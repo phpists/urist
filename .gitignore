@@ -4,6 +4,7 @@
 /public/hot
 /public/storage
 /storage/*.key
+/storage/logs
 /vendor
 .env
 .env.backup
@@ -17,3 +18,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/docker/*
+./docker-compose.yml
+docker-compose.yml
