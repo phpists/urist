@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -29,6 +28,6 @@ class UserAdminSeeder extends Seeder
         ]);
 
         $user->assignRole(User::ROLE_ADMIN);
-        $user->plans()->attach([Plan::PLAN_LITE_ID, Plan::PLAN_BASE_ID]);
+        $user->givePermissionTo([User::PLAN_LITE, User::PLAN_BASE]);
     }
 }
