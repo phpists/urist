@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('phone')->unique();
+            $table->string('email')->nullable()->unique();
+            $table->date('birth_date')->nullable();
+            $table->string('city')->nullable();
             $table->boolean('is_phone_verified')->default(false);
             $table->string('password');
             $table->rememberToken();
