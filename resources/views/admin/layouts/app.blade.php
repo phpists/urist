@@ -89,7 +89,7 @@
             <!--begin::Brand-->
             <div class="brand flex-column-auto" id="kt_brand">
                 <!--begin::Logo-->
-                <h1 style="color: #fff">LuxCosmetics</h1>
+                <h1 style="color: #fff">Збірник</h1>
                 <!--end::Logo-->
                 <!--begin::Toggle-->
                 <button class="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
