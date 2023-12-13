@@ -1,0 +1,52 @@
+.jstree-node i.jstree-icon.jstree-ocl {
+    background-position: center center;
+    background-size: 16px 16px;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+
+}
+
+.jstree-node.jstree-closed i.jstree-icon.jstree-ocl {
+    background-image: url('../../img/plus.png');
+}
+
+.jstree-leaf i.jstree-icon.jstree-ocl {
+    background-image: none;
+}
+
+.jstree-node.jstree-open > i.jstree-ocl {
+    display: block;
+    order: 1;
+    background-image: url('../../img/minus.png');
+    background-position: center center;
+    background-size: 12px 12px;
+}
+
+.jstree .jstree-open>.jstree-children {
+    width: 100%;
+}
+
+.jstree-default .jstree-container-ul .jstree-node {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.jstree-default .jstree-last {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.jstree-default a.jstree-anchor {
+    background: #F7F8FA;
+    flex-grow: 1;
+    border-bottom: 1px solid #A8B2C2;
+    padding: 26px;
+    display: flex;
+    align-items: center;
+    color: #374E73;
+    font-weight: 800;
+}

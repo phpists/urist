@@ -11,7 +11,8 @@ class ArticleCategoryController extends Controller
 {
     public function index() {
         $article_categories = ArticleCategory::query()->get();
-        return view('admin.article_categories.index', compact('article_categories'));
+        $tree_categories = ArticleCategory::query()->whereNull('parent_id')->with('children')->get();
+        return view('admin.article_categories.index', compact('article_categories', 'tree_categories'));
     }
 
     public function search(Request $request) {
@@ -28,7 +29,10 @@ class ArticleCategoryController extends Controller
     }
 
     public function getChildren(Request $request) {
-        $categories = ArticleCategory::query()->where('parent_id', $request->id)->get();
+        $validatedData = $request->validate([
+            'id_list' => 'required|array'
+        ]);
+        $categories = ArticleCategory::query()->whereIn('parent_id', $request->id_list)->get();
         return response()->json($categories);
     }
 
@@ -79,9 +83,7 @@ class ArticleCategoryController extends Controller
             'id' => 'required|exists:article_categories,id',
             'parent_id' => 'sometimes|exists:article_categories,id|nullable'
         ]);
-        ArticleCategory::query()->find($validatedData['id'])->update([
-            'parent_id' => $validatedData['parent_id']
-        ]);
+        ArticleCategory::query()->find($validatedData['id'])->update($validatedData);
         return response()->json([
             'success' => true
         ]);

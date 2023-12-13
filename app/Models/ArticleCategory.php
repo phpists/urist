@@ -16,4 +16,9 @@ class ArticleCategory extends Model
     {
         return $this->hasMany(CriminalArticle::class);
     }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(ArticleCategory::class, 'parent_id');
+    }
 }
