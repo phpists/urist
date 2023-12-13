@@ -1,29 +1,27 @@
 .jstree-node i.jstree-icon.jstree-ocl {
+    background-image: url('../../img/Vector.png');
     background-position: center center;
-    background-size: 16px 16px;
-    width: 16px;
-    height: 16px;
+    background-size: 19px 10px;
+    width: 19px;
+    height: 10px;
     position: absolute;
     right: 20px;
     top: 20px;
+    transition: transform .2s;
 
 }
 
 .jstree-node.jstree-closed i.jstree-icon.jstree-ocl {
-    background-image: url('../../img/plus.png');
+    transform: rotate(180deg);
 }
 
 .jstree-leaf i.jstree-icon.jstree-ocl {
     background-image: none;
 }
 
-.jstree-node.jstree-open > i.jstree-ocl {
-    display: block;
-    order: 1;
-    background-image: url('../../img/minus.png');
-    background-position: center center;
-    background-size: 12px 12px;
-}
+/*.jstree-node.jstree-open > i.jstree-ocl {*/
+/*    transform: rotate(180deg);*/
+/*}*/
 
 .jstree .jstree-open>.jstree-children {
     width: 100%;
@@ -49,4 +47,8 @@
     align-items: center;
     color: #374E73;
     font-weight: 800;
+}
+
+.jstree-default i.jstree-themeicon {
+    display: none;
 }
