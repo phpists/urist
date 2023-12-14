@@ -52,12 +52,11 @@ class LoginController extends Controller
                 ],
                 "json" => [
                     'recipients' => [
-                        "380989584976",
                         "380932439328",
                     ],
                     'sms' => [
                         'sender' => config('services.turbo_sms.sender_sms'),
-                        'text' => 'TurboSMS приветствует Вас!'
+                        'text' => config('services.turbo_sms.sender') . ' - ' . 'TurboSMS приветствует Вас!'
                     ],
                 ],
             ]);

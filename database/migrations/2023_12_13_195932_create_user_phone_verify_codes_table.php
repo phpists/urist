@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('user_phone_verify_codes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->smallInteger('code');
             $table->timestamps();
         });

@@ -35,7 +35,7 @@ return [
         'token' => env('TURBO_SMS_TOKEN', null),
         'url' => env('TURBO_SMS_URL', null),
         'sender_sms' => env('TURBO_SMS_SENDER_SMS', null),
-        'sender_viber' => env('TURBO_SMS_SENDER_VIBER', null),
+        'sender' => env('TURBO_SMS_SENDER', null),
     ],
 
 ];

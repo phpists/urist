@@ -28,7 +28,7 @@ class UserSendVerifyCodeListener implements ShouldQueue
     public function handle(UserRegisteredEvent $event): void
     {
         $code = rand(1000, 9999);
-        $message = Lang::get('messages.sms_code_sent: ') . $code;
+        $message = Lang::get('messages.sms_code_sent') .': '. $code;
         $event->user->userPhoneVerifyCodes()->create(['code' => $code]);
         $this->sender->sendMessage([$event->user->phone], $message);
     }
