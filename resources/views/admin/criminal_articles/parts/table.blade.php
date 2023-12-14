@@ -25,7 +25,7 @@
                 <a href="{{ route('admin.criminal_article.edit', $item->id) }}">{{ $item->name }}</a>
             </td>
             <td class="pr-0 text-center">
-                {{ $item->category->name }}
+                {{ $item->category?->name }}
             </td>
             <td class="justify-content-center pr-0 d-flex" id="row_{{ $item->id }}">
                 <a href="{{ route('admin.criminal_article.edit', $item->id) }}"

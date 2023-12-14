@@ -102,7 +102,7 @@
                         data: function (params) {
                             var query = {
                                 search_string: params.term,
-                                exclude_id: null
+                                article_category_id: null
                             }
                             // Query parameters will be ?search=[term]&type=public
                             return query;

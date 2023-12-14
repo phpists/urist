@@ -93,31 +93,8 @@
 @section('js_after')
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
+    <script src="{{ asset('js/helpers.js') }} "></script>
     <script>
-        function makeAjaxCategorySearch() {
-            return {
-                url: '/admin/article_category/search',
-                data: function (params) {
-                    var query = {
-                        search_string: params.term,
-                        exclude_id: null
-                    }
-                    // Query parameters will be ?search=[term]&type=public
-                    return query;
-                },
-                processResults: function (data) {
-                    data = data.map((el) => {
-                        return {
-                            id: el.id,
-                            text: el.name
-                        }
-                    })
-                    return {
-                        results: data
-                    };
-                }
-            }
-        }
         document.addEventListener('DOMContentLoaded', function () {
             var KTCkeditor = function () {
                 // Private functions
@@ -138,9 +115,9 @@
             }();
             KTCkeditor.init();
             $("#createFileFolder").select2({
-                placeholder: "Виберіть категорію",
-                ajax: makeAjaxCategorySearch()
-            });
+                placeholder: "Виберіть папку",
+                ajax: makeSelect2AjaxSearch('/folders/search_file_folders', 'createFileFolder')
+            })
         })
     </script>
 

@@ -18,7 +18,7 @@
                     {{ $article_category->id }}
                 </td>
                 <td class="text-center pl-0">
-                    {{ $article_category->name }}
+                    {{ $article_category?->name }}
                 </td>
                 <td class="text-center pr-0">
                     <form action="{{ route('admin.article_category.delete') }}" method="POST">

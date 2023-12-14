@@ -3,6 +3,7 @@
 @section('styles')
     <link rel="stylesheet" href="{{asset('js/jstree/dist/themes/default/style.min.css')}}" />
     <link rel="stylesheet" href="{{asset('super_admin/css/category.css')}}" />
+    <link rel="stylesheet" href="{{asset('super_admin/css/nestable.min.css')}}"></link>
 @endsection
 
 @section('title')
@@ -28,6 +29,11 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tree_tab">
+                                    <span class="nav-text">Дерево</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tree_nested_tab">
                                     <span class="nav-text">Дерево</span>
                                 </a>
                             </li>
@@ -69,6 +75,22 @@
                                 </ul>
                             </div>
                         </div>
+                        <div class="tab-pane fade" role="tabpanel" id="tree_nested_tab">
+                            <div class="card card-custom">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="dd w-100" id="nestable3">
+                                                <ol class="dd-list">
+                                                    @include('admin.article_categories.parts.table', ['categories' => $tree_categories])
+
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!--end::Body-->
@@ -86,129 +108,10 @@
 
 @section('js_after')
     <script src="{{asset('js/jstree/dist/jstree.min.js')}}"></script>
+    <script src="{{asset('super_admin/js/jquery.nestable.min.js')}}"></script>
+    <script src="{{asset('super_admin/js/category.js')}}"></script>
     <script>
-        function makeAjaxCategorySearch() {
-            return {
-                url: '/admin/article_category/search',
-                data: function (params) {
-                    var query = {
-                        search_string: params.term,
-                        exclude_id: document.getElementById('updateCategoryId').value
-                    }
-                    // Query parameters will be ?search=[term]&type=public
-                    return query;
-                },
-                processResults: function (data) {
-                    data = data.map((el) => {
-                        return {
-                            id: el.id,
-                            text: el.name
-                        }
-                    })
-                    return {
-                        results: data
-                    };
-                }
-            }
-        }
-        function changeParent(category_id, parent_id) {
-            $.ajax({
-                url: '/admin/article_category/update_parent',
-                method: 'put',
-                data: {
-                    id: category_id,
-                    parent_id: parent_id
-                },
-                error: function (resp) {
-                    console.log(resp)
-                }
-            })
-        }
-        document.addEventListener('DOMContentLoaded', function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
 
-            $("#createCategoryParent").select2({
-                placeholder: "Виберіть батьківську категорію",
-                ajax: makeAjaxCategorySearch()
-            });
-            $("#updateCategoryParent").select2({
-                placeholder: "Виберіть батьківську категорію",
-                ajax: makeAjaxCategorySearch()
-            })
-            $('.updateArticleCategory').on('click', function (ev) {
-                let categoryId = ev.currentTarget.dataset.id;
-                $.ajax({
-                    url: '{{route('admin.article_categories.view')}}',
-                    data: {
-                        id: categoryId
-                    },
-                    success: function (resp) {
-                        document.getElementById('updateCategoryId').value = categoryId;
-                        $("#updateCategoryName").val(resp.name)
-                        if (resp.parent_category !== null) {
-                            let categorySelect = $("#updateCategoryParent");
-                            let option = document.createElement('option');
-                            option.value = resp.parent_category.id;
-                            option.innerText = resp.parent_category.name;
-                            categorySelect.append(option);
-                            option.selected = 'selected';
-                        }
-                    }
-                })
-            })
-
-            $('#jstree_container').jstree({
-                core: {
-                    'check_callback': true
-                },
-                "plugins" : [ "dnd" ]
-            });
-            let jstreeEl = $('#jstree_container');
-            jstreeEl.on('open_node.jstree', function (ev, node) {
-                if(node.node.children.length === 0 || (node.node.children.length < node.node.children_d.length)) {
-                    return;
-                }
-                let el_ids = node.node.children.map((el) => {
-                    return el.split('_')[1];
-                })
-                $.ajax({
-                    url: "/admin/article_category/get_children",
-                    data: {
-                        id_list: el_ids
-                    },
-                    success: function (resp) {
-                        resp.forEach((el) => {
-                            jstreeEl.jstree('create_node', $('#node_' + el.parent_id), {
-                                "id": "node_" + el.id,
-                                "text": el.name
-                            }, 'last', false, false)
-                        })
-                    }
-                })
-            });
-            jstreeEl.on('activate_node.jstree', function (ev, node) {
-                if (!node.node.state.opened) {
-                    jstreeEl.jstree('open_node', $('#' + node.node.id));
-                }
-                else {
-                    jstreeEl.jstree('close_node', $('#' + node.node.id));
-                }
-            });
-            jstreeEl.on('move_node.jstree', function (ev, node) {
-                let parent_id = node.parent.split('_');
-                if(parent_id.length > 1) {
-                    parent_id = parent_id[1]
-                }
-                else {
-                    parent_id = null;
-                }
-                changeParent(node.node.id.split('_')[1], parent_id)
-            })
-        })
     </script>
 @endsection
 

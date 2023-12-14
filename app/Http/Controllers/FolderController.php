@@ -58,8 +58,15 @@ class FolderController extends Controller
         return redirect()->back()->withErrors('Папку не вдалось створити');
     }
 
-    public function update() {
-
+    public function update(StoreFolderRequest $request) {
+        $folder = Folder::query()->where('user_id', $request->user()->id)->find($request->folder_id);
+        if (!$folder) {
+            abort(404);
+        }
+        if ($folder->update($request->all())) {
+            return redirect()->route('admin.file_manager.view', $folder->id);
+        }
+        return redirect()->back()->withErrors('Папку не вдалось створити');
     }
 
     public function delete(DeleteFolderRequest $request) {

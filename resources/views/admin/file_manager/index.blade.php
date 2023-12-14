@@ -6,6 +6,9 @@
             -webkit-user-drag: none;
             user-select: none;
         }
+        .folder_container {
+            min-height: 256px;
+        }
     </style>
 @endsection
 
@@ -83,7 +86,11 @@
                                             <!--begin::Navigation-->
                                             <ul class="navi navi-hover">
                                                 <li class="navi-item text-center">
-                                                    <a href="#" class="navi-link">
+                                                    <a data-toggle="modal"
+                                                       data-id="{{$folder->id}}"
+                                                       data-name="{{$folder->name}}"
+                                                       data-target="#updateFolderModal"
+                                                       href="#" class="navi-link updateFolderBtn">
                                                         Редагувати
                                                     </a>
                                                 </li>
@@ -168,6 +175,7 @@
         </div>
     </div>
     @include('admin.file_manager.modals.create_folder')
+    @include('admin.file_manager.modals.edit_folder')
 @endsection
 
 @section('js_after')
@@ -242,6 +250,16 @@
             })
             $("#searchFile").on('select2:select', function(e) {
                 location.href = '/admin/file/' + e.target.value;
+            })
+            $("#updateParentFolder").select2({
+                placeholder: "Виберіть папку",
+                ajax: makeSelect2AjaxSearch('/folders/search_file_folders', 'updateParentFolder')
+            })
+            document.querySelectorAll('.updateFolderBtn').forEach(function (el) {
+                el.addEventListener('click', function (ev) {
+                    $('#updateFolderId').val(ev.currentTarget.dataset.id)
+                    $('#updateFolderName').val(ev.currentTarget.dataset.name)
+                })
             })
         })
     </script>

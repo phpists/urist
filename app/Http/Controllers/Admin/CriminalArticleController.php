@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CriminalArticleStoreRequest;
+use App\Http\Requests\CriminalArticleUpdateRequest;
 use App\Http\Requests\StoreFavouriteRequest;
 use App\Models\ArticleCategory;
 use App\Models\CriminalArticle;
@@ -19,28 +21,20 @@ class CriminalArticleController extends Controller
     public function create() {
         return view('admin.criminal_articles.create');
     }
-    public function store(Request $request) {
-        $validatedData = $request->validate([
-            'name' => 'required|string|unique:criminal_articles',
-            'content' => 'string|required',
-            'article_category_id' => 'required|exists:article_categories,id'
-        ]);
-        $article = new CriminalArticle($validatedData);
+    public function store(CriminalArticleStoreRequest $request) {
+        $article = new CriminalArticle($request->all());
         $article->save();
         return redirect()->back()->with('success', 'Article saved correct');
     }
-    public function update(Request $request) {
-        $validatedData = $request->validate([
-            'name' => 'required|string|unique:criminal_articles',
-            'content' => 'string|required',
-            'article_category_id' => 'required|exists:article_categories,id'
-        ]);
+    public function update(CriminalArticleUpdateRequest $request) {
         $article = CriminalArticle::query()->find($request->id);
         if (!$article) {
-            return redirect()->back()->withErrors('Article with such id not found');
+            return redirect()->back()->withErrors('Стаття не знайдена');
         }
-        $article->update($validatedData);
-        return redirect()->back()->with('success', 'Article saved correct');
+        if ($article->update($request->all())) {
+            return redirect()->back()->with('success', 'Article saved correct');
+        }
+        return redirect()>back()->withErrors('Не вдалось оновити дані');
     }
     public function delete(string $id) {
         $article = CriminalArticle::query()->find($id);

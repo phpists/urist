@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/folders/search_favourites', [\App\Http\Controllers\FolderController::class, 'searchFavouriteFolders'])->name('folders.search_favourites');
     Route::get('/folders/search_file_folders', [\App\Http\Controllers\FolderController::class, 'searchFileFolders'])->name('folders.search_file_folders');
     Route::put('/folder/move', [\App\Http\Controllers\FolderController::class, 'moveFolder'])->name('folder.move');
+    Route::put('/folder/update', [\App\Http\Controllers\FolderController::class, 'update'])->name('folder.update');
     Route::post('/folders', [\App\Http\Controllers\FolderController::class, 'store'])->name('folders.store');
     Route::delete('/folders', [\App\Http\Controllers\FolderController::class, 'delete'])->name('folders.delete');
     // Favourites Controller
