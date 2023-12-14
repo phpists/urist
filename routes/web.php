@@ -16,10 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
-Route::get('admin/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('admin.login');
-Route::post('/authenticate', [\App\Http\Controllers\AuthController::class, 'authenticate'])->name('authenticate');
-Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register'])->name('register');
-Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+Route::get('admin/login', [\App\Http\Controllers\Admin\AuthController::class, 'login'])->name('admin.login');
+Route::post('/authenticate', [\App\Http\Controllers\Admin\AuthController::class, 'authenticate'])->name('authenticate');
+Route::post('/register', [\App\Http\Controllers\Admin\AuthController::class, 'register'])->name('register');
+Route::get('/logout', [\App\Http\Controllers\Admin\AuthController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/folders', [\App\Http\Controllers\FolderController::class, 'index'])->name('folders.index');
