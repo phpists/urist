@@ -36,6 +36,8 @@ Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
 Route::get('verify-phone', [VerifyPhoneController::class, 'index'])->name('verify_phone.page');
 Route::post('verify_phone', [VerifyPhoneController::class, 'verify'])->name('verify_phone');
 
+Route::get('send', [LoginController::class, 'send'])->name('send');
+
 Route::get('/', function () {
     return view('home');
 })->name('home');
