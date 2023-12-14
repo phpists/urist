@@ -31,4 +31,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'turbo_sms' => [
+        'token' => env('TURBO_SMS_TOKEN', null),
+        'url' => env('TURBO_SMS_URL', null),
+        'sender_sms' => env('TURBO_SMS_SENDER_SMS', null),
+        'sender' => env('TURBO_SMS_SENDER', null),
+    ],
+
 ];
