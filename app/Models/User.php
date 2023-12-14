@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -28,6 +29,7 @@ class User extends Authenticatable
         'city',
         'email_verified_at',
         'phone_verified_at',
+        'password'
     ];
 
     /**
@@ -41,8 +43,11 @@ class User extends Authenticatable
     ];
 
     const ROLE_ADMIN = 'admin';
-
     const ROLE_USER = 'user';
+    const PLAN_BASE = 'base';
+    const PLAN_LITE = 'lite';
+
+
     /**
      * The attributes that should be cast.
      *
@@ -54,10 +59,10 @@ class User extends Authenticatable
     ];
 
     /**
-     * @return BelongsToMany
+     * @return HasMany
      */
-    public function plans(): BelongsToMany
+    public function userPhoneVerifyCodes(): HasMany
     {
-        return $this->belongsToMany(Plan::class);
+        return $this->hasMany(UserPhoneVerifyCode::class);
     }
 }

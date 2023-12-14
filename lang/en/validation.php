@@ -132,6 +132,7 @@ return [
     'prohibited_unless' => 'The :attribute field is prohibited unless :other is in :values.',
     'prohibits' => 'The :attribute field prohibits :other from being present.',
     'regex' => 'The :attribute field format is invalid.',
+    'regex_letter_digits' => 'The field must contain at least one letter and one digit.',
     'required' => 'The :attribute field is required.',
     'required_array_keys' => 'The :attribute field must contain entries for: :values.',
     'required_if' => 'The :attribute field is required when :other is :value.',
@@ -169,10 +170,34 @@ return [
     |
     */
 
+
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'phone' => [
+            'required' => 'Please enter your phone number',
+            'size' => 'Invalid phone number format'
         ],
+        'password' => [
+            'required' => 'Please enter your password',
+            'confirmed' => 'Please confirm your password',
+            'new_letter_digits' => 'Password must contain letters and digits',
+            'min' => 'Password must be at least :min characters long',
+            'unique' => 'This phone number is already in use by another user',
+        ],
+        'password_confirmation' => [
+            'required' => 'Please confirm your password',
+        ],
+        'policy' => [
+            'required' => 'Please select the privacy policy',
+            'accepted' => 'You must accept the privacy policy',
+        ],
+        'g-recaptcha-response' => [
+            'required' => 'Please fill in the robot protection',
+            'captcha' => 'Robot protection verification failed',
+        ],
+        'code' => [
+            'size' => 'Field code must have :size digits',
+            'required' => 'Please enter your code'
+        ]
     ],
 
     /*
