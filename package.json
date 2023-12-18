@@ -1,13 +1,26 @@
 {
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "dev": "vite",
-        "build": "vite build"
-    },
-    "devDependencies": {
-        "axios": "^1.6.1",
-        "laravel-vite-plugin": "^0.8.0",
-        "vite": "^4.0.0"
-    }
+  "name": "collection",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "sass": "^1.62.0",
+    "vite": "^4.3.2",
+    "vite-plugin-pug": "^0.3.2"
+  },
+  "dependencies": {
+    "choices.js": "^10.2.0",
+    "just-validate": "^4.2.0",
+    "laravel-vite-plugin": "^0.8.1",
+    "smooth-scroll": "^16.1.3",
+    "smoothscroll-for-websites": "^1.4.10",
+    "swiper": "^9.2.4",
+    "text-mask-addons": "^3.8.0",
+    "vanilla-text-mask": "^5.1.1"
+  }
 }

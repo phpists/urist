@@ -1,0 +1,97 @@
+.pagenav
+
+    &__list
+        display: flex
+        align-items: center
+        justify-content: center
+        gap: 10px
+        padding-left: 0
+        list-style: none
+        margin: 0
+        
+    &__item
+        position: relative
+        display: flex
+        align-items: center
+        justify-content: center
+        width: auto
+        height: 50px
+        line-height: 1
+        color: var(--black)
+        font-size: 18px
+        font-weight: 700
+        text-align: center
+
+        &.is-active
+
+            .pagenav__link
+                background: linear-gradient(90deg, #D6DCE4 0%, #F7F8FA 100%)
+                border-color: var(--blue)
+                color: var(--black)
+
+    &__link
+        position: relative
+        display: flex
+        align-items: center
+        justify-content: center
+        width: 50px
+        height: 50px
+        border: 1px solid var(--blue)
+        border-radius: 10px
+        text-decoration: none
+        font-size: 18px
+        font-weight: 700
+        color: var(--black)
+        line-height: 1
+        transition: all .5s ease
+
+        @media ($max-md)
+            width: 40px
+            height: 40px
+            font-size: 14px
+        
+        &:hover
+            background: var(--blue)
+            border-color: var(--blue)
+            color: #fff
+
+        &:active
+            background: var(--blue)
+            border-color: var(--blue)
+            color: #fff
+
+        &:focus-visible
+            background: var(--blue)
+            border-color: var(--blue)
+            color: #fff
+
+    &__arrow
+        position: relative
+        display: flex
+        align-items: center
+        justify-content: center
+        width: 50px
+        height: 50px
+        border: 1px solid var(--blue)
+        border-radius: 10px
+        transition: all .5s ease
+        color: var(--black)
+
+        @media ($max-md)
+            width: 40px
+            height: 40px
+
+        &:hover
+            background: var(--blue)
+            border-color: var(--blue)
+            color: #fff
+
+        &:active
+            background: var(--blue)
+            border-color: var(--blue)
+            color: #fff
+
+        &:focus-visible
+            background: var(--blue)
+            border-color: var(--blue)
+            color: #fff

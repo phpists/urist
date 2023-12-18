@@ -18,13 +18,12 @@ use Illuminate\Support\Facades\Log;
 class RegisterController extends Controller
 {
 
-
     /**
      * @return Application|Factory|View|\Illuminate\Foundation\Application
      */
     function index(): Application|Factory|View|\Illuminate\Foundation\Application
     {
-        return  view('auth.register');
+        return view('auth.register');
     }
 
     /**
@@ -35,7 +34,17 @@ class RegisterController extends Controller
     {
         DB::beginTransaction();
         try {
+            $ifUserPhoneNotVerified = User::where('phone',$request->phone)->first();
+            if ($ifUserPhoneNotVerified->phone_verified_at){
+                return redirect()->back()->withErrors(['phone'=> trans('validation.custom.phone.unique')])->withInput();
+            }
+            if (!$ifUserPhoneNotVerified->phone_verified_at){
+                return redirect()->back()->withErrors(['phone'=> trans('messages.not_verified')])->withInput();
+            }
+
+
             $newUser = User::create([
+                'first_name' => $request->name,
                 'phone' => $request->phone,
                 'password' => Hash::make($request->password),
             ]);

@@ -7,7 +7,10 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerifyPhoneController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FileManagerController;
@@ -26,21 +29,33 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
-//New routes
+//Auth routes and pages
 Route::get('login', [LoginController::class, 'index'])->name('login');
 Route::get('register', [RegisterController::class, 'index'])->name('register.page');
 Route::post('sing-in', [LoginController::class, 'login'])->name('sing-in')->middleware('throttle:5,1');
-Route::post('sing-up', [RegisterController::class, 'register'])->name('sing-up');
+Route::post('sing-up', [RegisterController::class, 'register'])->name('sing-up')->middleware('throttle:5,1');
 Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
 Route::get('verify-phone', [VerifyPhoneController::class, 'index'])->name('verify_phone.page');
+Route::get('verify-phone-resend', function (){return view('auth.verify_resend');})->name('verify_phone_resend.page');
 Route::post('verify_phone', [VerifyPhoneController::class, 'verify'])->name('verify_phone');
-
 Route::get('send', [LoginController::class, 'send'])->name('send');
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('password/forgot', [ResetPasswordController::class, 'index'])->name('password.forgot');
+Route::post('password/send-code', [ResetPasswordController::class, 'sendResetPasswordCode'])->name('password.send.code');
+Route::get('password/reset', function (){return view('auth.reset_password');})->name('password.reset');
+Route::post('password/recovery', [ResetPasswordController::class, 'resetPassword'])->name('password.recovery');
+
+
+
+//Other routes
+
+Route::get('/', function () {return view('home');})->name('home');
+Route::get('/offer', function () {return view('pages.offer');})->name('offer');
+Route::get('/policy', function () {return view('pages.policy');})->name('policy');
+Route::get('faq', [FaqController::class, 'index'])->name('faq');
+Route::get('contacts', [ContactController::class, 'index'])->name('contacts');
+
+
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/login', [AuthController::class, 'login'])->name('admin.login');
     Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');

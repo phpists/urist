@@ -1,0 +1,35 @@
+import accordion from './includes/accordion.js';
+import fixHeight from './includes/fixHeight.js';
+import mobileNav from './includes/mobileNav.js';
+import scrollToId from './includes/scrollToId.js';
+import modal from './includes/modal.js';
+import loadMore from './includes/loadMore.js';
+import select from './includes/select.js';
+import loginFormValidation from './includes/loginFormValidation.js';
+import tariffsSlider from './includes/tariffsSlider.js';
+import reviewsSlider from './includes/reviewsSlider.js';
+import feedbackFormValidation from './includes/feedbackFormValidation.js';
+import registrationFormValidation from './includes/registrationFormValidation.js';
+import phoneMask from './includes/phoneMask.js';
+import forgotFormValidation from './includes/forgotFormValidation.js';
+import passwordFormValidation from './includes/passwordFormValidation.js';
+import codeFormValidation from './includes/codeFormValidation.js';
+import '../sass/main.sass';
+
+
+accordion();
+fixHeight();
+mobileNav();
+scrollToId();
+modal();
+loadMore();
+select();
+tariffsSlider();
+feedbackFormValidation();
+reviewsSlider();
+registrationFormValidation();
+phoneMask();
+forgotFormValidation();
+loginFormValidation();
+passwordFormValidation();
+codeFormValidation();

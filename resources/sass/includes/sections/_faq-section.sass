@@ -1,0 +1,43 @@
+.faq-section
+    padding: 40px 0 90px
+
+    @media ($max-md)
+        padding: 25px 0
+
+    &__header
+        margin-bottom: 70px
+
+        @media ($max-md)
+            margin-bottom: 25px
+
+    &__row
+        display: grid
+        grid-template-columns: repeat(12, 1fr)
+        gap: 30px
+
+        @media ($max-md)
+            display: flex
+            flex-direction: column
+
+    &__col
+        grid-column: 6 span
+
+    &__list
+        margin: 0
+        padding: 0
+        list-style: none
+    
+    &__item
+        border-bottom: 1px solid #E0E0E0
+        padding-bottom: 20px
+        margin-bottom: 20px
+
+    &__sub-title
+        font-size: 22px
+        font-weight: 700
+        margin: 0 0 15px
+        color: var(--blue)
+
+        @media ($max-md)
+            font-size: 18px
+            text-align: center

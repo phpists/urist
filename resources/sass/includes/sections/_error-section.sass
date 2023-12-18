@@ -1,0 +1,86 @@
+.error-section
+    padding: 180px 0
+
+    @media ($max-lg)
+        padding: 100px 0
+
+    @media ($max-md)
+        padding: 80px 0
+
+    &__container
+        display: grid
+        grid-template-columns: repeat(12, 1fr)
+        align-items: center
+        gap: 30px
+
+        @media ($max-md)
+            display: flex
+            flex-direction: column-reverse
+            align-items: stretch
+
+    &__left
+        grid-column: 7 span
+        text-align: center
+    
+    &__right
+        grid-column: 5 span
+
+    &__number
+        font-size: 255px
+        line-height: 1
+        font-weight: 700
+        color: var(--blue)
+
+        @media ($max-lg)
+            font-size: 180px
+
+        @media ($max-md)
+            font-size: 120px
+            margin-bottom: 10px
+    
+    &__title
+        display: inline-flex
+        align-items: center
+        justify-content: center
+        background: var(--white)
+        border: 1px solid #E3E3E4
+        border-radius: 10px
+        font-size: 36px
+        font-weight: 400
+        text-align: center
+        margin: 0 auto 25px
+        padding: 20px 80px
+        line-height: 1.2
+
+        @media ($max-xl)
+            padding: 20px
+
+        @media ($max-lg)
+            font-size: 24px
+            padding: 20px
+
+        @media ($max-xs)
+            display: flex
+            font-size: 22px
+
+    &__picture
+        display: flex
+        justify-content: center
+    
+    &__img
+        max-width: 100%
+        height: auto
+
+        @media ($max-md)
+            width: 180px
+            height: auto
+
+    &__buttons
+        text-align: center
+
+    &__button
+        max-width: 254px
+        width: 100%
+
+        @media ($max-xs)
+            max-width: 100%

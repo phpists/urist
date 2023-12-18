@@ -1,0 +1,44 @@
+.reviews-slider
+    overflow: visible
+
+    @media ($max-lg)
+        padding-bottom: 40px
+
+    &__pagination
+        display: none
+
+        @media ($max-lg)
+            display: block
+
+    &__slide
+        opacity: .5
+        transition: opacity .5s ease
+
+        &.swiper-slide-active,
+        &.swiper-slide-prev,
+        &.swiper-slide-next
+            opacity: 1
+
+    &__prev,
+    &__next
+        position: absolute
+        top: calc(50% - 25px)
+        width: 55px
+        padding: 5px
+        z-index: $z-index-1
+
+        @media ($max-lg)
+            display: none
+
+        &.swiper-button-disabled
+            opacity: 0
+            visibility: hidden
+    
+    &__prev
+        left: -30px
+
+    &__next
+        right: -30px
+
+    .swiper-pagination-bullet
+        background: var(--blue)

@@ -172,9 +172,14 @@ return [
 
 
     'custom' => [
+        'name' => [
+            'required' => 'Please enter your name',
+        ],
         'phone' => [
+
             'required' => 'Please enter your phone number',
-            'size' => 'Invalid phone number format'
+            'size' => 'Invalid phone number format',
+            'unique' => 'Phone already in use'
         ],
         'password' => [
             'required' => 'Please enter your password',

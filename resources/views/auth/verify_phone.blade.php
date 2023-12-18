@@ -1,35 +1,39 @@
 @extends('layouts.app')
+@section('title', 'Верифікація')
 @section('page')
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-    <form action="{{route('verify_phone')}}" method="POST">
-        @csrf
-        @method('POST')
-        <div class="input-group">
-            <label>Код підтвердження
-                <input type="text" name="code" id="code" class="@error('code')is-invalid @enderror"
-                       value="{{ old('code') }}">
-                @error('code')
-                <span class="alert alert-danger">{{$message}}</span>
-                @enderror
-            </label>
-        </div>
-        <input type="hidden" name="phone" value="{{ old('phone',session('phone')) }}">
-        <button type="submit">Підтвердити</button>
-    </form>
+    <div class="login-section">
+        <form class="form" autocomplete="off" action="{{route('verify_phone')}}" method="POST">
+            @csrf
+            @method('POST')
+            <input type="hidden" name="phone" value="{{ old('phone',session('phone')) }}">
+            <h3 class="section-title form__title">Введіть код</h3>
+            <div class="form__group">
+                <div class="form__info form__info--big">Код підтвердження надісланий вам на телефон</div>
+            </div>
+            <div class="form__code">
+                <div class="form__group">
+                    <input class="input form__input @error('code') just-validate-error-field @enderror" type="number"
+                           maxlength="4"
+                           name="code"
+                           autocomplete="off" required="required"
+                           value="{{ old('code') }}"/>
+                    @error('code')
+                    <div class="error-label just-validate-error-label" style="display: block !important;">{{$message}}</div>
+                    @enderror
+                </div>
+            </div>
+            <div class="form__group">
+                <div class="form__info">Не отримали код?
+                    <a class="blue-link" href="#" data-modal="login-modal">Відправити ще раз</a>
+                </div>
+            </div>
+            <div class="form__button-group">
+                <button class="button form__button form__button--middle" type="submit">Відправити</button>
+            </div>
+        </form>
+    </div>
 @endsection
 
-@push('scripts_footer')
-    <script>
-        $(document).ready(function () {
-            $('#code').inputmask({
-                mask: '9999',
-                placeholder: '____',
-                clearMaskOnLostFocus: false
-            });
-        });
-    </script>
-@endpush
+
+
+

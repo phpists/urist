@@ -1,0 +1,61 @@
+.try-section
+    padding: 60px 0 40px
+    background: var(--blue)
+    clip-path: polygon(0% 0%, 50% 60px, 100% 0%, 100% calc(100% - 30px), 50% 100%, 0% calc(100% - 30px))
+
+    @media ($max-md)
+        clip-path: polygon(0% 0%, 50% 22px, 100% 0%, 100% calc(100% - 11px), 50% 100%, 0% calc(100% - 11px))
+
+    &__container
+        display: grid
+        grid-template-columns: repeat(12, 1fr)
+        align-items: center
+        gap: 30px
+
+        @media ($max-lg)
+            display: flex
+            flex-direction: column-reverse
+            gap: 15px
+
+    &__left
+        grid-column: 7 span
+
+        @media ($max-lg)
+            text-align: center
+    
+    &__right
+        grid-column: 5 span
+
+    &__title
+        margin-bottom: 15px
+        color: var(--white)
+        max-width: 540px
+
+        @media ($max-lg)
+            margin: 0 auto 15px
+
+        span
+            font-size: 55px
+
+            @media ($max-md)
+                font-size: 38px
+
+    &__descr
+        color: var(--white)
+        margin: 0 0 20px
+
+        @media ($max-md)
+            font-size: 14px
+
+    &__button
+        max-width: 190px
+        width: 100%
+
+    &__picture
+        display: flex
+        justify-content: center
+
+    &__img
+        max-width: 100%
+        height: auto
+    

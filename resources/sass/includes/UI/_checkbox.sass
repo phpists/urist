@@ -1,0 +1,97 @@
+.checkbox
+    padding: 0
+    margin: 0
+    line-height: 1
+
+    &__label
+        position: relative
+        display: inline-block
+        font-size: 14px
+        line-height: 1.6
+        font-weight: 400
+        color: var(--black)
+        margin: 0
+        padding-left: 30px
+        cursor: pointer
+        text-align: left
+        user-select: none
+        transition: all .5s ease
+
+        &::before
+            position: absolute
+            top: 0
+            left: 0
+            width: 22px
+            height: 22px
+            border: 1px solid var(--white)
+            background: var(--white)
+            border-radius: 4px
+            box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .15)
+            transition: all .5s ease
+            content: ""
+        
+        &::after
+            position: absolute
+            top: 1px
+            left: 1px
+            width: 20px
+            height: 20px
+            background: url("data:image/svg+xml,%3Csvg width='17' height='12' viewBox='0 0 17 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16.6449 0.23573C17.067 0.591883 17.1204 1.22279 16.7643 1.64489L8.32679 11.6449C8.14541 11.8599 7.88189 11.9885 7.60083 11.9993C7.31977 12.0101 7.04716 11.902 6.84985 11.7015L0.287348 5.03487C-0.10009 4.64129 -0.0951041 4.00814 0.298483 3.6207C0.69207 3.23327 1.32522 3.23825 1.71265 3.63184L7.50561 9.51675L15.2357 0.355151C15.5919 -0.0669556 16.2228 -0.120422 16.6449 0.23573Z' fill='%23374E73'/%3E%3C/svg%3E%0A") no-repeat center center
+            border-radius: 0
+            transition: all .25s ease
+            content: ""
+
+    &__input
+        position: absolute
+        opacity: 0
+        z-index: -1
+
+        // Checked
+        &:checked + .checkbox__label::before
+            background: var(--white)
+
+        &:checked + .checkbox__label::after
+            opacity: 1
+            transform: scale(1)
+
+        // Not Checked
+        &:not(:checked) + .checkbox__label::after
+            opacity: 0
+            transform: scale(0)
+
+        // Hover
+        &:not(:disabled):not(:checked) + .checkbox__label:hover::before
+            border-color: var(--blue)
+
+        // Active 
+        &:not(:disabled):active + .checkbox__label::before
+            border-color: var(--blue)
+
+        // Focus 
+        &:focus-visible + .checkbox__label::before
+            border-color: var(--blue)
+
+        &:focus-visible:not(:checked) + .checkbox__label::before
+            border-color: var(--blue)
+        
+        // Disabled
+        &:disabled
+
+            &:not(:checked) + .checkbox__label::before
+                box-shadow: none
+                border-color: var(--grey-disabled)
+
+            &:checked + .checkbox__label
+                &::before
+                    box-shadow: none
+                    border-color: var(--grey-disabled)
+                    background: var(--grey-disabled)
+
+            + .checkbox__label
+                color: var(--grey-disabled)
+        
+        &.just-validate-error-field + .checkbox__label::before
+            border-color: var(--red)
+
+    > .just-validate-error-label
+        display: none

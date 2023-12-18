@@ -1,0 +1,98 @@
+.why-section
+    padding: 130px 0 80px
+    background: var(--blue)
+    clip-path: polygon(0% 0%, 50% 60px, 100% 0%, 100% calc(100% - 30px), 50% 100%, 0% calc(100% - 30px))
+
+    @media ($max-md)
+        clip-path: polygon(0% 0%, 50% 22px, 100% 0%, 100% calc(100% - 11px), 50% 100%, 0% calc(100% - 11px))
+        padding: 60px 0 40px
+
+    &__title
+        margin-bottom: 40px
+        text-align: center
+        color: var(--white)
+
+        @media ($max-md)
+            margin-bottom: 15px
+    
+    &__list
+        display: grid
+        grid-template-columns: repeat(12, 1fr)
+        margin: 0
+        padding: 0
+        list-style: none
+
+        @media ($max-md)
+            display: flex
+            flex-direction: column
+            gap: 20px
+    
+    &__item
+        display: flex
+        align-items: flex-start
+        gap: 20px
+        padding: 20px 40px
+        min-height: 130px
+
+        @media ($max-lg)
+            padding: 20px
+            gap: 10px
+            min-height: 0
+
+        @media ($max-md)
+            padding: 0
+
+        &--4
+            grid-column: 4 span
+            border-right: 1px solid var(--white)
+            border-bottom: 1px solid var(--white)
+
+            @media ($max-md)
+                border: none
+
+        &--6
+            grid-column: 6 span
+            border-right: 1px solid var(--white)
+
+            @media ($max-md)
+                border: none
+        
+        &:nth-child(3),
+        &:nth-child(5)
+            border-right: none
+
+        &:nth-child(1),
+        &:nth-child(4)
+            padding-left: 0
+    
+    &__number
+        display: flex
+        align-items: center
+        justify-content: center
+        text-align: center
+        width: 45px
+        height: 45px
+        min-width: 45px
+        border-radius: 10px
+        font-size: 30px
+        font-weight: 700
+        line-height: 1
+        color: var(--white)
+        background: linear-gradient(to bottom, #C4D0E2, #6D7D94)
+        border: 2px solid #6D7E93
+
+        @media ($max-lg)
+            width: 35px
+            height: 35px
+            min-width: 35px
+            font-size: 24px
+
+    &__text
+        font-size: 16px
+        font-weight: 700
+        margin: 0
+        line-height: 1.25
+        color: var(--white)
+
+        @media ($max-lg)
+            font-size: 14px
