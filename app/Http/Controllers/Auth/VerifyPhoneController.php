@@ -9,6 +9,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
@@ -47,12 +48,19 @@ class VerifyPhoneController extends Controller
             $user->save();
             $user->userPhoneVerifyCodes()->delete();
             DB::commit();
-            return redirect()->route('login')
+            Auth::login($user);
+            return redirect()->route('dashboard')
                 ->with('success', Lang::get('messages.verify_success'));
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error($exception);
             abort(500);
         }
+    }
+
+
+    public function resendVerifyCode()
+    {
+//   TODO add resend verify
     }
 }

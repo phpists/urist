@@ -6,7 +6,9 @@ namespace App\Providers;
 use App\Events\ArticleCategoryDeleted;
 use App\Listeners\ProcessPostCategoryDelete;
 use App\Events\UserRegisteredEvent;
+use App\Events\UserSendResetPasswordCodeEvent;
 use App\Listeners\UserSendVerifyCodeListener;
+use App\Listeners\UserSendVerifyCodeResetPasswordListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         UserRegisteredEvent::class => [
             UserSendVerifyCodeListener::class
+        ],
+        UserSendResetPasswordCodeEvent::class => [
+            UserSendVerifyCodeResetPasswordListener::class
         ],
     ];
 

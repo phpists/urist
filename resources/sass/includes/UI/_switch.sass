@@ -1,0 +1,94 @@
+.switch
+    padding: 0
+    margin: 0
+    line-height: 1
+
+    &__label
+        position: relative
+        display: inline-flex
+        align-items: center
+        padding-left: 50px
+        min-height: 24px
+        font-size: 12px
+        line-height: 1.4
+        font-weight: 300
+        margin: 0
+        cursor: pointer
+        user-select: none
+        transition: all .5s ease
+
+        &::before
+            position: absolute
+            top: 0
+            left: 0
+            width: 44px
+            height: 24px
+            background: var(--white)
+            border-radius: 15px
+            transition: all .5s ease
+            content: ""
+
+        &::after
+            position: absolute
+            top: 2px
+            left: 2px
+            width: 20px
+            height: 20px
+            background: #e3e3e3
+            border-radius: 50%
+            transition: all .5s ease
+            content: ""
+
+        &:hover,
+        &:active,
+        &:focus-visible
+            color: var(--yellow)
+
+    &__input
+        position: absolute
+        opacity: 0
+        z-index: -1
+
+        // Checked
+        &:checked + .switch__label::before
+            background: var(--white)
+
+        &:checked + .switch__label::after
+            transform: translateX(20px)
+            background: var(--blue)
+
+        // Not Checked
+        &:not(:checked) + .switch__label::after
+            right: auto
+            left: 2px
+
+        // Hover
+        &:not(:disabled):not(:checked) + .switch__label:hover::before
+            background: var(--white)
+
+        // Active
+        &:not(:disabled):active + .switch__label::before
+            background: var(--blue)
+
+        // Focus
+        &:focus-visible + .switch__label::before
+            background: var(--yellow)
+
+        &:focus-visible:not(:checked) + .switch__label::before
+            background: var(--yellow)
+
+        // Disabled
+        &:disabled
+
+            &:not(:checked) + .switch__label::before
+                box-shadow: none
+                border-color: var(--grey-disabled)
+
+            &:checked + .switch__label
+                &::before
+                    box-shadow: none
+                    border-color: var(--grey-disabled)
+                    background: var(--grey-disabled)
+
+            + .switch__label
+                color: var(--grey-disabled)

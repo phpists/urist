@@ -1,0 +1,56 @@
+.tariffs-plan
+    display: flex
+    justify-content: center
+    margin-bottom: 50px
+
+    @media ($max-md)
+        margin-bottom: 15px
+
+    &__list
+        display: flex
+        align-items: center
+        gap: 6px
+        margin: 0 auto
+        padding: 6px
+        list-style: none
+        border-radius: 10px
+        background: var(--white)
+
+        @media ($max-md)
+            margin: 0
+            width: 100%
+
+    &__item
+
+        @media ($max-md)
+            width: 100%
+
+    &__button
+        display: flex
+        align-items: center
+        justify-content: center
+        text-align: center
+        padding: 4px 23px
+        height: 38px
+        border-radius: 6px
+        font-size: 16px
+        line-height: 1.2
+        font-weight: 700
+        color: var(--black)
+        transition: all .5s ease
+        text-align: center
+        white-space: nowrap
+        width: 100%
+
+        @media ($max-md)
+            font-size: 14px
+            padding: 5px 10px
+
+        &:hover,
+        &:active,
+        &:focus-visible
+            background: #e3e3e4
+
+        &.is-active
+            background: var(--blue)
+            color: var(--white)

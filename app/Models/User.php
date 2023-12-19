@@ -65,4 +65,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserPhoneVerifyCode::class);
     }
+
+     /**
+     * @return HasMany
+     */
+    public function userResetPasswordVerifyCodes(): HasMany
+    {
+        return $this->hasMany(UserResetPasswordCode::class);
+    }
+
 }

@@ -64,3 +64,21 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Using custom directives permissions (return bool)
+@can('base') or @can('lite') or @can(['lite','base']) 
+...
+@endcan
+
+## Using custom directives roles (return bool)
+@role('admin') or @role('user') or @role(['user','admin']) 
+...
+@endrole
+
+## Using custom middleware return 403 abort Role and Plans
+'middleware' => ['role:admin,otherrole']
+'middleware' => ['plan:base,lite']
+
+##  If use in dev mode and comment build files
+{{--        <link rel="stylesheet" href="{{ mix('/resources/sass/main.sass') }}">--}}
+{{--        <script src="{{ mix('/resources/js/main.js') }}"></script>--}}

@@ -1,0 +1,16 @@
+.tariffs-section
+    padding: 130px 0 100px
+    background: var(--blue)
+    clip-path: polygon(0% 0%, 50% 60px, 100% 0%, 100% calc(100% - 30px), 50% 100%, 0% calc(100% - 30px))
+
+    @media ($max-lg)
+        padding: 100px 0 60px
+
+    @media ($max-md)
+        clip-path: polygon(0% 0%, 50% 22px, 100% 0%, 100% calc(100% - 11px), 50% 100%, 0% calc(100% - 11px))
+        padding: 50px 0 30px
+
+    &__title
+        margin-bottom: 15px
+        text-align: center
+        color: var(--white)

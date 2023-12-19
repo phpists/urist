@@ -1,0 +1,29 @@
+.menu
+
+    &__list
+        display: flex
+        align-items: center
+        gap: 70px
+        padding: 0
+        margin: 0
+        list-style: none
+
+        @media ($max-xl)
+            gap: 40px
+
+        @media ($max-lg)
+            gap: 20px
+
+    &__item
+        display: flex
+        line-height: 1.2
+       
+    &__link
+        font-size: 16px
+        color: var(--black)
+        transition: color .5s ease
+
+        &:hover,
+        &:active,
+        &:focus-visible
+            color: var(--blue)

@@ -1,0 +1,133 @@
+.modal
+    position: absolute
+    top: 0
+    left: 0
+    z-index: $z-index-3
+    width: 100%
+    height: 100%
+    overflow-x: hidden
+    overflow-y: auto
+    outline: 0
+    opacity: 0
+    visibility: hidden
+    transition: all .5s ease
+
+    &.is-visible
+        opacity: 1
+        visibility: visible
+
+        .modal__window
+            transform: scale(1)
+
+    &--video
+
+        .modal__window
+            max-width: 960px
+            padding: 0
+            border-radius: 0
+            
+    &-wrap
+        position: fixed
+        top: 0
+        left: 0
+        z-index: 1000
+        width: 100%
+        height: 100%
+        outline: 0
+        background: rgba(0, 0, 0, .7)
+        opacity: 0
+        visibility: hidden
+        transition: all .5s ease
+
+        &.is-visible
+            opacity: 1
+            visibility: visible
+
+    &__inner
+        display: flex
+        align-items: center
+        justify-content: center
+        min-height: 100%
+        padding: 16px
+
+    &__window
+        position: relative
+        width: 100%
+        max-width: 530px
+        padding: 30px 25px
+        background: var(--white)
+        transform: scale(.8)
+        border-radius: 10px
+        transition: all .5s ease
+
+        @media ($max-md)
+            padding: 25px 20px
+
+    &__close
+        position: absolute
+        top: -40px
+        right: 0
+        width: 25px
+        height: 25px
+        display: flex
+        align-items: center
+        justify-content: center
+        font-size: 0
+        color: var(--white)
+        transition: all .5s ease
+
+        &:hover,
+        &:focus-visible
+            color: var(--grey)
+
+    &__content
+        text-align: center
+
+    &__icon
+        margin: 0 auto 30px
+
+    &__title
+        margin: 0 0 15px
+        font-size: 24px
+        line-height: 1.2
+        font-weight: 700
+        text-align: center
+
+        @media ($max-md)
+            margin-bottom: 10px
+    
+    &__descr
+        font-size: 22px
+        margin: 0 0 30px
+
+        @media ($max-md)
+            font-size: 16px
+            margin-bottom: 20px
+
+    &__button
+        width: 100%
+        max-width: 180px
+
+        @media ($max-md)
+            max-width: 100%
+
+    &__review-card
+        padding: 0
+        border-radius: 0
+        box-shadow: none
+
+    &__video
+        padding-bottom: 56.25%
+        position: relative 
+        // padding-top: 30px
+        overflow: hidden
+        height: 0
+
+        iframe,
+        object,
+        embed
+            position: absolute
+            height: 100%
+            width: 100%
+            left: 0
+            top: 0

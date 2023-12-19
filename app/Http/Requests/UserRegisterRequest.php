@@ -24,11 +24,13 @@ class UserRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => ['required', 'string', 'size:12', 'unique:users'],
+            'name' => ['required'],
+            'phone' => ['required', 'string', 'size:12'],
             'password' => ['required', 'min:8', 'confirmed', new LetterDigitsRule()],
             'password_confirmation' => 'required',
             'policy' => ['required', 'accepted'],
-            'g-recaptcha-response' => 'required|captcha',
+            'offer' => ['required', 'accepted'],
+//            'g-recaptcha-response' => 'required|captcha',
         ];
     }
 }

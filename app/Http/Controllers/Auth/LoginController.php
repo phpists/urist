@@ -24,6 +24,10 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
+    /**
+     * @param UserLoginRequest $request
+     * @return Factory|View|\Illuminate\Foundation\Application|RedirectResponse|Application
+     */
     public function login(UserLoginRequest $request): Factory|View|\Illuminate\Foundation\Application|RedirectResponse|Application
     {
         $credentials = $request->only('phone', 'password');
@@ -33,9 +37,9 @@ class LoginController extends Controller
                 return view('pages.dashboard');
             }
             auth()->logout();
-            return back()->withErrors(['phone' => Lang::get('messages.not_verified')]);
+            return back()->withErrors(['phone' => Lang::get('messages.not_verified')])->withInput();
         }
-        return back()->withErrors(['phone' => Lang::get('messages.invalid_data_login')]);
+        return back()->withErrors(['phone' => Lang::get('messages.invalid_data_login')])->withInput();
     }
 
     /**

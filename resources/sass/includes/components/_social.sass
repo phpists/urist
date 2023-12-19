@@ -1,0 +1,60 @@
+.social
+    font-style: normal
+
+    &__list
+        display: flex
+        align-items: center
+        flex-wrap: wrap
+        gap: 5px
+        margin: 0
+        padding: 0
+        list-style: none
+
+    &__link
+        display: flex
+        align-items: center
+        justify-content: center
+        width: 40px
+        height: 40px
+        line-height: 1
+        color: var(--white)
+        background: var(--white)
+        border-radius: 5px
+        transition: all .5s ease
+
+        @media ($max-lg)
+            width: 30px
+            height: 30px
+            
+        &:hover,
+        &:active,
+        &:focus-visible
+            color: var(--white)
+
+            .social__icon
+                transform: scale(1.2)
+
+        &--facebook
+            background: #0B84EE
+        
+        &--twitter
+            background: #55ACE3
+        
+        &--instagram
+            background: radial-gradient(230.93% 230.93% at 102.01% 2.03%, #F9ED32 0%, #EE2A7B 36%, #D22A8A 44%, #8B2AB2 60%, #1B2AF0 83%, #002AFF 88%)
+
+        &--linkedin
+            background: #2878B7
+
+        &--pinterest
+            background: #E60023
+        
+        &--tiktok
+            background: #111
+
+    &__icon
+        transition: transform .5s ease
+
+        @media ($max-lg)
+            width: 15px
+            height: 15px

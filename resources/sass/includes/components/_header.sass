@@ -1,0 +1,39 @@
+.header
+    position: fixed
+    top: 0
+    left: 0
+    width: 100%
+    background: var(--white)
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1)
+    z-index: $z-index-3
+    
+    &__container
+        display: flex
+        align-items: center
+        gap: 20px
+        padding: 20px 15px
+
+        @media ($max-md)
+            padding: 15px
+
+    &__logo
+
+        @media ($max-lg)
+            margin-right: auto
+
+        .logo__link
+
+            @media ($max-lg)
+                font-size: 20px
+
+        .logo__img
+
+            @media ($max-lg)
+                min-width: 32px
+                width: 32px
+
+    &__menu
+        margin: 0 auto
+
+        @media ($max-md)
+            display: none
