@@ -142,6 +142,13 @@
                                 <span class="menu-text">Статті</span>
                             </a>
                         </li>
+                        <li class="menu-item {{ request()->routeIs('admin.tags.index') ? 'menu-item-active' : '' }}"
+                            aria-haspopup="true">
+                            <a href="{{route('admin.tags.index')}}" class="menu-link">
+                                <i class="fas fa-hashtag menu-icon"></i>
+                                <span class="menu-text">Хештеги</span>
+                            </a>
+                        </li>
                         <li class="menu-item {{ request()->routeIs('admin.favourites.index') ? 'menu-item-active' : '' }}"
                             aria-haspopup="true">
                             <a href="{{route('admin.favourites.index')}}" class="menu-link">

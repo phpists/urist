@@ -22,7 +22,7 @@
     @if(sizeof($category->children) > 0)
         <ol class="dd-list">
 {{--            @dd($category)--}}
-            @foreach($category->children as $subcategory)
+            @foreach($category->children->sortBy('position') as $subcategory)
                 @include('admin.article_categories.parts.subcategory', ['category' => $subcategory])
             @endforeach
         </ol>

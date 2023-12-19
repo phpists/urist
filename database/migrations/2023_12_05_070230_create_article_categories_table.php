@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->unsignedBigInteger('parent_id')->nullable();
+            $table->unsignedBigInteger('position');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

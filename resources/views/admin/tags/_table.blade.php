@@ -15,47 +15,45 @@
                 ID
             </th>
             <th class="pr-0 text-center">
-                Категорія
+                Тег
+            </th>
+            <th class="pr-0 text-center">
+                Дії
             </th>
         </tr>
         </thead>
-        <tbody class="faq-table">
-        @foreach($article_categories as $article_category)
-            <tr>
+        <tbody id="tags-table">
+        @foreach($tags as $tag)
+            <tr class="handle table-sortable-drag" data-value="{{$tag->id}}">
                 <td class="text-center pl-0">
                                             <span style="width: 20px;">
                                                 <label class="checkbox checkbox-single">
                                                     <input class="checkbox-item" type="checkbox" name="checkbox[]"
-                                                           value="{{ $article_category->id }}">&nbsp;<span></span>
+                                                           value="{{ $tag->id }}">&nbsp;<span></span>
                                                 </label>
                                             </span>
                 </td>
                 <td class="handle text-center pl-0" style="cursor: pointer">
-                    {{ $article_category->id }}
+                    {{ $tag->id }}
                 </td>
                 <td class="text-center pl-0">
-                    {{ $article_category?->name }}
+                    {{ $tag?->name }}
                 </td>
                 <td class="text-center pr-0">
-                    <form action="{{ route('admin.article_category.delete') }}" method="POST">
-                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateArticleCategory"
-                           data-toggle="modal" data-target="#updateArticleCategoryModal"
-                           data-id="{{ $article_category->id }}">
-                            <i class="las la-edit"></i>
+                    <form action="{{ route('admin.tag.delete') }}" method="POST">
+                        <a class="btn btn-icon btn-clean btn-sm">
+                            <i class="flaticon2-resize"></i>
                         </a>
-                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateStatusBtn"
-                           data-id="{{ $article_category->id }}" data-value="{{$article_category->is_active}}">
-                            @if($article_category->is_active)
-                                <i class="la la-eye"></i>
-                            @else
-                                <i class="la la-eye-slash"></i>
-                            @endif
+                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateTag"
+                           data-toggle="modal" data-target="#updateArticleCategoryModal"
+                           data-id="{{ $tag->id }}">
+                            <i class="las la-edit"></i>
                         </a>
                         @csrf
                         @method('DELETE')
-                        <input type="hidden" name="id" value="{{ $article_category->id }}">
+                        <input type="hidden" name="id" value="{{ $tag->id }}">
                         <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
-                                onclick="return confirm('Ви впевнені, що хочете видалити питання \'{{ $article_category->title }}\'?')"
+                                onclick="return confirm('Ви впевнені, що хочете видалити хештег \'{{ $tag->title }}\'?')"
                                 title="Delete"><i class="las la-trash"></i>
                         </button>
                     </form>

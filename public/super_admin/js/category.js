@@ -23,12 +23,15 @@ $('.dd-item button').on('click', function(ev) {
     writeCookie(cookie_name, val, 24)
 });
 function writeCookie(name,value,hours) {
+    let expires;
     if (hours) {
-        var date = new Date();
+        const date = new Date();
         date.setTime(date.getTime()+(hours*60*60*1000));
-        var expires = "; expires="+date.toGMTString();
+        expires = "; expires=" + date.toGMTString();
     }
-    else var expires = "";
+    else {
+        expires = "";
+    }
     document.cookie = name+"="+value+expires+"; path=/";
 }
 function getCookie(name) {
@@ -173,17 +176,32 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         changeParent(node.node.id.split('_')[1], parent_id)
     })
+    $('.updateStatusBtn').each((id, el) => {
+        el.addEventListener('click', () => {
+            updateStatus('/admin/article_category/update_status', el)
+
+        })
+    })
     $('.dd').nestable({
         callback: function(l,e){
-            let el_id = e[0].dataset.id
+            let el_id = parseInt(e[0].dataset.id)
             let parentEl_id = e[0].parentNode?.parentNode?.dataset.id??null;
-            console.log(parentEl_id)
+            let nestable_arr = l.nestable('toArray');
+            let el_position = 1;
+            for (const nestableArrKey in nestable_arr) {
+                let sample = nestable_arr[nestableArrKey];
+                if (sample.id === el_id) {
+                    el_position = nestableArrKey + 1;
+                    break;
+                }
+            }
             $.ajax({
                 url: '/admin/article_category/update_parent',
                 method: 'put',
                 data: {
                     id: el_id,
-                    parent_id: parentEl_id
+                    parent_id: parentEl_id,
+                    position: el_position
                 },
                 error: function (resp) {
                     console.log(resp)

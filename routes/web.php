@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ArticleCategoryController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CriminalArticleController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -71,7 +72,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('files/search', [FileController::class, 'search'])->name('file.search');
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('article_categories', [ArticleCategoryController::class, 'index'])
         ->name('admin.article_categories');
@@ -89,6 +90,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         ->name('admin.article_category.delete');
     Route::put('/article_category/update_parent', [ArticleCategoryController::class, 'updateParent'])
         ->name('admin.article_category.update_parent');
+    Route::put('/article_category/update_position', [ArticleCategoryController::class, 'updatePosition'])
+        ->name('admin.article_category.update_position');
+    Route::put('/article_category/update_status', [ArticleCategoryController::class, 'updateStatus'])
+        ->name('admin.article_category.update_status');
+    Route::delete('article_category/bulk_delete', [ArticleCategoryController::class, 'deleteBulk'])
+        ->name('admin.article_categories.bulk_delete');
 
     // Criminal articles
     Route::get('/criminal_articles', [CriminalArticleController::class, 'index'])
@@ -105,6 +112,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         ->name('admin.criminal_article.delete');
     Route::get('/criminal_articles/search', [CriminalArticleController::class, 'search'])
         ->name('admin.criminal_articles.search');
+    Route::delete('criminal_articles/bulk_delete', [CriminalArticleController::class, 'deleteBulk'])
+        ->name('admin.criminal_articles.bulk_delete');
+    Route::put('/criminal_article/update_position', [CriminalArticleController::class, 'updatePosition'])
+        ->name('admin.criminal_article.update_position');
+    Route::put('/criminal_article/update_status', [CriminalArticleController::class, 'updateStatus'])
+        ->name('admin.criminal_article.update_status');
     // Favourites
     Route::get('/favourites', [FavoritesController::class, 'index'])
         ->name('admin.favourites.index');
@@ -116,4 +129,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         ->name('admin.file_manager.view');
     Route::get('/file/{id?}', [FileController::class, 'view'])
         ->name('admin.file.view');
+    // Tags
+    Route::get('/tags', [TagController::class, 'index'])->name('admin.tags.index');
+    Route::post('/tags', [TagController::class, 'store'])->name('admin.tags.store');
+    Route::get('/tag', [TagController::class, 'view'])->name('admin.tag.view');
+    Route::put('/tag/update', [TagController::class, 'update'])->name('admin.tag.update');
+    Route::delete('/tag/delete', [TagController::class, 'delete'])->name('admin.tag.delete');
+    Route::delete('/tags/bulk_delete', [TagController::class, 'deleteBulk'])
+        ->name('admin.tags.bulk_delete');
+    Route::put('/tag/update_position', [TagController::class, 'updatePosition'])
+        ->name('admin.tag.update_position');
 });

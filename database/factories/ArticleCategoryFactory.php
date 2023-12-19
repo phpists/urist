@@ -17,7 +17,7 @@ class ArticleCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'Стаття №'.fake()->randomNumber(5, false)
+            'name' => 'Категорія №'.fake()->randomNumber(5, false)
         ];
     }
 }

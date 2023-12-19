@@ -15,8 +15,16 @@ class CriminalArticleSeeder extends Seeder
      */
     public function run(): void
     {
+        $last_pos = CriminalArticle::query()->max('position');
+        if (!$last_pos) {
+            $last_pos = 0;
+        }
         CriminalArticle::factory()->count(40)->state(new Sequence(
-            fn (Sequence $sequence) => ['article_category_id' => ArticleCategory::all()->random(), 'name' => 'Стаття №'.($sequence->index + 1)]
+            fn (Sequence $sequence) => [
+                'article_category_id' => ArticleCategory::all()->random(),
+                'name' => 'Стаття №'.($sequence->index + 1),
+                'position' => ($last_pos + $sequence->index + 1)
+            ]
         ))->create();
     }
 }

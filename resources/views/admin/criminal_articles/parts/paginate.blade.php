@@ -1,1 +1,1 @@
-{{ $bannerAjax->links('vendor.pagination.product_pagination') }}
+{{ $criminal_articles->appends(request()->all())->links('vendor.pagination.product_pagination') }}

@@ -37,21 +37,38 @@
                             <h3 class="card-label">Статті</h3>
                         </div>
                         <div class="card-toolbar">
-                            <div class="dropdown dropdown-inline mr-2">
+                            <div class="dropdown dropdown-inline d-flex mr-2">
+                                <form class="mr-2" id="bulkRecordsDeleteForm" action="{{route('admin.criminal_articles.bulk_delete')}}">
+                                    <button onclick="confirm('Ви дійсно хочете видалити записи?')"
+                                       class="btn btn-success font-weight-bolder">
+                                        <span class="svg-icon svg-icon-md"><i class="fas fa-trash mr-2"></i></span> Видалити
+                                    </button>
+                                </form>
                                 <a href="{{ route('admin.criminal_articles.create') }}"
                                    class="btn btn-success font-weight-bolder">
                                     <span class="svg-icon svg-icon-md"><i class="fas fa-plus mr-2"></i></span>Створити
                                 </a>
                             </div>
                         </div>
+                        <div class="card-toolbar w-100">
+                            <form id="filterDataForm" class="w-100" action="{{ route('admin.criminal_articles.index') }}">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="form-group">
+                                            <select multiple="multiple" class="form-control" name="article_category_list[]" id="category_select"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <div class="card-body pb-3">
                         <!--begin::Table-->
-                        <div class="table-responsive">
+                        <div class="table-responsive" id="table_container">
                             @include('admin.criminal_articles.parts.table', compact('criminal_articles'))
                         </div>
-                        <div id="pagination">
-                            {{ $criminal_articles->appends(request()->all())->links('vendor.pagination.product_pagination') }}
+                        <div id="pagination_container">
+                            @include('admin.criminal_articles.parts.paginate', compact('criminal_articles'))
                         </div>
                         <!--end::Table-->
                     </div>
@@ -72,60 +89,5 @@
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('js/helpers.js') }}"></script>
-    <script>
-
-        jQuery(document).ready(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            document.querySelectorAll('.favouriteBtn').forEach((el) => {
-                el.addEventListener('click', function () {
-                    document.getElementById('storeFavArticleId').value = el.dataset.id;
-                })
-            });
-            document.querySelectorAll('.fileBtn').forEach((el) => {
-                el.addEventListener('click', function () {
-                    document.getElementById('storeFileArticleId').value = el.dataset.id;
-                })
-            });
-            // document.getElementById('add_favourites_form').addEventListener('submit', (ev) => {
-            //     ev.preventDefault();
-            //     let criminal_article_id = document.getElementById('storeFavArticleId').value;
-            //     $.ajax({
-            //         url: ev.currentTarget.action,
-            //         method: 'POST',
-            //         data: {
-            //             criminal_article_id: criminal_article_id,
-            //             name: document.getElementById('storeFavName').value,
-            //             folder_id: document.getElementById('storeFavFolder')?.value??null
-            //         },
-            //         success: () => {
-            //             let callBtn = document.getElementById('row_' + criminal_article_id);
-            //             if (callBtn.classList.contains('active')) {
-            //                 callBtn.innerHTML = '<i class="far fa-star"></i>';
-            //             }
-            //             else {
-            //                 callBtn.innerHTML = '<i class="fas fa-star"></i>';
-            //             }
-            //             callBtn.classList.toggle('active');
-            //             const myModal = new bootstrap.Modal('#createFavouriteModal', {
-            //                 keyboard: false
-            //             });
-            //             myModal.hide();
-            //         }
-            //     })
-            // })
-            $("#storeFavFolder").select2({
-                placeholder: "Назва папки",
-                ajax: makeSelect2AjaxSearch('/folders/search_favourites', 'storeFavFolder')
-            })
-            $("#storeFileFolder").select2({
-                placeholder: "Назва папки",
-                ajax: makeSelect2AjaxSearch('/folders/search_file_folders', 'storeFileFolder')
-            })
-        });
-    </script>
+    <script src="{{ asset('super_admin/js/criminal_articles.js') }}"></script>
 @endsection

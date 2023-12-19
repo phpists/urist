@@ -41,6 +41,14 @@
                     </div>
                     <div class="card-toolbar">
                         <div class="col-auto">
+                            <form class="mr-2" id="bulkRecordsDeleteForm" action="{{route('admin.article_categories.bulk_delete')}}">
+                                <button onclick="confirm('Ви дійсно хочете видалити записи?')"
+                                        class="btn btn-success font-weight-bolder">
+                                    <span class="svg-icon svg-icon-md"><i class="fas fa-trash mr-2"></i></span> Видалити
+                                </button>
+                            </form>
+                        </div>
+                        <div class="col-auto">
                             <button data-toggle="modal" data-target="#createArticleCategoryModal"
                                     class="btn btn-primary font-weight-bold">
                                 <i class="fas fa-plus mr-2"></i>Додати
@@ -110,6 +118,7 @@
     <script src="{{asset('js/jstree/dist/jstree.min.js')}}"></script>
     <script src="{{asset('super_admin/js/jquery.nestable.min.js')}}"></script>
     <script src="{{asset('super_admin/js/category.js')}}"></script>
+    <script src="{{ asset('js/helpers.js') }}"></script>
     <script>
 
     </script>

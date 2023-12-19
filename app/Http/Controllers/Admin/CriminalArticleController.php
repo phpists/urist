@@ -3,26 +3,47 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ArticleCategoryUpdateRequest;
+use App\Http\Requests\BulkDeleteItemsRequest;
 use App\Http\Requests\CriminalArticleStoreRequest;
+use App\Http\Requests\CriminalArticleUpdatePositionRequest;
 use App\Http\Requests\CriminalArticleUpdateRequest;
 use App\Http\Requests\StoreFavouriteRequest;
+use App\Http\Requests\UpdatePositionRequest;
 use App\Models\ArticleCategory;
 use App\Models\CriminalArticle;
 use App\Models\Favourite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CriminalArticleController extends Controller
 {
-    public function index() {
-        $criminal_articles = CriminalArticle::query()->with('category')->paginate(30);
+    public function index(Request $request) {
+        $criminal_articles = CriminalArticle::query();
+        if (isset($request->article_category_list) && (gettype($request->article_category_list) === 'array')) {
+            $criminal_articles = $criminal_articles->whereIn('article_category_id', $request->article_category_list);
+        }
+        $criminal_articles = $criminal_articles->with('category')->orderBy('position')->paginate(30);
+        if ($request->ajax()) {
+            $table = view('admin.criminal_articles.parts.table', compact('criminal_articles'))->render();
+            $pagination = view('admin.criminal_articles.parts.paginate', compact('criminal_articles'))->render();
+            return response()->json([
+                'table' => $table,
+                'pagination' => $pagination
+            ]);
+        }
         return view('admin.criminal_articles.index', compact('criminal_articles'));
     }
     public function create() {
         return view('admin.criminal_articles.create');
     }
     public function store(CriminalArticleStoreRequest $request) {
-        $article = new CriminalArticle($request->all());
+        $last_pos = CriminalArticle::query()->max('position');
+        if (gettype($last_pos) !== 'integer') {
+            $last_pos = 0;
+        }
+        $article = new CriminalArticle(array_merge($request->all(), ['position' => $last_pos + 1]));
         $article->save();
         return redirect()->back()->with('success', 'Article saved correct');
     }
@@ -43,6 +64,17 @@ class CriminalArticleController extends Controller
         }
         $article->delete();
         return redirect()->back()->with('success', 'Article deleted correct');
+    }
+
+    public function deleteBulk(BulkDeleteItemsRequest $request) {
+        $query = CriminalArticle::query()->whereIn('id', $request->item_list);
+        try {
+            if ($query->delete())
+                return response()->json(['success' => 'Записи успішно видалені']);
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+        }
+        return response()->json(['success' => 'Не вдалось видалити записи'], 500);
     }
 
     public function edit(string $id) {
@@ -74,5 +106,52 @@ class CriminalArticleController extends Controller
         if ($favourite->save())
             return redirect()->back()->with('success', 'Додано в закладки');
         return redirect()->back()->withErrors('Помилка при збереженні, спробуйте пізніше');
+    }
+
+    private function updateOrderOfRelated(CriminalArticle $article, $new_position) {
+        if ($article->position < $new_position) {
+            CriminalArticle::query()->whereBetween('position', [$article->position + 1, $new_position])
+                ->update(['position' => DB::raw('position - 1')]);
+        } else if($article->position > $new_position) {
+            CriminalArticle::query()->whereBetween('position', [$new_position, $article->position - 1])
+                ->update(['position' => DB::raw('position + 1')]);
+        }
+    }
+    public function updatePosition(UpdatePositionRequest $request): \Illuminate\Http\JsonResponse
+    {
+        $article = CriminalArticle::query()->find($request->id);
+        if (!$article) {
+            return response()->json([
+                'message' => 'Article not found'
+            ], 404);
+        }
+        try {
+            $this->updateOrderOfRelated($article, $request->position);
+            $result = $article->update([
+                'position' => $request->position
+            ]);
+            if ($result)
+                return response()->json([
+                    'sucecss' => true
+                ]);
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+        }
+        return response()->json(['error' => 'Не вдалось оновити дані'], 500);
+    }
+    public function updateStatus(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $article = CriminalArticle::query()->find($request->id);
+        if (!$article) {
+            return response()->json([
+                'message' => 'Article not found'
+            ], 404);
+        }
+        if ($article->update(['status' => $request->status])) {
+            return response()->json([
+                'status' => true
+            ]);
+        }
+        return response()->json(['error' => 'Не вдалось оновити дані'], 500);
     }
 }
