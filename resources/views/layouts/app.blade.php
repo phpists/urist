@@ -23,7 +23,6 @@
     <meta name="msapplication-TileImage" content="{{ asset('/assets/favicon/ms-icon-144x144.png') }}">
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="{{ asset('build/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/main2.css') }}">
     @stack('style')
     @stack('scripts_head')
 </head>

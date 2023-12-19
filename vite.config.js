@@ -9,18 +9,24 @@ export default defineConfig({
         }),
     ],
     build: {
-        outDir: 'public/build', // Main output directory
-        assetsDir: '.', // Assets directory relative to outDir
+        manifest: false,
+        reportCompressedSize: true,
+        cssCodeSplit: false,
+        minify: true,
+        outDir: 'public/build',
+        assetsDir: '.',
         rollupOptions: {
+            input: {
+                app: 'resources/js/main.js'
+            },
             output: {
-                entryFileNames: 'main.js', // Output path for the bundled JS file
-                assetFileNames: 'main.css', // Output path for the bundled CSS file
+                entryFileNames: 'main.js',
+                assetFileNames: 'main.css',
             },
         },
-        minify: true, // Enable minification
         terserOptions: {
             compress: {
-                drop_console: true, // Remove console.log statements in production
+                drop_console: true,
             },
         },
     },
