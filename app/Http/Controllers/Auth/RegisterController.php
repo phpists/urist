@@ -35,10 +35,10 @@ class RegisterController extends Controller
         DB::beginTransaction();
         try {
             $ifUserPhoneNotVerified = User::where('phone',$request->phone)->first();
-            if (!$ifUserPhoneNotVerified?->phone_verified_at){
+            if ($ifUserPhoneNotVerified?->phone_verified_at){
                 return redirect()->back()->withErrors(['phone'=> trans('validation.custom.phone.unique')])->withInput();
             }
-            if (!$ifUserPhoneNotVerified?->phone_verified_at){
+            else if (isset($ifUserPhoneNotVerified) && !$ifUserPhoneNotVerified?->phone_verified_at){
                 return redirect()->back()->withErrors(['phone'=> trans('messages.not_verified')])->withInput();
             }
 
