@@ -80,5 +80,6 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 'middleware' => ['plan:base,lite']
 
 ##  If use in dev mode and comment build files
-{{--        <link rel="stylesheet" href="{{ mix('/resources/sass/main.sass') }}">--}}
-{{--        <script src="{{ mix('/resources/js/main.js') }}"></script>--}}
+       @vite(['resources/css/main.css', 'resources/js/app.js'])
+
+    
