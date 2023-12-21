@@ -2,6 +2,18 @@
 
 @section('title', 'Закладки')
 
+@section('styles')
+    <style>
+        a.non-draggable {
+            -webkit-user-drag: none;
+            user-select: none;
+        }
+        .folder_container {
+            min-height: 256px;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="container-fluid">
         <div class="d-flex flex-column flex-grow-1">
@@ -14,12 +26,6 @@
 
                             </select>
                         </div>
-                        <div class="dropdown dropdown-inline mr-2">
-                            <a href="{{ route('admin.criminal_articles.create') }}"
-                               class="btn btn-success font-weight-bolder">
-                                <span class="svg-icon svg-icon-md"><i class="fas fa-plus mr-2"></i></span>Додати статтю
-                            </a>
-                        </div>
                         <a class="btn btn-success font-weight-bolder"
                            data-toggle="modal"
                            data-target="#createFolderModal">
@@ -29,8 +35,39 @@
                 </div>
             </div>
             <div class="row">
+                @if(isset($fav_folder))
+                    <div data-zone="folder_{{$fav_folder->parent_id}}" data-label="folder_{{$fav_folder->parent_id}}"
+                         class="folder_container col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                        <div class="card card-custom card-stretch gutter-b">
+                            <div class="card-header border-0">
+                                <h3 class="card-title">
+                                </h3>
+                                <div class="card-toolbar">
+                                    <div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="left" data-original-title="Quick actions">
+                                        <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="ki ki-bold-more-hor"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                                            <!--begin::Navigation-->
+                                            <!--end::Navigation-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex flex-column">
+                                    <a href="{{route('admin.favourites.view', $fav_folder->parent_id)}}"
+                                       class="non-draggable d-block text-center">
+                                        <img class="max-h-65px h-65px" alt="" src="{{asset('super_admin/media/svg/icons/Text/Dots.svg')}}">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 @foreach($folders as $folder)
-                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                    <div data-zone="folder_{{$folder->id}}" data-label="folder_{{$folder->id}}"
+                         class="folder_container col-xl-3 col-lg-6 col-md-6 col-sm-6">
                         <div class="card card-custom card-stretch gutter-b">
                             <div class="card-header border-0">
                                 <h3 class="card-title">
@@ -53,7 +90,7 @@
                                                         @method('delete')
                                                         @csrf
                                                         <input type="hidden" name="folder_id" value="{{$folder->id}}">
-                                                        <button class="navi-link">
+                                                        <button class="btn btn-clean w-100 rounded-0 navi-link">
                                                             Видалити
                                                         </button>
                                                     </form>
@@ -67,7 +104,9 @@
                             <div class="card-body">
                                 <div class="d-flex flex-column">
                                     <a href="{{route('admin.favourites.view', $folder->id)}}" class="d-block text-center">
-                                        <img class="max-h-65px h-65px" src="{{asset('super_admin/media/svg/icons/Files/Folder.svg')}}" alt="">
+                                        <img draggable="true"
+                                             data-item="folder_{{$folder->id}}"
+                                             class="drag_element max-h-65px h-65px non-" src="{{asset('super_admin/media/svg/icons/Files/Folder.svg')}}" alt="">
                                     </a>
                                     <a class="text-dark-75 text-center font-weight-bold mt-15 font-size-lg" href="">{{$folder->name}}</a>
                                 </div>
@@ -76,7 +115,7 @@
                     </div>
                 @endforeach
                 @foreach($favourites as $favourite)
-                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6" data-label="file_{{$favourite->id}}">
                         <div class="card card-custom card-stretch gutter-b">
                             <div class="card-header border-0">
                                 <h3 class="card-title">
@@ -112,7 +151,8 @@
                             </div>
                             <div class="card-body">
                                 <div class="d-flex flex-column">
-                                    <img class="max-h-65px" src="{{asset('super_admin/media/svg/files/doc.svg')}}" alt="">
+                                    <img draggable="true" data-item="file_{{$favourite->id}}"
+                                         class="max-h-65px drag_element" src="{{asset('super_admin/media/svg/files/doc.svg')}}" alt="">
                                     <a class="text-dark-75 text-center font-weight-bold mt-15 font-size-lg" href="">{{$favourite->name}}</a>
                                 </div>
                             </div>
@@ -123,6 +163,8 @@
         </div>
     </div>
     @include('admin.favourites.modals.create_folder')
+    @include('admin.file_manager.modals.edit_folder')
+    @include('admin.favourites.modals.edit_file_modal')
 @endsection
 
 @section('js_after')
@@ -154,8 +196,8 @@
             })
         }
 
-        function moveFile(folder_id, id) {
-            moveItem('/file/move', folder_id, id);
+        function moveFavourite(folder_id, id) {
+            moveItem('/favourites/move', folder_id, id);
         }
 
         function moveFolder(folder_id, id) {
@@ -169,7 +211,7 @@
                 if(id.length > 1) {
                     if (id[0] === 'file') {
                         let folder_id = ev.currentTarget.dataset.zone.split('_')[1];
-                        moveFile(folder_id, id[1]);
+                        moveFavourite(folder_id, id[1]);
                     }
                     else if(id[0] === 'folder') {
                         let folder_id = ev.currentTarget.dataset.zone.split('_')[1];

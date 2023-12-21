@@ -79,6 +79,9 @@ jQuery(document).ready(function () {
     $('#category_select').on('change', function () {
         request('filterDataForm')
     })
+    $('#nameSearch').on('input', function () {
+        request('filterDataForm')
+    })
 
     // Sorting table
     let tbody = document.getElementById('criminal_articles_table')

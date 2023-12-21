@@ -6,6 +6,11 @@
             height: 1500px !important;
             width: 100%;
         }
+        .input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
     </style>
 @endsection
 
@@ -37,7 +42,9 @@
     <div class="d-flex flex-column-fluid">
         <!--begin::Container-->
         <div class="container-fluid">
-            @include('admin.layouts.includes.messages')
+            <div class="validation_messages">
+                @include('admin.layouts.includes.success_message')
+            </div>
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-toolbar">
@@ -49,7 +56,19 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="card-toolbar">
+                    <div class="card-toolbar" style="gap: 10px">
+                        <a data-value="{{ $criminal_article->id }}" href="javascript:;" class="btn btn-primary favouriteBtn"
+                           data-toggle="modal"
+                           data-target="#createFavouriteModal"
+                           data-id="{{ $criminal_article->id }}">
+                            <i class="far fa-star"></i>
+                        </a>
+                        <a data-value="{{ $criminal_article->id }}" href="javascript:;" class="btn btn-primary fileBtn"
+                           data-toggle="modal"
+                           data-target="#createFileModal"
+                           data-id="{{ $criminal_article->id }}">
+                            <i class="las la-file-export icon-lg"></i>
+                        </a>
                         <button type="submit" form="criminal_article_form" class="btn btn-primary">Зберегти</button>
                     </div>
                 </div>
@@ -62,26 +81,71 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="createArticleName">Назва</label>
-                                    <input id="createArticleName" value="{{$criminal_article->name}}" type="text" name="name" class="form-control" required/>
+                                    <div class="input-wrapper">
+                                        <input id="createArticleName" value="{{$criminal_article->name}}" type="text" name="name" class="form-control" required/>
+                                        @error('name')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="createArticleCategory">Категорія</label>
-                                    <div>
-                                        <select class="form-control" name="article_category_id" id="createArticleCategory">
+                                    <label for="editArticleCategory">Категорія</label>
+                                    <div class="input-wrapper">
+                                        <select class="form-control required_inp" name="article_category_id" id="editArticleCategory">
                                             <option selected value="{{$criminal_article->category->id}}">{{$criminal_article->category->name}}</option>
+                                        </select>
+                                        @error('article_category_id')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group"><label for="courtDecisionLinkInp">Посилання на рішення суду</label>
+                                    <div class="input-wrapper">
+                                        <input value="{{$criminal_article->court_decision_link}}" type="text" required class="form-control" name="court_decision_link" id="courtDecisionLinkInp">
+                                    </div>
+                                    @error('court_decision_link')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="editArticleTags">Теги</label>
+                                    <div class="input-wrapper">
+                                        <select multiple="multiple" class="form-control" name="tag_list[]" id="editArticleTags">
+                                            @foreach($criminal_article->tags as $tag)
+                                                <option selected value="{{$tag->id}}">{{$tag->name}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12">
+                                <div class="form-group"><label for="descriptionEditor">Короткий опис</label>
+                                    <div class="input-wrapper">
+                                        <textarea class="required_inp" name="description" id="descriptionEditor">
+                                            {{$criminal_article->description}}
+                                        </textarea>
+                                        @error('description')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
                                 <div class="form-group">
-                                    <label>Текст</label>
-                                    <div>
-                                        <textarea id="textEditor" name="content">
+                                    <label for="contentEditor">Текст</label>
+                                    <div class="input-wrapper">
+                                        <textarea class="required_inp" style="height: 600px" id="contentEditor" name="content">
                                             {{$criminal_article->content}}
                                         </textarea>
+                                        @error('content')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -91,10 +155,13 @@
             </div>
             <!--end::Container-->
         </div>
+        @include('admin.criminal_articles.parts.add_to_fav_modal')
+        @include('admin.criminal_articles.parts.create_file_modal')
         @endsection
         @section('js_after')
             <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
-            <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
+            <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
+            <script src="{{ asset('js/helpers.js') }} "></script>
             <script>
                 function makeAjaxCategorySearch() {
                     return {
@@ -121,27 +188,33 @@
                     }
                 }
                 document.addEventListener('DOMContentLoaded', function () {
-                    var KTCkeditor = function () {
-                        // Private functions
-                        var demos = function () {
-                            ClassicEditor
-                                .create( document.querySelector( '#textEditor' ) )
-                                .catch( error => {
-                                    console.error( error );
-                                } );
-                        }
-
-                        return {
-                            // public functions
-                            init: function() {
-                                demos();
-                            }
-                        };
-                    }();
-                    KTCkeditor.init();
-                    $("#createArticleCategory").select2({
+                    let descriptionEditor = CKEDITOR.replace( 'descriptionEditor' );
+                    let contentEditor = CKEDITOR.replace( 'contentEditor' );
+                    $("#editArticleCategory").select2({
                         placeholder: "Виберіть категорію",
                         ajax: makeAjaxCategorySearch()
+                    });
+                    $("#editArticleTags").select2({
+                        placeholder: "Виберіть теги",
+                        ajax: makeSelect2AjaxSearch('/tags/search', 'editArticleTags')
+                    });
+                    $("#storeFavFolder").select2({
+                        placeholder: "Назва папки",
+                        ajax: makeSelect2AjaxSearch('/folders/search_favourites', 'storeFavFolder')
+                    })
+                    $("#storeFileFolder").select2({
+                        placeholder: "Назва папки",
+                        ajax: makeSelect2AjaxSearch('/folders/search_file_folders', 'storeFileFolder')
+                    })
+                    document.querySelectorAll('.favouriteBtn').forEach((el) => {
+                        el.addEventListener('click', function () {
+                            document.getElementById('storeFavArticleId').value = el.dataset.id;
+                        })
+                    });
+                    document.querySelectorAll('.fileBtn').forEach((el) => {
+                        el.addEventListener('click', function () {
+                            document.getElementById('storeFileArticleId').value = el.dataset.id;
+                        })
                     });
                 })
             </script>

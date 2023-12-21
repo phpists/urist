@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CriminalArticleStoreRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class CriminalArticleStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()?->hasRole('admin');
     }
 
     /**
@@ -24,7 +25,23 @@ class CriminalArticleStoreRequest extends FormRequest
         return [
             'name' => 'required|string|unique:criminal_articles',
             'content' => 'string|required',
-            'article_category_id' => 'required|exists:article_categories,id'
+            'article_category_id' => 'required|exists:article_categories,id',
+            'description' => 'required|string',
+            'court_decision_link' => 'required|string',
+            'tag_list' => 'array'
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Поле "Назва" обов’язкове для заповнення.',
+            'name.unique' => 'Значення для поля "Назва" вже використвується, спробуйте іншу.',
+            'content.required' => 'Поле "Текст" обов’язкове для заповнення.',
+            'description.required' => 'Поле "Короткий Опис" обов’язкове для заповнення.',
+            'article_category_id.required' => 'Поле "Категорія" обов’язкове для заповнення.',
+            'article_category_id.exists' => 'Вибрана категорія не існує, виберіть іншу',
+            'court_decision_link.required' => 'Поле "Посилання на рішення суду" обов’язкове для заповнення.'
         ];
     }
 }

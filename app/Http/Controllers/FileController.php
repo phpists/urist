@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MoveFileRequest;
+use App\Http\Requests\MoveItemRequest;
 use App\Http\Requests\StoreFileRequest;
 use App\Http\Requests\UpdateFileRequest;
 use App\Models\ArticleCategory;
 use App\Models\CriminalArticle;
+use App\Models\Favourite;
 use App\Models\File;
 use Illuminate\Http\Request;
 
@@ -20,6 +21,15 @@ class FileController extends Controller
             ->limit(30)
             ->get();
         return response()->json($files);
+    }
+
+    public function delete(Request $request) {
+        $file = File::query()->where('user_id', $request->user()->id)->find($request->file_id);
+        if (!$file) {
+            return redirect()->back()->withErrors('Не знайдено файла');
+        }
+        $file->delete();
+        return redirect()->back()->with('success', 'Файо успішно видалено');
     }
 
     public function store(StoreFileRequest $request) {
@@ -39,7 +49,7 @@ class FileController extends Controller
                     'success' => true
                 ]);
             }
-            return redirect()->back()->with('success', 'File successfully created');
+            return redirect()->back()->with('success', 'Файл успішно створений');
         }
         if ($request->ajax()) {
             return response()->json([
@@ -60,7 +70,8 @@ class FileController extends Controller
         return redirect()->back()->withErrors('Неполадки на сервері, спробуйте пізніше');
     }
 
-    public function moveFile(MoveFileRequest $request) {
+    public function moveFile(MoveItemRequest $request): \Illuminate\Http\JsonResponse
+    {
         $file = File::query()->where('user_id', $request->user()->id)->find($request->item_id);
         $file->update($request->all());
         return response()->json([

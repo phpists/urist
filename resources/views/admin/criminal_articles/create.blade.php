@@ -6,6 +6,11 @@
             height: 1500px !important;
             width: 100%;
         }
+        .input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
     </style>
 @endsection
 
@@ -23,7 +28,7 @@
                     <a href="{{ route('admin.criminal_articles.index') }}" class="text-muted">Статті</a>
                 </li>
                 <li class="breadcrumb-item">
-                    Створити статтю
+                    Додати статтю
                 </li>                <!--end::Page Title-->
             </div>
             <!--end::Page Heading-->
@@ -35,7 +40,7 @@
     <div class="d-flex flex-column-fluid">
         <!--begin::Container-->
         <div class="container-fluid">
-            @include('admin.layouts.includes.messages')
+            @include('admin.layouts.includes.success_message')
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-toolbar">
@@ -48,34 +53,74 @@
                         </ul>
                     </div>
                     <div class="card-toolbar">
-                        <button type="submit" form="form1" class="btn btn-primary">Зберегти</button>
+                        <button type="submit" form="createArticleForm" class="btn btn-primary">Зберегти</button>
                     </div>
                 </div>
                 <div class="card-body">
-                    <form id="form1" action="{{ route('admin.criminal_articles.store') }}" method="POST"
+                    <form id="createArticleForm" action="{{ route('admin.criminal_articles.store') }}" method="POST"
                           enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="createArticleName">Назва</label>
-                                    <input id="createArticleName" type="text" name="name" class="form-control" required/>
+                                    <div class="input-wrapper">
+                                        <input id="createArticleName" type="text" name="name" class="form-control" required/>
+                                        @error('name')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="createArticleCategory">Категорія</label>
-                                    <div>
-                                        <select class="form-control" name="article_category_id" id="createArticleCategory">
+                                    <div class="input-wrapper">
+                                        <select class="required_inp form-control" name="article_category_id" id="createArticleCategory">
+                                        </select>
+                                        @error('article_category_id')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group"><label for="courtDecisionLinkInp">Посилання на рішення суду</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" required class="form-control" name="court_decision_link" id="courtDecisionLinkInp">
+                                        @error('court_decision_link')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="editArticleTags">Теги</label>
+                                    <div class="input-wrapper">
+                                        <select multiple="multiple" class="form-control" name="tag_list[]" id="editArticleTags">
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12">
+                                <div class="form-group"><label for="descriptionEditor">Короткий опис</label>
+                                    <div class="input-wrapper">
+                                        <textarea class="required_inp" name="description" id="descriptionEditor"></textarea>
+                                    </div>
+                                    @error('description')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-12">
                                 <div class="form-group">
-                                    <label>Текст</label>
-                                    <div>
-                                        <textarea id="textEditor" name="content"></textarea>
+                                    <label for="contentEditor">Текст</label>
+                                    <div class="input-wrapper">
+                                        <textarea class="required_inp" style="height: 600px" id="contentEditor" name="content"></textarea>
+                                        @error('content')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +134,8 @@
     @endsection
 @section('js_after')
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
-    <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
+    <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
+    <script src="{{ asset('js/helpers.js') }} "></script>
     <script>
         function makeAjaxCategorySearch() {
             return {
@@ -115,12 +161,12 @@
                 }
             }
         }
-        document.addEventListener('DOMContentLoaded', function () {
-            var KTCkeditor = function () {
+        function makeEditor(id) {
+            return function () {
                 // Private functions
                 var demos = function () {
                     ClassicEditor
-                        .create( document.querySelector( '#textEditor' ) )
+                        .create( document.getElementById( id ) )
                         .catch( error => {
                             console.error( error );
                         } );
@@ -133,10 +179,17 @@
                     }
                 };
             }();
-            KTCkeditor.init();
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            let descriptionEditor = CKEDITOR.replace( 'descriptionEditor' );
+            let contentEditor = CKEDITOR.replace( 'contentEditor' );
             $("#createArticleCategory").select2({
                 placeholder: "Виберіть категорію",
                 ajax: makeAjaxCategorySearch()
+            });
+            $("#editArticleTags").select2({
+                placeholder: "Виберіть теги",
+                ajax: makeSelect2AjaxSearch('/tags/search', 'editArticleTags')
             });
         })
     </script>

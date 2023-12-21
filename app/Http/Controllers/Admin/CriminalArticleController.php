@@ -24,6 +24,9 @@ class CriminalArticleController extends Controller
         if (isset($request->article_category_list) && (gettype($request->article_category_list) === 'array')) {
             $criminal_articles = $criminal_articles->whereIn('article_category_id', $request->article_category_list);
         }
+        if (isset($request->name)) {
+            $criminal_articles = $criminal_articles->where('name', 'like', '%'.$request->name.'%');
+        }
         $criminal_articles = $criminal_articles->with('category')->orderBy('position')->paginate(30);
         if ($request->ajax()) {
             $table = view('admin.criminal_articles.parts.table', compact('criminal_articles'))->render();
@@ -38,22 +41,27 @@ class CriminalArticleController extends Controller
     public function create() {
         return view('admin.criminal_articles.create');
     }
-    public function store(CriminalArticleStoreRequest $request) {
+    public function store(CriminalArticleStoreRequest $request): \Illuminate\Http\RedirectResponse
+    {
         $last_pos = CriminalArticle::query()->max('position');
         if (gettype($last_pos) !== 'integer') {
             $last_pos = 0;
         }
+
         $article = new CriminalArticle(array_merge($request->all(), ['position' => $last_pos + 1]));
         $article->save();
-        return redirect()->back()->with('success', 'Article saved correct');
+        $this->insertArticleTags($request, $article);
+        return redirect()->back()->with('success', 'Стаття успішно збережена');
     }
-    public function update(CriminalArticleUpdateRequest $request) {
+    public function update(CriminalArticleUpdateRequest $request): bool|\Illuminate\Http\RedirectResponse
+    {
         $article = CriminalArticle::query()->find($request->id);
         if (!$article) {
             return redirect()->back()->withErrors('Стаття не знайдена');
         }
+        $this->insertArticleTags($request, $article);
         if ($article->update($request->all())) {
-            return redirect()->back()->with('success', 'Article saved correct');
+            return redirect()->back()->with('success', 'Стаття успішно оновлена');
         }
         return redirect()>back()->withErrors('Не вдалось оновити дані');
     }
@@ -108,7 +116,8 @@ class CriminalArticleController extends Controller
         return redirect()->back()->withErrors('Помилка при збереженні, спробуйте пізніше');
     }
 
-    private function updateOrderOfRelated(CriminalArticle $article, $new_position) {
+    private function updateOrderOfRelated(CriminalArticle $article, $new_position): void
+    {
         if ($article->position < $new_position) {
             CriminalArticle::query()->whereBetween('position', [$article->position + 1, $new_position])
                 ->update(['position' => DB::raw('position - 1')]);
@@ -153,5 +162,23 @@ class CriminalArticleController extends Controller
             ]);
         }
         return response()->json(['error' => 'Не вдалось оновити дані'], 500);
+    }
+
+    /**
+     * @param CriminalArticleStoreRequest|CriminalArticleUpdateRequest $request
+     * @param CriminalArticle $article
+     * @return void
+     */
+    private function insertArticleTags(CriminalArticleStoreRequest|CriminalArticleUpdateRequest $request, CriminalArticle $article): void
+    {
+        if (gettype($request->tag_list) === 'array') {
+            $tag_records = [];
+            DB::table('article_tags')->where('criminal_article_id', $article->id)->delete();
+            foreach ($request->tag_list as $tag_id) {
+                if (DB::table('tags')->find($tag_id))
+                    $tag_records[] = ['tag_id' => $tag_id, 'criminal_article_id' => $article->id];
+            }
+            DB::table('article_tags')->insert($tag_records);
+        }
     }
 }

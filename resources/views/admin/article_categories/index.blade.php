@@ -19,7 +19,7 @@
         <div class="container-fluid">
             <!--begin::Card-->
             <div class="card card-custom">
-                <div class="card-header">
+                <div class="card-header card-header-tabs-line">
                     <div class="card-toolbar">
                         <ul class="nav nav-tabs nav-bold nav-tabs-line">
                             <li class="nav-item">
@@ -27,11 +27,11 @@
                                     <span class="nav-text">Створити</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tree_tab">
-                                    <span class="nav-text">Дерево</span>
-                                </a>
-                            </li>
+{{--                            <li class="nav-item">--}}
+{{--                                <a class="nav-link" data-toggle="tab" href="#tree_tab">--}}
+{{--                                    <span class="nav-text">Дерево</span>--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tree_nested_tab">
                                     <span class="nav-text">Дерево</span>
@@ -40,15 +40,13 @@
                         </ul>
                     </div>
                     <div class="card-toolbar">
-                        <div class="col-auto">
+                        <div class="dropdown dropdown-inline d-flex mr-2">
                             <form class="mr-2" id="bulkRecordsDeleteForm" action="{{route('admin.article_categories.bulk_delete')}}">
                                 <button onclick="confirm('Ви дійсно хочете видалити записи?')"
                                         class="btn btn-success font-weight-bolder">
                                     <span class="svg-icon svg-icon-md"><i class="fas fa-trash mr-2"></i></span> Видалити
                                 </button>
                             </form>
-                        </div>
-                        <div class="col-auto">
                             <button data-toggle="modal" data-target="#createArticleCategoryModal"
                                     class="btn btn-primary font-weight-bold">
                                 <i class="fas fa-plus mr-2"></i>Додати
@@ -65,24 +63,24 @@
                                 @include('admin.article_categories._table')
                             </div>
                         </div>
-                        <div class="tab-pane fade show" role="tabpanel" id="tree_tab">
-                            <div id="jstree_container">
-                                <ul>
-                                    @foreach($tree_categories as $article_category)
-                                        <li id="node_{{$article_category->id}}">{{$article_category->name}}
-                                            @if(sizeof($article_category->children) > 0)
-                                                <ul>
-                                                    @foreach($article_category->children as $article_subcategory)
-                                                        <li id="node_{{$article_subcategory->id}}">{{$article_subcategory->name}}</li>
-                                                    @endforeach
-                                                </ul>
-                                            @endif
-                                        </li>
+{{--                        <div class="tab-pane fade show" role="tabpanel" id="tree_tab">--}}
+{{--                            <div id="jstree_container">--}}
+{{--                                <ul>--}}
+{{--                                    @foreach($tree_categories as $article_category)--}}
+{{--                                        <li id="node_{{$article_category->id}}">{{$article_category->name}}--}}
+{{--                                            @if(sizeof($article_category->children) > 0)--}}
+{{--                                                <ul>--}}
+{{--                                                    @foreach($article_category->children as $article_subcategory)--}}
+{{--                                                        <li id="node_{{$article_subcategory->id}}">{{$article_subcategory->name}}</li>--}}
+{{--                                                    @endforeach--}}
+{{--                                                </ul>--}}
+{{--                                            @endif--}}
+{{--                                        </li>--}}
 
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
+{{--                                    @endforeach--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <div class="tab-pane fade" role="tabpanel" id="tree_nested_tab">
                             <div class="card card-custom">
                                 <div class="card-body">
@@ -115,6 +113,7 @@
 @endsection
 
 @section('js_after')
+    <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
     <script src="{{asset('js/jstree/dist/jstree.min.js')}}"></script>
     <script src="{{asset('super_admin/js/jquery.nestable.min.js')}}"></script>
     <script src="{{asset('super_admin/js/category.js')}}"></script>

@@ -90,23 +90,23 @@
                             </div>
                         @endif
                         <div class="pb-13 pt-lg-0 pt-5">
-                            <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Welocme</h3>
+                            <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Ласкаво просимо</h3>
                         </div>
                         <!--begin::Title-->
                         <!--begin::Form group-->
                         <div class="form-group">
-                            <label class="font-size-h6 font-weight-bolder text-dark">Phone</label>
-                            <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" name="phone"
-                                   type="tel" autocomplete="off"/>
+                            <label class="font-size-h6 font-weight-bolder text-dark">Email</label>
+                            <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" name="email"
+                                   type="email" autocomplete="off"/>
                         </div>
                         <!--end::Form group-->
                         <!--begin::Form group-->
                         <div class="form-group">
                             <div class="d-flex justify-content-between mt-n5">
-                                <label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
+                                <label class="font-size-h6 font-weight-bolder text-dark pt-5">Пароль</label>
                                 <a href="javascript:;"
                                    class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5"
-                                   id="show_signup">Or signup</a>
+                                   id="show_signup">чи зареєтруйтесь</a>
                             </div>
                             <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" name="password"
                                    type="password" autocomplete="off"/>
@@ -115,7 +115,7 @@
                         <!--begin::Action-->
                         <div class="pb-lg-0 pb-5">
                             <button type="submit" id="kt_login_signin_submit"
-                                    class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Login
+                                    class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Увійти
                             </button>
                         </div>
                         <!--end::Action-->
@@ -131,47 +131,46 @@
                         <!--begin::Title-->
                         <div class="pb-13 pt-lg-0 pt-5">
                             <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Sign Up</h3>
-                            <p class="text-muted font-weight-bold font-size-h4">Enter your details to create your
-                                account</p>
+                            <p class="text-muted font-weight-bold font-size-h4">Введіть дані щоб зареєструватись</p>
                         </div>
                         <!--end::Title-->
                         <!--begin::Form group-->
                         <div class="form-group">
                             <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6"
-                                   type="text" placeholder="Your name" name="first_name" autocomplete="off"/>
+                                   type="text" placeholder="Ваше ім'я" name="first_name" autocomplete="off"/>
                         </div>
                         <!--end::Title-->
                         <!--begin::Form group-->
                         <div class="form-group">
                             <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6"
-                                   type="text" placeholder="Your last name" name="last_name" autocomplete="off"/>
+                                   type="text" placeholder="Прізвище" name="last_name" autocomplete="off"/>
                         </div>
                         <!--end::Form group-->
                         <!--begin::Form group-->
                         <div class="form-group">
                             <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6"
-                                   type="tel" placeholder="Phone" name="phone" autocomplete="off"/>
+                                   type="tel" placeholder="Телефон" name="phone" autocomplete="off"/>
                         </div>
                         <!--end::Form group-->
                         <!--begin::Form group-->
                         <div class="form-group">
                             <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6"
-                                   type="password" placeholder="Password" name="password" autocomplete="off"/>
+                                   type="password" placeholder="Пароль" name="password" autocomplete="off"/>
                         </div>
                         <!--end::Form group-->
                         <!--begin::Form group-->
                         <div class="form-group">
                             <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6"
-                                   type="password" placeholder="Confirm password" name="password_confirmation" autocomplete="off"/>
+                                   type="password" placeholder="Підтвердження паролю" name="password_confirmation" autocomplete="off"/>
                         </div>
                         <!--end::Form group-->
                         <!--begin::Form group-->
                         <div class="form-group d-flex flex-wrap pb-lg-0 pb-3">
                             <button type="submit" id="signup_submit"
-                                    class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">Submit
+                                    class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">Зареєструватись
                             </button>
                             <button type="button" id="show_login"
-                                    class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">Return to login
+                                    class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">Повернутись назад
                             </button>
                         </div>
                         <!--end::Form group-->

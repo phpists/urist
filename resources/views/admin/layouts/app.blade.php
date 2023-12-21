@@ -194,7 +194,7 @@
 <div id="kt_quick_user" class="offcanvas offcanvas-right p-10">
 <!--begin::Header-->
 <div class="offcanvas-header d-flex align-items-center justify-content-between pb-5">
-<h3 class="font-weight-bold m-0">Ваш профиль</h3>
+<h3 class="font-weight-bold m-0">Ваш профіль</h3>
 <a href="#" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_user_close">
 <i class="ki ki-close icon-xs text-muted"></i>
 </a>
@@ -237,7 +237,7 @@ class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{ Auth::u
 </a>
 <a href="{{ route('logout') }}"
 class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5"
-onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Выйти</a>
+onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Вийти</a>
 <form id="logout-form" action="{{ route('logout') }}" method="POST"
 style="display: none;">
 @csrf

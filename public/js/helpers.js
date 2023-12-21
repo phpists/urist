@@ -21,11 +21,8 @@ function makeSelect2AjaxSearch(url, element_id) {
         }
     }
 }
-
-
 // Checkbox selection handle
 let checkBoxAll = $('#checkbox-all');
-
 checkBoxAll.on('click', function(ev) {
     if (checkBoxAll.is(':checked')) {
         $('td .checkbox-single .checkbox-item').each((idx, el) => {
@@ -79,5 +76,30 @@ function updateStatus(url, el) {
             }
             el.dataset.value = "" + new_value;
         }
+    })
+}
+async function makeAlertText(alert_text) {
+    let alertDiv = document.createElement('div');
+    alertDiv.classList.add('alert');
+    alertDiv.classList.add('alert-danger');
+    alertDiv.innerText = alert_text;
+    return alertDiv
+}
+function checkRequiredInputs(id) {
+    document.getElementById(id).addEventListener('submit', function (ev) {
+        document.querySelectorAll('.required_inp').forEach(async (inp_element) => {
+            let containsAlertMessage = inp_element.parentElement.lastElementChild.classList.contains('alert');
+            if (inp_element?.value === null || inp_element?.value === '' || inp_element?.value === '<p></p>') {
+                // ev.preventDefault();
+                if (!containsAlertMessage) {
+                    let alertEl = await makeAlertText('Це поле повинно бути заповнене');
+                    inp_element.parentElement.append(alertEl);
+                    alertEl.scrollIntoView(false);
+                }
+            }
+            else if (containsAlertMessage) {
+                inp_element.parentElement.lastElementChild.remove();
+            }
+        })
     })
 }

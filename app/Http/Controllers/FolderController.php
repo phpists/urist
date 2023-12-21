@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\FolderType;
 use App\Http\Requests\DeleteFolderRequest;
-use App\Http\Requests\MoveFileRequest;
+use App\Http\Requests\MoveItemRequest;
 use App\Http\Requests\MoveFolderRequest;
 use App\Http\Requests\StoreFolderRequest;
 use App\Models\Favourite;
@@ -53,7 +53,7 @@ class FolderController extends Controller
     public function store(StoreFolderRequest $request) {
         $folder = new Folder(array_merge($request->all(), ['user_id' => $request->user()->id]));
         if ($folder->save()) {
-            return redirect()->route('admin.file_manager.view', $folder->id);
+            return redirect()->back()->with('success', 'Папка успішно створена');
         }
         return redirect()->back()->withErrors('Папку не вдалось створити');
     }
@@ -64,7 +64,7 @@ class FolderController extends Controller
             abort(404);
         }
         if ($folder->update($request->all())) {
-            return redirect()->route('admin.file_manager.view', $folder->id);
+            return redirect()->back()->with('success', 'Папка успішно оновлена');
         }
         return redirect()->back()->withErrors('Папку не вдалось створити');
     }

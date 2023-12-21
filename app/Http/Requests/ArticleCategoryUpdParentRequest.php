@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleCategoryUpdParentRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class ArticleCategoryUpdParentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()?->hasRole('admin');
     }
 
     /**
