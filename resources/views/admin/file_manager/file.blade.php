@@ -45,13 +45,13 @@
                         <ul class="nav nav-tabs nav-bold nav-tabs-line">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_4">
-                                    <span class="nav-text">Создать</span>
+                                    <span class="nav-text">Створити</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                     <div class="card-toolbar">
-                        <button type="submit" form="form1" class="btn btn-primary">Сохранить</button>
+                        <button type="submit" form="form1" class="btn btn-primary">Зберегти</button>
                     </div>
                 </div>
                 <div class="card-body">

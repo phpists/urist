@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Permissions;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -13,6 +14,6 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        collect([User::PLAN_LITE,User::PLAN_BASE])->each(fn($plan)=> Permission::create(['name'=>$plan]));
+        collect(Permissions::cases())->each(fn($plan)=> Permission::create(['name'=>$plan->value]));
     }
 }

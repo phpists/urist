@@ -44,8 +44,8 @@ class User extends Authenticatable
 
     const ROLE_ADMIN = 'admin';
     const ROLE_USER = 'user';
-    const PLAN_BASE = 'base';
-    const PLAN_LITE = 'lite';
+    const ROLE_BASE = 'base';
+    const ROLE_LITE = 'lite';
 
 
     /**

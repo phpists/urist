@@ -2,17 +2,16 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\Permissions;
 use Illuminate\Foundation\Http\FormRequest;
 
-class DeleteFolderRequest extends FormRequest
+class RolePermissionUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this->user()->can(Permissions::FILE_CREATE->value);
+        return $this->user()->hasRole('admin');
     }
 
     /**
@@ -23,7 +22,9 @@ class DeleteFolderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'folder_id' => 'required'
+            'permission_id' => 'required|exists:permissions,id',
+            'role_id' => 'required|exists:roles,id',
+            'is_active' => 'required|boolean'
         ];
     }
 }

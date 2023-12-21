@@ -28,6 +28,6 @@ class UserAdminSeeder extends Seeder
         ]);
 
         $user->assignRole(User::ROLE_ADMIN);
-        $user->givePermissionTo([User::PLAN_LITE, User::PLAN_BASE]);
+        $user->givePermissionTo([User::ROLE_LITE, User::ROLE_BASE]);
     }
 }

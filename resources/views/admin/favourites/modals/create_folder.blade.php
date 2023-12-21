@@ -32,7 +32,7 @@
                     <button type="button" class="btn btn-lg btn-light-primary font-weight-bold" data-dismiss="modal">
                         Закрыть
                     </button>
-                    <button type="submit" class="btn btn-lg btn-primary mr-2">Сохранить</button>
+                    <button type="submit" class="btn btn-lg btn-primary mr-2">Зберегти</button>
                 </div>
 
             </form>
