@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ArticleCategoryController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CriminalArticleController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -160,4 +161,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], func
         ->name('admin.tags.bulk_delete');
     Route::put('/tag/update_position', [TagController::class, 'updatePosition'])
         ->name('admin.tag.update_position');
+    // Subscriptions
+    Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('admin.subscriptions.index');
+    Route::post('/subscriptions/update_permission', [SubscriptionController::class, 'updateRolePermission'])->name('admin.subscriptions.update_role_permission');
 });

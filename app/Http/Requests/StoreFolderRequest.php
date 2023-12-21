@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\FolderType;
+use App\Enums\Permissions;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -13,7 +14,7 @@ class StoreFolderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can(Permissions::FILE_CREATE->value);
     }
 
     /**

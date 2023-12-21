@@ -15,13 +15,13 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::factory(10)->create()->each(function ($user) {
-            $permissions = [
-                [User::PLAN_LITE, User::PLAN_BASE],
-                [User::PLAN_BASE],
-                [User::PLAN_LITE]
+            $roles = [
+                User::ROLE_LITE,
+                User::ROLE_BASE,
+                User::ROLE_ADMIN,
+                User::ROLE_USER
             ];
-            $user->assignRole(User::ROLE_USER);
-            $user->givePermissionTo($permissions[rand(0, 2)]);
+            $user->assignRole($roles[array_rand($roles)]);
         });
     }
 }
