@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('article_category_id')->nullable();
             $table->string('name', 255);
             $table->text('content');
+            $table->text('description');
+            $table->string('court_decision_link', 512);
             $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('position');
             $table->timestamps();

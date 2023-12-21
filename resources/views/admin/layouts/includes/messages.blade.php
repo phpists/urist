@@ -1,9 +1,5 @@
 <div class="validation_messages">
-    @if(session()->get('success'))
-        <div class="alert alert-success" role="alert">
-            {{ session()->get('success') }}
-        </div>
-    @endif
+    @include('admin.layouts.includes.success_message')
 
     @if ($errors->any())
         @foreach ($errors->all() as $error)

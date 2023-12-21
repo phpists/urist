@@ -99,6 +99,30 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Sorting table
+    let tbody = document.getElementById('articleCategoriesTable')
+    new Sortable(tbody, {
+        animation: 150,
+        handle: '.handle',
+        dragClass: 'table-sortable-drag',
+        onEnd: function (/**Event*/ evt) {
+            let article_id = evt.item.dataset.value
+            let newIndex = evt.newIndex;
+            $.ajax({
+                method: 'put',
+                url: '/admin/article_category/update_position',
+                data: {
+                    id: article_id,
+                    position: newIndex
+                },
+                error: function (resp) {
+                    console.log(resp)
+                }
+            });
+
+        }
+    });
+
     $("#createCategoryParent").select2({
         placeholder: "Виберіть батьківську категорію",
         ajax: makeAjaxCategorySearch()

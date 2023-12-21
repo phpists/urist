@@ -23,7 +23,10 @@
                     <a href="{{ route('admin.file_manager.index') }}" class="text-muted">Файловий менеджер</a>
                 </li>
                 <li class="breadcrumb-item">
-                    Стаття
+                    Редагування файлу
+                </li>
+                <li class="breadcrumb-item">
+                    {{$file->name}}
                 </li>                <!--end::Page Title-->
             </div>
             <!--end::Page Heading-->

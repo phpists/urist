@@ -11,7 +11,7 @@ class ViewTagRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return request()->user()->hasRole('admin');
+        return $this->user()?->hasRole('admin');
     }
 
     /**

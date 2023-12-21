@@ -149,3 +149,8 @@ li > button.dd-collapse, li > button.dd-expand {
     background: whitesmoke;
 
 }
+
+.card.card-custom>.card-header.card-header-tabs-line .nav a.nav-link {
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+}

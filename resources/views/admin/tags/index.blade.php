@@ -30,15 +30,13 @@
                         </ul>
                     </div>
                     <div class="card-toolbar">
-                        <div class="col-auto">
+                        <div class="dropdown dropdown-inline d-flex mr-2">
                             <form class="mr-2" id="bulkRecordsDeleteForm" action="{{route('admin.tags.bulk_delete')}}">
                                 <button onclick="confirm('Ви дійсно хочете видалити записи?')"
                                         class="btn btn-success font-weight-bolder">
                                     <span class="svg-icon svg-icon-md"><i class="fas fa-trash mr-2"></i></span> Видалити
                                 </button>
                             </form>
-                        </div>
-                        <div class="col-auto">
                             <button data-toggle="modal" data-target="#createArticleCategoryModal"
                                     class="btn btn-primary font-weight-bold">
                                 <i class="fas fa-plus mr-2"></i>Додати

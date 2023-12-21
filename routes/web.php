@@ -78,6 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Favourites Controller
     Route::delete('favourites', [FavoritesController::class, 'delete'])->name('favourites.delete');
     Route::get('favourites/search', [FavoritesController::class, 'search'])->name('favourites.search');
+    Route::put('favourites/move', [FavoritesController::class, 'moveFavourite'])->name('favourite.move');
     // Article Routes
     Route::post('/favourites', [CriminalArticleController::class, 'addToFavourites'])->name('criminal_articles.favourites.add');
     // File Routes
@@ -85,6 +86,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('file/update', [FileController::class, 'update'])->name('file.update');
     Route::put('file/move', [FileController::class, 'moveFile'])->name('file.move');
     Route::get('files/search', [FileController::class, 'search'])->name('file.search');
+    Route::delete('files', [FileController::class, 'delete'])->name('files.delete');
+    // Tags
+    Route::get('/tags/search', [TagController::class, 'search'])
+        ->name('tags.search');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], function () {
@@ -147,6 +152,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], func
     // Tags
     Route::get('/tags', [TagController::class, 'index'])->name('admin.tags.index');
     Route::post('/tags', [TagController::class, 'store'])->name('admin.tags.store');
+    Route::get('/tag', [TagController::class, 'view'])->name('admin.tag.view');
     Route::get('/tag', [TagController::class, 'view'])->name('admin.tag.view');
     Route::put('/tag/update', [TagController::class, 'update'])->name('admin.tag.update');
     Route::delete('/tag/delete', [TagController::class, 'delete'])->name('admin.tag.delete');

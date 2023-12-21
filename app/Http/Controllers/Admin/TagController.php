@@ -60,6 +60,14 @@ class TagController extends Controller
         return response()->json($tag);
     }
 
+    public function search(Request $request) {
+        $tags = Tag::query()
+            ->where('name', 'LIKE', '%'.$request->get('search_string').'%')
+            ->limit(20)
+            ->get();
+        return response()->json($tags);
+    }
+
     public function deleteBulk(BulkDeleteItemsRequest $request): \Illuminate\Http\RedirectResponse
     {
         $query = Tag::query()->whereIn('id', $request->item_list);

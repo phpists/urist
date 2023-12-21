@@ -24,12 +24,6 @@
 
                             </select>
                         </div>
-                        <div class="dropdown dropdown-inline mr-2">
-                            <a href="{{ route('admin.criminal_articles.create') }}"
-                               class="btn btn-success font-weight-bolder">
-                                <span class="svg-icon svg-icon-md"><i class="fas fa-plus mr-2"></i></span>Додати статтю
-                            </a>
-                        </div>
                         <a class="btn btn-success font-weight-bolder"
                            data-toggle="modal"
                            data-target="#createFolderModal">
@@ -38,6 +32,7 @@
                     </div>
                 </div>
             </div>
+            @include('admin.layouts.includes.messages')
             <div class="row">
                 @if(isset($file_folder))
                     <div data-zone="folder_{{$file_folder->parent_id}}" data-label="folder_{{$file_folder->parent_id}}"
@@ -139,15 +134,15 @@
                                             <!--begin::Navigation-->
                                             <ul class="navi navi-hover">
                                                 <li class="navi-item text-center">
-                                                    <a href="#" class="navi-link">
+                                                    <a href="{{route('admin.file.view', $file->id)}}" class="navi-link">
                                                         Редагувати
                                                     </a>
                                                 </li>
                                                 <li class="navi-item">
-                                                    <form action="{{route('favourites.delete')}}" method="POST">
+                                                    <form action="{{route('files.delete')}}" method="POST">
                                                         @method('delete')
                                                         @csrf
-                                                        <input type="hidden" name="favourite_id" value="{{$file->id}}">
+                                                        <input type="hidden" name="file_id" value="{{$file->id}}">
                                                         <button class="btn btn-clean w-100 rounded-0 navi-link">
                                                             Видалити
                                                         </button>
@@ -255,11 +250,9 @@
                 placeholder: "Виберіть папку",
                 ajax: makeSelect2AjaxSearch('/folders/search_file_folders', 'updateParentFolder')
             })
-            document.querySelectorAll('.updateFolderBtn').forEach(function (el) {
-                el.addEventListener('click', function (ev) {
-                    $('#updateFolderId').val(ev.currentTarget.dataset.id)
-                    $('#updateFolderName').val(ev.currentTarget.dataset.name)
-                })
+            $("#updateFileFolder").select2({
+                placeholder: "Виберіть папку",
+                ajax: makeSelect2AjaxSearch('/folders/search_file_folders', 'updateFileFolder')
             })
         })
     </script>

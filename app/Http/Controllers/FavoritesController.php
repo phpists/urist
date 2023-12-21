@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\FolderType;
+use App\Http\Requests\MoveItemRequest;
 use App\Models\Favourite;
 use App\Models\File;
 use App\Models\Folder;
@@ -13,11 +14,11 @@ class FavoritesController extends Controller
     public function index(Request $request, string|null $folder_id = null) {
         $fav_folder = null;
         if ($folder_id !== null) {
-            $folder = Folder::query()
+            $fav_folder = Folder::query()
                 ->where('user_id', $request->user()->id)
                 ->where('folder_type', FolderType::FAVOURITES_FOLDER->value)
                 ->find($folder_id);
-            if (!$folder) {
+            if (!$fav_folder) {
                 abort(404);
             }
         }
@@ -50,5 +51,14 @@ class FavoritesController extends Controller
             ->limit(30)
             ->get();
         return response()->json($favourites);
+    }
+
+    public function moveFavourite(MoveItemRequest $request): \Illuminate\Http\JsonResponse
+    {
+        $favourite = Favourite::query()->where('user_id', $request->user()->id)->find($request->item_id);
+        $favourite->update($request->all());
+        return response()->json([
+            'success' => true
+        ]);
     }
 }

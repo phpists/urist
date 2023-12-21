@@ -10,4 +10,6 @@ class ArticleTag extends Model
     use HasFactory;
 
     protected $fillable = ['criminal_article_id', 'tag_id'];
+
+    public $timestamps = false;
 }

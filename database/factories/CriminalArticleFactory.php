@@ -17,7 +17,9 @@ class CriminalArticleFactory extends Factory
     public function definition(): array
     {
         return [
-            'content' => fake()->text()
+            'content' => fake()->text(500),
+            'description' => fake()->text(200),
+            'court_decision_link' => fake()->url()
         ];
     }
 }
