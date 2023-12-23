@@ -2,7 +2,7 @@
 @section('title', 'Верифікація')
 @section('page')
     <div class="login-section">
-        <form class="form" autocomplete="off" action="{{route('verify_phone')}}" method="POST">
+        <form class="form" id="code-form" autocomplete="off" action="{{route('verify_phone')}}" method="POST">
             @csrf
             @method('POST')
             <input type="hidden" name="phone" value="{{ old('phone',session('phone')) }}">
@@ -14,6 +14,7 @@
                 <div class="form__group">
                     <input class="input form__input @error('code') just-validate-error-field @enderror" type="number"
                            maxlength="4"
+                           id="inputCode"
                            name="code"
                            autocomplete="off" required="required"
                            value="{{ old('code') }}"/>

@@ -12,6 +12,11 @@ const registrationFormValidation = () => {
                     rule: 'required',
                     errorMessage: "Заповніть це поле",
                 },
+                {
+                    rule: 'minLength',
+                    value: 3,
+                    errorMessage: "Мінімальна кількість 3 символи",
+                },
             ]);
 
         document.getElementById('inputRegPhone') &&
@@ -20,22 +25,73 @@ const registrationFormValidation = () => {
                     rule: 'required',
                     errorMessage: "Заповніть це поле",
                 },
-            ]);
-        
-        document.getElementById('inputRegPassword') &&
-            validator.addField('#inputRegPassword', [
                 {
-                    rule: 'required',
-                    errorMessage: "Заповніть це поле",
-                },
+                    rule: 'customRegexp',
+                    value: /\+38\s?\(\d{3}\)-\d{2}-\d{2}-\d{3,4}/
+                }
             ]);
-        
+        let passwordInp = document.getElementById('inputRegPassword');
+
+        const customPasswordRules = [
+            {
+                errorMessage: "Пароль має містити хоча б одну літеру",
+                validator: (value) => {
+                    return /[a-zA-Z:]/.test(value);
+                }
+            },
+            {
+                errorMessage: "Пароль має містити хоча б одну цифру",
+                validator: (value) => {
+                    return /\d/.test(value);
+                }
+            },
+            {
+                errorMessage: "Пароль має містити символ",
+                validator: (value) => {
+                    return /[^a-zA-Z\d\s:]/.test(value);
+                }
+            },
+            {
+                errorMessage: "Пароль має містити хоча б 8 символів",
+                validator: (value) => {
+                    return value.length >= 8;
+                }
+            },
+        ];
+        passwordInp &&
+        validator.addField('#inputRegPassword', [
+            {
+                rule: 'required',
+                errorMessage: "Заповніть це поле",
+            },
+            ...customPasswordRules
+        ]);
+        let formPass = document.querySelector('.form-pass__power');
+        passwordInp.addEventListener('input', () => {
+            formPass.setAttribute('data-pass-power', "0");
+            customPasswordRules.some((rule, idx) => {
+                if (rule.validator(passwordInp.value)) {
+                    formPass.setAttribute('data-pass-power', idx + 1);
+                    validator.showSuccessLabels({'#inputRegPassword': ''})
+                    return false
+                }
+                else {
+                    validator.showErrors({'#inputRegPassword': rule.errorMessage})
+                    return true;
+                }
+            })
+        })
+
         document.getElementById('inputConfirmRegPassword') &&
             validator.addField('#inputConfirmRegPassword', [
                 {
                     rule: 'required',
                     errorMessage: "Заповніть це поле",
                 },
+                {
+                    validator: (value, context) => passwordInp.value === value,
+                    errorMessage: 'Паролі не співпадають'
+                }
             ]);
 
         document.getElementById('checkboxRegAgree') &&
@@ -53,6 +109,9 @@ const registrationFormValidation = () => {
                     errorMessage: "Заповніть це поле",
                 },
             ]);
+        validator.onSuccess(( event ) => {
+            event.currentTarget.submit();
+        });
     }
 }
 

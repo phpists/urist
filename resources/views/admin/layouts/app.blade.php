@@ -243,8 +243,7 @@ class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{ Auth::u
     </span>
 </a>
 <a href="{{ route('logout') }}"
-class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5"
-onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Вийти</a>
+class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Вийти</a>
 <form id="logout-form" action="{{ route('logout') }}" method="POST"
 style="display: none;">
 @csrf

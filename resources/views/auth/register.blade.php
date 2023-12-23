@@ -8,7 +8,7 @@
         <div class="container login-section__container">
             <div class="login-section__inner">
                 <form class="form login-section__form" autocomplete="off"
-                      action="{{route('sing-up')}}" method="POST">
+                      action="{{route('sing-up')}}" id="registration-form" method="POST">
                     @csrf
                     @method('POST')
                     <h1 class="section-title form__title">Реєстрація</h1>
@@ -59,7 +59,7 @@
                     <div class="form__group">
                         <input
                             class="input form__input @error('password_confirmation') just-validate-error-field @enderror"
-                            id="inputRegPassword" type="password" name="password_confirmation"
+                            id="inputConfirmRegPassword" type="password" name="password_confirmation"
                             value="{{ old('password_confirmation') }}"
                             placeholder="Повторіть пароль *"/>
                         @error('password_confirmation')

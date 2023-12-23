@@ -12,6 +12,11 @@ const feedbackFormValidation = () => {
                     rule: 'required',
                     errorMessage: "Заповніть це поле",
                 },
+                {
+                    rule: 'minLength',
+                    value: 3,
+                    errorMessage: "Мінімальна кількість 3 символи",
+                },
             ]);
 
         document.getElementById('inputEmail') &&
@@ -20,13 +25,22 @@ const feedbackFormValidation = () => {
                     rule: 'required',
                     errorMessage: "Заповніть це поле",
                 },
+                {
+                    rule: 'email',
+                    errorMessage: "Некоректний формат email"
+                }
             ]);
-        
+
         document.getElementById('textareaFeedback') &&
             validator.addField('#textareaFeedback', [
                 {
                     rule: 'required',
                     errorMessage: "Заповніть це поле",
+                },
+                {
+                    rule: 'minLength',
+                    value: 30,
+                    errorMessage: "Мінімальна кількість 30 символів",
                 },
             ]);
 
@@ -37,6 +51,9 @@ const feedbackFormValidation = () => {
                     errorMessage: "Заповніть це поле",
                 },
             ]);
+        validator.onSuccess(( event ) => {
+            event.currentTarget.submit();
+        });
     }
 }
 
