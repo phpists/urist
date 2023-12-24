@@ -23,6 +23,9 @@ const codeFormValidation = () => {
                     errorMessage: "Максимальна к-сть символів",
                 },
             ]);
+        validator.onSuccess(( event ) => {
+            event.currentTarget.submit();
+        });
 
         // document.getElementById('inputCode2') &&
         //     validator.addField('#inputCode2', [

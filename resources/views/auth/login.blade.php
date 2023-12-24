@@ -39,7 +39,7 @@
                         @else
                          <div></div>
                         @endif
-                        <a class="form__link blue-link" href="{{route('password.reset')}}">Забули пароль?</a>
+                        <a class="form__link blue-link" href="{{route('password.forgot')}}">Забули пароль?</a>
                     </div>
                     <div class="form__group form__group--center">
                         <button class="button form__button form__button--middle" type="submit">Увійти</button>

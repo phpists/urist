@@ -14,6 +14,7 @@
                     <h1 class="section-title form__title">Реєстрація</h1>
                     <div class="form__group">
                         <input
+                            id="inputRegName"
                             class="input form__input @error('name') just-validate-error-field @enderror"
                             type="text"
                             value="{{ old('name') }}"

@@ -4,7 +4,7 @@
     <section class="login-section">
         <div class="container login-section__container">
             <div class="login-section__inner">
-                <form class="form" autocomplete="off" action="{{ route('password.recovery') }}" method="POST">
+                <form id="password-form" class="form" autocomplete="off" action="{{ route('password.recovery') }}" method="POST">
                     @csrf
                     @method('POST')
                     <h1 class="section-title form__title">Новий пароль</h1>
@@ -34,6 +34,7 @@
                     <div class="form__group">
                         <input class="input form__input @error('password') just-validate-error-field @enderror"
                                type="password" name="password"
+                               id="inputNewPassword"
                                placeholder="Пароль *"/>
                         @error('password')
                         <div class="error-label just-validate-error-label">{{$message}}</div>
@@ -56,6 +57,7 @@
                         <input
                             class="input form__input @error('password_confirmation') just-validate-error-field @enderror"
                             type="password"
+                            id="inputConfirmNewPassword"
                             name="password_confirmation" placeholder="Повторіть пароль *" autocomplete="off"
                         />
                         @error('password_confirmation')

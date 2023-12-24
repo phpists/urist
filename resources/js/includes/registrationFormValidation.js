@@ -18,8 +18,8 @@ const registrationFormValidation = () => {
                     errorMessage: "Мінімальна кількість 3 символи",
                 },
             ]);
-
-        document.getElementById('inputRegPhone') &&
+        let phoneInp = document.getElementById('inputRegPhone');
+        phoneInp &&
             validator.addField('#inputRegPhone', [
                 {
                     rule: 'required',
@@ -27,9 +27,18 @@ const registrationFormValidation = () => {
                 },
                 {
                     rule: 'customRegexp',
-                    value: /\+38\s?\(\d{3}\)-\d{2}-\d{2}-\d{3,4}/
+                    value: /\+38\s?\(\d{3}\)\s?\d{2}-\d{2}-\d{3,4}/,
+                    errorMessage: 'Некоректний формат номеру телефона'
                 }
             ]);
+        phoneInp.addEventListener('input', () => {
+            let errorLabel = document.querySelector('#inputRegPhone + .error-label');
+            if (errorLabel) {
+                errorLabel.remove();
+            }
+            validator.revalidateField('#inputRegPhone').then((isValid) => {
+            });
+        })
         let passwordInp = document.getElementById('inputRegPassword');
 
         const customPasswordRules = [

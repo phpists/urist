@@ -4,7 +4,7 @@
     <section class="login-section">
         <div class="container login-section__container">
             <div class="login-section__inner">
-                <form class="form login-section__form" action="{{route('password.send.code')}}" method="POST">
+                <form id="forgot-form" class="form login-section__form" action="{{route('password.send.code')}}" method="POST">
                     @csrf
                     @method('POST')
                     <h1 class="section-title form__title">Забули пароль?</h1>
