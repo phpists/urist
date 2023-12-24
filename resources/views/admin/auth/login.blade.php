@@ -4,7 +4,7 @@
 <head>
     <base href="../../../">
     <meta charset="utf-8"/>
-    <title>Jobitt | Админ-панель</title>
+    <title>Збірник | Адмін-панель</title>
     <meta name="description" content="Login page example"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link rel="canonical" href="https://keenthemes.com/metronic"/>
@@ -46,7 +46,7 @@
                 <!--end::Aside header-->
                 <!--begin::Aside title-->
                 <h3 class="font-weight-bolder text-center font-size-h4 font-size-h1-lg" style="color: #986923;">
-                    Админ-панель <br> Jobitt</h3>
+                    Адмін-панель <br> Збірник</h3>
                 <!--end::Aside title-->
             </div>
             <!--end::Aside Top-->

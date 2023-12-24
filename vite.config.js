@@ -8,6 +8,11 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    resolve: {
+        alias: {
+            '@': '/resources/js',
+        },
+    },
     build: {
         manifest: false,
         reportCompressedSize: true,

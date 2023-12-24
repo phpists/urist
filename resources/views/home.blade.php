@@ -8,7 +8,7 @@
                     <h1 class="top-section__title">База правових
                         позицій<span>Касаційний</span><span>кримінальний суд</span></h1>
                     <p class="top-section__slogan">Онлайн сервіс, який допоможе вам зрозуміти та оцінити важливість
-                        судових рішень</p><a class="button top-section__button" href="#">Спробувати</a>
+                        судових рішень</p><a class="button top-section__button" href="#tariffs-section">Спробувати</a>
                 </div>
                 <div class="top-section__right">
                     <picture class="top-section__picture"><img class="top-section__img" src="/assets/img/top-img.webp"
@@ -282,7 +282,7 @@
         </div>
     </section>
 
-    <section class="tariffs-section">
+    <section class="tariffs-section" id="tariffs-section">
         <div class="container tariffs-section__container">
             <h2 class="section-title tariffs-section__title">Тарифи</h2>
             <nav class="tariffs-plan">
@@ -375,7 +375,7 @@
                                     <div class="tariff-card__discount">27$ / 6 мес (-10%)</div>
                                     <div class="tariff-card__discount">48$ / 12 мес (-20%)</div>
                                 </div>
-                                <button class="button tariff-card__buy-button" type="button">Обрати</button>
+                                <button class="button tariff-card__buy-button @if(!\Illuminate\Support\Facades\Auth::check()) redirect-btn @endif" @if(!\Illuminate\Support\Facades\Auth::check()) data-link="{{route('register.page')}}" @endif type="button">Обрати</button>
                             </div>
                         </div>
                     </div>
@@ -457,7 +457,7 @@
                                     <div class="tariff-card__discount">37$ / 6 мес (-10%)</div>
                                     <div class="tariff-card__discount">65$ / 12 мес (-25%)</div>
                                 </div>
-                                <button class="button tariff-card__buy-button" type="button">Обрати</button>
+                                <button class="button tariff-card__buy-button @if(!\Illuminate\Support\Facades\Auth::check()) redirect-btn @endif" @if(!\Illuminate\Support\Facades\Auth::check()) data-link="{{route('register.page')}}" @endif type="button">Обрати</button>
                             </div>
                         </div>
                     </div>
@@ -702,7 +702,7 @@
                 </h2>
                 <p class="try-section__descr">Ви заощаджуєте час та зусилля, отримуючи миттєвий доступ до багатої бази
                     статей, які допоможуть вам успішно розумітися на складних юридичних питаннях.</p><a
-                    class="button button--white try-section__button" href="#">Спробувати</a>
+                    class="button button--white try-section__button" href="#tariffs-section">Спробувати</a>
             </div>
             <div class="try-section__right">
                 <picture class="try-section__picture"><img class="try-section__img" src="/assets/img/try-img.webp"
@@ -743,4 +743,5 @@
             </button>
         </div>
     </section>
+    @include('layouts.partials.modals')
 @endsection

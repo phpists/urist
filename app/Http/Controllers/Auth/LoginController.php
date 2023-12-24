@@ -31,7 +31,7 @@ class LoginController extends Controller
     public function login(UserLoginRequest $request): Factory|View|\Illuminate\Foundation\Application|RedirectResponse|Application
     {
         $credentials = $request->only('phone', 'password');
-        if (auth()->attempt($credentials)) {
+        if (auth()->attempt($credentials, )) {
             $user = auth()->user();
             if ($user->phone_verified_at) {
                 return view('pages.dashboard');

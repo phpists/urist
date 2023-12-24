@@ -53,6 +53,7 @@ Route::post('password/recovery', [ResetPasswordController::class, 'resetPassword
 
 Route::get('/', function () {return view('home');})->name('home');
 Route::get('/offer', function () {return view('pages.offer');})->name('offer');
+Route::get('/blog', function () {return view('pages.blog');})->name('blog');
 Route::get('/policy', function () {return view('pages.policy');})->name('policy');
 Route::get('faq', [FaqController::class, 'index'])->name('faq');
 Route::get('contacts', [ContactController::class, 'index'])->name('contacts');

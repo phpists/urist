@@ -1,7 +1,7 @@
 <footer class="footer">
     <div class="container footer__container">
         <div class="footer__col footer__col--3">
-            <div class="logo footer__logo"><a class="logo__link" href="#" aria-label="logo">
+            <div class="logo footer__logo"><a class="logo__link" href="{{route('home')}}" aria-label="logo">
                     <svg class="logo__img" width="46" height="38">
                         <use xlink:href="/assets/img/sprite.svg#logo"></use>
                     </svg>

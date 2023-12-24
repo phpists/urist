@@ -12,7 +12,15 @@ const forgotFormValidation = () => {
                     rule: 'required',
                     errorMessage: "Заповніть це поле",
                 },
+                {
+                    rule: 'customRegexp',
+                    value: /\+38\s?\(\d{3}\)\s?\d{2}-\d{2}-\d{3,4}/,
+                    errorMessage: 'Некоректний формат номеру телефона'
+                }
             ]);
+        validator.onSuccess((ev) => {
+            ev.currentTarget.submit()
+        })
     }
 }
 

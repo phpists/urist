@@ -6,37 +6,50 @@ const codeFormValidation = () => {
             errorLabelCssClass: ['error-label'],
         });
 
-        document.getElementById('inputCode1') &&
-            validator.addField('#inputCode1', [
+        document.getElementById('inputCode') &&
+            validator.addField('#inputCode', [
                 {
                     rule: 'required',
                     errorMessage: "Заповніть це поле",
                 },
-            ]);
-        
-        document.getElementById('inputCode2') &&
-            validator.addField('#inputCode2', [
                 {
-                    rule: 'required',
-                    errorMessage: "Заповніть це поле",
+                    rule: 'minLength',
+                    value: 4,
+                    errorMessage: "Мінімальна к-сть символів",
+                },
+                {
+                    rule: 'maxLength',
+                    value: 4,
+                    errorMessage: "Максимальна к-сть символів",
                 },
             ]);
-        
-        document.getElementById('inputCode3') &&
-            validator.addField('#inputCode3', [
-                {
-                    rule: 'required',
-                    errorMessage: "Заповніть це поле",
-                },
-            ]);
-        
-        document.getElementById('inputCode4') &&
-            validator.addField('#inputCode4', [
-                {
-                    rule: 'required',
-                    errorMessage: "Заповніть це поле",
-                },
-            ]);
+        validator.onSuccess(( event ) => {
+            event.currentTarget.submit();
+        });
+
+        // document.getElementById('inputCode2') &&
+        //     validator.addField('#inputCode2', [
+        //         {
+        //             rule: 'required',
+        //             errorMessage: "Заповніть це поле",
+        //         },
+        //     ]);
+        //
+        // document.getElementById('inputCode3') &&
+        //     validator.addField('#inputCode3', [
+        //         {
+        //             rule: 'required',
+        //             errorMessage: "Заповніть це поле",
+        //         },
+        //     ]);
+        //
+        // document.getElementById('inputCode4') &&
+        //     validator.addField('#inputCode4', [
+        //         {
+        //             rule: 'required',
+        //             errorMessage: "Заповніть це поле",
+        //         },
+        //     ]);
     }
 }
 

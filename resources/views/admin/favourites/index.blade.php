@@ -81,7 +81,11 @@
                                             <!--begin::Navigation-->
                                             <ul class="navi navi-hover">
                                                 <li class="navi-item text-center">
-                                                    <a href="#" class="navi-link">
+                                                    <a data-toggle="modal"
+                                                       data-id="{{$folder->id}}"
+                                                       data-name="{{$folder->name}}"
+                                                       data-target="#updateFolderModal"
+                                                       href="#" class="navi-link updateFolderBtn">
                                                         Редагувати
                                                     </a>
                                                 </li>
@@ -163,7 +167,7 @@
         </div>
     </div>
     @include('admin.favourites.modals.create_folder')
-    @include('admin.file_manager.modals.edit_folder')
+    @include('admin.favourites.modals.edit_folder')
     @include('admin.favourites.modals.edit_file_modal')
 @endsection
 
