@@ -1,83 +1,94 @@
 .accordion
+    border-radius: 10px
+    background: var(--white)
+    box-shadow: 0 7px 10px 0 rgba(0, 0, 0, .2)
+    overflow: hidden
+    isolation: isolate
 
-    &.is-open
+    &__header
+        margin: 0
 
-        .accordion__icon
-
-            &:after
-                transform: translate3d(-50%, -50%, 0) rotate(90deg)
-
-    &__toggle
-        position: relative
+    &__trigger
         display: flex
         align-items: center
-        gap: 20px
-        width: 100%
+        justify-content: space-between
         text-align: left
-        padding: 0
-        border: 0
-        border-radius: 0
-        font-size: 16px
+        gap: 15px
+        width: 100%
+        padding: 20px 35px 20px 20px
+        font-size: 22px
         font-weight: 700
-        line-height: 1.2
+        line-height: 1.25
         color: var(--blue)
-        cursor: pointer
-        transition: all .5s ease
+        background: var(--white)
+        transition: background-color .5s ease
 
         @media ($max-md)
-            font-size: 14px
+            font-size: 18px
+            padding: 18px 15px
+
+        &[aria-expanded="true"]
+            color: var(--blue)
+            background: #F7F8FA
+
+            .accordion__icon
+                transform: rotateX(180deg)
 
         &:hover,
         &:active,
         &:focus-visible
-            color: var(--black)
+            color: var(--blue)
+            background: #F7F8FA
 
     &__icon
-        position: relative
-        width: 30px
-        height: 30px
-        min-width: 30px
-        background: #D7DCE3
-        border-radius: 10px
-
-        &:before
-            position: absolute
-            top: 50%
-            left: 50%
-            transform: translate3d(-50%, -50%, 0)
-            width: 16px
-            height: 3px
-            border-radius: 2px
-            background: var(--blue)
-            content: ""
-
-        &:after
-            position: absolute
-            top: 50%
-            left: 50%
-            transform: translate3d(-50%, -50%, 0)
-            width: 3px
-            height: 16px
-            border-radius: 2px
-            background: var(--blue)
-            transition: transform .5s ease
-            content: ""
+        transition: transform .5s ease
 
     &__content
-        max-height: 0
+        display: grid
+        grid-template-rows: 0fr
+        transition: grid-template-rows .5s, background-color .5s ease
+
+        &[aria-hidden="false"]
+            grid-template-rows: 1fr
+            background: #F7F8FA
+
+        .accordion__trigger
+            font-size: 20px
+
+    &__inner
         overflow: hidden
-        will-change: max-height
-        transition: all .5s ease
-        box-sizing: content-box
 
-    &__text
-        padding-left: 50px
+        > .accordion__panel
+            border-top: 1px solid #A8B2C2
 
-        @media ($max-md)
-            font-size: 14px
+            .accordion__trigger
+                font-size: 20px
 
-        p
-            margin: 0 0 .5rem
+                @media ($max-md)
+                    font-size: 14px
 
-            &:last-child
-                margin-bottom: 0
+            .accordion__inner
+
+                > .accordion__panel
+
+                    .accordion__trigger
+                        padding-left: 45px
+                        font-size: 20px
+                        font-weight: 500
+
+                        @media ($max-md)
+                            font-size: 14px
+                            padding-left: 25px
+
+                    .accordion__inner
+
+                        > .accordion__panel
+
+                            .accordion__trigger
+                                padding-left: 70px
+                                font-size: 18px
+                                font-weight: 400
+
+                                @media ($max-md)
+                                    font-size: 14px
+                                    padding-left: 35px

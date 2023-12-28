@@ -7,7 +7,7 @@
         height: 20px
         margin-top: -10px
         right: 15px
-        background: url("data:image/svg+xml,%3Csvg width='16' height='8' viewBox='0 0 16 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0.240762 0.349227C0.600184 -0.0700991 1.23148 -0.118661 1.65081 0.240762L8.00002 5.68294L14.3492 0.240762C14.7686 -0.118661 15.3999 -0.0700991 15.7593 0.349227C16.1187 0.768552 16.0701 1.39985 15.6508 1.75927L8.65081 7.75928C8.27632 8.08027 7.72372 8.08027 7.34923 7.75928L0.349227 1.75927C-0.0700991 1.39985 -0.118661 0.768552 0.240762 0.349227Z' fill='%23FFCA42'/%3E%3C/svg%3E%0A") no-repeat center center
+        background: url("data:image/svg+xml,%3Csvg width='16' height='8' viewBox='0 0 16 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0.240762 0.349227C0.600184 -0.0700991 1.23148 -0.118661 1.65081 0.240762L8.00002 5.68294L14.3492 0.240762C14.7686 -0.118661 15.3999 -0.0700991 15.7593 0.349227C16.1187 0.768552 16.0701 1.39985 15.6508 1.75927L8.65081 7.75928C8.27632 8.08027 7.72372 8.08027 7.34923 7.75928L0.349227 1.75927C-0.0700991 1.39985 -0.118661 0.768552 0.240762 0.349227Z' fill='%23374E73'/%3E%3C/svg%3E%0A") no-repeat center center
         transition: all .5s ease
         
     &[data-type*=select-one].is-open::after
@@ -23,41 +23,38 @@
         display: flex
         align-items: center
         width: 100%
-        height: 65px
+        height: 50px
         border-radius: 10px
         background: var(--white)
-        border: 1px solid #e2e2e2
+        border: 1px solid #D9DDE4
         box-shadow: none
-        font-size: 20px
+        font-size: 16px
         line-height: 1.2
         color: var(--black)
         padding: 5px 45px 5px 20px !important
-        font-weight: 300
+        font-weight: 400
         outline: none
         appearance: none
         transition: all .5s ease
 
-        @media ($max-lg)
-            font-size: 16px
-
-        @media ($max-md)
-            height: 40px
-
         &:hover
-            border-color: var(--yellow)
+            border-color: var(--blue)
+            box-shadow: inset 0 0 0 1px var(--blue)
 
         &:focus-visible
-            border-color: var(--yellow)
+            border-color: var(--blue)
+            box-shadow: inset 0 0 0 1px var(--blue)
 
         &:has(> select.just-validate-error-field)
             border-color: var(--red)
+            box-shadow: inset 0 0 0 1px var(--red)
 
     &.is-open
         // z-index: $z-index-1
 
         .choices__inner
             border-radius: 10px
-            border-color: var(--yellow)
+            border-color: var(--blue)
 
         .choices__list--dropdown, 
         .choices__list[aria-expanded]
@@ -66,7 +63,8 @@
     &.is-focused
 
         .choices__inner
-            border-color: var(--yellow)
+            border-color: var(--blue)
+            box-shadow: inset 0 0 0 1px var(--blue)
 
     &__list
 
@@ -153,9 +151,9 @@
     transition: all .5s ease
 
     @media ($max-md)
-        font-weight: 300
+        font-weight: 400
 
 .choices__list--dropdown .choices__item--selectable.is-highlighted, 
 .choices__list[aria-expanded] .choices__item--selectable.is-highlighted
-    background: var(--yellow)
-    color: var(--black)
+    background: var(--blue)
+    color: var(--white)

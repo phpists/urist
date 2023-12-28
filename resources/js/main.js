@@ -1,3 +1,14 @@
+import '../sass/main.sass';
+import newAccordion from './includes/newAccordion.js';
+import sidebar from './includes/sidebar.js';
+import isDropdown from './includes/isDropdown.js';
+import closeAlert from './includes/closeAlert.js';
+import profileFormValidation from './includes/profileFormValidation.js';
+import searchFormValidation from './includes/searchFormValidation.js';
+import bookmarkFormValidation from './includes/bookmarkFormValidation.js';
+import fileFormValidation from './includes/fileFormValidation.js';
+import createFormValidation from './includes/createFormValidation.js';
+import modalSearchFormValidation from './includes/modalSearchFormValidation.js';
 import accordion from './includes/accordion.js';
 import fixHeight from './includes/fixHeight.js';
 import mobileNav from './includes/mobileNav.js';
@@ -15,7 +26,8 @@ import forgotFormValidation from './includes/forgotFormValidation.js';
 import passwordFormValidation from './includes/passwordFormValidation.js';
 import codeFormValidation from './includes/codeFormValidation.js';
 import homePage from "./pages/home.js";
-import '../sass/main.sass';
+import Jquery from 'jquery'
+window.$ = Jquery;
 
 
 accordion();
@@ -35,3 +47,13 @@ loginFormValidation();
 passwordFormValidation();
 codeFormValidation();
 homePage();
+newAccordion();
+sidebar();
+isDropdown();
+closeAlert();
+profileFormValidation();
+searchFormValidation();
+bookmarkFormValidation();
+fileFormValidation();
+createFormValidation();
+modalSearchFormValidation();

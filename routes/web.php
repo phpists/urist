@@ -78,6 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/folders', [FolderController::class, 'store'])->name('folders.store');
     Route::delete('/folders', [FolderController::class, 'delete'])->name('folders.delete');
     // Favourites Controller
+    Route::get('/favourites/{id?}', [\App\Http\Controllers\ProfileController::class, 'favourites'])->name('favourites');
     Route::delete('favourites', [FavoritesController::class, 'delete'])->name('favourites.delete');
     Route::get('favourites/search', [FavoritesController::class, 'search'])->name('favourites.search');
     Route::put('favourites/move', [FavoritesController::class, 'moveFavourite'])->name('favourite.move');
@@ -92,6 +93,13 @@ Route::group(['middleware' => 'auth'], function () {
     // Tags
     Route::get('/tags/search', [TagController::class, 'search'])
         ->name('tags.search');
+    // Users
+    Route::get('/welcome', [\App\Http\Controllers\ProfileController::class, 'welcome'])->name('welcome');
+    Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'profile'])->name('profile');
+    Route::get('/collection', [\App\Http\Controllers\ProfileController::class, 'collection'])->name('collection');
+    Route::get('/edit-page', [\App\Http\Controllers\ProfileController::class, 'editPage'])->name('edit_page');
+    Route::get('/article', [\App\Http\Controllers\ProfileController::class, 'article'])->name('article');
+    Route::get('/subscription', [\App\Http\Controllers\ProfileController::class, 'subscription'])->name('subscription');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], function () {
