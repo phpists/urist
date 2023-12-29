@@ -25,8 +25,7 @@
     color: var(--white)
     background: var(--blue)
     box-shadow: none
-    transition: all .5s ease
-    isolation: isolate
+    transition: background-color .5s ease, border-color .5s ease, color .5s ease
 
     &:hover,
     &:active,
@@ -76,15 +75,3 @@
         &:focus-visible
             color: var(--white)
             background: var(--blue)
-
-    &--red
-        background: #ED0000
-        color: var(--white)
-        border: 1px solid #ED0000
-
-        &:hover,
-        &:active,
-        &:focus-visible
-            color: var(--white)
-            background: var(--red)
-            border-color: var(--red)

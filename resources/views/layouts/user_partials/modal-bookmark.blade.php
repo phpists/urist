@@ -8,6 +8,7 @@
         </button>
         <h3 class="modal__title">Додавання позиції до розділу “Закладки”</h3>
         <form class="form modal__form" id="bookmark-form" autocomplete="off" novalidate="novalidate">
+            <input id="storeFavArticleId" type="hidden" name="criminal_article_id">
           <div class="form__group">
             <select class="select" id="selectBookmarkFolder" name="selectBookmarkFolder" aria-label="Виберіть папку" required="required">
               <option value="">Виберіть папку</option>

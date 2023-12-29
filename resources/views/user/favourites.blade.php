@@ -42,14 +42,14 @@
                                     <li class="bookmark-card-menu__item"><a class="bookmark-card-menu__link" href="#">Редагувати</a></li>
                                     <li class="bookmark-card-menu__item"><a class="bookmark-card-menu__link" href="#">Видалити</a></li>
                                 </ul>
-                            </div><a class="bookmark-card__link" href="#">
+                            </div><a class="bookmark-card__link" href="{{route('favourites', $fav_folder->parent_id)}}">
                                 <div class="bookmark-card__pic">
                                     <svg class="bookmark-card__icon" width="110" height="86">
                                         <use xlink:href="{{asset('assets/img/user/sprite.svg#folder-solid')}}"></use>
                                     </svg>
                                 </div>
-                                <h3 class="bookmark-card__title">Папка Фінанси</h3>
-                                <div class="bookmark-card__info">7 файлів</div></a>
+                                <h3 class="bookmark-card__title">Повернутись назад</h3>
+                                <div class="bookmark-card__info"></div></a>
                         </div>
                     </li>
                 @endif
@@ -67,7 +67,7 @@
                                         <li class="bookmark-card-menu__item"><a class="bookmark-card-menu__link" href="#">Видалити</a></li>
                                     </ul>
                                 </div>
-                                <a class="drag_element bookmark-card__link" href="#" draggable="true"
+                                <a class="drag_element bookmark-card__link" href="{{route('favourites', $folder->id)}}" draggable="true"
                                    data-item="folder_{{$folder->id}}">
                                     <div class="bookmark-card__pic">
                                         <svg class="bookmark-card__icon" width="110" height="86">
@@ -80,98 +80,39 @@
                             </div>
                         </li>
                     @endforeach
-                <li class="bookmarks-section__item">
-                    <div class="bookmark-card">
-                        <div class="bookmark-card-menu is-dropdown">
-                            <button class="bookmark-card-menu__toggle is-dropdown__toggle">
-                                <svg class="bookmark-card-menu__toggle-icon" width="4" height="18">
-                                    <use xlink:href="{{asset('assets/img/user/sprite.svg#dots')}}"></use>
-                                </svg>
-                            </button>
-                            <ul class="bookmark-card-menu__dropdown">
-                                <li class="bookmark-card-menu__item"><a class="bookmark-card-menu__link" href="#">Редагувати</a></li>
-                                <li class="bookmark-card-menu__item"><a class="bookmark-card-menu__link" href="#">Видалити</a></li>
-                            </ul>
-                        </div><a class="bookmark-card__link" href="#">
-                            <div class="bookmark-card__pic">
-                                <svg class="bookmark-card__icon" width="110" height="86">
-                                    <use xlink:href="{{asset('assets/img/user/sprite.svg#docx')}}"></use>
-                                </svg>
+                    @foreach($favourites as $favourite)
+                        <li class="bookmarks-section__item" data-label="file_{{$favourite->id}}">
+                            <div class="bookmark-card">
+                                <div class="bookmark-card-menu is-dropdown">
+                                    <button class="bookmark-card-menu__toggle is-dropdown__toggle">
+                                        <svg class="bookmark-card-menu__toggle-icon" width="4" height="18">
+                                            <use xlink:href="{{asset('assets/img/user/sprite.svg#dots')}}"></use>
+                                        </svg>
+                                    </button>
+                                    <ul class="bookmark-card-menu__dropdown">
+                                        <li class="bookmark-card-menu__item"><a class="bookmark-card-menu__link" href="#">Редагувати</a></li>
+                                        <li class="bookmark-card-menu__item"><a class="bookmark-card-menu__link" href="#">Видалити</a></li>
+                                    </ul>
+                                </div>
+                                <a class="bookmark-card__link drag_element" draggable="true" data-item="file_{{$favourite->id}}" href="#">
+                                    <div class="bookmark-card__pic">
+                                        <svg class="bookmark-card__icon" width="110" height="86">
+                                            <use xlink:href="{{asset('assets/img/user/sprite.svg#docx')}}"></use>
+                                        </svg>
+                                    </div>
+                                    <h3 class="bookmark-card__title">{{$favourite->name}}</h3>
+                                </a>
                             </div>
-                            <h3 class="bookmark-card__title">Назва пропозиції</h3></a>
-                    </div>
-                </li>
-                <li class="bookmarks-section__item">
-                    <div class="bookmark-card">
-                        <div class="bookmark-card-menu is-dropdown">
-                            <button class="bookmark-card-menu__toggle is-dropdown__toggle">
-                                <svg class="bookmark-card-menu__toggle-icon" width="4" height="18">
-                                    <use xlink:href="{{asset('assets/img/user/sprite.svg#dots')}}"></use>
-                                </svg>
-                            </button>
-                            <ul class="bookmark-card-menu__dropdown">
-                                <li class="bookmark-card-menu__item"><a class="bookmark-card-menu__link" href="#">Редагувати</a></li>
-                                <li class="bookmark-card-menu__item"><a class="bookmark-card-menu__link" href="#">Видалити</a></li>
-                            </ul>
-                        </div><a class="bookmark-card__link" href="#">
-                            <div class="bookmark-card__pic">
-                                <svg class="bookmark-card__icon" width="110" height="86">
-                                    <use xlink:href="{{asset('assets/img/user/sprite.svg#docx')}}"></use>
-                                </svg>
-                            </div>
-                            <h3 class="bookmark-card__title">Назва пропозиції</h3></a>
-                    </div>
-                </li>
-                <li class="bookmarks-section__item">
-                    <div class="bookmark-card">
-                        <div class="bookmark-card-menu is-dropdown">
-                            <button class="bookmark-card-menu__toggle is-dropdown__toggle">
-                                <svg class="bookmark-card-menu__toggle-icon" width="4" height="18">
-                                    <use xlink:href="assets/img/user/sprite.svg#dots"></use>
-                                </svg>
-                            </button>
-                            <ul class="bookmark-card-menu__dropdown">
-                                <li class="bookmark-card-menu__item"><a class="bookmark-card-menu__link" href="#">Редагувати</a></li>
-                                <li class="bookmark-card-menu__item"><a class="bookmark-card-menu__link" href="#">Видалити</a></li>
-                            </ul>
-                        </div><a class="bookmark-card__link" href="#">
-                            <div class="bookmark-card__pic">
-                                <svg class="bookmark-card__icon" width="110" height="86">
-                                    <use xlink:href="{{asset('assets/img/user/sprite.svg#docx')}}"></use>
-                                </svg>
-                            </div>
-                            <h3 class="bookmark-card__title">Назва пропозиції</h3></a>
-                    </div>
-                </li>
-                <li class="bookmarks-section__item">
-                    <div class="bookmark-card">
-                        <div class="bookmark-card-menu is-dropdown">
-                            <button class="bookmark-card-menu__toggle is-dropdown__toggle">
-                                <svg class="bookmark-card-menu__toggle-icon" width="4" height="18">
-                                    <use xlink:href="{{asset('assets/img/user/sprite.svg#dots')}}"></use>
-                                </svg>
-                            </button>
-                            <ul class="bookmark-card-menu__dropdown">
-                                <li class="bookmark-card-menu__item"><a class="bookmark-card-menu__link" href="#">Редагувати</a></li>
-                                <li class="bookmark-card-menu__item"><a class="bookmark-card-menu__link" href="#">Видалити</a></li>
-                            </ul>
-                        </div><a class="bookmark-card__link" href="#">
-                            <div class="bookmark-card__pic">
-                                <svg class="bookmark-card__icon" width="110" height="86">
-                                    <use xlink:href="{{asset('assets/img/user/sprite.svg#docx')}}"></use>
-                                </svg>
-                            </div>
-                            <h3 class="bookmark-card__title">Назва пропозиції</h3></a>
-                    </div>
-                </li>
+                        </li>
+                    @endforeach
             </ul>
         </div>
     </section>
 @endsection
 
 @section('scripts_footer')
-    <script src="{{ asset('js/helpers.js') }}"></script>
-    <script>
+    <script type="module" src="{{ asset('js/helpers.js') }}"></script>
+    <script type="module">
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -208,7 +149,6 @@
 
         function handleDrop(ev) {
             let item_id = ev.dataTransfer.getData('text/plain');
-            console.log(item_id)
             if(item_id !== null && ev.currentTarget.dataset.zone !==  item_id) {
                 let id = item_id.split('_');
                 if(id.length > 1) {
@@ -225,8 +165,6 @@
             }
         }
         function handleDragStart(ev) {
-            console.log('test')
-            console.log(ev.currentTarget.dataset.item)
             ev.dataTransfer.setData("text/plain", ev.currentTarget.dataset.item);
         }
         document.addEventListener('DOMContentLoaded', function (ev) {

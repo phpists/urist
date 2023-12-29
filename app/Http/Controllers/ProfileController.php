@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\FolderType;
+use App\Models\ArticleCategory;
 use App\Models\Favourite;
 use App\Models\Folder;
 use Illuminate\Http\Request;
@@ -43,7 +44,8 @@ class ProfileController extends Controller
     }
 
     public function collection() {
-        return view('user.collection');
+        $categories = ArticleCategory::query()->whereNull('parent_id')->orderBy('position')->with('children')->get();
+        return view('user.collection', compact('categories'));
     }
 
     public function editPage() {

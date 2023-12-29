@@ -22,7 +22,8 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="{{ asset('/assets/favicon/ms-icon-144x144.png') }}">
     <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet" href="{{ asset('build/main.css') }}">
+    @yield('meta')
+    <link rel="stylesheet" href="{{ asset('user_build/main.css') }}">
     @stack('style')
     @stack('scripts_head')
 </head>
@@ -69,7 +70,7 @@
         </div>
     </aside>
 </main>
-<script type="module" crossorigin src="{{ asset('build/main.js')}}"></script>
+<script type="module" crossorigin src="{{ asset('user_build/main.js')}}"></script>
 @yield('scripts_footer')
 </body>
 </html>

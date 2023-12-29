@@ -23,7 +23,7 @@ class StoreFavouriteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'sometimes|string|nullable',
             'folder_id' => 'sometimes|exists:folders,id|nullable',
             'criminal_article_id' => 'required'
         ];
