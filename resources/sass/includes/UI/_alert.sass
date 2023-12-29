@@ -1,33 +1,49 @@
 .alert
     position: fixed
-    top: 25%
-    right: 0
-    display: inline-flex
-    align-items: center
-    gap: 10px
-    padding: 5px 20px
-    height: 50px
-    border-radius: 10px 0 0 10px
-    background: var(--green)
-    font-size: 14px
-    line-height: 1.2
-    font-weight: 700
-    color: var(--white)
-    transform: translateX(100%)
-    opacity: 0
-    visibility: hidden
-    transition: all .5s ease
+    bottom: 0
+    left: 0
+    width: 100%
+    background: var(--black)
+    display: none
     z-index: $z-index-2
-    cursor: pointer
-
-    @media ($max-md)
-        top: 10%
-        font-size: 12px
 
     &.is-visible
-        transform: translateX(0)
-        opacity: 1
-        visibility: visible
+        display: block
 
-    &--red
-        background: var(--red)
+    &__container
+        display: flex
+        justify-content: space-between
+        gap: 100px
+        padding: 10px 15px
+
+        @media ($max-md)
+            flex-direction: column
+            align-items: center
+            gap: 15px
+            text-align: center
+
+    &__text
+        margin: 0
+        color: var(--white)
+        font-weight: 300
+
+        @media ($max-lg)
+            font-size: 12px
+
+        a
+            color: var(--white)
+            border-bottom: 1px solid var(--white)
+            transition: all .5s ease
+
+            &:hover,
+            &:active,
+            &:focus-visible
+                color: var(--blue)
+                border-color: var(--blue)
+
+    &__close
+        width: 72px
+        min-width: 72px
+        height: 42px
+        font-size: 20px
+        text-transform: uppercase

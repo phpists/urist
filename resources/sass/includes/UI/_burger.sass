@@ -3,27 +3,22 @@
     flex-direction: column
     align-items: center
     justify-content: center
-    width: 50px
-    min-width: 50px
-    height: 50px
-    padding: 10px
+    width: 40px
+    min-width: 40px
+    height: 40px
+    padding: 5px
     line-height: 1
     gap: 5px
-    color: var(--white)
-    background: var(--blue)
+    color: var(--blue)
+    border: 1px solid var(--blue)
+    background: linear-gradient(90deg, #D6DCE4 0%, #F7F8FA 100%)
     border-radius: 10px
     transition: all .5s ease
-
-    @media ($max-md)
-        width: 40px
-        height: 40px
-        min-width: 40px
 
     &:hover,
     &:active,
     &:focus-visible
-        color: var(--white)
-        background: var(--blue)
+        border-color: var(--blue)
 
     &.is-active
 
@@ -42,6 +37,6 @@
         width: 23px
         height: 2px
         border-radius: 0
-        background: var(--white)
+        background: var(--blue)
         transition: all .5s ease
 

@@ -4,41 +4,36 @@
     left: 0
     width: 100%
     background: var(--white)
-    // box-shadow: 0 0 0 1px rgba(0, 0, 0, .1)
-    border-bottom: 1px solid #e5e5e5
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1)
     z-index: $z-index-3
-    padding-left: 320px
-
-    @media ($max-xl)
-        padding-left: 0
     
     &__container
         display: flex
         align-items: center
         gap: 20px
-        padding: 20px 30px 19px
+        padding: 20px 15px
 
         @media ($max-md)
-            padding: 15px 15px 14px
+            padding: 15px
 
-    &__burger
-        display: none
-
-        @media ($max-xl)
-            display: flex
-    
-    &__search
-        max-width: 585px
-        width: 100%
-
-        @media ($max-md)
-            display: none
-
-    &__actions
-        margin-left: auto
-
-    &__tariff-button
-        white-space: nowrap
+    &__logo
 
         @media ($max-lg)
+            margin-right: auto
+
+        .logo__link
+
+            @media ($max-lg)
+                font-size: 20px
+
+        .logo__img
+
+            @media ($max-lg)
+                min-width: 32px
+                width: 32px
+
+    &__menu
+        margin: 0 auto
+
+        @media ($max-md)
             display: none
