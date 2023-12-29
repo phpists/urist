@@ -114,7 +114,7 @@
             <ul class="pagenav__list">
                 <li class="pagenav__item"><a class="pagenav__arrow" href="#" aria-label="Previous">
                         <svg class="pagenav__icon" width="7" height="14">
-                            <use xlink:href="img/sprite.svg#arrow-left"></use>
+                            <use xlink:href="{{asset('assets/img/user/sprite.svg#arrow-left')}}"></use>
                         </svg></a></li>
                 <li class="pagenav__item is-active" aria-current="page"><a class="pagenav__link" href="#">1</a></li>
                 <li class="pagenav__item"><a class="pagenav__link" href="#">2</a></li>
@@ -122,7 +122,7 @@
                 <li class="pagenav__item"><a class="pagenav__link" href="#">7</a></li>
                 <li class="pagenav__item"><a class="pagenav__arrow" href="#" aria-label="Next">
                         <svg class="pagenav__icon" width="7" height="14">
-                            <use xlink:href="img/sprite.svg#arrow-right"></use>
+                            <use xlink:href="{{asset('assets/img/user/sprite.svg#arrow-right')}}"></use>
                         </svg></a></li>
             </ul>
         </nav>

@@ -1,0 +1,130 @@
+.sidebar
+    position: fixed
+    top: 0
+    left: 0
+    z-index: $z-index-3
+    width: 100%
+    max-width: 320px
+    height: calc(var(--vh) * 100)
+    outline: 0
+    // background: rgba(0, 0, 0, .5)
+    opacity: 1
+    visibility: visible
+    transition: all .5s ease
+
+    @media ($max-xl)
+        opacity: 0
+        visibility: hidden
+        max-width: 100%
+        z-index: $z-index-2
+
+    &.is-visible
+        opacity: 1
+        visibility: visible
+
+        .sidebar__panel
+            visibility: visible
+            transform: translate3d(0, 0, 0)
+
+    &__panel
+        position: fixed
+        top: 0
+        left: 0
+        width: 100%
+        max-width: 320px
+        height: 100%
+        background: var(--blue)
+        visibility: visible
+        transform: translate3d(0, 0, 0)
+        transition: all .5s ease
+
+        @media ($max-xl)
+            visibility: hidden
+            transform: translate3d(-100%, 0, 0)
+
+        @media ($max-sm)
+            max-width: 100%
+
+    &__inner
+        display: flex
+        flex-direction: column
+        height: 100%
+        width: 100%
+        padding: 0
+        overflow-y: auto
+
+        @media ($max-xl)
+            padding-top: 90px
+
+        @media ($max-md)
+            padding-top: 70px
+
+    &__logo
+        padding: 15px 30px
+        height: 90px
+        border-bottom: 1px solid var(--white)
+        
+        .logo__link
+            font-size: 25px
+            color: var(--white)
+
+        @media ($max-xl)
+            display: none
+
+    &-menu
+        padding: 30px
+
+        @media ($max-md)
+            padding: 25px 15px
+
+        &__list
+            margin: 0
+            padding: 0
+            list-style: none
+        
+        &__item
+            position: relative
+
+            &:not(:last-child)
+                margin-bottom: 25px
+
+        &__link
+            display: inline-flex
+            align-items: center
+            gap: 12px
+            font-size: 16px
+            font-weight: 400
+            line-height: 1.4
+            color: var(--white)
+            text-transform: uppercase
+            transition: color .5s ease
+
+            &:hover,
+            &:active,
+            &:focus-visible
+                color: var(--white)
+
+                .sidebar-menu__pic
+                    background: var(--white)
+                    color: var(--blue)
+
+            &.is-active
+                color: var(--white)
+                font-weight: 600
+
+                .sidebar-menu__pic
+                    background: var(--white)
+                    color: var(--blue)
+        
+        &__pic
+            display: flex
+            align-items: center
+            justify-content: center
+            height: 40px
+            width: 40px
+            min-width: 40px
+            border-radius: 8px
+            line-height: 1
+            border: 1px solid var(--white)
+            color: var(--white)
+            transition: all .5s ease

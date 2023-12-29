@@ -1,0 +1,162 @@
+.collection
+    margin: 0
+    padding: 0
+    list-style: none
+
+    &-table
+        width: auto
+        max-width: 100%
+        border-collapse: separate
+        border-spacing: 0
+        margin: 0 20px 20px
+        border: 1px solid #A8B2C2
+        border-radius: 6px
+        overflow: hidden
+
+        @media ($max-md)
+            display: block
+            margin: 0 15px 15px
+
+        &__thead
+
+            @media ($max-md)
+                display: none
+
+            tr
+                th
+                    background: var(--white)
+                    border-bottom: 1px solid #A8B2C2
+                    font-size: 20px
+                    font-weight: 300
+                    padding: 15px
+
+                    &:first-child
+                        text-align: center
+        
+        &__tbody
+            
+            @media ($max-md)
+                display: block
+
+            tr
+                @media ($max-md)
+                    display: flex
+                    flex-direction: column
+                    width: 100%
+                    gap: 10px
+                    padding: 15px 10px
+                    background: var(--white)
+
+                td
+                    background: var(--white)
+                    padding: 25px 15px
+                    vertical-align: top
+
+                    @media ($max-md)
+                        display: block
+                        padding: 0
+
+                    &:first-child
+                        text-align: center
+
+                        @media ($max-md)
+                            display: flex
+                            align-items: center
+                            justify-content: space-between
+
+                &:not(:last-child)
+                    
+                    @media ($max-md)
+                        border-bottom: 1px solid #A8B2C2
+
+                    td
+                        border-bottom: 1px solid #A8B2C2
+
+                        @media ($max-md)
+                            border: none
+        
+        &__date
+            display: block
+            font-size: 16px
+
+            @media ($max-md)
+                font-size: 14px
+        
+        &__info
+            display: block
+            font-size: 16px
+            font-weight: 600
+            color: var(--blue)
+            text-transform: uppercase
+
+            @media ($max-md)
+                font-size: 14px
+
+        &__title
+            font-size: 16px
+            font-weight: 400
+            line-height: 1.25
+            margin: 0
+
+            @media ($max-md)
+                font-size: 14px
+
+            &:not(:last-child)
+                margin-bottom: 5px
+        
+        &__link
+            font-size: 14px
+
+            @media ($max-md)
+                font-size: 12px
+
+        &__actions
+            justify-content: flex-end
+            gap: 15px
+
+            @media ($max-xl)
+                flex-wrap: wrap
+
+            @media ($max-md)
+                justify-content: flex-start
+                gap: 10px
+
+    &-descr
+
+        @media ($max-md)
+            font-size: 12px
+            
+        &__text
+            line-height: 1.25
+
+            p
+                margin: 0 0 .5rem
+
+        &__hidden
+            display: none
+
+            &.is-visible
+                display: block
+
+        &__more
+            display: inline-flex
+            align-items: center
+            gap: 5px
+            font-size: 14px
+            font-weight: 700
+            line-height: 1.25
+            color: var(--blue)
+            transition: color .5s ease
+
+            @media ($max-md)
+                font-size: 12px
+
+            &:hover,
+            &:active,
+            &:focus-visible
+                color: var(--black)
+
+            &.is-active
+
+                .collection-descr__more-icon
+                    transform: rotate(180deg)

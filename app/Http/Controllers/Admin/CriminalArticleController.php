@@ -109,7 +109,7 @@ class CriminalArticleController extends Controller
             'user_id' => $request->user()->id,
             'folder_id' => $request->folder_id,
             'criminal_article_id' => $request->criminal_article_id,
-            'name' => $request->name
+            'name' => $request->name??$article->name
         ]);
         if ($favourite->save())
             return redirect()->back()->with('success', 'Додано в закладки');
