@@ -8,7 +8,7 @@
             <nav class="sidebar-menu">
                 <ul class="sidebar-menu__list">
                     <li class="sidebar-menu__item">
-                        <a class="sidebar-menu__link @if(request()->routeIs('profile')) is-active @endif" href="{{route('profile')}}">
+                        <a class="sidebar-menu__link @if(request()->routeIs('user.profile.index')) is-active @endif" href="{{ route('user.profile.index') }}">
                             <span class="sidebar-menu__pic">
                                 <svg class="sidebar-menu__icon" width="17" height="19">
                                   <use xlink:href="{{asset('assets/img/user/sprite.svg#user')}}"></use>

@@ -35,7 +35,7 @@ class LoginController extends Controller
         if (auth()->attempt($credentials, $remember)) {
             $user = auth()->user();
             if ($user->phone_verified_at) {
-                return view('pages.dashboard');
+                return to_route('profile');
             }
             auth()->logout();
             return back()->withErrors(['phone' => Lang::get('messages.not_verified')])->withInput();
