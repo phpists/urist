@@ -17,7 +17,9 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
+        \Auth::user()->update($request->all());
 
+        return to_route('user.profile.index');
     }
 
 }
