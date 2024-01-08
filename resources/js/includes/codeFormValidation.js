@@ -5,51 +5,26 @@ const codeFormValidation = () => {
         const validator = new JustValidate('#code-form', {
             errorLabelCssClass: ['error-label'],
         });
-
-        document.getElementById('inputCode') &&
-            validator.addField('#inputCode', [
+        let hasInputStarted = false;
+        let codeInputs = document.querySelectorAll('.code_input');
+        codeInputs.forEach((el) => {
+            el &&
+            validator.addField('#' + el.id, [
                 {
                     rule: 'required',
                     errorMessage: "Заповніть це поле",
-                },
-                {
-                    rule: 'minLength',
-                    value: 4,
-                    errorMessage: "Мінімальна к-сть символів",
-                },
-                {
-                    rule: 'maxLength',
-                    value: 4,
-                    errorMessage: "Максимальна к-сть символів",
-                },
+                }
             ]);
+            el.addEventListener('input', () => {
+                if (!hasInputStarted) {
+                    hasInputStarted = true;
+                    document.querySelector('.just-validate-error-label').remove();
+                }
+            })
+        })
         validator.onSuccess(( event ) => {
             event.currentTarget.submit();
         });
-
-        // document.getElementById('inputCode2') &&
-        //     validator.addField('#inputCode2', [
-        //         {
-        //             rule: 'required',
-        //             errorMessage: "Заповніть це поле",
-        //         },
-        //     ]);
-        //
-        // document.getElementById('inputCode3') &&
-        //     validator.addField('#inputCode3', [
-        //         {
-        //             rule: 'required',
-        //             errorMessage: "Заповніть це поле",
-        //         },
-        //     ]);
-        //
-        // document.getElementById('inputCode4') &&
-        //     validator.addField('#inputCode4', [
-        //         {
-        //             rule: 'required',
-        //             errorMessage: "Заповніть це поле",
-        //         },
-        //     ]);
     }
 }
 

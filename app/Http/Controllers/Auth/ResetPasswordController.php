@@ -6,13 +6,16 @@ use App\Events\UserSendResetPasswordCodeEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserResetPasswordRequest;
 use App\Http\Requests\UserSendForgotPasswordRequest;
+use App\Http\Requests\VerifyPasswordResetCodeRequest;
 use App\Models\User;
 use App\Models\UserResetPasswordCode;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class ResetPasswordController extends Controller
 {
@@ -37,7 +40,26 @@ class ResetPasswordController extends Controller
             return redirect()->back()->withErrors(['phone' => trans('messages.user_not_found')])->withInput();
         }
         event(new UserSendResetPasswordCodeEvent($user));
-        return to_route('password.reset')->with('message', trans('messages.verify_phone'));
+        session(['hasSentCode' => 1]);
+        return redirect()->route('password.verify-page')->with('message', trans('messages.verify_phone'));
+    }
+
+    public function verificationPage(Request $request): View|\Illuminate\Foundation\Application|Factory|Application|RedirectResponse
+    {
+        if (!$request->session()->has('hasSentCode')) {
+            return redirect()->route('password.forgot');
+        }
+        return \view('auth.verify_reset');
+    }
+
+    public function verifyCode(VerifyPasswordResetCodeRequest $request) {
+        $code = UserResetPasswordCode::query()->where('code', $request->code)->first();
+        if (!$code) {
+            $action_route = route('password.verify-code');
+            return redirect()->back()->withErrors(['code' => trans('messages.invalid_code')])->withInput();
+        }
+        $user_id = $code->user_id;
+        return \view('auth.reset_password', compact('user_id'));
     }
 
     /**
@@ -46,14 +68,11 @@ class ResetPasswordController extends Controller
      */
     public function resetPassword(UserResetPasswordRequest $request): \Illuminate\Foundation\Application|View|Factory|Application|RedirectResponse
     {
-        $code = UserResetPasswordCode::where('code', $request->code)->first();
-        if (!$code) {
-            return redirect()->back()->withErrors(['code' => trans('messages.invalid_code')])->withInput();
-        }
-        $user = User::find($code->user_id);
+        $user = User::find($request->user_id);
         $user->password = Hash::make($request->password);
         $user->save();
         $user->userResetPasswordVerifyCodes()->delete();
+        $request->session()->forget('hasSentCode');
         return view('auth.login');
 
     }

@@ -7,6 +7,7 @@
                 <form id="password-form" class="form" autocomplete="off" action="{{ route('password.recovery') }}" method="POST">
                     @csrf
                     @method('POST')
+                    <input type="hidden" name="user_id" value="{{ $user_id }}">
                     <h1 class="section-title form__title">Новий пароль</h1>
                     <div class="form__group">
                         <div class="form__info">Ви вже скинули пароль? <a class="blue-link" href="{{route('login')}}">Увійти</a>
@@ -16,20 +17,6 @@
                         <div class="form__info"> {{ session('message') }}</a>
                         </div>
                     </div>
-                    <div class="form__group">
-                        <input class="input form__input @error('code') just-validate-error-field @enderror"
-                               placeholder="Код підтвердження *"
-                               type="number"
-                               maxlength="4"
-                               name="code"
-                               autocomplete="off" required="required"
-                               value="{{ old('code') }}"/>
-                        @error('code')
-                        <div class="error-label just-validate-error-label"
-                             style="display: block !important;">{{$message}}</div>
-                        @enderror
-                    </div>
-
 
                     <div class="form__group">
                         <input class="input form__input @error('password') just-validate-error-field @enderror"

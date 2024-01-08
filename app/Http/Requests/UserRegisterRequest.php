@@ -30,7 +30,7 @@ class UserRegisterRequest extends FormRequest
             'password_confirmation' => 'required',
             'policy' => ['required', 'accepted'],
             'offer' => ['required', 'accepted'],
-//            'g-recaptcha-response' => 'required|captcha',
+            'g-recaptcha-response' => 'required|captcha',
         ];
     }
 }

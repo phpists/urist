@@ -2,15 +2,18 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserVerifyPhoneRequest extends FormRequest
+class VerifyPasswordResetCodeRequest extends FormRequest
 {
-
     /**
-     * @return void
+     * Determine if the user is authorized to make this request.
      */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
     protected function prepareForValidation(): void
     {
         $code = $this->input('inputCode1').$this->input('inputCode2').$this->input('inputCode3').$this->input('inputCode4');
@@ -19,16 +22,15 @@ class UserVerifyPhoneRequest extends FormRequest
         ]);
     }
 
-
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array|string>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'code' => ['required','size:4'],
+            'code' => ['required', 'size:4'],
         ];
     }
 }
