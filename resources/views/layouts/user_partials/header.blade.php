@@ -56,7 +56,9 @@
                 </button>
                 <div class="actions__count">2</div>
             </li>
-            <li class="actions__item actions__item--hidden-md"><a class="button actions__button actions__button--big" href="#">Моя підписка</a></li>
+            <li class="actions__item actions__item--hidden-md">
+                <a class="button actions__button actions__button--big" href="{{ route('subscription') }}">Моя підписка</a>
+            </li>
             <li class="actions__item actions__item--visible-md">
                 <button class="button button--outline actions__button" type="button" data-modal="modal-search" aria-label="Show search modal">
                     <svg class="button__icon" width="21" height="21">
@@ -64,10 +66,12 @@
                     </svg>
                 </button>
             </li>
-            <li class="actions__item"><a class="button button--outline actions__button" href="#" aria-label="Logout">
+            <li class="actions__item">
+                <a class="button button--outline actions__button" href="{{ route('logout') }}" aria-label="Logout">
                     <svg class="button__icon" width="24" height="22">
                         <use xlink:href="{{asset('assets/img/user/sprite.svg#logout')}}"></use>
-                    </svg></a></li>
+                    </svg></a>
+            </li>
         </ul>
     </div>
 </header>

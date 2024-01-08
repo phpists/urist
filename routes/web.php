@@ -18,6 +18,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\FolderController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\ProfileController as UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,6 +104,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/article', [\App\Http\Controllers\ProfileController::class, 'article'])->name('article');
     Route::get('/subscription', [\App\Http\Controllers\ProfileController::class, 'subscription'])->name('subscription');
 });
+
+/** User */
+Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
+    // Profile
+    Route::get('profile', [UserProfileController::class, 'index'])->name('profile.index');
+    Route::put('profile', [UserProfileController::class, 'update'])->name('profile.update');
+});
+
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
