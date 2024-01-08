@@ -40,8 +40,8 @@
                     <div class="checkbox">
                         <input class="checkbox__input" id="checkboxAgree" type="checkbox" name="checkbox" value="true"
                                required="required"/>
-                        <label class="checkbox__label" for="checkboxAgree">Погоджуюсь з <a class="blue-link" href="#">Політикою
-                                конфіденційності</a> та <a class="blue-link" href="#">Офертою</a></label>
+                        <label class="checkbox__label" for="checkboxAgree">Погоджуюсь з <a class="blue-link" href="{{route('policy')}}">Політикою
+                                конфіденційності</a> та <a class="blue-link" href="{{route('offer')}}">Офертою</a></label>
                     </div>
                 </div>
                 <div class="form__button-group">

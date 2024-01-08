@@ -14,7 +14,7 @@ class UserResetPasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required', 'size:4'],
+            'user_id' => ['required', 'exists:users,id'],
             'password' => ['required', 'min:8', 'confirmed', new LetterDigitsRule()],
             'password_confirmation' => 'required',
         ];

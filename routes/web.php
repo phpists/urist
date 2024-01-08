@@ -45,7 +45,9 @@ Route::get('send', [LoginController::class, 'send'])->name('send');
 Route::get('password/forgot', [ResetPasswordController::class, 'index'])->name('password.forgot');
 Route::post('password/send-code', [ResetPasswordController::class, 'sendResetPasswordCode'])->name('password.send.code');
 Route::get('password/reset', function (){return view('auth.reset_password');})->name('password.reset');
+Route::post('password/verify-code', [ResetPasswordController::class, 'verifyCode'])->name('password.verify-code');
 Route::post('password/recovery', [ResetPasswordController::class, 'resetPassword'])->name('password.recovery');
+Route::get('password/verify-page', [ResetPasswordController::class, 'verificationPage'])->name('password.verify-page');
 
 
 
