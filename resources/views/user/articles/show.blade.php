@@ -26,7 +26,7 @@
                         </button>
                     </li>
                     <li class="actions__item">
-                        <button class="button button--outline actions__button" type="button" aria-label="Add page" data-tooltip="Робота з файлом" data-modal="modal-file">
+                        <button class="button button--outline actions__button modal-self-completing" type="button" aria-label="Add page" data-tooltip="Робота з файлом" data-json='@json(['criminal_article_id' => $article->id, 'name' => $article->name])' data-modal="modal-file">
                             <svg class="button__icon" width="22" height="24">
                                 <use xlink:href="{{ asset('assets/img/sprite.svg#create') }}"></use>
                             </svg>
@@ -43,7 +43,6 @@
             </header>
             <div class="page-section__text">
                 <p><strong class="blue-color">{!! $article->content !!}</strong></p>
-                <p><strong class="blue-color">Зміни до кримінального процесуального законодавства України можуть вноситися виключно законами про внесення змін до цього Кодексу та/або до законодавства про кримінальну відповідальність, та/або до законодавства України про адміністративні правопорушення.</strong></p>
             </div>
         </div>
     </section>
@@ -51,4 +50,5 @@
 
 <div class="modal-wrap">
     @include('layouts.user_partials.modal-bookmark')
+    @include('layouts.user_partials.modal-file')
 </div>

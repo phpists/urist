@@ -41,7 +41,8 @@ class FileController extends Controller
             'name' => $request->name,
             'content' => $article->content,
             'folder_id' => $request->folder_id,
-            'user_id' => $request->user()->id
+            'user_id' => $request->user()->id,
+            'criminal_article_id' => $article->id
         ]);
         if ($file->save()) {
             if ($request->ajax()) {

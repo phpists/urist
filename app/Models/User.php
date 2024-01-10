@@ -86,4 +86,10 @@ class User extends Authenticatable
             ->whereFolderType(FolderType::FAVOURITES_FOLDER->value);
     }
 
+    public function fileFolders()
+    {
+        return $this->allFolders()
+            ->whereFolderType(FolderType::FILE_FOLDER->value);
+    }
+
 }

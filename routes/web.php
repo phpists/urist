@@ -126,8 +126,13 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
     // Bookmarks
     Route::get('bookmarks/{folderId?}', [\App\Http\Controllers\User\BookmarkController::class, 'index'])
         ->name('bookmarks.index');
-//    Route::resource('bookmarks', \App\Http\Controllers\User\BookmarkController::class)
-//        ->only(['index', 'show']);
+
+    // File Manager
+    Route::get('file-manager/{folderId?}', [\App\Http\Controllers\User\FileController::class, 'index'])
+        ->name('files.index');
+    Route::get('file/{file}/edit', [\App\Http\Controllers\User\FileController::class, 'edit'])
+        ->name('files.edit');
+
 });
 
 

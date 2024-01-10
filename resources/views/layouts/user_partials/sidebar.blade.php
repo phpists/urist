@@ -25,7 +25,8 @@
                 <svg class="sidebar-menu__icon" width="16" height="20">
                   <use xlink:href="{{asset('assets/img/user/sprite.svg#bookmark')}}"></use>
                 </svg></span><span class="sidebar-menu__title">Закладки</span></a></li>
-                    <li class="sidebar-menu__item"><a class="sidebar-menu__link @if(request()->routeIs('edit_page')) is-active @endif" href="{{route('edit_page')}}"><span class="sidebar-menu__pic">
+                    <li class="sidebar-menu__item">
+                        <a class="sidebar-menu__link @if(request()->routeIs('user.files.*')) is-active @endif" href="{{ route('user.files.index') }}"><span class="sidebar-menu__pic">
                 <svg class="sidebar-menu__icon" width="17" height="21">
                   <use xlink:href="{{asset('assets/img/user/sprite.svg#file')}}"></use>
                 </svg></span><span class="sidebar-menu__title">Робота з файлами</span></a></li>
