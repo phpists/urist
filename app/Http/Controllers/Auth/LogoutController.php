@@ -14,6 +14,6 @@ class LogoutController extends Controller
     public function logout(): RedirectResponse
     {
         Auth::logout();
-        return redirect()->route('home');
+        return redirect('/');
     }
 }

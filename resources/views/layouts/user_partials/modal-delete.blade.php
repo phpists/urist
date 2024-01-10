@@ -7,10 +7,14 @@
                 </svg>
             </button>
             <h3 class="modal__title modal__title--mb-20">Ви підтверджуєте видалення?</h3>
-            <div class="modal__buttons">
-                <button class="button modal__button" type="button">Так</button>
-                <button class="button button--outline modal__button" type="button">Ні</button>
-            </div>
+            <form action="" method="POST">
+                @method('DELETE')
+                @csrf
+                <div class="modal__buttons">
+                    <button class="button modal__button" type="submit">Так</button>
+                    <button class="button button--outline modal__button" data-modal-close="data-modal-close" type="button">Ні</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

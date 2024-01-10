@@ -107,9 +107,27 @@ Route::group(['middleware' => 'auth'], function () {
 
 /** User */
 Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
+    // Index
+    Route::get('dashboard', [\App\Http\Controllers\User\DashboardController::class, 'index'])
+        ->name('dashboard.index');
+
     // Profile
-    Route::get('profile', [UserProfileController::class, 'index'])->name('profile.index');
-    Route::put('profile', [UserProfileController::class, 'update'])->name('profile.update');
+    Route::get('profile', [UserProfileController::class, 'index'])
+        ->name('profile.index');
+    Route::put('profile', [UserProfileController::class, 'update'])
+        ->name('profile.update');
+    Route::post('update-password', [UserProfileController::class, 'changePassword'])
+        ->name('profile.change-password');
+
+    // Articles
+    Route::resource('articles', \App\Http\Controllers\User\ArticleController::class)
+        ->only(['index', 'show']);
+
+    // Bookmarks
+    Route::get('bookmarks/{folderId?}', [\App\Http\Controllers\User\BookmarkController::class, 'index'])
+        ->name('bookmarks.index');
+//    Route::resource('bookmarks', \App\Http\Controllers\User\BookmarkController::class)
+//        ->only(['index', 'show']);
 });
 
 

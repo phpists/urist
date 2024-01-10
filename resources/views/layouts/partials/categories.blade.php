@@ -29,14 +29,14 @@
                                             <time class="collection-table__date">{{$article->created_at}}</time><span class="collection-table__info">ккс вс</span>
                                         </td>
                                         <td>
-                                            <h4 class="collection-table__title">{{$article->name}}</h4><a class="blue-link collection-table__link" href="#">Посилання на рішення</a>
+                                            <h4 class="collection-table__title">{{$article->name}}</h4><a class="blue-link collection-table__link" href="{{ $article->court_decision_link }}" target="_blank">Посилання на рішення</a>
                                         </td>
                                         <td>
                                             <div class="collection-descr">
                                                 <div class="collection-descr__text">
-                                                    <p>Онлайн-сервисы помогают пользователям решать самые разные задачи в интернете: проводить финансовые транзакции, совершать покупки... Онлайн-сервисы помогают пользователям решать самые разные задачи в интернете: проводить финансовые транзакции, совершать покупки...</p>
+                                                    {!! $short = Str::words($article->content, 50, '') !!}
                                                     <div class="collection-descr__hidden">
-                                                        <p>Онлайн-сервисы помогают пользователям решать самые разные задачи в интернете: проводить финансовые транзакции, совершать покупки... Онлайн-сервисы помогают пользователям решать самые разные задачи в интернете: проводить финансовые транзакции, совершать покупки...</p>
+                                                        {!! Str::substr($article->content, strlen($short)) !!}
                                                     </div>
                                                 </div>
                                                 <button class="collection-descr__more" type="button"><span>Читати детальніше</span>
@@ -49,14 +49,14 @@
                                         <td>
                                             <ul class="actions collection-table__actions">
                                                 <li class="actions__item">
-                                                    <button class="button button--outline actions__button" type="button" aria-label="Copy" data-tooltip="Копіювати">
+                                                    <button class="button button--outline actions__button" onclick="copyText('{{ route('user.articles.show', $article) }}')" type="button" aria-label="Copy" data-tooltip="Копіювати">
                                                         <svg class="button__icon" width="22" height="22">
                                                             <use xlink:href="{{asset('assets/img/user/sprite.svg#copy')}}"></use>
                                                         </svg>
                                                     </button>
                                                 </li>
                                                 <li class="actions__item">
-                                                    <button class="favouriteBtn button button--outline actions__button" type="button" aria-label="Add to bookmarks" data-id="{{$article->id}}" data-tooltip="В закладки" data-modal="modal-bookmark">
+                                                    <button class="favouriteBtn button button--outline actions__button modal-self-completing" type="button" aria-label="Add to bookmarks" data-json='@json(['criminal_article_id' => $article->id])' data-id="{{$article->id}}" data-tooltip="В закладки" data-modal="modal-bookmark">
                                                         <svg class="button__icon" width="19" height="24">
                                                             <use xlink:href="{{asset('assets/img/user/sprite.svg#bookmark')}}"></use>
                                                         </svg>
@@ -70,7 +70,7 @@
                                                     </button>
                                                 </li>
                                                 <li class="actions__item">
-                                                    <button class="button button--outline actions__button" type="button" aria-label="Read more" data-tooltip="Перейти">
+                                                    <button class="button button--outline actions__button" type="button" onclick="location.href = '{{ route('user.articles.show', $article) }}'" aria-label="Read more" data-tooltip="Перейти">
                                                         <svg class="button__icon" width="17" height="12">
                                                             <use xlink:href="{{asset('assets/img/user/sprite.svg#long-arrow-right')}}"></use>
                                                         </svg>
@@ -85,9 +85,6 @@
                     @endif
                     @include('layouts.partials.categories', ['categories' => $category->children])
                 </div>
-            </div>
-            <div class="modal-wrap">
-                @include('layouts.user_partials.modal-bookmark')
             </div>
         @endif
     </div>

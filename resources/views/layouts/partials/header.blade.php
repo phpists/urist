@@ -23,7 +23,7 @@
             @endguest
             @auth
                 <li class="actions__item actions__item"><a class="button button--outline actions__button"
-                                                           href="{{route('profile')}}">
+                                                           href="{{route('user.profile.index')}}">
                         <svg class="button__icon" width="17" height="19">
                             <use xlink:href="assets/img/sprite.svg#user "></use>
                         </svg>

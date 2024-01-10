@@ -1,7 +1,7 @@
 <aside class="sidebar">
     <div class="sidebar__panel">
         <div class="sidebar__inner">
-            <div class="logo sidebar__logo"><a class="logo__link" href="#" aria-label="logo">
+            <div class="logo sidebar__logo"><a class="logo__link" href="{{ route('user.dashboard.index') }}" aria-label="logo">
                     <svg class="logo__img" width="38" height="32">
                         <use xlink:href="{{asset('assets/img/user/sprite.svg#logo')}}"></use>
                     </svg><span class="logo__title">Збірник</span></a></div>
@@ -17,11 +17,11 @@
                             <span class="sidebar-menu__title">Мій профіль</span>
                         </a>
                     </li>
-                    <li class="sidebar-menu__item"><a class="sidebar-menu__link @if(request()->routeIs('collection')) is-active @endif" href="{{route('collection')}}"><span class="sidebar-menu__pic">
+                    <li class="sidebar-menu__item"><a class="sidebar-menu__link @if(request()->routeIs('user.articles.*')) is-active @endif" href="{{route('user.articles.index')}}"><span class="sidebar-menu__pic">
                 <svg class="sidebar-menu__icon" width="22" height="18">
                   <use xlink:href="{{asset('assets/img/user/sprite.svg#book')}}"></use>
                 </svg></span><span class="sidebar-menu__title">Збірник</span></a></li>
-                    <li class="sidebar-menu__item"><a class="sidebar-menu__link @if(request()->routeIs('favourites')) is-active @endif" href="{{route('favourites')}}"><span class="sidebar-menu__pic">
+                    <li class="sidebar-menu__item"><a class="sidebar-menu__link @if(request()->routeIs('user.bookmarks.*')) is-active @endif" href="{{route('user.bookmarks.index')}}"><span class="sidebar-menu__pic">
                 <svg class="sidebar-menu__icon" width="16" height="20">
                   <use xlink:href="{{asset('assets/img/user/sprite.svg#bookmark')}}"></use>
                 </svg></span><span class="sidebar-menu__title">Закладки</span></a></li>

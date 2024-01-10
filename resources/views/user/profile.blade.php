@@ -36,7 +36,7 @@
                     <label class="form-block__label">Номер телефону</label>
                 </div>
                 <div class="form-block__right">
-                    <input class="input form__input phone-mask" id="inputPhone" type="text" name="phone" placeholder="+38 (___) __-__-___" autocomplete="off" value="{{ old('phone', Str::substr($user->phone, 2)) }}" required="required"/>
+                    <input class="input form__input phone-mask" id="inputPhone" type="text" placeholder="+38 (___) __-__-___" autocomplete="off" value="{{ old('phone', Str::substr($user->phone, 2)) }}" disabled/>
                 </div>
             </div>
             <div class="form-block">
@@ -74,3 +74,33 @@
     </div>
 </section>
 @endsection
+
+<div class="modal-wrap">
+    <div class="modal" id="modal-edit-password">
+        <div class="modal__inner">
+            <div class="modal__window">
+                <button class="modal__close" aria-label="Close modal" data-modal-close="data-modal-close" type="button">
+                    <svg class="modal__close-icon" width="23" height="22">
+                        <use xlink:href="img/sprite.svg#close-modal"></use>
+                    </svg>
+                </button>
+                <h3 class="modal__title">Редагувати пароль</h3>
+                <form action="{{ route('user.profile.change-password') }}" method="POST" class="form modal__form" id="edit-password-form" autocomplete="off" novalidate="novalidate">
+                    @csrf
+                    <div class="form__group">
+                        <input class="input form__input" id="inputEditPassword" type="password" name="old_password" placeholder="Старий пароль" autocomplete="off" required="required"/>
+                    </div>
+                    <div class="form__group">
+                        <input class="input form__input" id="inputEditNewPassword" type="password" name="new_password" placeholder="Новий пароль" autocomplete="off" required="required"/>
+                    </div>
+                    <div class="form__group">
+                        <input class="input form__input" id="inputEditRepeatPassword" type="password" name="new_password_confirmation" placeholder="Повторити пароль" autocomplete="off" required="required"/>
+                    </div>
+                    <div class="form__buttons-group form__buttons-group--center">
+                        <button class="button form__button modal__button">Зберегти</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
