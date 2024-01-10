@@ -133,6 +133,10 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
     Route::get('file/{file}/edit', [\App\Http\Controllers\User\FileController::class, 'edit'])
         ->name('files.edit');
 
+    // Registries
+    Route::get('registries', [\App\Http\Controllers\User\RegistryController::class, 'index'])
+        ->name('registries.index');
+
 });
 
 
@@ -207,4 +211,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], func
     // Subscriptions
     Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('admin.subscriptions.index');
     Route::post('/subscriptions/update_permission', [SubscriptionController::class, 'updateRolePermission'])->name('admin.subscriptions.update_role_permission');
+
+    // Registries
+    Route::delete('registries/bulk-delete', [\App\Http\Controllers\Admin\RegistryController::class, 'bulkDelete'])
+        ->name('admin.registries.bulk_delete');
+    Route::resource('registries', \App\Http\Controllers\Admin\RegistryController::class, ['as' => 'admin']);
+
 });

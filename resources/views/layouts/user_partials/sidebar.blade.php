@@ -21,20 +21,27 @@
                 <svg class="sidebar-menu__icon" width="22" height="18">
                   <use xlink:href="{{asset('assets/img/user/sprite.svg#book')}}"></use>
                 </svg></span><span class="sidebar-menu__title">Збірник</span></a></li>
-                    <li class="sidebar-menu__item"><a class="sidebar-menu__link @if(request()->routeIs('user.bookmarks.*')) is-active @endif" href="{{route('user.bookmarks.index')}}"><span class="sidebar-menu__pic">
+                    <li class="sidebar-menu__item"><a
+                            class="sidebar-menu__link @if(request()->routeIs('user.bookmarks.*')) is-active @endif"
+                            href="{{route('user.bookmarks.index')}}"><span class="sidebar-menu__pic">
                 <svg class="sidebar-menu__icon" width="16" height="20">
                   <use xlink:href="{{asset('assets/img/user/sprite.svg#bookmark')}}"></use>
                 </svg></span><span class="sidebar-menu__title">Закладки</span></a></li>
                     <li class="sidebar-menu__item">
-                        <a class="sidebar-menu__link @if(request()->routeIs('user.files.*')) is-active @endif" href="{{ route('user.files.index') }}"><span class="sidebar-menu__pic">
+                        <a class="sidebar-menu__link @if(request()->routeIs('user.files.*')) is-active @endif"
+                           href="{{ route('user.files.index') }}"><span class="sidebar-menu__pic">
                 <svg class="sidebar-menu__icon" width="17" height="21">
                   <use xlink:href="{{asset('assets/img/user/sprite.svg#file')}}"></use>
                 </svg></span><span class="sidebar-menu__title">Робота з файлами</span></a></li>
-                    <li class="sidebar-menu__item"><a class="sidebar-menu__link" href="#"><span class="sidebar-menu__pic">
+                    <li class="sidebar-menu__item">
+                        <a class="sidebar-menu__link @if(request()->routeIs('user.registries.*')) is-active @endif"
+                           href="{{ route('user.registries.index') }}"><span class="sidebar-menu__pic">
                 <svg class="sidebar-menu__icon" width="21" height="17">
                   <use xlink:href="{{asset('assets/img/user/sprite.svg#folder')}}"></use>
                 </svg></span><span class="sidebar-menu__title">Реєстри</span></a></li>
-                    <li class="sidebar-menu__item"><a class="sidebar-menu__link @if(request()->routeIs('subscription')) is-active @endif" href="{{route('subscription')}}"><span class="sidebar-menu__pic">
+                    <li class="sidebar-menu__item"><a
+                            class="sidebar-menu__link @if(request()->routeIs('subscription')) is-active @endif"
+                            href="{{route('subscription')}}"><span class="sidebar-menu__pic">
                 <svg class="sidebar-menu__icon" width="20" height="19">
                   <use xlink:href="{{asset('assets/img/user/sprite.svg#subscribe')}}"></use>
                 </svg></span><span class="sidebar-menu__title">Моя підписка</span></a></li>
