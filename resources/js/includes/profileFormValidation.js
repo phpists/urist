@@ -13,7 +13,7 @@ const profileFormValidation = () => {
                     errorMessage: "Заповніть це поле",
                 },
             ]);
-        
+
         document.getElementById('inputLastName') &&
             validator.addField('#inputLastName', [
                 {
@@ -21,7 +21,7 @@ const profileFormValidation = () => {
                     errorMessage: "Заповніть це поле",
                 },
             ]);
-        
+
         document.getElementById('inputEmail') &&
             validator.addField('#inputEmail', [
                 {
@@ -29,15 +29,11 @@ const profileFormValidation = () => {
                     errorMessage: "Заповніть це поле",
                 },
             ]);
-        
+
         document.getElementById('inputPhone') &&
             validator.addField('#inputPhone', [
-                {
-                    rule: 'required',
-                    errorMessage: "Заповніть це поле",
-                },
             ]);
-        
+
         document.getElementById('inputDate') &&
             validator.addField('#inputDate', [
                 {
@@ -45,7 +41,7 @@ const profileFormValidation = () => {
                     errorMessage: "Заповніть це поле",
                 },
             ]);
-        
+
         document.getElementById('selectCity') &&
             validator.addField('#selectCity', [
                 {
@@ -53,7 +49,7 @@ const profileFormValidation = () => {
                     errorMessage: "Заповніть це поле",
                 },
             ]);
-        
+
     }
 }
 

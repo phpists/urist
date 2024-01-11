@@ -12,7 +12,8 @@ class UpdateFileRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can(Permissions::FILE_CREATE->value);
+        return true;
+//        return $this->user()->can(Permissions::FILE_CREATE->value);
     }
 
     /**

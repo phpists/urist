@@ -163,6 +163,13 @@
                                 <span class="menu-text">Файловий менеджер</span>
                             </a>
                         </li>
+                        <li class="menu-item {{ request()->routeIs('admin.registries.*') ? 'menu-item-active' : '' }}"
+                            aria-haspopup="true">
+                            <a href="{{route('admin.registries.index')}}" class="menu-link">
+                                <i class="flaticon-folder menu-icon"></i>
+                                <span class="menu-text">Реєстр</span>
+                            </a>
+                        </li>
                         <li class="menu-item {{ request()->routeIs('admin.subscriptions.index') ? 'menu-item-active' : '' }}"
                             aria-haspopup="true">
                             <a href="{{route('admin.subscriptions.index')}}" class="menu-link">

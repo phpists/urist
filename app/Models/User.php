@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\FolderType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -72,6 +73,23 @@ class User extends Authenticatable
     public function userResetPasswordVerifyCodes(): HasMany
     {
         return $this->hasMany(UserResetPasswordCode::class);
+    }
+
+    public function allFolders()
+    {
+        return $this->hasMany(Folder::class);
+    }
+
+    public function bookmarkFolders()
+    {
+        return $this->allFolders()
+            ->whereFolderType(FolderType::FAVOURITES_FOLDER->value);
+    }
+
+    public function fileFolders()
+    {
+        return $this->allFolders()
+            ->whereFolderType(FolderType::FILE_FOLDER->value);
     }
 
 }

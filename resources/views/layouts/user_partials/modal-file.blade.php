@@ -7,17 +7,18 @@
                 </svg>
             </button>
             <h3 class="modal__title">Робота з файлом</h3>
-            <form class="form modal__form" id="file-form" autocomplete="off" novalidate="novalidate">
+            <form action="{{ route('files.store') }}" method="POST" class="form modal__form" id="file-form" autocomplete="off" novalidate="novalidate">
+                @csrf
+                <input type="hidden" name="criminal_article_id">
                 <div class="form__group">
-                    <input class="input form__input" id="inputFileTitle" type="text" name="inputFileTitle" placeholder="Введіть вашу назву пропозиції" autocomplete="off" required="required"/>
+                    <input class="input form__input" id="inputFileTitle" type="text" name="name" placeholder="Введіть вашу назву пропозиції" autocomplete="off" required="required"/>
                 </div>
                 <div class="form__group">
-                    <select class="select" id="selectFileFolder" name="selectFileFolder" aria-label="Виберіть папку" required="required">
+                    <select class="select" id="selectFileFolder" name="folder_id" aria-label="Виберіть папку" required="required">
                         <option value="">Виберіть папку</option>
-                        <option value="1">Папка 1</option>
-                        <option value="2">Папка 2</option>
-                        <option value="3">Папка 3</option>
-                        <option value="4">Папка 4</option>
+                        @foreach(auth()->user()->fileFolders as $fileFolder)
+                            <option value="{{ $fileFolder->id }}">{{ $fileFolder->name }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form__buttons-group form__buttons-group--center">

@@ -34,6 +34,7 @@
     @include('layouts.user_partials.sidebar')
 </main>
 <script type="module" crossorigin src="{{ asset('user_build/main.js')}}"></script>
+<script src="{{ asset('js/scripts.js')}}"></script>
 @yield('scripts_footer')
 </body>
 </html>
