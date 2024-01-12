@@ -49,7 +49,7 @@ class VerifyPhoneController extends Controller
             $user->userPhoneVerifyCodes()->delete();
             DB::commit();
             Auth::login($user);
-            return redirect()->route('dashboard')
+            return to_route('user.dashboard.index')
                 ->with('success', Lang::get('messages.verify_success'));
         } catch (\Exception $exception) {
             DB::rollBack();
