@@ -50,6 +50,11 @@ const profileFormValidation = () => {
                 },
             ]);
 
+        validator.onSuccess(( event ) => {
+            console.log(event.currentTarget);
+            event.currentTarget.submit();
+        });
+
     }
 }
 

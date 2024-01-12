@@ -13,7 +13,7 @@ const fileFormValidation = () => {
                     errorMessage: "Заповніть це поле",
                 },
             ]);
-        
+
         document.getElementById('selectFileFolder') &&
             validator.addField('#selectFileFolder', [
                 {
@@ -21,6 +21,11 @@ const fileFormValidation = () => {
                     errorMessage: "Заповніть це поле",
                 },
             ]);
+
+        validator.onSuccess(( event ) => {
+            event.currentTarget.submit();
+        });
+
     }
 }
 

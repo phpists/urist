@@ -14,6 +14,10 @@ const createFormValidation = () => {
                 },
             ]);
 
+        validator.onSuccess(( event ) => {
+            event.currentTarget.submit();
+        });
+
     }
 }
 
