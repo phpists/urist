@@ -29,7 +29,7 @@
 </head>
 <body>
 @include('layouts.user_partials.header')
-<main id="main" class="main">
+<main id="main" class="main is-full">
     @yield('page')
     @include('layouts.user_partials.sidebar')
 </main>
