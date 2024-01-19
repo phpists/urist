@@ -5,18 +5,38 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\ArticleCategory;
 use App\Models\CriminalArticle;
+use App\Services\ArticleFilterService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
 
     public function index()
     {
-        $categories = ArticleCategory::whereNull('parent_id')
-            ->orderBy('position')
-            ->with('children')
-            ->get();
+        $filterService = new ArticleFilterService();
 
-        return view('user.articles.index', compact('categories'));
+        if (request()->wantsJson()) {
+            return new JsonResponse([
+                'html' => view('user.articles._items', [
+                    'categories' => $filterService->getCategories(),
+                    'articles' => $filterService->getArticles()
+                ])->render(),
+                'url' => request()->fullUrl()
+            ]);
+        }
+
+        return view('user.articles.index', [
+            'categories' => $filterService->getCategories(),
+            'articles' => $filterService->getArticles()
+        ]);
+    }
+
+    public function articlesCount()
+    {
+        return new JsonResponse([
+            'count' => (new ArticleFilterService())->getTotalCount()
+        ]);
     }
 
     public function show(CriminalArticle $article)

@@ -28,13 +28,25 @@
     @stack('scripts_head')
 </head>
 <body>
+
+@php($is_menu_hidden = isset($is_menu_hidden) ? $is_menu_hidden : true)
+
 @include('layouts.user_partials.header')
-<main id="main" class="main is-full">
+
+<main id="main" class="main {{ $is_menu_hidden ? 'is-full' : '' }}">
     @yield('page')
     @include('layouts.user_partials.sidebar')
 </main>
+
+
+<img id="spinner" src="{{ asset('img/spinner.gif') }}" alt="loading..." style="display: none">
+
+@include('user.articles.filter._filter')
+
 <script type="module" crossorigin src="{{ asset('user_build/main.js')}}"></script>
 <script src="{{ asset('js/scripts.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 @yield('scripts_footer')
+@stack('scripts')
 </body>
 </html>

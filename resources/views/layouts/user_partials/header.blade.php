@@ -1,11 +1,12 @@
-<header class="header is-full">
+<header class="header {{ $is_menu_hidden ? 'is-full' : '' }}">
     <div class="container header__container">
         <button class="burger header__burger" type="button" aria-label="Open sidebar" aria-expanded="false" data-sidebar-toggle="data-sidebar-toggle">
             <div class="burger__line"></div>
             <div class="burger__line"></div>
             <div class="burger__line"></div>
         </button>
-        <a class="button header__button" href="#">Модуль КК</a><a class="button button--outline header__button" href="#">Модуль КПК</a>
+        <a class="button header__button" href="{{ route('user.articles.index') }}">Модуль КК</a>
+        <a class="button button--outline header__button" href="{{ route('user.articles.index') }}">Модуль КПК</a>
         <form class="search header__search" id="search-form" autocomplete="off" novalidate="novalidate">
             <div class="search__group">
                 <input class="input search__input" id="inputSearch" type="text" name="inputSearch" placeholder="Пошук по збірнику" autocomplete="off" required="required"/>

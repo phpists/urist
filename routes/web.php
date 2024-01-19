@@ -122,6 +122,8 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
     // Articles
     Route::resource('articles', \App\Http\Controllers\User\ArticleController::class)
         ->only(['index', 'show']);
+    Route::get('articles-total-count', [\App\Http\Controllers\User\ArticleController::class, 'articlesCount'])
+        ->name('articles.total-count');
 
     // Bookmarks
     Route::get('bookmarks/{folderId?}', [\App\Http\Controllers\User\BookmarkController::class, 'index'])

@@ -33,4 +33,20 @@ class ArticleCategory extends Model
     protected $dispatchesEvents = [
         'deleted' => ArticleCategoryDeleted::class
     ];
+
+
+    public static function getChildIds($category_id): array
+    {
+        $ids = [$category_id];
+        $category = self::find($category_id);
+
+        if ($category->children) {
+            foreach ($category->children as $subcategory) {
+                $ids = array_merge($ids, self::getChildIds($subcategory->id));
+            }
+        }
+
+        return $ids;
+    }
+
 }

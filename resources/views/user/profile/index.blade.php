@@ -3,6 +3,14 @@
 @section('page')
     <section class="profile-section">
         <div class="container profile-section__container">
+            <div class="filter-toggle">
+                <h3 class="filter-toggle__title">Фільтр</h3>
+                <button class="button button--outline filter-toggle__button" type="button" aria-label="Hide Filter" data-filter-toggle="data-filter-toggle">
+                    <svg class="button__icon" width="20" height="20p">
+                        <use xlink:href="img/sprite.svg#filter"></use>
+                    </svg>
+                </button>
+            </div>
             <h1 class="page-title profile-section__title">Мій профіль</h1>
             <form action="{{ route('user.profile.update') }}" method="POST" class="form profile-section__form" id="profile-form" autocomplete="off" novalidate="novalidate">
                 @csrf

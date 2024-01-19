@@ -35,7 +35,7 @@
                             <a class="bookmark-card__link" href="{{ route('user.bookmarks.index', $fav_folder->parent_id) }}">
                                 <div class="bookmark-card__pic">
                                     <svg class="bookmark-card__icon" width="110" height="86">
-                                        <use xlink:href="{{asset('assets/img/user/sprite.svg#folder-solid')}}"></use>
+                                        <use xlink:href="{{asset('assets/img/user/sprite.svg#case')}}"></use>
                                     </svg>
                                 </div>
                                 <h3 class="bookmark-card__title">Повернутись назад</h3>
@@ -65,7 +65,7 @@
                                data-item="folder_{{ $folder->id }}">
                                 <div class="bookmark-card__pic">
                                     <svg class="bookmark-card__icon" width="110" height="86">
-                                        <use xlink:href="{{asset('assets/img/user/sprite.svg#folder-solid')}}"></use>
+                                        <use xlink:href="{{asset('assets/img/user/sprite.svg#case')}}"></use>
                                     </svg>
                                 </div>
                                 <h3 class="bookmark-card__title">{{$folder->name}}</h3>
@@ -92,7 +92,7 @@
                             <a class="bookmark-card__link drag_element" draggable="true" data-item="file_{{$favourite->id}}" href="{{ route('user.articles.show', $favourite->criminal_article_id) }}">
                                 <div class="bookmark-card__pic">
                                     <svg class="bookmark-card__icon" width="110" height="86">
-                                        <use xlink:href="{{asset('assets/img/user/sprite.svg#docx')}}"></use>
+                                        <use xlink:href="{{asset('assets/img/user/sprite.svg#proposition')}}"></use>
                                     </svg>
                                 </div>
                                 <h3 class="bookmark-card__title">{{$favourite->name}}</h3>
