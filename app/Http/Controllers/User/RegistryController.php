@@ -10,7 +10,8 @@ class RegistryController extends Controller
 
     public function index()
     {
-        $registries = Registry::all();
+        $registries = Registry::paginate()
+            ->withQueryString();
 
         return view('user.registries.index', compact('registries'));
     }

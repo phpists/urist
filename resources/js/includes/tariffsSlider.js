@@ -7,7 +7,7 @@ const tariffsSlider = () => {
         modules: [Pagination],
         spaceBetween: 30,
         slidesPerView: 2,
-        loop: true,
+        loop: false,
         centeredSlides: false,
         observer: true,
         speed: 700,
