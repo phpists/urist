@@ -223,4 +223,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], func
         ->name('admin.registries.bulk_delete');
     Route::resource('registries', \App\Http\Controllers\Admin\RegistryController::class, ['as' => 'admin']);
 
+    // Blog
+    Route::delete('blog/bulk-delete', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'bulkDelete'])
+        ->name('admin.blog.bulk-delete');
+    Route::resource('blog', \App\Http\Controllers\Admin\Blog\BlogController::class, [
+        'as' => 'admin'
+    ]);
+
+    // Blog Tag
+    Route::resource('blog-tags', \App\Http\Controllers\Admin\Blog\BlogTagController::class, [
+        'as' => 'admin'
+    ]);
+
 });

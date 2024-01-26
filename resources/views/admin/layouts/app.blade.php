@@ -181,6 +181,38 @@
 <h4 class="menu-text">Настройки</h4>
 <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
 </li>
+
+
+                        <li class="menu-item  menu-item-submenu {{ (request()->routeIs('admin.blog.*')) ? 'menu-item-open' : '' }}"
+                            aria-haspopup="true" data-menu-toggle="hover">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="flaticon-folder menu-icon"></i>
+                                <span class="menu-text">Блог</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item  menu-item-parent" aria-haspopup="true">
+                                        <span class="menu-link"><span class="menu-text">Блог</span></span>
+                                    </li>
+
+                                    <li class="menu-item {{ request()->routeIs('admin.blog.*') ? 'menu-item-active' : '' }}">
+                                        <a href="{{ route('admin.blog.index') }}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                            <span class="menu-text">Статті</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item {{ request()->routeIs('home') ? 'menu-item-active' : '' }}">
+                                        <a href="#" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                            <span class="menu-text">Хештеги</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
 </ul>
 <!--end::Menu Nav-->
 </div>
@@ -304,6 +336,7 @@ fill="#000000" fill-rule="nonzero"/>
 
 <script src="{{ asset('super_admin/js/toastr.min.js') }}"></script>
 @yield('js_after')
+@stack('scripts')
 <!--end::Page Scripts-->
 </body>
 <!--end::Body-->
