@@ -187,4 +187,10 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+
+
+    /** CUSTOM */
+    'admin_email' => env('APP_ADMIN_EMAIL')
+
+
 ];

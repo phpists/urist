@@ -51,8 +51,23 @@ const feedbackFormValidation = () => {
                     errorMessage: "Заповніть це поле",
                 },
             ]);
+
         validator.onSuccess(( event ) => {
-            event.currentTarget.submit();
+            let $form = $(event.currentTarget);
+
+            console.log($form)
+
+            $.ajax({
+                type: $form.attr('method'),
+                url: $form.attr('action'),
+                dataType: 'json',
+                data: $form.serialize(),
+                success: function (response) {
+                    console.log($form.find('button[data-modal]'));
+                    $form.find('button[data-modal]').click()
+                    $form[0].reset()
+                }
+            })
         });
     }
 }

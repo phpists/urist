@@ -54,7 +54,11 @@ Route::get('password/verify-page', [ResetPasswordController::class, 'verificatio
 
 //Other routes
 
-Route::get('/', function () {return view('home');})->name('home');
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home');
+Route::post('form', [\App\Http\Controllers\HomeController::class, 'form'])
+    ->name('home.form');
+
 Route::get('/offer', function () {return view('pages.offer');})->name('offer');
 Route::get('/blog', function () {return view('pages.blog');})->name('blog');
 Route::get('/policy', function () {return view('pages.policy');})->name('policy');
