@@ -282,7 +282,7 @@
         </div>
     </section>
 
-    <section class="tariffs-section">
+    <section class="tariffs-section" id="tariffs-section">
         <div class="container tariffs-section__container">
             <h2 class="section-title tariffs-section__title">Тарифи</h2>
             <nav class="tariffs-plan">

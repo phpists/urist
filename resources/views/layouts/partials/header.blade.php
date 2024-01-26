@@ -1,16 +1,16 @@
 <header class="header">
     <div class="container header__container">
-        <div class="logo header__logo"><a class="logo__link" href="{{route('home')}}" aria-label="logo">
+        <div class="logo header__logo"><a class="logo__link" href="/" aria-label="logo">
                 <svg class="logo__img" width="46" height="38">
                     <use xlink:href="{{ asset('/assets/img/sprite.svg#logo') }}"></use>
                 </svg>
                 <span class="logo__title">Збірник</span></a></div>
         <nav class="menu header__menu">
             <ul class="menu__list">
-                <li class="menu__item"><a class="menu__link is-active" href="{{route('home')}}#tariffs-section">Тарифи</a></li>
-                <li class="menu__item"><a class="menu__link" href="{{route('blog')}}">Блог</a></li>
-                <li class="menu__item"><a class="menu__link" href="{{route('faq')}}">FAQ</a></li>
-                <li class="menu__item"><a class="menu__link" href="{{route('contacts')}}">Контакти</a></li>
+                <li class="menu__item"><a class="menu__link @if(request()->routeIs('home')) is-active @endif" href="/#tariffs-section">Тарифи</a></li>
+                <li class="menu__item"><a class="menu__link @if(request()->routeIs('blog')) is-active @endif" href="{{ route('blog') }}">Блог</a></li>
+                <li class="menu__item"><a class="menu__link @if(request()->routeIs('faq')) is-active @endif" href="{{ route('faq') }}">FAQ</a></li>
+                <li class="menu__item"><a class="menu__link @if(request()->routeIs('contacts')) is-active @endif" href="{{ route('contacts') }}">Контакти</a></li>
             </ul>
         </nav>
         <ul class="actions">

@@ -27,13 +27,24 @@
         <div class="footer__col footer__col--5">
             <nav class="footer-menu">
                 <ul class="footer-menu__list">
-                    <li class="footer-menu__item"><a class="footer-menu__link" href="#">Тарифи</a></li>
-                    <li class="footer-menu__item"><a class="footer-menu__link" href="#">Блог</a></li>
-                    <li class="footer-menu__item"><a class="footer-menu__link" href="#">FAQ</a></li>
-                    <li class="footer-menu__item"><a class="footer-menu__link" href="#">Контакти</a></li>
-                    <li class="footer-menu__item"><a class="footer-menu__link" href="#">Політика конфіденційності</a>
+                    <li class="footer-menu__item">
+                        <a class="footer-menu__link" href="/#tariffs-section">Тарифи</a>
                     </li>
-                    <li class="footer-menu__item"><a class="footer-menu__link" href="#">Оферта</a></li>
+                    <li class="footer-menu__item">
+                        <a class="footer-menu__link" href="{{ route('blog') }}">Блог</a>
+                    </li>
+                    <li class="footer-menu__item">
+                        <a class="footer-menu__link" href="{{ route('faq') }}">FAQ</a>
+                    </li>
+                    <li class="footer-menu__item">
+                        <a class="footer-menu__link" href="{{ route('contacts') }}">Контакти</a>
+                    </li>
+                    <li class="footer-menu__item">
+                        <a class="footer-menu__link" href="{{ route('policy') }}">Політика конфіденційності</a>
+                    </li>
+                    <li class="footer-menu__item">
+                        <a class="footer-menu__link" href="{{ route('offer') }}">Оферта</a>
+                    </li>
                 </ul>
             </nav>
         </div>
