@@ -34,11 +34,8 @@
                         <label class="checkbox__label" for="checkboxKeep">Бути у системі</label>
                     </div>
                     <div class="form__group form__group--sb" style="margin-top: 20px">
-                        @if($errors->any())
-                            <a class="form__link blue-link" href="{{route('verify_phone_resend.page')}}">Верифікація номеру</a>
-                        @else
+{{--                            <a class="form__link blue-link" href="{{route('verify_phone_resend.page')}}">Верифікація номеру</a>--}}
                          <div></div>
-                        @endif
                         <a class="form__link blue-link" href="{{route('password.forgot')}}">Забули пароль?</a>
                     </div>
                     <div class="form__group form__group--center">

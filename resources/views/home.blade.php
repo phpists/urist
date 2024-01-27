@@ -288,13 +288,13 @@
             <nav class="tariffs-plan">
                 <ul class="tariffs-plan__list">
                     <li class="tariffs-plan__item">
-                        <button class="tariffs-plan__button is-active" type="button">В місяць</button>
+                        <button class="tariffs-plan__button is-active" type="button" data-months="1">В місяць</button>
                     </li>
                     <li class="tariffs-plan__item">
-                        <button class="tariffs-plan__button" type="button">На пів року</button>
+                        <button class="tariffs-plan__button" type="button" data-months="6">На пів року</button>
                     </li>
                     <li class="tariffs-plan__item">
-                        <button class="tariffs-plan__button" type="button">На рік</button>
+                        <button class="tariffs-plan__button" type="button" data-months="12">На рік</button>
                     </li>
                 </ul>
             </nav>
@@ -365,11 +365,12 @@
                             </div>
                             <div class="tariff-card__footer">
                                 <div class="tariff-card__total">
-                                    <div class="tariff-card__price">Вартість 5$</div>
-                                    <div class="tariff-card__discount">27$ / 6 мес (-10%)</div>
-                                    <div class="tariff-card__discount">48$ / 12 мес (-20%)</div>
+                                    <div class="tariff-card__price">Вартість <span>5$</span></div>
+                                    <div class="tariff-card__discount" data-months="1" data-price="5$" style="display: none">5$ / 1 мес</div>
+                                    <div class="tariff-card__discount" data-months="6" data-price="27$">27$ / 6 мес (-10%)</div>
+                                    <div class="tariff-card__discount" data-months="12" data-price="48$">48$ / 12 мес (-20%)</div>
                                 </div>
-                                <button class="button tariff-card__buy-button" type="button">Обрати</button>
+                                <a class="button tariff-card__buy-button" href="{{ auth()->check() ? route('subscription') : route('register.page') }}">Обрати</a>
                             </div>
                         </div>
                     </div>
@@ -438,11 +439,12 @@
                             </div>
                             <div class="tariff-card__footer">
                                 <div class="tariff-card__total">
-                                    <div class="tariff-card__price">Вартість 7$</div>
-                                    <div class="tariff-card__discount">37$ / 6 мес (-10%)</div>
-                                    <div class="tariff-card__discount">65$ / 12 мес (-25%)</div>
+                                    <div class="tariff-card__price">Вартість <span>7$</span></div>
+                                    <div class="tariff-card__discount" data-months="1" data-price="7$" style="display:none;">7$ / 1 мес</div>
+                                    <div class="tariff-card__discount" data-months="6" data-price="37$">37$ / 6 мес (-10%)</div>
+                                    <div class="tariff-card__discount" data-months="12" data-price="65$">65$ / 12 мес (-25%)</div>
                                 </div>
-                                <button class="button tariff-card__buy-button" type="button">Обрати</button>
+                                <a class="button tariff-card__buy-button" href="{{ auth()->check() ? route('subscription') : route('register.page') }}">Обрати</a>
                             </div>
                         </div>
                     </div>
@@ -511,11 +513,12 @@
                             </div>
                             <div class="tariff-card__footer">
                                 <div class="tariff-card__total">
-                                    <div class="tariff-card__price">Вартість 7$</div>
-                                    <div class="tariff-card__discount">37$ / 6 мес (-10%)</div>
-                                    <div class="tariff-card__discount">65$ / 12 мес (-25%)</div>
+                                    <div class="tariff-card__price">Вартість <span>7$</span></div>
+                                    <div class="tariff-card__discount" data-months="1" data-price="7$" style="display: none">7$ / 1 мес</div>
+                                    <div class="tariff-card__discount" data-months="6" data-price="37$">37$ / 6 мес (-10%)</div>
+                                    <div class="tariff-card__discount" data-months="12" data-price="65$">65$ / 12 мес (-25%)</div>
                                 </div>
-                                <button class="button tariff-card__buy-button" type="button">Обрати</button>
+                                <a class="button tariff-card__buy-button" href="{{ auth()->check() ? route('subscription') : route('register.page') }}">Обрати</a>
                             </div>
                         </div>
                     </div>
@@ -790,6 +793,6 @@
     @include('layouts.partials.modals')
 @endsection
 
-@push('scripts_footer')
+@push('scripts')
     <script src="{{ asset('js/home.js') }}"></script>
 @endpush
