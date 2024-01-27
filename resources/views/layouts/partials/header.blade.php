@@ -8,7 +8,7 @@
         <nav class="menu header__menu">
             <ul class="menu__list">
                 <li class="menu__item"><a class="menu__link @if(request()->routeIs('home')) is-active @endif" href="/#tariffs-section">Тарифи</a></li>
-                <li class="menu__item"><a class="menu__link @if(request()->routeIs('blog')) is-active @endif" href="{{ route('blog') }}">Блог</a></li>
+                <li class="menu__item"><a class="menu__link @if(request()->routeIs('blog.*')) is-active @endif" href="{{ route('blog.index') }}">Блог</a></li>
                 <li class="menu__item"><a class="menu__link @if(request()->routeIs('faq')) is-active @endif" href="{{ route('faq') }}">FAQ</a></li>
                 <li class="menu__item"><a class="menu__link @if(request()->routeIs('contacts')) is-active @endif" href="{{ route('contacts') }}">Контакти</a></li>
             </ul>

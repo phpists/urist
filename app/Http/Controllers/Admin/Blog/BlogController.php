@@ -24,6 +24,7 @@ class BlogController extends Controller
             ->when($search = $request->get('search'), function ($q) use($search) {
                 return $q->where('title', 'LIKE', "%{$search}%");
             })
+            ->orderBy('id', 'DESC')
             ->paginate()
             ->withQueryString();
 
@@ -68,7 +69,7 @@ class BlogController extends Controller
                         'blog_tag_id' => $tag
                     ]);
 
-            return to_route('admin.blog.edit', $blog);
+            return to_route('admin.blog.edit', $blog)->with('success', 'Стаття успішно збережена');
         }
 
         return back()->with('error', 'Не вдалось зберегти дані');
@@ -94,13 +95,14 @@ class BlogController extends Controller
         $result = $blog->update($data);
 
         if ($result) {
-            \DB::table('blog_tag_relation')->where('blog_id', $blog->id)->delete();
-            if (isset($data['tags']))
+            if (isset($data['tags'])) {
+                \DB::table('blog_tag_relation')->where('blog_id', $blog->id)->delete();
                 foreach ($data['tags'] as $tag)
                     \DB::table('blog_tag_relation')->insert([
                         'blog_id' => $blog->id,
                         'blog_tag_id' => $tag
                     ]);
+            }
         }
 
         if ($request->wantsJson())
@@ -109,7 +111,7 @@ class BlogController extends Controller
             ]);
 
         if ($result)
-            return back()->with('success', 'Стаття успішно оновлена');
+            return to_route('admin.blog.edit', $blog)->with('success', 'Стаття успішно оновлена');
         else
             return back()->with('error', 'Не вдалось зберегти зміни');
     }
@@ -125,7 +127,11 @@ class BlogController extends Controller
 
     public function bulkDelete(Request $request)
     {
-        $result = Blog::whereIn('id', json_decode($request->post('ids')))->delete();
+        $result = Blog::whereIn('id', json_decode($request->post('ids')))
+            ->get()
+            ->each(function ($item) {
+                $item->delete();
+            });
         if ($result) {
             return back()->with('success', 'Статті видалено');
         } else {

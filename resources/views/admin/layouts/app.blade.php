@@ -183,7 +183,7 @@
 </li>
 
 
-                        <li class="menu-item  menu-item-submenu {{ (request()->routeIs('admin.blog.*')) ? 'menu-item-open' : '' }}"
+                        <li class="menu-item  menu-item-submenu {{ (request()->routeIs(['admin.blog.*', 'admin.blog-tags.*'])) ? 'menu-item-open' : '' }}"
                             aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="flaticon-folder menu-icon"></i>
@@ -203,8 +203,8 @@
                                             <span class="menu-text">Статті</span>
                                         </a>
                                     </li>
-                                    <li class="menu-item {{ request()->routeIs('home') ? 'menu-item-active' : '' }}">
-                                        <a href="#" class="menu-link">
+                                    <li class="menu-item {{ request()->routeIs('admin.blog-tags.*') ? 'menu-item-active' : '' }}">
+                                        <a href="{{ route('admin.blog-tags.index') }}" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot"><span></span></i>
                                             <span class="menu-text">Хештеги</span>
                                         </a>

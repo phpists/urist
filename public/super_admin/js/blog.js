@@ -59,7 +59,7 @@ jQuery(document).ready(function () {
             return $(this).val();
         }).get());
 
-        $(this).append(`<input name="ids" value='${ids}'>`)
+        $(this).append(`<input name="ids" value='${ids}' style="display: none">`)
     })
 
 });

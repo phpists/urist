@@ -31,7 +31,7 @@
                         <a class="footer-menu__link" href="/#tariffs-section">Тарифи</a>
                     </li>
                     <li class="footer-menu__item">
-                        <a class="footer-menu__link" href="{{ route('blog') }}">Блог</a>
+                        <a class="footer-menu__link" href="{{ route('blog.index') }}">Блог</a>
                     </li>
                     <li class="footer-menu__item">
                         <a class="footer-menu__link" href="{{ route('faq') }}">FAQ</a>

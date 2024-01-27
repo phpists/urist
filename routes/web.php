@@ -60,10 +60,15 @@ Route::post('form', [\App\Http\Controllers\HomeController::class, 'form'])
     ->name('home.form');
 
 Route::get('/offer', function () {return view('pages.offer');})->name('offer');
-Route::get('/blog', function () {return view('pages.blog');})->name('blog');
 Route::get('/policy', function () {return view('pages.policy');})->name('policy');
 Route::get('faq', [FaqController::class, 'index'])->name('faq');
 Route::get('contacts', [ContactController::class, 'index'])->name('contacts');
+
+
+/** Blog */
+Route::get('blog/{blogTag?}', [\App\Http\Controllers\BlogController::class, 'index'])->name('blog.index');
+Route::get('blog/article/{blog}', [\App\Http\Controllers\BlogController::class, 'show'])->name('blog.show');
+/** /Blog */
 
 
 Route::group(['prefix' => 'admin'], function () {
@@ -231,6 +236,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], func
     ]);
 
     // Blog Tag
+    Route::delete('blog-tags/bulk-delete', [\App\Http\Controllers\Admin\Blog\BlogTagController::class, 'bulkDelete'])
+        ->name('admin.blog-tags.bulk-delete');
+    Route::post('blog-tags/sort', [\App\Http\Controllers\Admin\Blog\BlogTagController::class, 'sort'])
+        ->name('admin.blog-tags.sort');
     Route::resource('blog-tags', \App\Http\Controllers\Admin\Blog\BlogTagController::class, [
         'as' => 'admin'
     ]);

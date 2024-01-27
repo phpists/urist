@@ -34,6 +34,9 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col">
         <div class="form-group">
             <label for="formTags">Теги</label>
             <div class="input-wrapper">
@@ -45,6 +48,19 @@
                 @error('tags')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
+            </div>
+        </div>
+            </div>
+            <div class="col-2">
+                <div class="form-group">
+                    <label for="formTags">Дата</label>
+                    <div class="input-wrapper">
+                        <input class="form-control" type="datetime-local" name="date" value="{{ old('date', $model->date ?? now()) }}">
+                        @error('date')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -6,7 +6,7 @@
       <nav class="mobile-nav-menu">
         <ul class="mobile-nav-menu__list">
           <li class="mobile-nav-menu__item"><a class="mobile-nav-menu__link" href="{{route('home')}}#tariffs-section">Тарифи</a></li>
-          <li class="mobile-nav-menu__item"><a class="mobile-nav-menu__link" href="{{route('blog')}}">Блог</a></li>
+          <li class="mobile-nav-menu__item"><a class="mobile-nav-menu__link" href="{{route('blog.index')}}">Блог</a></li>
           <li class="mobile-nav-menu__item"><a class="mobile-nav-menu__link" href="#{{route('faq')}}">FAQ</a></li>
           <li class="mobile-nav-menu__item"><a class="mobile-nav-menu__link" href="{{route('contacts')}}">Контакти</a></li>
           <li class="mobile-nav-menu__item">
