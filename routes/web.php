@@ -244,4 +244,20 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], func
         'as' => 'admin'
     ]);
 
+    // Plans
+    Route::post('plans/sort', [\App\Http\Controllers\Admin\Plan\PlanController::class, 'sort'])
+        ->name('admin.plans.sort');
+    Route::resource('plans', \App\Http\Controllers\Admin\Plan\PlanController::class, [
+        'as' => 'admin',
+        'only' => ['index', 'show', 'update']
+    ]);
+
+    // Plan Features
+    Route::post('features/sort', [\App\Http\Controllers\Admin\Plan\FeatureController::class, 'sort'])
+        ->name('admin.features.sort');
+    Route::resource('features', \App\Http\Controllers\Admin\Plan\FeatureController::class, [
+        'as' => 'admin',
+        'only' => ['index', 'show', 'update']
+    ]);
+
 });

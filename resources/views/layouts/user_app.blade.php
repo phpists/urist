@@ -24,6 +24,7 @@
     <meta name="theme-color" content="#ffffff">
     @yield('meta')
     <link rel="stylesheet" href="{{ asset('user_build/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('user_build/css/styles.css') }}">
     @stack('style')
     @stack('scripts_head')
 </head>

@@ -213,6 +213,36 @@
                             </div>
                         </li>
 
+                        <li class="menu-item  menu-item-submenu {{ (request()->routeIs(['admin.plans.*', 'admin.features.*'])) ? 'menu-item-open' : '' }}"
+                            aria-haspopup="true" data-menu-toggle="hover">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="flaticon-folder menu-icon"></i>
+                                <span class="menu-text">Плани і Можливості</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item  menu-item-parent" aria-haspopup="true">
+                                        <span class="menu-link"><span class="menu-text">Плани і Можливості</span></span>
+                                    </li>
+
+                                    <li class="menu-item {{ request()->routeIs('admin.plans.*') ? 'menu-item-active' : '' }}">
+                                        <a href="{{ route('admin.plans.index') }}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                            <span class="menu-text">Плани</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item {{ request()->routeIs('admin.features.*') ? 'menu-item-active' : '' }}">
+                                        <a href="{{ route('admin.features.index') }}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                            <span class="menu-text">Можливості</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
 </ul>
 <!--end::Menu Nav-->
 </div>

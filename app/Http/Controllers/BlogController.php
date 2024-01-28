@@ -22,7 +22,7 @@ class BlogController extends Controller
             'blogTags' => BlogTag::orderBy('pos')->get(),
             'blog' => $blog
                 ->customSorted()
-                ->paginate(1)
+                ->paginate()
                 ->withQueryString(),
             'currentBlogTag' => $currentBlogTag ?? null
         ]);
