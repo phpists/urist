@@ -111,7 +111,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/collection', [\App\Http\Controllers\ProfileController::class, 'collection'])->name('collection');
     Route::get('/edit-page', [\App\Http\Controllers\ProfileController::class, 'editPage'])->name('edit_page');
     Route::get('/article', [\App\Http\Controllers\ProfileController::class, 'article'])->name('article');
-    Route::get('/subscription', [\App\Http\Controllers\ProfileController::class, 'subscription'])->name('subscription');
 });
 
 /** User */
@@ -147,6 +146,10 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
     // Registries
     Route::get('registries', [\App\Http\Controllers\User\RegistryController::class, 'index'])
         ->name('registries.index');
+
+    // Subscription
+    Route::get('/subscription', [\App\Http\Controllers\User\SubscriptionController::class, 'index'])
+        ->name('subscription.index');
 
 });
 

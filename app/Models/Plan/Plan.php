@@ -19,6 +19,12 @@ class Plan extends Model
         'price_annual',
     ];
 
+
+    public function scopeActive($query)
+    {
+        return $query->whereIsActive(1);
+    }
+
     public function features()
     {
         return $this->hasManyThrough(
@@ -45,6 +51,16 @@ class Plan extends Model
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function getSemiannualDiscountPercent(): int
+    {
+        return round((($this->price_monthly * 6) - $this->price_semiannual) / ($this->price_monthly * 6) * 100);
+    }
+
+    public function getAnnualDiscountPercent(): int
+    {
+        return round((($this->price_monthly * 12) - $this->price_annual) / ($this->price_monthly * 12) * 100);
     }
 
 }

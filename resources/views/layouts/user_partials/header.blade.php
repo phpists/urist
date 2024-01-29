@@ -59,7 +59,7 @@
                 <div class="actions__count">2</div>
             </li>
             <li class="actions__item actions__item--hidden-md">
-                <a class="button actions__button actions__button--big" href="{{ route('subscription') }}">Моя підписка</a>
+                <a class="button actions__button actions__button--big" href="{{ route('user.subscription.index') }}">Моя підписка</a>
             </li>
             <li class="actions__item actions__item--visible-md">
                 <button class="button button--outline actions__button" type="button" data-modal="modal-search" aria-label="Show search modal">

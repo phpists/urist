@@ -25,9 +25,11 @@
                         <button class="button button--outline tariffs-list__button" type="button">На рік</button>
                     </li>
                 </ul>
+
+                @foreach($plans as $plan)
                 <div class="tariff-card tariffs__card">
                     <div class="tariff-card__body">
-                        <h3 class="tariff-card__title">Тариф LITE</h3>
+                        <h3 class="tariff-card__title">Тариф {{ $plan->title }}</h3>
                         <ul class="tariff-card__list">
                             <li class="tariff-card__item"><strong>Інтелектуальний пошук</strong>
                                 <div class="tariff-card__status tariff-card__status--green">
@@ -93,6 +95,8 @@
                         <button class="button tariff-card__buy-button" type="button" data-modal="modal-period">Обрати</button>
                     </div>
                 </div>
+                @endforeach
+
                 <div class="tariff-max tariffs__max">
                     <div class="tariff-max__col tariff-max__col--5">
                         <h3 class="tariff-max__title">Незабаром вийде тариф MAX</h3>

@@ -40,8 +40,8 @@
                   <use xlink:href="{{asset('assets/img/user/sprite.svg#folder')}}"></use>
                 </svg></span><span class="sidebar-menu__title">Реєстри</span></a></li>
                     <li class="sidebar-menu__item"><a
-                            class="sidebar-menu__link @if(request()->routeIs('subscription')) is-active @endif"
-                            href="{{route('subscription')}}"><span class="sidebar-menu__pic">
+                            class="sidebar-menu__link @if(request()->routeIs('user.subscription.index')) is-active @endif"
+                            href="{{ route('user.subscription.index') }}"><span class="sidebar-menu__pic">
                 <svg class="sidebar-menu__icon" width="20" height="19">
                   <use xlink:href="{{asset('assets/img/user/sprite.svg#subscribe')}}"></use>
                 </svg></span><span class="sidebar-menu__title">Моя підписка</span></a></li>

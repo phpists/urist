@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mail\FeedbackFormMail;
+use App\Models\Plan\Feature;
+use App\Models\Plan\Plan;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -12,7 +14,10 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('home');
+        return view('home', [
+            'plans' => Plan::active()->orderBy('pos')->get(),
+            'features' => Feature::active()->orderBy('pos')->get()
+        ]);
     }
 
     public function form(Request $request)
