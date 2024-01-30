@@ -115,10 +115,32 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="contentEditor">Текст</label>
+                                    <label for="contentEditor">Назва ПП</label>
                                     <div class="input-wrapper">
-                                        <textarea class="required_inp" style="height: 600px" id="contentEditor" name="content"></textarea>
-                                        @error('content')
+                                        <textarea class="required_inp" style="height: 600px" id="contentEditor" name="nazva_pp"></textarea>
+                                        @error('nazva_pp')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="contentEditor">ПП</label>
+                                    <div class="input-wrapper">
+                                        <textarea class="required_inp" style="height: 600px" id="contentEditor1" name="pp"></textarea>
+                                        @error('pp')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="contentEditor">Стаття КК</label>
+                                    <div class="input-wrapper">
+                                        <textarea class="required_inp" style="height: 600px" id="contentEditor2" name="statya_kk"></textarea>
+                                        @error('statya_kk')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -183,6 +205,8 @@
         document.addEventListener('DOMContentLoaded', function () {
             let descriptionEditor = CKEDITOR.replace( 'descriptionEditor' );
             let contentEditor = CKEDITOR.replace( 'contentEditor' );
+            let contentEditor1 = CKEDITOR.replace( 'contentEditor1' );
+            let contentEditor2 = CKEDITOR.replace( 'contentEditor2' );
             $("#createArticleCategory").select2({
                 placeholder: "Виберіть категорію",
                 ajax: makeAjaxCategorySearch()

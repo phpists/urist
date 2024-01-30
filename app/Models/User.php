@@ -92,4 +92,27 @@ class User extends Authenticatable
             ->whereFolderType(FolderType::FILE_FOLDER->value);
     }
 
+
+    public function userNotifications()
+    {
+        return $this->hasMany(UserNotification::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasManyThrough(
+            Notification::class,
+            UserNotification::class,
+            'user_id',
+            'id',
+            'id',
+            'notification_id'
+        );
+    }
+
+    public function unreadNotifications()
+    {
+        return $this->notifications()->where('user_notifications.is_read', 0);
+    }
+
 }

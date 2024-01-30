@@ -19,36 +19,34 @@
         </form>
         <ul class="actions header__actions">
             <li class="actions__item is-dropdown actions__item--hidden-md">
-                <button class="button button--outline actions__button is-dropdown__toggle" type="button" aria-label="Show dropdown menu">
+                <button class="button button--outline actions__button is-dropdown__toggle" id="notificationsButton" type="button" aria-label="Show dropdown menu">
                     <svg class="button__icon" width="21" height="22">
                         <use xlink:href="{{asset('assets/img/user/sprite.svg#bell')}}"></use>
                     </svg>
                 </button>
-                <ul class="actions-dropdown">
-                    <li class="actions-dropdown__item">
-                        <div class="notification-card">
-                            <time class="notification-card__date">27.11.2023</time>
-                            <div class="notification-card__info">
-                                <h3 class="notification-card__title">Кримінальне процесуальне законодавство України</h3><a class="button button--outline notification-card__more" href="#">
-                                    <svg class="button__icon" width="17" height="12">
-                                        <use xlink:href="{{('assets/img/user/sprite.svg#long-arrow-right')}}"></use>
-                                    </svg></a>
+                @php($userNotifications = \App\Services\NotificationService::getUnread())
+                @if($userNotifications->isNotEmpty())
+                    <ul class="actions-dropdown" id="notificationsContainer" data-read-url="{{ route('user.notifications.bulk-mark-as-read') }}">
+                        @foreach($userNotifications as $userNotification)
+                        <li class="actions-dropdown__item notification-item" data-id="{{ $userNotification->id }}">
+                            <div class="notification-card">
+                                <time class="notification-card__date">{{ $userNotification->pretty_created_at }}</time>
+                                <div class="notification-card__info">
+                                    <h3 class="notification-card__title">{{ $userNotification->title }}</h3>
+                                    @if($userNotification->url)
+                                    <a class="button button--outline notification-card__more" href="{{ $userNotification->url }}">
+                                        <svg class="button__icon" width="17" height="12">
+                                            <use xlink:href="{{('/assets/img/user/sprite.svg#long-arrow-right')}}"></use>
+                                        </svg>
+                                    </a>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                    <li class="actions-dropdown__item">
-                        <div class="notification-card">
-                            <time class="notification-card__date">27.11.2023</time>
-                            <div class="notification-card__info">
-                                <h3 class="notification-card__title">Кримінальне процесуальне законодавство України</h3><a class="button button--outline notification-card__more" href="#">
-                                    <svg class="button__icon" width="17" height="12">
-                                        <use xlink:href="{{asset('assets/img/user/sprite.svg#long-arrow-right')}}"></use>
-                                    </svg></a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <div class="actions__count">2</div>
+                        </li>
+                        @endforeach
+                    </ul>
+                    <div id="notificationsCount" class="actions__count">{{ $userNotifications->count() }}</div>
+                @endif
             </li>
             <li class="actions__item is-dropdown actions__item--visible-md">
                 <button class="button button--outline actions__button" type="button" aria-label="Show notifications modal" data-modal="modal-notifications">

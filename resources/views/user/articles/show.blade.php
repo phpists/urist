@@ -39,14 +39,47 @@
                             </svg>
                         </button>
                     </li>
+                    <li class="actions__item">
+                        <button class="button button--outline actions__button" type="button" aria-label="Word" data-tooltip="Word">
+                            <svg class="button__icon" width="18" height="21">
+                                <use xlink:href="{{ asset('img/sprite.svg#word-simple') }}"></use>
+                            </svg>
+                        </button>
+                    </li>
                 </ul>
             </header>
-            <div class="page-section__text">
-                <p><strong class="blue-color">{!! $article->content !!}</strong></p>
+            <div class="tabs page-section__tabs" data-tabs="tabs-1" data-active="0">
+                <ul class="tabs__nav">
+                    <li class="tabs__nav-item">
+                        <button class="button button--outline tabs__nav-btn" type="button">Назва ПП</button>
+                    </li>
+                    <li class="tabs__nav-item">
+                        <button class="button button--outline tabs__nav-btn" type="button">ПП</button>
+                    </li>
+                    <li class="tabs__nav-item">
+                        <button class="button button--outline tabs__nav-btn" type="button">Статья КК</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="tabs-content page-section__tabs-content" data-tabs-content="tabs-1">
+                <div class="tabs-panel">
+                    <div class="page-section__text">
+                        {!! $article->nazva_pp !!}
+                    </div>
+                </div>
+                <div class="tabs-panel">
+                    <div class="page-section__text">
+                        {!! $article->pp !!}
+                    </div>
+                </div>
+                <div class="tabs-panel">
+                    <div class="page-section__text">
+                        {!! $article->statya_kk !!}
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
-@endsection
+    </section>@endsection
 
 <div class="modal-wrap">
     @include('layouts.user_partials.modal-bookmark')

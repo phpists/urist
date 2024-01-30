@@ -24,7 +24,9 @@ class CriminalArticleStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|unique:criminal_articles',
-            'content' => 'string|required',
+            'nazva_pp' => 'string|required',
+            'pp' => 'string|required',
+            'statya_kk' => 'string|required',
             'article_category_id' => 'required|exists:article_categories,id',
             'description' => 'required|string',
             'court_decision_link' => 'required|string',
@@ -37,7 +39,9 @@ class CriminalArticleStoreRequest extends FormRequest
         return [
             'name.required' => 'Поле "Назва" обов’язкове для заповнення.',
             'name.unique' => 'Значення для поля "Назва" вже використвується, спробуйте іншу.',
-            'content.required' => 'Поле "Текст" обов’язкове для заповнення.',
+            'nazva_pp.required' => 'Поле "Текст" обов’язкове для заповнення.',
+            'pp.required' => 'Поле "Текст" обов’язкове для заповнення.',
+            'statya_kk.required' => 'Поле "Текст" обов’язкове для заповнення.',
             'description.required' => 'Поле "Короткий Опис" обов’язкове для заповнення.',
             'article_category_id.required' => 'Поле "Категорія" обов’язкове для заповнення.',
             'article_category_id.exists' => 'Вибрана категорія не існує, виберіть іншу',

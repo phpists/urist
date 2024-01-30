@@ -243,6 +243,13 @@
                             </div>
                         </li>
 
+                        <li class="menu-item {{ request()->routeIs('admin.notifications.*') ? 'menu-item-active' : '' }}">
+                            <a href="{{ route('admin.notifications.index') }}" class="menu-link">
+                                <i class="flaticon-folder menu-icon"></i>
+                                <span class="menu-text">Сповіщення</span>
+                            </a>
+                        </li>
+
 </ul>
 <!--end::Menu Nav-->
 </div>

@@ -11,7 +11,17 @@ class CriminalArticle extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'content', 'description', 'court_decision_link', 'article_category_id', 'position'];
+    protected $fillable = [
+        'name',
+        'description',
+        'court_decision_link',
+        'article_category_id',
+        'position',
+        'is_active',
+        'nazva_pp',
+        'pp',
+        'statya_kk',
+    ];
 
     public function category(): BelongsTo
     {

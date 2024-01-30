@@ -151,116 +151,117 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
     Route::get('/subscription', [\App\Http\Controllers\User\SubscriptionController::class, 'index'])
         ->name('subscription.index');
 
+    // Notifications
+    Route::post('notifications/bulk-mark-as-read', [\App\Http\Controllers\User\NotificationController::class, 'bulkMarkAsRead'])
+        ->name('notifications.bulk-mark-as-read');
+
 });
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin'], 'as' => 'admin.'], function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('article_categories', [ArticleCategoryController::class, 'index'])
-        ->name('admin.article_categories');
+        ->name('article_categories');
     Route::get('article_category', [ArticleCategoryController::class, 'view'])
-        ->name('admin.article_categories.view');
+        ->name('article_categories.view');
     Route::get('article_category/search', [ArticleCategoryController::class, 'search'])
-        ->name('admin.article_categories.search');
+        ->name('article_categories.search');
     Route::get('/article_category/get_children', [ArticleCategoryController::class, 'getChildren'])
-        ->name('admin.article_categories.get_children');
+        ->name('article_categories.get_children');
     Route::post('/article_categories', [ArticleCategoryController::class, 'store'])
-        ->name('admin.article_category.store');
+        ->name('article_category.store');
     Route::put('/article_categories', [ArticleCategoryController::class, 'update'])
-        ->name('admin.article_category.update');
+        ->name('article_category.update');
     Route::delete('/article_categories', [ArticleCategoryController::class, 'delete'])
-        ->name('admin.article_category.delete');
+        ->name('article_category.delete');
     Route::put('/article_category/update_parent', [ArticleCategoryController::class, 'updateParent'])
-        ->name('admin.article_category.update_parent');
+        ->name('article_category.update_parent');
     Route::put('/article_category/update_position', [ArticleCategoryController::class, 'updatePosition'])
-        ->name('admin.article_category.update_position');
+        ->name('article_category.update_position');
     Route::put('/article_category/update_status', [ArticleCategoryController::class, 'updateStatus'])
-        ->name('admin.article_category.update_status');
+        ->name('article_category.update_status');
     Route::delete('article_category/bulk_delete', [ArticleCategoryController::class, 'deleteBulk'])
-        ->name('admin.article_categories.bulk_delete');
+        ->name('article_categories.bulk_delete');
 
     // Criminal articles
     Route::get('/criminal_articles', [CriminalArticleController::class, 'index'])
-        ->name('admin.criminal_articles.index');
+        ->name('criminal_articles.index');
     Route::get('/criminal_articles/create', [CriminalArticleController::class, 'create'])
-        ->name('admin.criminal_articles.create');
+        ->name('criminal_articles.create');
     Route::get('/criminal_articles/{id}', [CriminalArticleController::class, 'edit'])
-        ->name('admin.criminal_article.edit');
+        ->name('criminal_article.edit');
     Route::post('/criminal_articles/store', [CriminalArticleController::class, 'store'])
-        ->name('admin.criminal_articles.store');
+        ->name('criminal_articles.store');
     Route::post('/criminal_articles/update', [CriminalArticleController::class, 'update'])
-        ->name('admin.criminal_articles.update');
+        ->name('criminal_articles.update');
     Route::delete('/criminal_article/delete/{id}', [CriminalArticleController::class, 'delete'])
-        ->name('admin.criminal_article.delete');
+        ->name('criminal_article.delete');
     Route::get('/criminal_articles/search', [CriminalArticleController::class, 'search'])
-        ->name('admin.criminal_articles.search');
+        ->name('criminal_articles.search');
     Route::delete('criminal_articles/bulk_delete', [CriminalArticleController::class, 'deleteBulk'])
-        ->name('admin.criminal_articles.bulk_delete');
+        ->name('criminal_articles.bulk_delete');
     Route::put('/criminal_article/update_position', [CriminalArticleController::class, 'updatePosition'])
-        ->name('admin.criminal_article.update_position');
+        ->name('criminal_article.update_position');
     Route::put('/criminal_article/update_status', [CriminalArticleController::class, 'updateStatus'])
-        ->name('admin.criminal_article.update_status');
+        ->name('criminal_article.update_status');
     // Favourites
     Route::get('/favourites', [FavoritesController::class, 'index'])
-        ->name('admin.favourites.index');
+        ->name('favourites.index');
     Route::get('/favourites/{id?}', [FavoritesController::class, 'index'])
-        ->name('admin.favourites.view');
+        ->name('favourites.view');
     // File Manager
-    Route::get('file_manager', [FileManagerController::class, 'index'])->name('admin.file_manager.index');
+    Route::get('file_manager', [FileManagerController::class, 'index'])->name('file_manager.index');
     Route::get('/file_manager/{folder_id?}', [FileManagerController::class, 'index'])
-        ->name('admin.file_manager.view');
+        ->name('file_manager.view');
     Route::get('/file/{id?}', [FileController::class, 'view'])
-        ->name('admin.file.view');
+        ->name('file.view');
     // Tags
-    Route::get('/tags', [TagController::class, 'index'])->name('admin.tags.index');
-    Route::post('/tags', [TagController::class, 'store'])->name('admin.tags.store');
-    Route::get('/tag', [TagController::class, 'view'])->name('admin.tag.view');
-    Route::get('/tag', [TagController::class, 'view'])->name('admin.tag.view');
-    Route::put('/tag/update', [TagController::class, 'update'])->name('admin.tag.update');
-    Route::delete('/tag/delete', [TagController::class, 'delete'])->name('admin.tag.delete');
+    Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
+    Route::post('/tags', [TagController::class, 'store'])->name('tags.store');
+    Route::get('/tag', [TagController::class, 'view'])->name('tag.view');
+    Route::get('/tag', [TagController::class, 'view'])->name('tag.view');
+    Route::put('/tag/update', [TagController::class, 'update'])->name('tag.update');
+    Route::delete('/tag/delete', [TagController::class, 'delete'])->name('tag.delete');
     Route::delete('/tags/bulk_delete', [TagController::class, 'deleteBulk'])
-        ->name('admin.tags.bulk_delete');
+        ->name('tags.bulk_delete');
     Route::put('/tag/update_position', [TagController::class, 'updatePosition'])
-        ->name('admin.tag.update_position');
+        ->name('tag.update_position');
     // Subscriptions
-    Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('admin.subscriptions.index');
-    Route::post('/subscriptions/update_permission', [SubscriptionController::class, 'updateRolePermission'])->name('admin.subscriptions.update_role_permission');
+    Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('subscriptions.index');
+    Route::post('/subscriptions/update_permission', [SubscriptionController::class, 'updateRolePermission'])->name('subscriptions.update_role_permission');
 
     // Registries
     Route::delete('registries/bulk-delete', [\App\Http\Controllers\Admin\RegistryController::class, 'bulkDelete'])
-        ->name('admin.registries.bulk_delete');
-    Route::resource('registries', \App\Http\Controllers\Admin\RegistryController::class, ['as' => 'admin']);
+        ->name('registries.bulk_delete');
+    Route::resource('registries', \App\Http\Controllers\Admin\RegistryController::class);
 
     // Blog
     Route::delete('blog/bulk-delete', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'bulkDelete'])
-        ->name('admin.blog.bulk-delete');
-    Route::resource('blog', \App\Http\Controllers\Admin\Blog\BlogController::class, [
-        'as' => 'admin'
-    ]);
+        ->name('blog.bulk-delete');
+    Route::resource('blog', \App\Http\Controllers\Admin\Blog\BlogController::class);
 
     // Blog Tag
     Route::delete('blog-tags/bulk-delete', [\App\Http\Controllers\Admin\Blog\BlogTagController::class, 'bulkDelete'])
-        ->name('admin.blog-tags.bulk-delete');
+        ->name('blog-tags.bulk-delete');
     Route::post('blog-tags/sort', [\App\Http\Controllers\Admin\Blog\BlogTagController::class, 'sort'])
-        ->name('admin.blog-tags.sort');
-    Route::resource('blog-tags', \App\Http\Controllers\Admin\Blog\BlogTagController::class, [
-        'as' => 'admin'
-    ]);
+        ->name('blog-tags.sort');
+    Route::resource('blog-tags', \App\Http\Controllers\Admin\Blog\BlogTagController::class);
 
     // Plans
     Route::post('plans/sort', [\App\Http\Controllers\Admin\Plan\PlanController::class, 'sort'])
-        ->name('admin.plans.sort');
+        ->name('plans.sort');
     Route::resource('plans', \App\Http\Controllers\Admin\Plan\PlanController::class, [
-        'as' => 'admin',
         'only' => ['index', 'show', 'update']
     ]);
 
     // Plan Features
     Route::post('features/sort', [\App\Http\Controllers\Admin\Plan\FeatureController::class, 'sort'])
-        ->name('admin.features.sort');
+        ->name('features.sort');
     Route::resource('features', \App\Http\Controllers\Admin\Plan\FeatureController::class, [
-        'as' => 'admin',
         'only' => ['index', 'show', 'update']
     ]);
+
+    // Notifications
+    Route::resource('notifications', \App\Http\Controllers\Admin\NotificationController::class);
 
 });
