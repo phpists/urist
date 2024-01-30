@@ -43,16 +43,15 @@ class PlanController extends Controller
         $data['is_active'] = $request->boolean('is_active');
 
         $result = $plan->update($data);
-        if ($request->has('features')) {
-            $permissionsToSync = [];
-            $plan->planFeatures()->delete();
-            foreach ($request->post('features') as $feature_id) {
-                $feature = Feature::find($feature_id);
-                $plan->planFeatures()->create(['feature_id' => $feature->id]);
-                $permissionsToSync[] = $feature->permission->name;
-            }
-            $plan->role->syncPermissions($permissionsToSync);
+
+        $permissionsToSync = [];
+        $plan->planFeatures()->delete();
+        foreach ($request->post('features', []) as $feature_id) {
+            $feature = Feature::find($feature_id);
+            $plan->planFeatures()->create(['feature_id' => $feature->id]);
+            $permissionsToSync[] = $feature->permission->name;
         }
+        $plan->role->syncPermissions($permissionsToSync);
 
         if ($request->wantsJson())
             return new JsonResponse([

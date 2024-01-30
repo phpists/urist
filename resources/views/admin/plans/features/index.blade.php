@@ -11,10 +11,10 @@
                         <a href="{{ route('admin.dashboard') }}" class="text-muted">Головна</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.plans.index') }}" class="text-muted">Плани</a>
+                        <a href="{{ route('admin.plans.index') }}" class="text-muted">Тарифні плани</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <span class="text-muted">Можливості</span>
+                        <span class="text-muted">Можливості тарифних планів</span>
                     </li>
                 </ul>
                 <!--end::Page Title-->
@@ -33,7 +33,7 @@
             <div class="card card-custom">
                 <div class="card-header flex-wrap border-0 pt-6 pb-0">
                     <div class="card-title">
-                        <h3 class="card-label">Можливості</h3>
+                        <h3 class="card-label">Можливості тарифних планів</h3>
                     </div>
                 </div>
                 <div class="card-body pb-3">

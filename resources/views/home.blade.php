@@ -330,7 +330,7 @@
                                     <button class="button button--outline tariff-card__button" type="button">1 день безкоштовне демо</button>
                                     <button class="play-button" type="button" data-modal="modal-video"><span class="play-button__pic">
                     <svg class="play-button__icon" width="11" height="14">
-                      <use xlink:href="img/sprite.svg#play"></use>
+                      <use xlink:href="{{ asset('img/sprite.svg#play') }}"></use>
                     </svg></span>Як це працює?</button>
                                 </div>
                             </div>

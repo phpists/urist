@@ -6,6 +6,7 @@ use App\Events\UserRegisteredEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRegisterRequest;
 use App\Models\User;
+use App\Services\UserAuthService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -32,16 +33,21 @@ class RegisterController extends Controller
      */
     public function register(UserRegisterRequest $request)
     {
-        DB::beginTransaction();
         try {
-            $ifUserPhoneNotVerified = User::where('phone',$request->phone)->first();
-            if ($ifUserPhoneNotVerified?->phone_verified_at){
-                return redirect()->back()->withErrors(['phone'=> trans('validation.custom.phone.unique')])->withInput();
-            }
-            else if (isset($ifUserPhoneNotVerified) && !$ifUserPhoneNotVerified?->phone_verified_at){
-                return redirect()->back()->withErrors(['phone'=> trans('messages.not_verified')])->withInput();
+            $user = User::where('phone',$request->phone)->first();
+
+            if ($user) {
+                if (is_null($user->phone_verified_at)) {
+                    return UserAuthService::resendVerificationCode($user, UserAuthService::RELATION_VERIFICATION_CODE, true);
+                } else {
+                    return redirect()
+                        ->back()
+                        ->withErrors(['phone' => trans('validation.custom.phone.unique')])
+                        ->withInput();
+                }
             }
 
+            DB::beginTransaction();
 
             $newUser = User::create([
                 'first_name' => $request->name,
@@ -49,9 +55,13 @@ class RegisterController extends Controller
                 'password' => Hash::make($request->password),
             ]);
             $newUser->assignRole(User::ROLE_USER);
+
             DB::commit();
+
             event(new UserRegisteredEvent($newUser));
-            return redirect()->route('verify_phone.page')
+
+            return redirect()
+                ->route('verify_phone.page')
                 ->with([
                     'success' => Lang::get('messages.verify_phone'),
                     'phone' => $newUser->phone

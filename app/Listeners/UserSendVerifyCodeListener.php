@@ -3,14 +3,15 @@
 namespace App\Listeners;
 
 use App\Events\UserRegisteredEvent;
+use App\Jobs\SendVerificationCodeJob;
 use App\Services\SmsService\TurboSmsSender;
+use App\Services\UserAuthService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Lang;
 
-class UserSendVerifyCodeListener implements ShouldQueue
+class UserSendVerifyCodeListener
 {
-    use InteractsWithQueue;
 
     private TurboSmsSender $sender;
 
@@ -27,9 +28,6 @@ class UserSendVerifyCodeListener implements ShouldQueue
      */
     public function handle(UserRegisteredEvent $event): void
     {
-        $code = rand(1000, 9999);
-        $message = Lang::get('messages.sms_code_sent') .': '. $code;
-        $event->user->userPhoneVerifyCodes()->create(['code' => $code]);
-        $this->sender->sendMessage([$event->user->phone], $message);
+        dispatch(new SendVerificationCodeJob($event->user, $this->sender, UserAuthService::RELATION_VERIFICATION_CODE));
     }
 }

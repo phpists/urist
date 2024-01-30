@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserVerifyPhoneRequest;
 use App\Models\User;
+use App\Services\UserAuthService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
@@ -59,8 +62,14 @@ class VerifyPhoneController extends Controller
     }
 
 
-    public function resendVerifyCode()
+    public function resendVerifyCode(Request $request)
     {
-//   TODO add resend verify
+        $user = User::wherePhone($request->post('phone'))->firstOrFail();
+
+        UserAuthService::resendVerificationCode($user, UserAuthService::RELATION_VERIFICATION_CODE);
+
+        return new JsonResponse([
+            'result' => true
+        ]);
     }
 }

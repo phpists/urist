@@ -23,6 +23,11 @@ class CriminalArticle extends Model
         'statya_kk',
     ];
 
+    public function getPrettyCreatedAtAttribute()
+    {
+        return $this->created_at->format('d.m.Y');
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(ArticleCategory::class, 'article_category_id', 'id');

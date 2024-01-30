@@ -3,7 +3,9 @@
 namespace App\Listeners;
 
 use App\Events\UserSendResetPasswordCodeEvent;
+use App\Jobs\SendVerificationCodeJob;
 use App\Services\SmsService\TurboSmsSender;
+use App\Services\UserAuthService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Lang;
@@ -27,10 +29,6 @@ class UserSendVerifyCodeResetPasswordListener implements ShouldQueue
      */
     public function handle(UserSendResetPasswordCodeEvent $event): void
     {
-        $event->user->userResetPasswordVerifyCodes()->delete();
-        $code = rand(1000, 9999);
-        $message = Lang::get('messages.sms_code_sent_reset_password') . ': ' . $code;
-        $event->user->userResetPasswordVerifyCodes()->create(['code' => $code]);
-        $this->sender->sendMessage([$event->user->phone], $message);
+        dispatch(new SendVerificationCodeJob($event->user, $this->sender, UserAuthService::RELATION_PASSWORD_RESET_CODE));
     }
 }

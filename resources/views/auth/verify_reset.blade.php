@@ -1,5 +1,10 @@
 @extends('layouts.app')
 @section('title', 'Верифікація')
+
+@push('style')
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+@endpush
+
 @section('page')
     <div class="login-section">
         <div class="login-section__inner">
@@ -38,7 +43,7 @@
                     </div>
                 </div>
                 <div class="form__group" @error('code') style="margin-top: 30px;" @enderror>
-                    <div class="form__info">Не отримали код? <a class="blue-link" href="#" data-modal="login-modal">Відправити ще раз</a></div>
+                    <div class="form__info" id="resendVerificationBlock" data-url="{{ route('auth.reset-password.verify-code.resend') }}">Не отримали код? <a class="blue-link" href="#" data-modal="login-modal">Відправити ще раз</a></div>
                 </div>
                 <div class="form__button-group">
                     <button class="button form__button form__button--middle">Відправити</button>
@@ -79,5 +84,9 @@
 @endsection
 
 
+@push('scripts')
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="{{ asset('js/verification.js') }}"></script>
+@endpush
 
 

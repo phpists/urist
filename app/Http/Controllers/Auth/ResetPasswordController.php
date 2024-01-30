@@ -7,11 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserResetPasswordRequest;
 use App\Http\Requests\UserSendForgotPasswordRequest;
 use App\Http\Requests\VerifyPasswordResetCodeRequest;
+use App\Jobs\SendVerificationCodeJob;
 use App\Models\User;
 use App\Models\UserResetPasswordCode;
+use App\Services\SmsService\TurboSmsSender;
+use App\Services\UserAuthService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
@@ -40,7 +44,11 @@ class ResetPasswordController extends Controller
             return redirect()->back()->withErrors(['phone' => trans('messages.user_not_found')])->withInput();
         }
         event(new UserSendResetPasswordCodeEvent($user));
-        session(['hasSentCode' => 1]);
+        session([
+            'hasSentCode' => 1,
+            'phone' => $phone
+        ]);
+
         return redirect()->route('password.verify-page')->with('message', trans('messages.verify_phone'));
     }
 
@@ -60,6 +68,17 @@ class ResetPasswordController extends Controller
         }
         $user_id = $code->user_id;
         return \view('auth.reset_password', compact('user_id'));
+    }
+
+    public function resendVerifyCode(Request $request)
+    {
+        $user = User::wherePhone($request->post('phone'))->firstOrFail();
+
+        UserAuthService::resendResetPasswordCode($user, UserAuthService::RELATION_PASSWORD_RESET_CODE);
+
+        return new JsonResponse([
+            'result' => true
+        ]);
     }
 
     /**

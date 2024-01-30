@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserLoginRequest;
+use App\Services\UserAuthService;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Foundation\Application;
@@ -34,11 +35,11 @@ class LoginController extends Controller
         $remember = isset($request->checkboxKeep);
         if (auth()->attempt($credentials, $remember)) {
             $user = auth()->user();
-            if ($user->phone_verified_at) {
+            if (!is_null($user->phone_verified_at)) {
                 return to_route('user.dashboard.index');
             }
             auth()->logout();
-            return back()->withErrors(['phone' => Lang::get('messages.not_verified')])->withInput();
+            return UserAuthService::resendVerificationCode($user, UserAuthService::RELATION_VERIFICATION_CODE, true);
         }
         return back()->withErrors(['phone' => Lang::get('messages.invalid_data_login')])->withInput();
     }

@@ -18,6 +18,9 @@ class TurboSmsSender implements SmsSenderInterface
     public function sendMessage(array $phones, string $message): void
     {
         try {
+            if (config('app.env') !== 'production')
+                return;
+
             $client = new Client();
             $response = $client->post(config('services.turbo_sms.url'), [
                 'headers' => [
@@ -26,6 +29,10 @@ class TurboSmsSender implements SmsSenderInterface
                 ],
                 "json" => [
                     'recipients' => $phones,
+                    'viber' => [
+                        'sender' => config('services.turbo_sms.sender_sms'),
+                        'text' => config('services.turbo_sms.sender') . ' - ' . $message
+                    ],
                     'sms' => [
                         'sender' => config('services.turbo_sms.sender_sms'),
                         'text' => config('services.turbo_sms.sender') . ' - ' . $message
@@ -33,7 +40,7 @@ class TurboSmsSender implements SmsSenderInterface
                 ],
             ]);
             $responseData = json_decode($response->getBody()->getContents(), true);
-           Log::info("Turbo sms :" . $responseData['response_code'] . ' ' . $responseData['response_status']);
+            Log::info("Turbo sms :" . $responseData['response_code'] . ' ' . $responseData['response_status']);
         } catch (\Exception $e) {
             Log::info("An error with turbo sms service : " . $e->getMessage());
         }

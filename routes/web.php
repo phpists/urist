@@ -41,6 +41,7 @@ Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
 Route::get('verify-phone', [VerifyPhoneController::class, 'index'])->name('verify_phone.page');
 Route::get('verify-phone-resend', function (){return view('auth.verify_resend');})->name('verify_phone_resend.page');
 Route::post('verify_phone', [VerifyPhoneController::class, 'verify'])->name('verify_phone');
+Route::post('verify-phone/resend', [VerifyPhoneController::class, 'resendVerifyCode'])->name('auth.verify-phone.resend');
 Route::get('send', [LoginController::class, 'send'])->name('send');
 
 Route::get('password/forgot', [ResetPasswordController::class, 'index'])->name('password.forgot');
@@ -49,6 +50,8 @@ Route::get('password/reset', function (){return view('auth.reset_password');})->
 Route::post('password/verify-code', [ResetPasswordController::class, 'verifyCode'])->name('password.verify-code');
 Route::post('password/recovery', [ResetPasswordController::class, 'resetPassword'])->name('password.recovery');
 Route::get('password/verify-page', [ResetPasswordController::class, 'verificationPage'])->name('password.verify-page');
+Route::post('password/verification-code/resend', [ResetPasswordController::class, 'resendVerifyCode'])
+    ->name('auth.reset-password.verify-code.resend');
 
 
 

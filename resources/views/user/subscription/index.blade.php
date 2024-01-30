@@ -76,6 +76,10 @@
             </div>
         </div>
     </section>
+
+    <div class="modal-wrap">
+        @include('layouts.modals.video')
+    </div>
 @endsection
 
 @push('scripts')

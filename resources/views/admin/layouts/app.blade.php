@@ -230,7 +230,7 @@
                                     <li class="menu-item {{ request()->routeIs('admin.plans.*') ? 'menu-item-active' : '' }}">
                                         <a href="{{ route('admin.plans.index') }}" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                                            <span class="menu-text">Плани</span>
+                                            <span class="menu-text">Тарифні плани</span>
                                         </a>
                                     </li>
                                     <li class="menu-item {{ request()->routeIs('admin.features.*') ? 'menu-item-active' : '' }}">

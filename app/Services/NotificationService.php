@@ -5,9 +5,14 @@ namespace App\Services;
 class NotificationService
 {
 
-    public static function getUnread()
+    public function getLatest()
     {
-        return \Auth::user()->unreadNotifications;
+        return \Auth::user()->latestNotifications;
+    }
+
+    public function getUnreadCount()
+    {
+        return \Auth::user()->unreadNotifications()->count();
     }
 
     public static function bulkMarkAsRead(array $ids)

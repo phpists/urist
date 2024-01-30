@@ -115,4 +115,9 @@ class User extends Authenticatable
         return $this->notifications()->where('user_notifications.is_read', 0);
     }
 
+    public function latestNotifications()
+    {
+        return $this->notifications()->latest()->limit(5);
+    }
+
 }

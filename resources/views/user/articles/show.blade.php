@@ -57,7 +57,7 @@
                         <button class="button button--outline tabs__nav-btn" type="button">ПП</button>
                     </li>
                     <li class="tabs__nav-item">
-                        <button class="button button--outline tabs__nav-btn" type="button">Статья КК</button>
+                        <button class="button button--outline tabs__nav-btn" type="button">Стаття КК</button>
                     </li>
                 </ul>
             </div>

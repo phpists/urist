@@ -24,10 +24,9 @@
                         <use xlink:href="{{asset('assets/img/user/sprite.svg#bell')}}"></use>
                     </svg>
                 </button>
-                @php($userNotifications = \App\Services\NotificationService::getUnread())
-                @if($userNotifications->isNotEmpty())
+                @php($notificationService = new \App\Services\NotificationService())
                     <ul class="actions-dropdown" id="notificationsContainer" data-read-url="{{ route('user.notifications.bulk-mark-as-read') }}">
-                        @foreach($userNotifications as $userNotification)
+                        @foreach($notificationService->getLatest() as $userNotification)
                         <li class="actions-dropdown__item notification-item" data-id="{{ $userNotification->id }}">
                             <div class="notification-card">
                                 <time class="notification-card__date">{{ $userNotification->pretty_created_at }}</time>
@@ -45,8 +44,8 @@
                         </li>
                         @endforeach
                     </ul>
-                    <div id="notificationsCount" class="actions__count">{{ $userNotifications->count() }}</div>
-                @endif
+                @php($unreadCount = $notificationService->getUnreadCount())
+                    <div id="notificationsCount" class="actions__count" @if($unreadCount < 1) style="display: none" @endif>{{ $unreadCount }}</div>
             </li>
             <li class="actions__item is-dropdown actions__item--visible-md">
                 <button class="button button--outline actions__button" type="button" aria-label="Show notifications modal" data-modal="modal-notifications">
