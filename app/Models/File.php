@@ -11,7 +11,7 @@ class File extends Model
 
     const EXTENSION = '.docx';
 
-    protected $fillable = ['name', 'content', 'folder_id', 'user_id', 'criminal_article_id'];
+    protected $fillable = ['name', 'folder_id', 'user_id', 'criminal_article_id', 'statya_kk', 'pp', 'nazva_pp'];
 
     public function folder() {
         return $this->belongsTo(Folder::class);

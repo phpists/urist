@@ -1,0 +1,44 @@
+.breadcrumbs
+
+    &__list
+        padding-left: 0
+        list-style: none
+        margin: 0
+        font-size: 0
+        text-align: center
+
+    &__item
+        line-height: 1.45
+        position: relative
+        color: var(--black)
+        display: inline
+        font-weight: 700
+        font-size: 18px
+
+        @media ($max-md)
+            font-size: 16px
+
+        &:after
+            display: inline-flex
+            margin: 0 5px
+            font-weight: 400
+            content: '/'
+
+        &:last-child
+            margin-right: 0
+
+            &:after
+                display: none
+
+    &__link
+        position: relative
+        color: var(--black)
+        font-weight: 400
+        text-decoration: none
+        display: inline
+        transition: all .5s ease
+
+        &:hover,
+        &:active,
+        &:focus-visible
+            color: var(--blue)

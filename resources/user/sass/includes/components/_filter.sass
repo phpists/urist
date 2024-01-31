@@ -1,0 +1,191 @@
+.filter
+    position: fixed
+    top: 0
+    left: 0
+    z-index: $z-index-3
+    width: 100%
+    max-width: 560px
+    height: calc(var(--vh) * 100)
+    outline: 0
+    // background: rgba(0, 0, 0, .25)
+    opacity: 1
+    visibility: visible
+
+    @media (max-width: 1400px)
+        max-width: 420px
+
+    @media ($max-md)
+        opacity: 0
+        visibility: hidden
+        transition: all .25s ease
+
+    &.is-hide
+        max-width: 128px
+        transition: all .25s ease
+
+        @media ($max-md)
+            max-width: 100%
+
+        @media ($min-md)
+
+            .logo__title
+                display: none
+            
+            .filter__title
+
+                span
+                    display: none
+
+            .filter__hide-button
+
+                .button__icon
+                    transform: rotateY(180deg)
+            
+            .filter__panel
+                max-width: 128px
+                transition: all .25s ease
+
+            .filter__accordion
+                display: none
+            
+            .filter__bottom
+                display: none
+
+            .filter__search
+                display: none
+
+    &.is-visible
+        opacity: 1
+        visibility: visible
+
+        .filter__panel
+            visibility: visible
+            transform: translate3d(0, 0, 0)
+
+    &-toggle
+        display: none
+        align-items: center
+        justify-content: space-between
+        gap: 10px
+        border-radius: 10px
+        background: #F7F8FA
+        box-shadow: 0 7px 10px 0 rgba(0, 0, 0, .2)
+        padding: 10px
+        margin-bottom: 30px
+
+        @media ($max-md)
+            display: flex
+
+        &__title
+            display: flex
+            align-items: center
+            gap: 10px
+            font-size: 18px
+            font-weight: 700
+            line-height: 1
+            margin: 0
+            color: var(--blue)
+        
+        &__button
+            padding: 5px
+            width: 40px
+            height: 40px
+
+    &__panel
+        position: fixed
+        top: 0
+        left: 0
+        width: 100%
+        max-width: 560px
+        height: 100%
+        background: #F7F8FA
+        visibility: visible
+        transform: translate3d(0, 0, 0)
+        
+        @media (max-width: 1400px)
+            max-width: 420px
+
+        @media ($max-md)
+            visibility: hidden
+            transform: translate3d(-100%, 0, 0)
+            max-width: 100%
+            transition: all .25s ease
+
+    &__top
+        display: flex
+        align-items: center
+        justify-content: space-between
+        gap: 10px
+        padding: 15px
+        height: 90px
+        background: var(--blue)
+
+        @media ($max-md)
+            display: none
+
+    &__logo
+
+        .logo__link
+            color: var(--white)
+
+    &__inner
+        height: calc(100% - 180px)
+        width: 100%
+        padding: 15px 5px
+        overflow-y: auto
+
+        @media ($max-md)
+            height: calc(100% - 90px)
+        
+
+    &__header
+        display: flex
+        align-items: center
+        justify-content: space-between
+        gap: 10px
+        margin-bottom: 15px
+        padding: 0 10px
+    
+    &__title
+        display: flex
+        align-items: center
+        gap: 12px
+        margin: 0
+        font-size: 22px
+        font-weight: 700
+        line-height: 1.2
+        color: var(--blue)
+
+    &__hide-button
+        height: 40px
+        width: 40px
+        padding: 5px
+
+        @media ($max-md)
+            display: none
+
+    &__toggle-button
+        display: none
+        height: 40px
+        width: 40px
+        padding: 5px
+
+        @media ($max-md)
+            display: flex
+
+    &__search
+        margin-bottom: 15px
+
+    &__bottom
+        display: flex
+        align-items: center
+        justify-content: space-between
+        gap: 30px
+        padding: 15px
+        background: var(--white)
+
+        @media ($max-md)
+            gap: 15px
+    
+    &__button
+        width: 100%

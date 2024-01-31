@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Enums\Permissions;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreFavouriteRequest extends FormRequest
 {
@@ -14,6 +15,12 @@ class StoreFavouriteRequest extends FormRequest
     {
         return true;
 //        return $this->user()->can(Permissions::FILE_CREATE->value);
+    }
+
+    protected function prepareForValidation()
+    {
+        if ($this->post('folder_id') == 0)
+            $this->offsetUnset('folder_id');
     }
 
     /**

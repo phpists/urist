@@ -1,0 +1,90 @@
+.button
+    position: relative
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    gap: 10px
+    box-sizing: border-box
+    -webkit-tap-highlight-color: transparent
+    outline: none
+    border: none
+    margin: 0
+    cursor: pointer
+    user-select: none
+    vertical-align: middle
+    appearance: none
+    text-decoration: none
+    font-size: 16px
+    font-weight: 700
+    line-height: 1
+    letter-spacing: 0
+    text-align: center
+    height: 50px
+    padding: 5px 20px
+    border-radius: 10px
+    color: var(--white)
+    background: var(--blue)
+    box-shadow: none
+    transition: all .5s ease
+    isolation: isolate
+
+    &:hover,
+    &:active,
+    &:focus-visible
+        outline: none
+        color: var(--white)
+        background: var(--black)
+
+    &:disabled
+        background: var(--grey-disabled) !important
+        border-color: var(--grey-disabled) !important
+        color: var(--grey) !important
+        cursor: not-allowed
+
+    &--outline
+        background: linear-gradient(90deg, rgba(55, 78, 115, .2) 20%, transparent 100%)
+        background-color: var(--white) 
+        border: 1px solid var(--blue)
+        color: var(--blue)
+
+        &:hover,
+        &:active,
+        &:focus-visible
+            color: var(--white)
+            background: linear-gradient(90deg, rgba(55, 78, 115, .2) 20%, transparent 100%)
+            background-color: var(--blue) 
+            border-color: var(--blue)
+
+    &--white
+        background: var(--white)
+        color: var(--blue)
+        border: 1px solid var(--white)
+
+        &:hover,
+        &:active,
+        &:focus-visible
+            color: var(--white)
+            background: none
+
+    &--bordered
+        background: none
+        border: 1px solid var(--blue)
+        color: var(--blue)
+
+        &:hover,
+        &:active,
+        &:focus-visible
+            color: var(--white)
+            background: var(--blue)
+
+    &--red
+        background: #ED0000
+        color: var(--white)
+        border: 1px solid #ED0000
+
+        &:hover,
+        &:active,
+        &:focus-visible
+            color: var(--white)
+            background: var(--red)
+            border-color: var(--red)

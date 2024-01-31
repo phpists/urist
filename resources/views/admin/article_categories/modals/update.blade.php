@@ -26,6 +26,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-12 px-0">
+                            <div class="form-group w-100">
+                                <label for="updateCategorySubTitle" class="col-auto col-form-label font-weight-bold">Статті</label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" id="updateCategorySubTitle" name="sub_title">
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="col-12 px-0">
                             <div class="form-group w-100">

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\SettingEnum;
 use App\Models\ArticleCategory;
 use App\Models\CriminalArticle;
 
@@ -18,6 +19,7 @@ class ArticleFilterService
 
     public function getArticles()
     {
+        $perPage = SettingService::getValueByName(SettingEnum::CRIMINAL_ARTICLES_PER_PAGE->value) ?? 20;
         $categories = request('categories', []);
         foreach ($categories as $category)
             $categories = array_merge($categories, ArticleCategory::getChildIds($category));
@@ -35,7 +37,7 @@ class ArticleFilterService
 
                 return $q;
             })
-            ->paginate()
+            ->paginate($perPage)
             ->withQueryString();
     }
 

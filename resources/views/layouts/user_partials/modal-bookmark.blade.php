@@ -12,7 +12,7 @@
             <input id="storeFavArticleId" type="hidden" name="criminal_article_id">
           <div class="form__group">
             <select class="select" id="selectBookmarkFolder" name="folder_id" aria-label="Виберіть папку" required="required">
-              <option value="">Виберіть папку</option>
+              <option value="0">Без додавання папки</option>
                 @foreach(Auth::user()->bookmarkFolders as $bookmarkFolder)
                     <option value="{{ $bookmarkFolder->id }}">{{ $bookmarkFolder->name }}</option>
                 @endforeach

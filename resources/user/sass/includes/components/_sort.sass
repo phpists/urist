@@ -1,0 +1,16 @@
+.sort
+    display: inline-block
+
+    &__button
+        display: flex
+        color: var(--blue)
+        min-width: 11px
+        transition: color .5s ease
+
+        &:not(:last-child)
+            margin-bottom: 4px
+
+        &:hover,
+        &:active,
+        &:focus-visible
+            color: var(--red)

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\SettingEnum;
 use App\Mail\FeedbackFormMail;
 use App\Models\Plan\Feature;
 use App\Models\Plan\Plan;
+use App\Services\SettingService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -28,8 +30,10 @@ class HomeController extends Controller
             'message' => ['required'],
         ]);
 
+        $email = SettingService::getValueByName(SettingEnum::ADMIN_EMAIL->value) ?? config('app.admin_email');
+
         return new JsonResponse([
-            'result' => Mail::to(config('app.admin_email'))
+            'result' => Mail::to($email)
                 ->send(
                     new FeedbackFormMail(
                         $request->post('name'),

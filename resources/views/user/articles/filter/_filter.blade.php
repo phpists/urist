@@ -45,7 +45,7 @@
                 </div>
             </form>
 
-            <form id="filterForm" action="{{ route('user.articles.index') }}" data-count-url="{{ route('user.articles.total-count') }}">
+            <form id="filterForm" action="{{ route('user.articles.index') }}" data-count-url="{{ route('user.articles.total-count') }}" style="margin-bottom: 0">
                 <input type="hidden" name="sort">
                 <div class="accordion filter__accordion">
                     @foreach($filterService->getCategories() as $category)
@@ -125,6 +125,8 @@
                     beforeSend: function () {
                         let $spinner = $('#spinner').clone();
 
+                        $('button[form="filterForm"]').prop('disabled', true)
+
                         $('#itemsContainer')
                             .html($spinner.show())
                             .css({
@@ -145,7 +147,7 @@
                     },
                     complete: function () {
                         if ($('aside.filter').hasClass('is-visible'))
-                            $('.filter-toggle__button').click()
+                            $('.filter-toggle__button').click();
                     }
                 })
             })
@@ -153,6 +155,8 @@
             $(document).on('change', 'input[name="categories[]"]', function (e) {
                 let $form = $('#filterForm'),
                     $button = $('button[form="filterForm"]');
+
+                $button.prop('disabled', false)
 
                 $.ajax({
                     url: $form.data('count-url'),
@@ -171,16 +175,40 @@
         })
 
         function filterCategories(value) {
-            $('div.accordion__panel.sub-category').each(function (i, el) {
-                let title = $(el).find('label');
-                if (title.length > 0) {
-                    if (title.text().toLowerCase().indexOf(value) === -1) {
-                        $(el).hide();
-                    } else {
-                        $(el).show();
+            value = value.toLowerCase();
+
+            if (value.length > 0 && $('#filterForm input[name="categories[]"]:checked').length > 0) {
+                $('#filterForm div.accordion__panel.sub-category .accordion__header input[name="categories[]"]:not(:checked)').each(function (i, el) {
+                    $(el).parents('div.accordion__panel.sub-category:first').hide()
+                })
+
+                $('div.accordion__panel.sub-category .accordion__header input[name="categories[]"]:checked')
+                    .each(function (i, el) {
+                        $(el).parents('div.accordion__panel.sub-category:first')
+                            .find('div.accordion__content div.accordion__panel.sub-category')
+                            .each(function (i, el) {
+                                let title = $(el).find('label');
+                                if (title.length > 0) {
+                                    if (title.text().toLowerCase().indexOf(value) === -1) {
+                                        $(el).hide();
+                                    } else {
+                                        $(el).show();
+                                    }
+                                }
+                            })
+                    })
+            } else {
+                $('div.accordion__panel.sub-category').each(function (i, el) {
+                    let title = $(el).find('label');
+                    if (title.length > 0) {
+                        if (title.text().toLowerCase().indexOf(value) === -1) {
+                            $(el).hide();
+                        } else {
+                            $(el).show();
+                        }
                     }
-                }
-            })
+                })
+            }
         }
 
     </script>

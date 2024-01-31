@@ -1,0 +1,21 @@
+.logo
+    display: flex
+
+    &__link
+        display: inline-flex
+        align-items: center
+        gap: 12px
+        font-size: 22px
+        font-weight: 700
+        line-height: 1
+        transition: color .5s ease
+        color: var(--blue)
+
+        &:hover,
+        &:active,
+        &:focus-visible
+            color: var(--black)
+
+    &__img
+        max-width: 100%
+        height: auto

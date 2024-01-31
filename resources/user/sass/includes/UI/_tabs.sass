@@ -1,0 +1,40 @@
+.tabs
+    position: relative
+
+    &__nav
+        position: relative
+        list-style: none
+        padding: 0
+        margin: 0
+        display: flex
+        flex-wrap: wrap
+        gap: 20px
+
+        @media ($max-md)
+            gap: 10px
+            justify-content: center
+
+        &-item
+            position: relative
+
+        &-btn
+            min-width: 162px
+
+            @media ($max-md)
+                min-width: 0
+                height: 40px
+                font-size: 14px
+                padding: 5px 15px
+
+            &.is-active
+                color: var(--white)
+                background: var(--blue)
+
+    &-panel
+        margin-top: 20px
+        
+        p
+            margin: 0
+            
+            &:not(:last-child)
+                margin-bottom: 5px

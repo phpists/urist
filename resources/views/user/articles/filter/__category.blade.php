@@ -2,7 +2,12 @@
     <div class="accordion__header" id="accordion-header-{{ $category->id }}">
         <div class="checkbox accordion__checkbox">
             <input class="checkbox__input" id="accordion-checkbox-{{ $category->id }}" type="checkbox" name="categories[]" value="{{ $category->id }}" @checked($filterService->isCategoryActive($category->id))>
-            <label class="checkbox__label" for="accordion-checkbox-{{ $category->id }}">{{ $category->name }}</label>
+            <label class="checkbox__label" for="accordion-checkbox-{{ $category->id }}">
+                @if($category->sub_title)
+                <span class="blue-color">{{ $category->sub_title }}</span>
+                @endif
+                {{ $category->name }}
+            </label>
         </div>
         @if($category->children->isNotEmpty())
         <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="accordion-content-{{ $category->id }}">

@@ -250,6 +250,13 @@
                             </a>
                         </li>
 
+                        <li class="menu-item {{ request()->routeIs('admin.settings.*') ? 'menu-item-active' : '' }}">
+                            <a href="{{ route('admin.settings.index') }}" class="menu-link">
+                                <i class="flaticon-folder menu-icon"></i>
+                                <span class="menu-text">Загальні налаштування</span>
+                            </a>
+                        </li>
+
 </ul>
 <!--end::Menu Nav-->
 </div>

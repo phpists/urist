@@ -23,6 +23,7 @@ class ArticleCategoryStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'sub_title' => 'nullable|string',
             'name' => 'required|string',
             'parent_id' => 'nullable|int'
         ];

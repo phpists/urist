@@ -1,15 +1,16 @@
 <table class="collection-table">
     <thead class="collection-table__thead">
     <tr>
-        <th>Дата
+        <th>
+            <span>Дата</span>
             <div class="sort">
                 <button class="sort__button filter-sort" data-value="created_at:asc" type="button" aria-label="Sort up">
-                    <svg class="sort__icon" width="11" height="6">
+                    <svg class="sort__icon" width="16" height="12">
                         <use xlink:href="{{ asset('img/sprite.svg#sort-up-arrow') }}"></use>
                     </svg>
                 </button>
                 <button class="sort__button filter-sort" data-value="created_at:desc" type="button" aria-label="Sort up">
-                    <svg class="sort__icon" width="11" height="6">
+                    <svg class="sort__icon" width="16" height="12">
                         <use xlink:href="{{ asset('img/sprite.svg#sort-down-arrow') }}"></use>
                     </svg>
                 </button>
@@ -38,9 +39,9 @@
             <td>
                 <div class="collection-descr">
                     <a class="black-link collection-descr__text" href="{{ route('user.articles.show', $article) }}">
-                        {!! $short = Str::words($article->content, 50, '') !!}
+                        {!! $short = Str::words($article->description, 40, '') !!}
                         <div class="collection-descr__hidden">
-                            {!! Str::substr($article->content, strlen($short)) !!}
+                            {!! Str::substr($article->description, strlen($short)) !!}
                         </div>
                     </a>
                     <button class="collection-descr__more" type="button"><span>Читати детальніше</span>

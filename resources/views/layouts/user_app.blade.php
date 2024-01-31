@@ -23,8 +23,8 @@
     <meta name="msapplication-TileImage" content="{{ asset('/assets/favicon/ms-icon-144x144.png') }}">
     <meta name="theme-color" content="#ffffff">
     @yield('meta')
-    <link rel="stylesheet" href="{{ asset('user_build/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('user_build/css/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('user/build/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('user/css/styles.css') }}">
     @stack('style')
     @stack('scripts_head')
 </head>
@@ -45,9 +45,8 @@
 @include('user.articles.filter._filter')
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script type="module" crossorigin src="{{ asset('user_build/main.js')}}"></script>
-<script src="{{ asset('js/scripts.js')}}"></script>
-<script src="{{ asset('user_build/js/scripts.js')}}"></script>
+<script type="module" crossorigin src="{{ asset('user/build/main.js')}}"></script>
+<script src="{{ asset('user/js/scripts.js')}}"></script>
 @yield('scripts_footer')
 @stack('scripts')
 </body>

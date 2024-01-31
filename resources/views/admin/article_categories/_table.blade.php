@@ -15,6 +15,9 @@
                 ID
             </th>
             <th class="pr-0 text-center">
+                Статті
+            </th>
+            <th class="pr-0 text-center">
                 Категорія
             </th>
             <th class="pr-0 text-center">
@@ -35,6 +38,9 @@
                 </td>
                 <td class="text-center pl-0" style="cursor: pointer">
                     {{ $article_category->id }}
+                </td>
+                <td class="text-center pl-0">
+                    {{ $article_category?->sub_title }}
                 </td>
                 <td class="text-center pl-0">
                     {{ $article_category?->name }}

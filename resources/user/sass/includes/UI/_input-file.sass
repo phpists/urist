@@ -1,0 +1,61 @@
+.input-file
+    position: relative
+    display: flex
+    align-items: center
+    gap: 30px
+    width: auto
+    box-shadow: none
+    font-size: 15px
+    line-height: 1.2
+    color: var(--white)
+    font-weight: 900
+    outline: none
+    appearance: none
+    margin-top: 25px
+
+    @media ($max-md)
+        flex-direction: column
+        justify-content: center
+        text-align: center
+        gap: 10px
+        font-size: 14px
+        margin-top: 0
+
+    &__left
+        display: inline-flex
+        align-items: center
+        gap: 5px
+
+    &__button
+        border-bottom: 1px solid var(--white)
+        transition: all .5s ease
+
+        &:hover,
+        &:active,
+        &:focus-visible
+            border-color: transparent
+            color: var(--blue-hover)
+
+    &__icon
+        color: var(--orange)
+        min-width: 16px
+        
+    &__text
+        color: #B2E0F4
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+        font-weight: 400
+
+        @media ($max-md)
+            white-space: normal
+            overflow: visible
+            text-overflow: clip
+
+    &__field
+        position: absolute
+        z-index: -1
+        opacity: 0
+        display: block
+        width: 0
+        height: 0

@@ -13,7 +13,7 @@ class ArticleCategory extends Model
     use HasFactory;
     use Notifiable;
 
-    protected $fillable = ['name', 'parent_id', 'position', 'is_active'];
+    protected $fillable = ['name', 'parent_id', 'position', 'is_active', 'sub_title'];
 
     public function articles(): HasMany
     {

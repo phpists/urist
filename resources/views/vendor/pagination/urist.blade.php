@@ -1,6 +1,7 @@
 @if ($paginator->hasPages())
     <nav class="pagenav collection-section__pagenav" aria-label="Page navigation">
         <ul class="pagenav__list">
+            @if(!$paginator->onFirstPage())
             <li class="pagenav__item">
                 <a class="pagenav__arrow" href="{{ $paginator->onFirstPage() ? '#' : $paginator->previousPageUrl() }}" aria-label="Previous">
                     <svg class="pagenav__icon" width="7" height="14">
@@ -8,6 +9,7 @@
                     </svg>
                 </a>
             </li>
+            @endif
 
             {{-- Pagination Elements --}}
             @foreach ($elements as $element)
@@ -29,6 +31,7 @@
 
             @endforeach
 
+                @if(!$paginator->onLastPage())
             <li class="pagenav__item">
                 <a class="pagenav__arrow" href="{{ $paginator->hasMorePages() ? $paginator->nextPageUrl() : '#' }}" aria-label="Next">
                     <svg class="pagenav__icon" width="7" height="14">
@@ -36,6 +39,7 @@
                     </svg>
                 </a>
             </li>
+                @endif
         </ul>
     </nav>
 @endif

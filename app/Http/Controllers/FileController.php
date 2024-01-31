@@ -39,7 +39,9 @@ class FileController extends Controller
         }
         $file = new File([
             'name' => $request->name,
-            'content' => $article->content,
+            'nazva_pp' => $article->nazva_pp,
+            'pp' => $article->pp,
+            'statya_kk' => $article->statya_kk,
             'folder_id' => $request->folder_id,
             'user_id' => $request->user()->id,
             'criminal_article_id' => $article->id
@@ -47,7 +49,9 @@ class FileController extends Controller
         if ($file->save()) {
             if ($request->ajax()) {
                 return response()->json([
-                    'success' => true
+                    'success' => true,
+                    'result' => true,
+                    'message' => 'Файл успішно створений'
                 ]);
             }
             return redirect()->back()->with('success', 'Файл успішно створений');
@@ -55,7 +59,9 @@ class FileController extends Controller
         if ($request->ajax()) {
             return response()->json([
                 'success' => false,
-                'error' => 'Неполадки на сервері, спробуйте пізніше'
+                'result' => false,
+                'error' => 'Неполадки на сервері, спробуйте пізніше',
+                'message' => 'Неполадки на сервері, спробуйте пізніше'
             ]);
         }
         return redirect()->back()->withErrors('Неполадки на сервері, спробуйте пізніше', 500);

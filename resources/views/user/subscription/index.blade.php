@@ -83,5 +83,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('user_build/js/subscription.js') }}"></script>
+    <script src="{{ asset('user/js/subscription.js') }}"></script>
 @endpush

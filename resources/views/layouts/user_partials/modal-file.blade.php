@@ -15,7 +15,7 @@
                 </div>
                 <div class="form__group">
                     <select class="select" id="selectFileFolder" name="folder_id" aria-label="Виберіть папку" required="required">
-                        <option value="">Виберіть папку</option>
+                        <option value="0">Без додавання папки</option>
                         @foreach(auth()->user()->fileFolders as $fileFolder)
                             <option value="{{ $fileFolder->id }}">{{ $fileFolder->name }}</option>
                         @endforeach

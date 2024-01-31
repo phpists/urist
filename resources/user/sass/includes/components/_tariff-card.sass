@@ -1,0 +1,115 @@
+.tariff-card
+    display: flex
+    flex-direction: column
+    width: 100%
+    height: 100%
+    border-radius: 10px
+    background: var(--white)
+    box-shadow: 0 7px 10px 0 rgba(0, 0, 0, .2)
+
+    &__body
+        flex: 1
+        display: flex
+        flex-direction: column
+        padding: 25px 35px
+
+        @media ($max-md)
+            padding: 20px 15px
+
+    &__title
+        margin: 0 0 20px
+        font-size: 25px
+        font-weight: 700
+        line-height: 1.2
+        color: var(--blue)
+
+        @media ($max-md)
+            font-size: 18px
+            margin-bottom: 10px
+
+    &__list
+        margin: 0 0 12px
+        padding: 0
+        list-style: none
+    
+    &__item
+        display: flex
+        align-items: flex-start
+        justify-content: space-between
+        gap: 10px
+        line-height: 1.5
+
+        @media ($max-md)
+            font-size: 12px
+
+        &:not(:last-child)
+            margin-bottom: 10px
+    
+    &__status
+        display: flex
+        align-items: center
+        justify-content: center
+        width: 30px
+        height: 30px
+        min-width: 30px
+        border-radius: 10px
+        background: #eff1f4
+        color: #afb8c7
+
+        @media ($max-md)
+            width: 23px
+            height: 23px
+            min-width: 23px
+            border-radius: 5px
+
+        &-icon
+
+            @media ($max-md)
+                width: 12px
+                height: 12px
+
+        &--green
+            background: #e2f9df
+            color: #7fb978
+
+    &__buttons
+        display: flex
+        align-items: center
+        justify-content: space-between
+        gap: 15px
+        margin-top: auto
+
+        @media ($max-md)
+            flex-direction: column
+
+    &__footer
+        display: flex
+        align-items: center
+        justify-content: space-between
+        gap: 30px
+        padding: 25px 35px
+        border-top: 1px solid #E0E0E0
+
+        @media ($max-md)
+            padding: 20px 15px
+            flex-direction: column
+            text-align: center
+            gap: 10px
+
+    &__price
+        font-size: 25px
+        font-weight: 700
+        color: var(--blue)
+
+    &__discount
+        font-size: 12px
+        color: var(--blue)
+
+    &__buy-button
+        min-width: 180px
+    
+    &__play-button
+        margin-left: auto
+
+        @media ($max-md)
+            margin-left: 0

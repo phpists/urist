@@ -1,0 +1,96 @@
+.footer
+    padding: 120px 0 30px
+    background-image: linear-gradient(180deg, rgba(48, 79, 118, .2) 0%, transparent 100%)
+    clip-path: polygon(0% 0%, 50% 60px, 100% 0%, 100% 100%, 0% 100%)
+
+    @media ($max-md)
+        padding: 50px 0 15px
+        clip-path: polygon(0% 0%, 50% 22px, 100% 0%, 100% 100%, 0% 100%)
+        
+    &__container
+        display: grid
+        grid-template-columns: repeat(12, 1fr)
+        gap: 30px
+
+        @media ($max-md)
+            display: flex
+            flex-direction: column
+
+    &__col
+
+        &--3
+            grid-column: 3 span
+
+            @media ($max-lg)
+                grid-column: 5 span
+
+        &--4
+            grid-column: 4 span
+            display: flex
+            align-items: flex-start
+            justify-content: space-between
+            gap: 15px
+
+            @media ($max-lg)
+                grid-column: 12 span
+
+        &--5
+            grid-column: 5 span
+
+            @media ($max-lg)
+                grid-column: 7 span
+
+    &__logo
+        margin-bottom: 10px
+
+        @media ($max-md)
+            justify-content: center
+
+    &__payment
+
+        @media ($max-md)
+            justify-content: center
+
+    &-menu
+
+        &__list
+            display: flex
+            align-items: center
+            gap: 12px 70px
+            flex-wrap: wrap
+            margin: 0
+            padding: 0
+            list-style: none
+
+            @media ($max-xl)
+                gap: 12px 40px
+
+            @media ($max-lg)
+                justify-content: flex-end
+
+            @media ($max-md)
+                justify-content: center
+                gap: 12px 35px
+        
+        &__link
+            font-size: 16px
+            color: var(--black)
+            transition: color .5s ease
+
+            &:hover,
+            &:active,
+            &:focus-visible
+                color: var(--blue)
+
+    &__dev
+        display: inline-flex
+        align-items: center
+        gap: 20px
+        font-size: 16px
+
+        &-link
+            display: flex
+
+    &__copyright
+        font-size: 16px
+        margin-bottom: 12px

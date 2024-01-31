@@ -1,0 +1,57 @@
+.header
+    position: fixed
+    top: 0
+    left: 0
+    width: 100%
+    background: var(--white)
+    // box-shadow: 0 0 0 1px rgba(0, 0, 0, .1)
+    border-bottom: 1px solid #e5e5e5
+    z-index: $z-index-3
+    padding-left: 560px
+
+    @media (max-width: 1400px)
+        padding-left: 420px
+
+    &.is-full
+        padding-left: 128px
+        transition: padding .25s ease
+
+        @media ($max-md)
+            padding-left: 0
+    
+    &__container
+        display: flex
+        align-items: center
+        gap: 20px
+        padding: 20px 30px 19px
+
+        @media ($max-md)
+            padding: 15px 15px 14px
+
+    &__burger
+        display: none
+
+        @media ($max-md)
+            display: flex
+    
+    &__button
+        white-space: nowrap
+
+        @media ($max-lg)
+            display: none
+        
+    &__search
+        // max-width: 585px
+        width: 100%
+
+        @media ($max-md)
+            display: none
+
+    &__actions
+        margin-left: auto
+
+    &__tariff-button
+        white-space: nowrap
+
+        @media ($max-lg)
+            display: none

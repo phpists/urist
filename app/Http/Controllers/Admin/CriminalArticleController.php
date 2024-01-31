@@ -13,6 +13,7 @@ use App\Http\Requests\UpdatePositionRequest;
 use App\Models\ArticleCategory;
 use App\Models\CriminalArticle;
 use App\Models\Favourite;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -111,8 +112,23 @@ class CriminalArticleController extends Controller
             'criminal_article_id' => $request->criminal_article_id,
             'name' => $request->name??$article->name
         ]);
-        if ($favourite->save())
-            return redirect()->back()->with('success', 'Додано в закладки');
+
+        if ($favourite->save()) {
+            if ($request->wantsJson())
+                return new JsonResponse([
+                    'result' => true,
+                    'message' => 'Статтю успішно додано в закладки'
+                ]);
+
+            return redirect()->back()->with('success', 'Статтю успішно додано в закладки');
+        }
+
+        if ($request->wantsJson())
+            return new JsonResponse([
+                'result' => false,
+                'message' => 'Помилка при збереженні, спробуйте пізніше'
+            ], 500);
+
         return redirect()->back()->withErrors('Помилка при збереженні, спробуйте пізніше');
     }
 

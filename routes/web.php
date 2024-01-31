@@ -267,4 +267,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin'], 'as' 
     // Notifications
     Route::resource('notifications', \App\Http\Controllers\Admin\NotificationController::class);
 
+    // Settings
+    Route::resource('settings', \App\Http\Controllers\Admin\SettingController::class)
+        ->only(['index', 'show', 'update']);
+
 });

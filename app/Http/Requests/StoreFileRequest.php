@@ -16,6 +16,13 @@ class StoreFileRequest extends FormRequest
 //        return $this->user()->can(Permissions::FILE_CREATE->value);
     }
 
+
+    protected function prepareForValidation()
+    {
+        if ($this->post('folder_id') == 0)
+            $this->offsetUnset('folder_id');
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,7 +32,7 @@ class StoreFileRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'folder_id' => 'required|exists:folders,id',
+            'folder_id' => 'sometimes|exists:folders,id|nullable',
             'criminal_article_id' => 'required'
         ];
     }

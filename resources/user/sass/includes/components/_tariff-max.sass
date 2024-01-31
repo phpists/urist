@@ -1,0 +1,81 @@
+.tariff-max
+    display: grid
+    grid-template-columns: repeat(12, 1fr)
+    border-radius: 10px
+    background: var(--white)
+    box-shadow: 0 7px 10px 0 rgba(0, 0, 0, .2)
+
+    @media ($max-lg)
+        display: flex
+        flex-direction: column
+        text-align: center
+        padding: 35px
+        gap: 20px
+
+    @media ($max-md)
+        display: none
+
+    &__col
+        display: flex
+        flex-direction: column
+        justify-content: center
+        padding: 20px 35px
+
+        @media ($max-lg)
+            padding: 0
+
+        &:not(:last-child)
+            border-right: 1px solid #e0e0e0
+
+            @media ($max-lg)
+                border: none
+
+        &--3
+            grid-column: 3 span
+        
+        &--4
+            grid-column: 4 span
+        
+        &--5
+            grid-column: 5 span
+
+    &__title
+        margin: 0 0 10px
+        font-size: 25px
+        font-weight: 700
+        line-height: 1.2
+        color: var(--blue)
+
+    &__descr
+        margin: 0
+    
+    &__info
+        max-width: 280px
+        padding: 15px
+        margin: 0 auto 5px
+        border-radius: 10px
+        background: #D7DCE3
+        text-align: center
+        font-size: 16px
+        font-weight: 700
+        color: var(--blue)
+    
+    &__price
+        font-size: 25px
+        font-weight: 700
+        color: var(--blue)
+        text-align: center
+
+    &__discount
+        font-size: 12px
+        color: var(--blue)
+        text-align: center
+
+    &__picture
+        display: flex
+        align-items: center
+        justify-content: center
+
+    &__img
+        max-width: 100%
+        height: auto

@@ -1,0 +1,125 @@
+.accordion
+    border-radius: 10px
+    background: var(--white)
+    box-shadow: 0 7px 10px 0 rgba(0, 0, 0, .2)
+    overflow: hidden
+    isolation: isolate
+
+    &__header
+        position: relative
+        display: flex
+        align-items: center
+        padding: 15px 60px 15px 15px
+        min-height: 50px
+        transition: background-color .5s ease
+        margin: 0
+
+        &:has(.accordion__trigger[aria-expanded="true"])
+            background: var(--blue)
+            color: var(--white)
+            
+            .checkbox__label,
+            .blue-color
+                color: var(--white)
+
+    &__title
+        margin: 0
+        line-height: 1
+
+    &__trigger
+        position: absolute
+        top: 5px
+        right: 10px
+        display: flex
+        align-items: center
+        justify-content: center
+        text-align: left
+        gap: 15px
+        width: 40px
+        height: 40px
+        padding: 5px
+        color: var(--blue)
+        border: 1px solid var(--blue)
+        border-radius: 10px
+        transition: all .5s ease
+
+        &[aria-expanded="true"]
+            color: var(--blue)
+            background: #F7F8FA
+
+            .accordion__icon
+                transform: rotateX(180deg)
+
+            &:hover,
+            &:active,
+            &:focus-visible
+                border-color: var(--white)
+
+        &:hover,
+        &:active,
+        &:focus-visible
+            color: var(--white)
+            background: var(--blue)
+
+    &__icon
+        transition: transform .5s ease
+
+    &__content
+        display: grid
+        grid-template-rows: 0fr
+        transition: grid-template-rows .5s, background-color .5s ease
+
+        &[aria-hidden="false"]
+            grid-template-rows: 1fr
+            background: #F7F8FA
+
+        .accordion__trigger
+            font-size: 20px
+
+    &__inner
+        overflow: hidden
+
+        > .accordion__panel
+            border-top: 1px solid #A8B2C2
+
+            .accordion__text
+                padding-left: 30px
+
+                @media ($max-md)
+                    padding-left: 20px
+
+            .accordion__inner
+
+                > .accordion__panel
+
+                    .accordion__header
+                        padding-left: 30px
+
+                        @media ($max-md)
+                            padding-left: 20px
+
+                    .accordion__text
+                        padding-left: 45px
+
+                        @media ($max-md)
+                            padding-left: 25px
+
+                    .accordion__inner
+
+                        > .accordion__panel
+
+                            .accordion__header
+                                padding-left: 45px
+
+                                @media ($max-md)
+                                    padding-left: 25px
+
+                            .accordion__text
+                                padding-left: 60px
+
+                                @media ($max-md)
+                                    padding-left: 30px
+
+    &__text
+        padding: 15px 60px 15px 15px
+        min-height: 50px
