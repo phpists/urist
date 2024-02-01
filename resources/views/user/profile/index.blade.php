@@ -44,7 +44,7 @@
                         <label class="form-block__label">Номер телефону</label>
                     </div>
                     <div class="form-block__right">
-                        <input class="input form__input phone-mask" id="inputPhone" type="text" placeholder="+38 (___) __-__-___" autocomplete="off" value="{{ old('phone', Str::substr($user->phone, 2)) }}" disabled/>
+                        <input class="input form__input phone-mask" id="inputPhone" type="text" placeholder="+38 (___) __-__-___" autocomplete="off" value="{{ old('phone', Str::substr($user->phone, 2)) }}" style="text-align: initial" disabled/>
                     </div>
                 </div>
                 <div class="form-block">
@@ -63,9 +63,35 @@
                         <select class="select" id="selectCity" name="city" aria-label="Виберіть місто" required="required">
                             <option value="">Виберіть місто</option>
                             <option @selected($user->city == 'Київ')>Київ</option>
-                            <option @selected($user->city == 'Одеса')>Одеса</option>
-                            <option @selected($user->city == 'Львів')>Львів</option>
                             <option @selected($user->city == 'Харків')>Харків</option>
+                            <option @selected($user->city == 'Одеса')>Одеса</option>
+                            <option @selected($user->city == 'Дніпро')>Дніпро</option>
+                            <option @selected($user->city == 'Донецьк')>Донецьк</option>
+                            <option @selected($user->city == 'Запоріжжя')>Запоріжжя</option>
+                            <option @selected($user->city == 'Львів')>Львів</option>
+                            <option @selected($user->city == 'Кривий Ріг')>Кривий Ріг</option>
+                            <option @selected($user->city == 'Миколаїв')>Миколаїв</option>
+                            <option @selected($user->city == 'Севастополь')>Севастополь</option>
+                            <option @selected($user->city == 'Маріуполь')>Маріуполь</option>
+                            <option @selected($user->city == 'Луганськ')>Луганськ</option>
+                            <option @selected($user->city == 'Вінниця')>Вінниця</option>
+                            <option @selected($user->city == 'Сімферополь')>Сімферополь</option>
+                            <option @selected($user->city == 'Макіївка')>Макіївка</option>
+                            <option @selected($user->city == 'Херсон')>Херсон</option>
+                            <option @selected($user->city == 'Чернігів')>Чернігів</option>
+                            <option @selected($user->city == 'Полтава')>Полтава</option>
+                            <option @selected($user->city == 'Хмельницький')>Хмельницький</option>
+                            <option @selected($user->city == 'Черкаси')>Черкаси</option>
+                            <option @selected($user->city == 'Чернівці')>Чернівці</option>
+                            <option @selected($user->city == 'Житомир')>Житомир</option>
+                            <option @selected($user->city == 'Суми')>Суми</option>
+                            <option @selected($user->city == 'Рівне')>Рівне</option>
+                            <option @selected($user->city == 'Горлівка')>Горлівка</option>
+                            <option @selected($user->city == 'Івано-Франківськ')>Івано-Франківськ</option>
+                            <option @selected($user->city == 'Кам\'янське')>Кам'янське</option>
+                            <option @selected($user->city == 'Кропивницький')>Кропивницький</option>
+                            <option @selected($user->city == 'Тернопіль')>Тернопіль</option>
+                            <option @selected($user->city == 'Луцьк')>Луцьк</option>
                         </select>
                     </div>
                 </div>

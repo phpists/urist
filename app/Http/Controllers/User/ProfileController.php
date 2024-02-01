@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -17,7 +18,17 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-        \Auth::user()->update($request->all());
+        $user = \Auth::user();
+        $result = $user->update($request->all());
+
+        if ($request->wantsJson()) {
+            return new JsonResponse([
+                'result' => $result,
+                'message' => $result
+                    ? 'Дані успішно збережено'
+                    : 'Не вдалось зберегти дані'
+            ], $result ? 200 : 500);
+        }
 
         return to_route('user.profile.index');
     }
@@ -25,16 +36,27 @@ class ProfileController extends Controller
     public function changePassword(Request $request)
     {
         $request->validate([
-            'old_password' => ['required', 'string'],
+            'old_password' => ['required', 'string', function ($attribute, $value, $fail) {
+                if (!\Hash::check($value, \Auth::user()->password)) {
+                    $fail('Неправильний пароль');
+                }
+            }],
             'new_password' => ['required', 'string', 'confirmed']
         ]);
 
-        if (!\Hash::check($request->post('old_password'), \Auth::user()->password))
-            return back()->with('error', 'Неправильний пароль');
-
-        \Auth::user()->update([
+        $result = \Auth::user()->update([
             'password' => \Hash::make($request->post('new_password'))
         ]);
+
+
+        if ($request->wantsJson()) {
+            return new JsonResponse([
+                'result' => $result,
+                'message' => $result
+                    ? 'Пароль змінено'
+                    : 'Не вдалось зберегти новий пароль'
+            ], $result ? 200 : 500);
+        }
 
         return back()->with('success', 'Пароль змінено');
     }

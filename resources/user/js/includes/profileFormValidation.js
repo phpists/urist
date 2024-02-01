@@ -13,7 +13,7 @@ const profileFormValidation = () => {
                     errorMessage: "Заповніть це поле",
                 },
             ]);
-        
+
         document.getElementById('inputLastName') &&
             validator.addField('#inputLastName', [
                 {
@@ -21,15 +21,19 @@ const profileFormValidation = () => {
                     errorMessage: "Заповніть це поле",
                 },
             ]);
-        
+
         document.getElementById('inputEmail') &&
             validator.addField('#inputEmail', [
                 {
                     rule: 'required',
                     errorMessage: "Заповніть це поле",
                 },
+                {
+                    rule: 'email',
+                    errorMessage: "Вкажіть валідну email-адресу",
+                },
             ]);
-        
+
         document.getElementById('inputPhone') &&
             validator.addField('#inputPhone', [
                 {
@@ -37,7 +41,7 @@ const profileFormValidation = () => {
                     errorMessage: "Заповніть це поле",
                 },
             ]);
-        
+
         document.getElementById('inputDate') &&
             validator.addField('#inputDate', [
                 {
@@ -45,7 +49,7 @@ const profileFormValidation = () => {
                     errorMessage: "Заповніть це поле",
                 },
             ]);
-        
+
         document.getElementById('selectCity') &&
             validator.addField('#selectCity', [
                 {
@@ -55,7 +59,20 @@ const profileFormValidation = () => {
             ]);
 
         validator.onSuccess((event) => {
-            event.currentTarget.submit();
+            let form = event.currentTarget;
+
+            $.ajax({
+                type: form.method,
+                url: form.action,
+                data: $(form).serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    throwSuccessToaster(response.message);
+                },
+                error: function (jqXHR) {
+                    throwErrorToaster(jqXHR?.responseJSON?.message ?? 'Не вдалось обробити запит')
+                }
+            })
         });
     }
 }
