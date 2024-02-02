@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\SettingEnum;
 use App\Models\ArticleCategory;
 use App\Models\CriminalArticle;
+use Illuminate\Support\Facades\Cache;
 
 class ArticleFilterService
 {
@@ -26,9 +27,14 @@ class ArticleFilterService
 
         $categories = array_unique($categories);
 
-        return CriminalArticle::when(!empty($categories), function ($q) use ($categories) {
-            return $q->whereIn('article_category_id', $categories);
-        })
+        $articles = request()->has('search')
+            ? CriminalArticle::search(request('search'))
+            : CriminalArticle::query();
+
+        return $articles
+            ->when(!empty($categories), function ($q) use ($categories) {
+                return $q->whereIn('article_category_id', $categories);
+            })
             ->when($sort = request('sort'), function ($q) use ($sort) {
                 [$column, $direction] = explode(':', $sort);
 

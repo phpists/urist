@@ -47,6 +47,7 @@
 
             <form id="filterForm" action="{{ route('user.articles.index') }}" data-count-url="{{ route('user.articles.total-count') }}" style="margin-bottom: 0">
                 <input type="hidden" name="sort">
+                <input type="hidden" name="search" value="{{ request('search') }}">
                 <div class="accordion filter__accordion">
                     @foreach($filterService->getCategories() as $category)
                         <div class="accordion__panel">

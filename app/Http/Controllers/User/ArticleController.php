@@ -44,4 +44,18 @@ class ArticleController extends Controller
         return view('user.articles.show', compact('article'));
     }
 
+    public function search(Request $request)
+    {
+        $articles = CriminalArticle::search($request->get('search'))->limit(10)->get();
+
+        if ($request->wantsJson()) {
+            return new JsonResponse([
+                'html' => view('user.articles._search', compact('articles'))->render(),
+                'total_count' => $articles->count()
+            ]);
+        }
+
+        return back();
+    }
+
 }

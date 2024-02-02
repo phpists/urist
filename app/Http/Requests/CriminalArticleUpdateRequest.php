@@ -25,7 +25,9 @@ class CriminalArticleUpdateRequest extends FormRequest
         return [
             'id' => 'required',
             'name' => ['required', 'string', Rule::unique('criminal_articles')->ignore($this->input('id'))],
-            'content' => 'string|required',
+            'nazva_pp' => 'string|required',
+            'pp' => 'string|required',
+            'statya_kk' => 'string|required',
             'article_category_id' => 'required|exists:article_categories,id',
             'description' => 'required|string',
             'court_decision_link' => 'required|string',

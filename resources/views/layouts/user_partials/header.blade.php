@@ -7,9 +7,9 @@
         </button>
         <a class="button header__button" href="{{ route('user.articles.index') }}">Модуль КК</a>
         <a class="button button--outline header__button" href="{{ route('user.articles.index') }}">Модуль КПК</a>
-        <form class="search header__search" id="search-form" autocomplete="off" novalidate="novalidate">
+        <form class="search header__search" action="{{ route('user.articles.index') }}" id="search-form" autocomplete="off" novalidate="novalidate">
             <div class="search__group">
-                <input class="input search__input" id="inputSearch" type="text" name="inputSearch" placeholder="Пошук по збірнику" autocomplete="off" required="required"/>
+                <input class="input search__input" id="inputSearch" type="text" name="search" placeholder="Пошук по збірнику" autocomplete="off" value="{{ request('search') }}" required="required"/>
                 <button class="search__button">
                     <svg class="search__icon" width="21" height="21">
                         <use xlink:href="{{asset('assets/img/user/sprite.svg#search')}}"></use>

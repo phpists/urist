@@ -9,6 +9,9 @@
 @section('page')
     <section class="collection-section">
         <div class="container collection-section__container">
+            @if(request()->has('search'))
+            <h1 class="page-title collection-section__title">Результати за запитом: "{{ request('search') }}"</h1>
+            @endif
             <div class="filter-toggle">
                 <h3 class="filter-toggle__title">Фільтр</h3>
                 <button class="button button--outline filter-toggle__button" type="button" aria-label="Hide Filter" data-filter-toggle="data-filter-toggle">
