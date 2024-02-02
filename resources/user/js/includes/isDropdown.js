@@ -1,33 +1,27 @@
 const isDropdown = () => {
-    const body = document.querySelector('body');
-    const dropdownAll = document.querySelectorAll('.is-dropdown');
-    
 
-    dropdownAll?.forEach(item => {
-        const dropdownToggle = item.querySelector('.is-dropdown__toggle');
-        
-        dropdownToggle?.addEventListener('click', function(e) {
-            const activeItem = document.querySelector('.is-dropdown.is-active');
-            
-            e.preventDefault();
+    $(document).on('click', '.is-dropdown', function (e) {
+        const activeItem = $('.is-dropdown.is-active')[0] ?? null;
 
-            if (activeItem != item) {
-                activeItem?.classList.remove('is-active');
-            }
-            
-            item.classList.toggle('is-active');
-        });
-    });
+        e.preventDefault();
 
-    body.addEventListener('click', e => {
+        if (activeItem != this) {
+            activeItem?.classList.remove('is-active');
+        }
+
+        this.classList.toggle('is-active');
+    })
+
+    $(document).on('click', 'body', function (e) {
         const isDropdown = e.target.closest('.is-dropdown');
 
         if (!isDropdown) {
-            dropdownAll?.forEach(item => {
+            $('.is-dropdown').each((i, item) => {
                 item.classList.remove('is-active');
             });
         }
-    });
+    })
+
 }
 
 export default isDropdown;

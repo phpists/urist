@@ -7,6 +7,7 @@ use App\Http\Requests\MoveItemRequest;
 use App\Models\Favourite;
 use App\Models\File;
 use App\Models\Folder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class FavoritesController extends Controller
@@ -40,6 +41,13 @@ class FavoritesController extends Controller
             return redirect()->back()->withErrors('Не знайдено папки з даним ідентифікаторм');
         }
         $favourite->delete();
+
+        if ($request->wantsJson())
+            return new JsonResponse([
+                'result' => true,
+                'message' => 'Файл успішно видалено з закладок'
+            ]);
+
         return redirect()->back()->with('success', 'Успішно видалено з закладок');
     }
 
@@ -56,9 +64,13 @@ class FavoritesController extends Controller
     public function moveFavourite(MoveItemRequest $request): \Illuminate\Http\JsonResponse
     {
         $favourite = Favourite::query()->where('user_id', $request->user()->id)->find($request->item_id);
-        $favourite->update($request->all());
+        $result = $favourite->update($request->all());
         return response()->json([
-            'success' => true
+            'success' => true,
+            'result' => $result,
+            'message' => $result
+                ? 'Файл успішно переміщено'
+                : 'Не вдалось перемістити файл'
         ]);
     }
 }

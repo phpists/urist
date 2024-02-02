@@ -10,6 +10,7 @@ use App\Http\Requests\StoreFolderRequest;
 use App\Models\Favourite;
 use App\Models\File;
 use App\Models\Folder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class FolderController extends Controller
@@ -52,7 +53,18 @@ class FolderController extends Controller
 
     public function store(StoreFolderRequest $request) {
         $folder = new Folder(array_merge($request->all(), ['user_id' => $request->user()->id]));
-        if ($folder->save()) {
+        $result = $folder->save();
+
+        if ($request->wantsJson()) {
+            return new JsonResponse([
+                'result' => $result,
+                'message' => $result
+                    ? 'Папка успішно створена'
+                    : 'Не вдалось створити папку'
+            ]);
+        }
+
+        if ($result) {
             return redirect()->back()->with('success', 'Папка успішно створена');
         }
         return redirect()->back()->withErrors('Папку не вдалось створити');
@@ -63,7 +75,18 @@ class FolderController extends Controller
         if (!$folder) {
             abort(404);
         }
-        if ($folder->update($request->all())) {
+
+        $result = $folder->update($request->all());
+
+        if ($request->wantsJson())
+            return new JsonResponse([
+                'result' => $result,
+                'message' => $result
+                    ? 'Папка успішно оновлена'
+                    : 'Не вдалось оновити папку'
+            ]);
+
+        if ($result) {
             return redirect()->back()->with('success', 'Папка успішно оновлена');
         }
         return redirect()->back()->withErrors('Папку не вдалось створити');
@@ -76,6 +99,13 @@ class FolderController extends Controller
                 Favourite::query()->where('folder_id', $folder->id)->delete();
             }
             $folder->delete();
+
+            if ($request->wantsJson())
+                return new JsonResponse([
+                    'result' => true,
+                    'message' => 'Папку успішно видалено з закладок'
+                ]);
+
             return redirect()->back()->with('success', 'Папку успішно видалено');
         }
         return redirect()->back()->withErrors('Папку не знайдено');
@@ -88,12 +118,16 @@ class FolderController extends Controller
                 'error' => 'Не вдалось знайти папку'
             ]);
         }
-        $folder->update([
+        $result = $folder->update([
             'parent_id' => $request->folder_id
         ]);
         return response()->json([
             'success' => true,
-            'id' => $folder->id
+            'id' => $folder->id,
+            'result' => $result,
+            'message' => $result
+                ? 'Папка успішно переміщена'
+                : 'Не вдалось перемістити папку'
         ]);
     }
 }

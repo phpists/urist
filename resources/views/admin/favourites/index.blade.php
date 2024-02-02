@@ -195,7 +195,10 @@
                     folder_id: folder_id
                 },
                 success: function (resp) {
-                    console.log(resp)
+                    throwSuccessToaster(response.message);
+                },
+                error: function (jqHXR) {
+                    throwErrorToaster(jqXHR?.responseJSON?.message ?? 'Не вдалось обробити запит')
                 }
             })
         }

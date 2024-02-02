@@ -13,9 +13,26 @@ const createFormValidation = () => {
                     errorMessage: "Заповніть це поле",
                 },
             ]);
-            
+
         validator.onSuccess((event) => {
-            event.currentTarget.submit();
+            let form = event.currentTarget;
+
+            $.ajax({
+                type: form.method,
+                url: form.action,
+                data: $(form).serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    throwSuccessToaster(response.message);
+                },
+                error: function (jqXHR) {
+                    throwErrorToaster(jqXHR?.responseJSON?.message ?? 'Не вдалось обробити запит')
+                },
+                complete: function () {
+                    $('#modal-create button.modal__close').click()
+                    updateContainer('#itemsContainer', location.href)
+                }
+            })
         });
     }
 }

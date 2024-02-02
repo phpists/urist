@@ -58,7 +58,63 @@ $(function () {
         }
     })
 
+    $(document).on('submit', '#modal-delete form', function (e) {
+        e.preventDefault();
+
+        let form = this;
+
+        $.ajax({
+            type: form.method,
+            url: form.action,
+            data: $(form).serialize(),
+            dataType: 'json',
+            success: function (response) {
+                throwSuccessToaster(response.message);
+            },
+            error: function (jqXHR) {
+                throwErrorToaster(jqXHR?.responseJSON?.message ?? 'Не вдалось обробити запит')
+            },
+            complete: function () {
+                $('#modal-delete button.modal__close').click()
+                updateContainer('#itemsContainer', location.href)
+            }
+        })
+    })
+
+    $(document).on('submit', '#modal-edit form', function (e) {
+        e.preventDefault();
+
+        let form = this;
+
+        $.ajax({
+            type: form.method,
+            url: form.action,
+            data: $(form).serialize(),
+            dataType: 'json',
+            success: function (response) {
+                throwSuccessToaster(response.message);
+            },
+            error: function (jqXHR) {
+                throwErrorToaster(jqXHR?.responseJSON?.message ?? 'Не вдалось обробити запит')
+            },
+            complete: function () {
+                $('#modal-edit button.modal__close').click()
+                updateContainer('#itemsContainer', location.href)
+            }
+        })
+    })
+
+    $(document).on('submit', 'form.ajax-form', function (e) {
+        e.preventDefault();
+        updateContainer($(this).data('target-container'), this.action + '?' + $(this).serialize())
+    })
+
 })
+
+
+function updateContainer(targetSelector, url) {
+    $(targetSelector).load(url)
+}
 
 
 

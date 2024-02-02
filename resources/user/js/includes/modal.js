@@ -2,47 +2,38 @@ const modal = () => {
     const body = document.querySelector("body");
     const header = document.querySelector(".header");
     const modalWrap = document.querySelector(".modal-wrap");
-    const modalAll = document.querySelectorAll(".modal");
-    const modalToggleAll = document.querySelectorAll("[data-modal]");
-    const modalCloseAll = document.querySelectorAll("[data-modal-close]");
     const paddingRight = window.innerWidth - document.documentElement.clientWidth;
 
-    modalToggleAll.forEach(item => {
-        const modalID = item.getAttribute("data-modal");
-        const modal = document.getElementById(modalID);
+    $(document).on('click', '[data-modal]', function (e) {
+        const $modalVisible = $(".modal.is-visible");
+
+        e.preventDefault();
+
+        const modal = $('#' + $(this).data('modal'))[0] ?? null;
 
         if (modal) {
-            item.addEventListener('click', e => {
-                const modalVisible = document.querySelector(".modal.is-visible");
+            if ($modalVisible.length > 0) {
+                $modalVisible.removeClass('is-visible');
 
-                e.preventDefault();
-
-                if (modalVisible) {
-                    modalVisible.classList.remove('is-visible');
-
-                    setTimeout(() => {
-                        openModal(modal);
-                    }, 250);
-                } else {
+                setTimeout(() => {
                     openModal(modal);
-                }
-            });
-        }
-    });
-
-    modalAll.forEach(item => {
-        item.addEventListener('click', e => {
-            if (!e.target.closest('.modal__window')) {
-                closeModal(item);
+                }, 250);
+            } else {
+                openModal(modal);
             }
-        });
-    });
+        }
+    })
 
-    modalCloseAll.forEach(item => {
-        item.addEventListener('click', e => {
-            closeModal(item.closest(".modal"));
-        });
-    });
+    $(document).on('click', '.modal', function (e) {
+        if (!e.target.closest('.modal__window')) {
+            closeModal(this);
+        }
+    })
+
+    $(document).on('click', '[data-modal-close]', function (e) {
+        closeModal(this.closest(".modal"));
+    })
+
 
     const openModal = (modal) => {
         body.classList.add('scroll-disabled');
