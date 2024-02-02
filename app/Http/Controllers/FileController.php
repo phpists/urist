@@ -9,6 +9,7 @@ use App\Models\ArticleCategory;
 use App\Models\CriminalArticle;
 use App\Models\Favourite;
 use App\Models\File;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class FileController extends Controller
@@ -29,6 +30,12 @@ class FileController extends Controller
             return redirect()->back()->withErrors('Не знайдено файла');
         }
         $file->delete();
+        if ($request->wantsJson())
+            return new JsonResponse([
+                'result' => true,
+                'message' => 'Файл успішно видалено'
+            ]);
+
         return redirect()->back()->with('success', 'Файо успішно видалено');
     }
 
@@ -71,7 +78,18 @@ class FileController extends Controller
         $file = File::query()
             ->where('user_id', $request->user()->id)
             ->findOrFail($request->file_id);
-        if ($file->update($request->all())) {
+        $result = $file->update($request->all());
+
+        if ($request->wantsJson()) {
+            return new JsonResponse([
+                'result' => $result,
+                'message' => $request
+                    ? 'Файл збережено'
+                    : 'Не вдалось зберегти файл'
+            ]);
+        }
+
+        if ($result) {
             return redirect()->back()->with('success', 'Файл успішно оновлено');
         }
         return redirect()->back()->withErrors('Неполадки на сервері, спробуйте пізніше');
@@ -80,9 +98,13 @@ class FileController extends Controller
     public function moveFile(MoveItemRequest $request): \Illuminate\Http\JsonResponse
     {
         $file = File::query()->where('user_id', $request->user()->id)->find($request->item_id);
-        $file->update($request->all());
+        $result = $file->update($request->all());
         return response()->json([
-            'success' => true
+            'success' => true,
+            'result' => $result,
+            'message' => $result
+                ? 'Файл успішно переміщено'
+                : 'Не вдалось перемістити файл'
         ]);
     }
 

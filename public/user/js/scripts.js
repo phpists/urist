@@ -109,6 +109,10 @@ $(function () {
         updateContainer($(this).data('target-container'), this.action + '?' + $(this).serialize())
     })
 
+    $(document).on('keyup', `form.ajax-form input[name*="search"]`, function (e) {
+        $(this).parents('form').submit()
+    })
+
 })
 
 

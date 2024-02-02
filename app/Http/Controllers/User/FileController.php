@@ -13,24 +13,29 @@ class FileController extends Controller
 
     public function index(Request $request, string|null|int $folder_id = null) {
         $file_folder = null;
-        if ($folder_id !== null) {
-            $file_folder = Folder::query()
-                ->where('user_id', $request->user()->id)
-                ->where('folder_type', FolderType::FILE_FOLDER)
-                ->find($folder_id);
-            if (!$file_folder) {
-                abort(404);
-            }
-        }
+        if ($folder_id !== null)
+            $file_folder = Folder::findOrFail($folder_id);
+
+        $search = \request('files_search');
+
         $folders = Folder::query()
+            ->when($search, function ($q) use($search) {
+                $q->where('name', 'LIKE', "%{$search}%");
+            })
             ->where('user_id', $request->user()->id)
             ->where('folder_type', FolderType::FILE_FOLDER)
             ->where('parent_id', $folder_id)
             ->get();
         $files = File::query()
+            ->when($search, function ($q) use($search) {
+                $q->where('name', 'LIKE', "%{$search}%");
+            })
             ->where('user_id', $request->user()->id)
             ->where('folder_id', $folder_id)
             ->get();
+
+        if ($request->ajax())
+            return view('user.files._items', compact('file_folder', 'folders', 'files'));
 
         return view('user.files.index', compact('folders', 'files', 'file_folder'));
     }

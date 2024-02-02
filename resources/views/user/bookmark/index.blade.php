@@ -16,7 +16,7 @@
                 <form class="search bookmarks-section__search ajax-form"
                       id="bookmark-search-form" autocomplete="off" data-target-container="#itemsContainer" novalidate="novalidate">
                     <div class="search__group">
-                        <input class="input search__input" id="inputBookmarkSearch" type="text" name="bookmarks_search" placeholder="Пошук по файлах" autocomplete="off" required onkeyup="$(this).parents('form').submit()"/>
+                        <input class="input search__input" id="inputBookmarkSearch" type="text" name="bookmarks_search" placeholder="Пошук по файлах" autocomplete="off" required/>
                         <button class="search__button">
                             <svg class="search__icon" width="21" height="21">
                                 <use xlink:href="{{asset('assets/img/user/sprite.svg#search')}}"></use>

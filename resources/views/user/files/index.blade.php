@@ -13,9 +13,9 @@
         <div class="container bookmarks-section__container">
             <header class="bookmarks-section__header">
                 <h1 class="page-title bookmarks-section__title">Робота з файлами</h1>
-                <form class="search bookmarks-section__search" id="bookmark-search-form" autocomplete="off" novalidate="novalidate">
+                <form class="search bookmarks-section__search ajax-form" id="bookmark-search-form" data-target-container="#itemsContainer" autocomplete="off" novalidate="novalidate">
                     <div class="search__group">
-                        <input class="input search__input" id="inputBookmarkSearch" type="text" name="inputBookmarkSearch" placeholder="Пошук по файлах" autocomplete="off" required="required"/>
+                        <input class="input search__input" id="inputBookmarkSearch" type="text" name="files_search" placeholder="Пошук по файлах" autocomplete="off" required="required"/>
                         <button class="search__button">
                             <svg class="search__icon" width="21" height="21">
                                 <use xlink:href="{{asset('assets/img/user/sprite.svg#search')}}"></use>
@@ -28,78 +28,8 @@
                     <button class="button button--outline bookmarks-section__button" type="button" data-modal="modal-create">Створити папку</button>
                 </div>
             </header>
-            <ul class="bookmarks-section__list">
-                @if(isset($file_folder))
-                    <li data-zone="folder_{{ $file_folder->parent_id }}" data-label="folder_{{ $file_folder->parent_id }}" class="folder_container bookmarks-section__item">
-                        <div class="bookmark-card">
-                            <a class="bookmark-card__link" href="{{ route('user.files.index', $file_folder->parent_id) }}">
-                                <div class="bookmark-card__pic">
-                                    <svg class="bookmark-card__icon" width="110" height="86">
-                                        <use xlink:href="{{asset('assets/img/user/sprite.svg#case')}}"></use>
-                                    </svg>
-                                </div>
-                                <h3 class="bookmark-card__title">Повернутись назад</h3>
-                            </a>
-                        </div>
-                    </li>
-                @endif
-                @foreach($folders as $folder)
-                    <li data-zone="folder_{{$folder->id}}" data-label="folder_{{$folder->id}}" class="folder_container bookmarks-section__item">
-                        <div class="bookmark-card">
-                            <div class="bookmark-card-menu is-dropdown">
-                                <button class="bookmark-card-menu__toggle is-dropdown__toggle">
-                                    <svg class="non-draggable bookmark-card-menu__toggle-icon" width="4" height="18">
-                                        <use xlink:href="{{asset('assets/img/user/sprite.svg#dots')}}"></use>
-                                    </svg>
-                                </button>
-                                <ul class="bookmark-card-menu__dropdown">
-                                    <li class="bookmark-card-menu__item"><button type="button" class="bookmark-card-menu__link modal-self-completing"
-                                                                                 data-action="{{ route('folder.update', ['folder_id' => $folder->id]) }}" data-json='@json($folder)'
-                                                                                 data-modal="modal-edit">Редагувати</button></li>
-                                    <li class="bookmark-card-menu__item">
-                                        <button type="button" class="bookmark-card-menu__link modal-self-completing" data-action="{{ route('folders.delete', ['folder_id' => $folder->id]) }}" data-modal="modal-delete">Видалити</button>
-                                    </li>
-                                </ul>
-                            </div>
-                            <a class="drag_element bookmark-card__link" href="{{ route('user.files.index', $folder) }}" draggable="true"
-                               data-item="folder_{{ $folder->id }}">
-                                <div class="bookmark-card__pic">
-                                    <svg class="bookmark-card__icon" width="110" height="86">
-                                        <use xlink:href="{{asset('assets/img/user/sprite.svg#case')}}"></use>
-                                    </svg>
-                                </div>
-                                <h3 class="bookmark-card__title">{{ $folder->name }}</h3>
-                                <div class="bookmark-card__info">{{ $folder->getFilesCountTitle() }}</div>
-                            </a>
-                        </div>
-                    </li>
-                @endforeach
-                @foreach($files as $file)
-                    <li class="bookmarks-section__item" data-label="file_{{ $file->id }}">
-                        <div class="bookmark-card">
-                            <div class="bookmark-card-menu is-dropdown">
-                                <button class="bookmark-card-menu__toggle is-dropdown__toggle">
-                                    <svg class="bookmark-card-menu__toggle-icon" width="4" height="18">
-                                        <use xlink:href="{{asset('assets/img/user/sprite.svg#dots')}}"></use>
-                                    </svg>
-                                </button>
-                                <ul class="bookmark-card-menu__dropdown">
-                                    <li class="bookmark-card-menu__item">
-                                        <button type="button" class="bookmark-card-menu__link modal-self-completing" data-action="{{ route('files.delete', ['file_id' => $file->id]) }}" data-modal="modal-delete">Видалити</button>
-                                    </li>
-                                </ul>
-                            </div>
-                            <a class="bookmark-card__link drag_element" draggable="true" data-item="file_{{$file->id}}" href="{{ route('user.files.edit', $file) }}">
-                                <div class="bookmark-card__pic">
-                                    <svg class="bookmark-card__icon" width="110" height="86">
-                                        <use xlink:href="{{asset('assets/img/user/sprite.svg#proposition')}}"></use>
-                                    </svg>
-                                </div>
-                                <h3 class="bookmark-card__title">{{ $file->name }}</h3>
-                            </a>
-                        </div>
-                    </li>
-                @endforeach
+            <ul class="bookmarks-section__list" id="itemsContainer">
+                @include('user.files._items')
             </ul>
         </div>
     </section>
@@ -109,6 +39,7 @@
 <div class="modal-wrap">
     @include('layouts.user_partials.modal-create', ['folder_type' => \App\Enums\FolderType::FILE_FOLDER->value])
     @include('layouts.user_partials.modal-edit', ['folder_type' => \App\Enums\FolderType::FILE_FOLDER->value])
+    @include('layouts.user_partials.modal-edit-file')
     @include('layouts.user_partials.modal-delete')
 </div>
 
@@ -135,14 +66,17 @@
                     item_id: id,
                     folder_id: folder_id
                 },
-                success: function (resp) {
-                    console.log(resp)
+                success: function (response) {
+                    throwSuccessToaster(response.message);
+                },
+                error: function (jqXHR) {
+                    throwErrorToaster(jqXHR?.responseJSON?.message ?? 'Не вдалось обробити запит')
                 }
             })
         }
 
         function moveFavourite(folder_id, id) {
-            moveItem('/folders/move', folder_id, id);
+            moveItem('/file/move', folder_id, id);
         }
 
         function moveFolder(folder_id, id) {

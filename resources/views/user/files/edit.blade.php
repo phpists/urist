@@ -17,12 +17,40 @@
                 </div>
             </header>
 
-            <form action="{{ route('file.update', ['file_id' => $file->id]) }}" method="POST">
+            <form id="editForm" action="{{ route('file.update', ['file_id' => $file->id]) }}" method="POST">
                 @csrf
                 @method('PUT')
 
-                <div class="page-section__editor">
-                    <textarea id="textEditor" name="content">{{ $file->content }}</textarea>
+
+                <div class="tabs page-section__tabs" data-tabs="tabs-1" data-active="0">
+                    <ul class="tabs__nav">
+                        <li class="tabs__nav-item">
+                            <button class="button button--outline tabs__nav-btn" type="button">Назва ПП</button>
+                        </li>
+                        <li class="tabs__nav-item">
+                            <button class="button button--outline tabs__nav-btn" type="button">ПП</button>
+                        </li>
+                        <li class="tabs__nav-item">
+                            <button class="button button--outline tabs__nav-btn" type="button">Стаття КК</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tabs-content page-section__tabs-content" data-tabs-content="tabs-1">
+                    <div class="tabs-panel">
+                        <div class="page-section__editor">
+                            <textarea id="textEditor" name="nazva_pp">{{ $file->nazva_pp }}</textarea>
+                        </div>
+                    </div>
+                    <div class="tabs-panel">
+                        <div class="page-section__editor">
+                            <textarea id="textEditor1" name="pp">{{ $file->pp }}</textarea>
+                        </div>
+                    </div>
+                    <div class="tabs-panel">
+                        <div class="page-section__editor">
+                            <textarea id="textEditor2" name="statya_kk">{{ $file->statya_kk }}</textarea>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="page-section__buttons">
@@ -39,30 +67,54 @@
 @endsection
 
 @section('scripts_footer')
-    <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
+    <script src="https://cdn.ckeditor.com/4.8.0/full-all/ckeditor.js"></script>
+    <script src="{{ asset('user/ckeditor/document-config.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var KTCkeditor = function () {
-                // Private functions
-                var demos = function () {
-                    ClassicEditor
-                        .create( document.querySelector( '#textEditor' ) )
-                        .catch( error => {
-                            console.error( error );
-                        } );
-                }
+            CKEDITOR.replace( 'textEditor', CKEditorDocumentConfig );
+            CKEDITOR.replace( 'textEditor1', CKEditorDocumentConfig );
+            CKEDITOR.replace( 'textEditor2', CKEditorDocumentConfig );
 
-                return {
-                    // public functions
-                    init: function() {
-                        demos();
-                    }
-                };
-            }();
-            KTCkeditor.init();
+            // var KTCkeditor = function () {
+            //     // Private functions
+            //     var demos = function () {
+            //         ClassicEditor
+            //             .create( document.querySelector( '#textEditor' ) )
+            //             .catch( error => {
+            //                 console.error( error );
+            //             } );
+            //     }
+            //
+            //     return {
+            //         // public functions
+            //         init: function() {
+            //             demos();
+            //         }
+            //     };
+            // }();
+            // KTCkeditor.init();
             $("#createFileFolder").select2({
                 placeholder: "Виберіть папку",
                 ajax: makeSelect2AjaxSearch('/folders/search_file_folders', 'createFileFolder')
+            })
+        })
+
+        $(document).on('submit', '#editForm', function (e) {
+            e.preventDefault();
+
+            let form = this;
+
+            $.ajax({
+                type: form.method,
+                url: form.action,
+                data: $(form).serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    throwSuccessToaster(response.message);
+                },
+                error: function (jqXHR) {
+                    throwErrorToaster(jqXHR?.responseJSON?.message ?? 'Не вдалось обробити запит')
+                }
             })
         })
     </script>
