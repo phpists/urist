@@ -51,6 +51,30 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+
+        $(document).on('submit', '#edit-file-form', function (e) {
+            e.preventDefault()
+            let form = this;
+
+            $.ajax({
+                type: form.method,
+                url: form.action,
+                data: $(form).serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    throwSuccessToaster(response.message);
+                },
+                error: function (jqXHR) {
+                    throwErrorToaster(jqXHR?.responseJSON?.message ?? 'Не вдалось обробити запит')
+                },
+                complete: function () {
+                    $('#modal-edit-file button.modal__close').click()
+                    updateContainer('#itemsContainer', location.href)
+                }
+            })
+        })
+
         function handleDragEnter(ev) {
             ev.preventDefault()
         }

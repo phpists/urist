@@ -7,6 +7,11 @@
 @php($is_menu_hidden = false)
 
 @section('page')
+    <style>
+        .collection-descr__text p {
+            margin-bottom: 0!important;
+        }
+    </style>
     <section class="collection-section">
         <div class="container collection-section__container">
             @if(request()->has('search'))

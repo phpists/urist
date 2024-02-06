@@ -6,6 +6,7 @@ use App\Enums\FolderType;
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Folder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class FileController extends Controller
@@ -43,6 +44,22 @@ class FileController extends Controller
     public function edit(Request $request, File $file)
     {
         return view('user.files.edit', compact('file'));
+    }
+
+    public function updateFileName(Request $request, File $file)
+    {
+        $result = $file->update(['name' => $request->post('name')]);
+
+        if ($request->wantsJson()) {
+            return new JsonResponse([
+                'result' => $result,
+                'message' => $request
+                    ? 'Файл збережено'
+                    : 'Не вдалось зберегти файл'
+            ]);
+        }
+
+        return back();
     }
 
 }

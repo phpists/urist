@@ -57,7 +57,7 @@
                 <ul class="bookmark-card-menu__dropdown">
                     <li class="bookmark-card-menu__item">
                         <button type="button" class="bookmark-card-menu__link modal-self-completing"
-                                data-action="{{ route('file.update', ['file_id' => $file->id]) }}"
+                                data-action="{{ route('user.files.update.file-name', $file) }}"
                                 data-json='@json($file)' data-modal="modal-edit-file">Редагувати</button>
                     </li>
                     <li class="bookmark-card-menu__item">

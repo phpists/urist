@@ -141,6 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
             success: function (resp) {
                 document.getElementById('updateCategoryId').value = categoryId;
                 $("#updateCategoryName").val(resp.name)
+                $('#updateCategorySubTitle').val(resp.sub_title)
                 if (resp.parent_category !== null) {
                     let categorySelect = $("#updateCategoryParent");
                     let option = document.createElement('option');

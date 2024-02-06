@@ -24,12 +24,11 @@ class CriminalArticleStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|unique:criminal_articles',
-            'nazva_pp' => 'string|required',
             'pp' => 'string|required',
             'statya_kk' => 'string|required',
             'article_category_id' => 'required|exists:article_categories,id',
             'description' => 'required|string',
-            'court_decision_link' => 'required|string',
+            'court_decision_link' => 'nullable|string',
             'tag_list' => 'array'
         ];
     }

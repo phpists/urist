@@ -64,4 +64,4 @@
     </table>
 </div>
 <!--end::Table-->
-{{--{{ $article_categories->links('vendor.pagination.super_admin_pagination') }}--}}
+{{ $tags->links('vendor.pagination.super_admin_pagination') }}

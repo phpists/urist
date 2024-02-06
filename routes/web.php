@@ -145,6 +145,8 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
         ->name('files.index');
     Route::get('file/{file}/edit', [\App\Http\Controllers\User\FileController::class, 'edit'])
         ->name('files.edit');
+    Route::put('file/{file}/update-file-name', [\App\Http\Controllers\User\FileController::class, 'updateFileName'])
+        ->name('files.update.file-name');
 
     // Registries
     Route::get('registries', [\App\Http\Controllers\User\RegistryController::class, 'index'])

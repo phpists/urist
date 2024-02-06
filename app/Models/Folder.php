@@ -29,11 +29,11 @@ class Folder extends Model
         $count = $this->files()->count();
 
         if ($count == 1) {
-            return "$count файл";
+            return "$count правова позиція";
         } elseif ($count > 1 && $count < 5) {
-            return "$count файла";
+            return "$count правові позиції";
         } else {
-            return "$count файлів";
+            return "$count правових позицій";
         }
     }
 

@@ -87,7 +87,7 @@
                             <div class="col-md-6">
                                 <div class="form-group"><label for="courtDecisionLinkInp">Посилання на рішення суду</label>
                                     <div class="input-wrapper">
-                                        <input type="text" required class="form-control" name="court_decision_link" id="courtDecisionLinkInp">
+                                        <input type="text" class="form-control" name="court_decision_link" id="courtDecisionLinkInp">
                                         @error('court_decision_link')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -115,17 +115,6 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="contentEditor">Назва ПП</label>
-                                    <div class="input-wrapper">
-                                        <textarea class="required_inp" style="height: 600px" id="contentEditor" name="nazva_pp"></textarea>
-                                        @error('nazva_pp')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
                                     <label for="contentEditor">ПП</label>
                                     <div class="input-wrapper">
                                         <textarea class="required_inp" style="height: 600px" id="contentEditor1" name="pp"></textarea>
@@ -137,7 +126,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="contentEditor">Стаття КК</label>
+                                    <label for="contentEditor">Судове рішення</label>
                                     <div class="input-wrapper">
                                         <textarea class="required_inp" style="height: 600px" id="contentEditor2" name="statya_kk"></textarea>
                                         @error('statya_kk')
@@ -204,7 +193,6 @@
         }
         document.addEventListener('DOMContentLoaded', function () {
             let descriptionEditor = CKEDITOR.replace( 'descriptionEditor' );
-            let contentEditor = CKEDITOR.replace( 'contentEditor' );
             let contentEditor1 = CKEDITOR.replace( 'contentEditor1' );
             let contentEditor2 = CKEDITOR.replace( 'contentEditor2' );
             $("#createArticleCategory").select2({

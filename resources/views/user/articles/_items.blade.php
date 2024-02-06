@@ -1,3 +1,4 @@
+@if($articles->isNotEmpty())
 <table class="collection-table">
     <thead class="collection-table__thead">
     <tr>
@@ -34,12 +35,14 @@
             </td>
             <td>
                 <h4 class="collection-table__title"><a class="black-link" href="{{ route('user.articles.show', $article) }}">{{ $article->name }}</a></h4>
+                @if($article->court_decision_link)
                 <a class="blue-link collection-table__link" href="{{ $article->court_decision_link }}" target="_blank">Посилання на рішення</a>
+                @endif
             </td>
             <td>
                 <div class="collection-descr">
                     <a class="black-link collection-descr__text" href="{{ route('user.articles.show', $article) }}">
-                        {!! $short = Str::words($article->description, 40, '') !!}
+                        {!! $short = Str::words($article->description, 50, '') !!}
                         <div class="collection-descr__hidden">
                             {!! Str::substr($article->description, strlen($short)) !!}
                         </div>
@@ -96,3 +99,6 @@
 </table>
 
 {!! $articles->links('vendor.pagination.urist') !!}
+@else
+    <h3>Немає результатів</h3>
+@endif

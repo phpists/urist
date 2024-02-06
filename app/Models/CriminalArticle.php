@@ -19,7 +19,6 @@ class CriminalArticle extends Model
         'article_category_id',
         'position',
         'is_active',
-        'nazva_pp',
         'pp',
         'statya_kk',
     ];
