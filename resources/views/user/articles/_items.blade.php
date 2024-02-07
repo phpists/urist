@@ -44,7 +44,7 @@
                     <a class="black-link collection-descr__text" href="{{ route('user.articles.show', $article) }}">
                         {!! $short = truncate_by_words($article->description, 200) !!}
                         <div class="collection-descr__hidden">
-                            {!! Str::substr($article->description, mb_strlen($short)) !!}
+                            {!! Str::substr($article->description, mb_strlen($short) - 3) !!}
                         </div>
                     </a>
                     @if(strlen($short) < strlen($article->description))
