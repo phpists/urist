@@ -10,8 +10,8 @@
             <form action="{{ route('folders.store') }}" method="POST" class="form modal__form" id="create-form" autocomplete="off" novalidate="novalidate">
                 @csrf
                 <input type="hidden" name="folder_type" value="{{ $folder_type }}">
-                @if(isset($parent_id))
-                    <input type="hidden" name="parent_id" value="{{ $parent_id }}">
+                @if(isset($folder_id))
+                    <input type="hidden" name="parent_id" value="{{ $folder_id }}">
                 @endif
                 <div class="form__group">
                     <input class="input form__input" id="inputCreateFolderTitle" type="text" name="name" placeholder="Введіть назву папки" autocomplete="off" required="required"/>

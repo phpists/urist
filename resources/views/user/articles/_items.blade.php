@@ -42,16 +42,18 @@
             <td>
                 <div class="collection-descr">
                     <a class="black-link collection-descr__text" href="{{ route('user.articles.show', $article) }}">
-                        {!! $short = Str::words($article->description, 50, '') !!}
+                        {!! $short = truncate_by_words($article->description, 200) !!}
                         <div class="collection-descr__hidden">
-                            {!! Str::substr($article->description, strlen($short)) !!}
+                            {!! Str::substr($article->description, mb_strlen($short)) !!}
                         </div>
                     </a>
+                    @if(strlen($short) < strlen($article->description))
                     <button class="collection-descr__more" type="button"><span>Читати детальніше</span>
                         <svg class="collection-descr__more-icon" width="8" height="4">
                             <use xlink:href="{{ asset('assets/img/user/sprite.svg#dropdown-arrow') }}"></use>
                         </svg>
                     </button>
+                    @endif
                 </div>
             </td>
             <td>

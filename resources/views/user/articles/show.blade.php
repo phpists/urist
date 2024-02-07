@@ -12,7 +12,9 @@
                     </a>
                     <div class="page-section__info">
                         <h1 class="page-title page-section__title">{{ $article->name }}</h1>
+                        @if($article->court_decision_link)
                         <a class="blue-link page-section__link" href="{{ $article->court_decision_link }}" target="_blank">Посилання на рішення </a>
+                        @endif
                     </div>
                 </div>
                 <ul class="actions page-section__actions">

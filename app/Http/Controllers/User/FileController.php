@@ -38,7 +38,7 @@ class FileController extends Controller
         if ($request->ajax())
             return view('user.files._items', compact('file_folder', 'folders', 'files'));
 
-        return view('user.files.index', compact('folders', 'files', 'file_folder'));
+        return view('user.files.index', compact('folders', 'files', 'file_folder', 'folder_id'));
     }
 
     public function edit(Request $request, File $file)
