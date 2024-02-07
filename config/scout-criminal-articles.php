@@ -19,7 +19,6 @@ return [
     'searchableAttributes' => [
         'name',
         'description',
-        'nazva_pp',
         'pp',
         'statya_kk',
     ],

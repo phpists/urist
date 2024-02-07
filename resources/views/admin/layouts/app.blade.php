@@ -170,13 +170,13 @@
                                 <span class="menu-text">Реєстр</span>
                             </a>
                         </li>
-                        <li class="menu-item {{ request()->routeIs('admin.subscriptions.index') ? 'menu-item-active' : '' }}"
-                            aria-haspopup="true">
-                            <a href="{{route('admin.subscriptions.index')}}" class="menu-link">
-                                <i class="flaticon-folder menu-icon"></i>
-                                <span class="menu-text">Підписки</span>
-                            </a>
-                        </li>
+{{--                        <li class="menu-item {{ request()->routeIs('admin.subscriptions.index') ? 'menu-item-active' : '' }}"--}}
+{{--                            aria-haspopup="true">--}}
+{{--                            <a href="{{route('admin.subscriptions.index')}}" class="menu-link">--}}
+{{--                                <i class="flaticon-folder menu-icon"></i>--}}
+{{--                                <span class="menu-text">Підписки</span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
 <li class="menu-section ">
 <h4 class="menu-text">Настройки</h4>
 <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
