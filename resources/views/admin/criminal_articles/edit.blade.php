@@ -127,9 +127,7 @@
                             <div class="col-12">
                                 <div class="form-group"><label for="descriptionEditor">Короткий опис</label>
                                     <div class="input-wrapper">
-                                        <textarea class="required_inp" name="description" id="descriptionEditor">
-                                            {{$criminal_article->description}}
-                                        </textarea>
+                                        <textarea class="form-control" name="description" id="descriptionEditor" rows="5" required>{{$criminal_article->description}}</textarea>
                                         @error('description')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -201,7 +199,7 @@
                     }
                 }
                 document.addEventListener('DOMContentLoaded', function () {
-                    let descriptionEditor = CKEDITOR.replace( 'descriptionEditor' );
+                    // let descriptionEditor = CKEDITOR.replace( 'descriptionEditor' );
                     let contentEditor1 = CKEDITOR.replace( 'contentEditor1' );
                     let contentEditor2 = CKEDITOR.replace( 'contentEditor2' );
                     $("#editArticleCategory").select2({

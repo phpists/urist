@@ -41,8 +41,8 @@
             </td>
             <td>
                 <div class="collection-descr">
-                    <a class="black-link collection-descr__text" href="{{ route('user.articles.show', $article) }}">
-                        {!! $short = truncate_by_words($article->description, 200) !!}
+                    <a class="black-link collection-descr__text" href="{{ route('user.articles.show', $article) }}" style="display:block;">
+                        <p style="display: inline;">{{ $short = strip_tags(truncate_by_words($article->description, 200)) }}</p>
                         <div class="collection-descr__hidden">
                             {!! Str::substr($article->description, mb_strlen($short) - 3) !!}
                         </div>
