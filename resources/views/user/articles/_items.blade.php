@@ -30,7 +30,7 @@
                     <a class="black-link" href="{{ route('user.articles.show', $article) }}">{{ $article->pretty_date }}</a>
                 </time>
                 <span class="collection-table__info">
-                    <a class="black-link" href="{{ route('user.articles.show', $article) }}">ккс вс</a>
+                    <a class="black-link" href="{{ route('user.articles.show', $article) }}">{{ $article->getTagsString() }}</a>
                 </span>
             </td>
             <td>
@@ -42,9 +42,9 @@
             <td>
                 <div class="collection-descr">
                     <a class="black-link collection-descr__text" href="{{ route('user.articles.show', $article) }}" style="display:block;">
-                        <p style="display: inline;">{{ $short = strip_tags(truncate_by_words($article->description, 200)) }}</p>
+                        <p style="display: inline;">{!! $short = str_replace("\r\n", '<br>', truncate_by_words($article->description, 200)) !!}</p>
                         <div class="collection-descr__hidden">
-                            {!! Str::substr($article->description, mb_strlen($short) - 3) !!}
+                            {!! str_replace("\r\n", '<br>', Str::substr($article->description, mb_strlen($short) - 3)) !!}
                         </div>
                     </a>
                     @if(strlen($short) < strlen($article->description))

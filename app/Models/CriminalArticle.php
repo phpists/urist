@@ -47,4 +47,10 @@ class CriminalArticle extends Model
     {
         return $this->belongsToMany(Tag::class, 'article_tags');
     }
+
+    public function getTagsString(): string
+    {
+        return implode(', ', $this->tags->pluck('name')->toArray() ?? []);
+    }
+
 }
