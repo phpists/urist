@@ -11,6 +11,13 @@
         .collection-descr__text p {
             margin-bottom: 0!important;
         }
+
+        #itemsContainer table thead tr th:first-child {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            vertical-align: middle;
+        }
     </style>
     <section class="collection-section">
         <div class="container collection-section__container">

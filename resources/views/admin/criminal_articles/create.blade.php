@@ -72,13 +72,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-4">
                                 <div class="form-group">
                                     <label for="createArticleCategory">Категорія</label>
                                     <div class="input-wrapper">
                                         <select class="required_inp form-control" name="article_category_id" id="createArticleCategory">
                                         </select>
                                         @error('article_category_id')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="form-group">
+                                    <label for="createArticleDate">Дата</label>
+                                    <div class="input-wrapper">
+                                        <input id="createArticleDate" type="date" name="date" class="form-control" required/>
+                                        @error('date')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>

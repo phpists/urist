@@ -27,7 +27,7 @@
         <tr>
             <td>
                 <time class="collection-table__date">
-                    <a class="black-link" href="{{ route('user.articles.show', $article) }}">{{ $article->pretty_created_at }}</a>
+                    <a class="black-link" href="{{ route('user.articles.show', $article) }}">{{ $article->pretty_date }}</a>
                 </time>
                 <span class="collection-table__info">
                     <a class="black-link" href="{{ route('user.articles.show', $article) }}">ккс вс</a>

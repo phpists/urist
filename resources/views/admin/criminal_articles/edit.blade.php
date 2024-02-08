@@ -89,7 +89,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-4">
                                 <div class="form-group">
                                     <label for="editArticleCategory">Категорія</label>
                                     <div class="input-wrapper">
@@ -98,6 +98,17 @@
                                         </select>
                                         @error('article_category_id')
                                             <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="form-group">
+                                    <label for="createArticleDate">Дата</label>
+                                    <div class="input-wrapper">
+                                        <input id="createArticleDate" type="date" name="date" class="form-control" value="{{ $criminal_article->date?->format('Y-m-d') }}" required/>
+                                        @error('date')
+                                        <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>

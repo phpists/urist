@@ -21,11 +21,21 @@ class CriminalArticle extends Model
         'is_active',
         'pp',
         'statya_kk',
+        'date'
+    ];
+
+    protected $casts = [
+        'date' => 'date'
     ];
 
     public function getPrettyCreatedAtAttribute()
     {
         return $this->created_at->format('d.m.Y');
+    }
+
+    public function getPrettyDateAttribute()
+    {
+        return $this->date?->format('d.m.Y');
     }
 
     public function category(): BelongsTo

@@ -30,7 +30,8 @@ class CriminalArticleUpdateRequest extends FormRequest
             'article_category_id' => 'required|exists:article_categories,id',
             'description' => 'required|string',
             'court_decision_link' => 'nullable|string',
-            'tag_list' => 'array'
+            'tag_list' => 'array',
+            'date' => ['required', 'date']
         ];
     }
 
