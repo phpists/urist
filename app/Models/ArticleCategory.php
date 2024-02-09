@@ -22,12 +22,15 @@ class ArticleCategory extends Model
 
     public function children(): HasMany
     {
-        return $this->hasMany(ArticleCategory::class, 'parent_id');
+        return $this->hasMany(ArticleCategory::class, 'parent_id')
+            ->orderBy('position');
     }
 
     public function subcategories(): HasMany
     {
-        return $this->hasMany(ArticleCategory::class, 'parent_id')->with("children");
+        return $this->hasMany(ArticleCategory::class, 'parent_id')
+            ->with("children")
+            ->orderBy('position');
     }
 
     protected $dispatchesEvents = [
