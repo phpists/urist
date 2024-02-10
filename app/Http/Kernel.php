@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\Api\ForceJson;
+use App\Http\Middleware\Api\JWTAuth;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -42,6 +44,7 @@ class Kernel extends HttpKernel
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            ForceJson::class
         ],
     ];
 
@@ -66,5 +69,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' => \App\Http\Middleware\RoleMiddleware::class,
         'plan' => \App\Http\Middleware\PlanMiddleware::class,
+        'jwt' => JWTAuth::class
     ];
 }

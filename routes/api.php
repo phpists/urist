@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+/** Auth */
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('register', [\App\Http\Controllers\Api\Auth\RegisterController::class, 'index']);
+    Route::post('login', [\App\Http\Controllers\Api\Auth\LoginController::class, 'index']);
+    Route::post('verify-code', [\App\Http\Controllers\Api\Auth\VerifyController::class, 'index']);
+    Route::post('logout', [\App\Http\Controllers\Api\Auth\LogoutController::class, 'index']);
+
+    // Reset Password
+    Route::post('reset-password/request', [\App\Http\Controllers\Api\Auth\ResetPasswordController::class, 'request']);
+    Route::post('reset-password/verify', [\App\Http\Controllers\Api\Auth\ResetPasswordController::class, 'verify']);
+    Route::put('reset-password', [\App\Http\Controllers\Api\Auth\ResetPasswordController::class, 'update']);
+});
+
+Route::group(['middleware' => 'jwt'], function () {
+    Route::get('me', [\App\Http\Controllers\Api\User\ProfileController::class, 'index']);
 });
