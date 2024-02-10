@@ -10,6 +10,11 @@
     <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Категорії статей</h5>
 @endsection
 @section('content')
+    <style>
+        .dd {
+            max-width: none!important;
+        }
+    </style>
 
     <!--end::Subheader-->
     <!--begin::Entry-->

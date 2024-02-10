@@ -1,7 +1,7 @@
 <li class="dd-item dd3-item" data-id="{{$category->id}}">
     <div class="dd-handle dd3-handle">Drag</div>
     <div class="dd3-content">
-        <span>{{$category->name}}</span>
+        <span><b>{{ $category->sub_title }}</b> {{$category->name}}</span>
         <div>
             <form action="{{ route('admin.article_category.delete') }}" method="POST">
                 @csrf

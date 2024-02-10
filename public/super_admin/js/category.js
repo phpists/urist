@@ -207,31 +207,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
         })
     })
-    $('.dd').nestable({
-        callback: function(l,e){
-            let el_id = parseInt(e[0].dataset.id)
-            let parentEl_id = e[0].parentNode?.parentNode?.dataset.id??null;
-            let nestable_arr = l.nestable('toArray');
-            let el_position = 1;
-            for (const nestableArrKey in nestable_arr) {
-                let sample = nestable_arr[nestableArrKey];
-                if (sample.id === el_id) {
-                    el_position = nestableArrKey + 1;
-                    break;
-                }
-            }
+    $('.dd').nestable()
+        .on('change', function (e) {
+            let list = e.length ? e : $(e.target);
             $.ajax({
-                url: '/admin/article_category/update_parent',
+                url: '/admin/article_category/update_position',
                 method: 'put',
                 data: {
-                    id: el_id,
-                    parent_id: parentEl_id,
-                    position: el_position
+                    positions: list.nestable('serialize')
                 },
                 error: function (resp) {
                     console.log(resp)
                 }
             })
-        }
-    });
+        });
 })

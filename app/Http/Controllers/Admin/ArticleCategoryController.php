@@ -16,9 +16,20 @@ use Illuminate\Support\Facades\Log;
 class ArticleCategoryController extends Controller
 {
     public function index() {
-        $article_categories = ArticleCategory::query()->orderBy('position')->get();
-        $tree_categories = ArticleCategory::query()->whereNull('parent_id')->orderBy('position')->with('children')->get();
-        return view('admin.article_categories.index', compact('article_categories', 'tree_categories'));
+        $article_categories = ArticleCategory::query()
+            ->orderBy('position')
+            ->get();
+
+        $tree_categories = ArticleCategory::query()
+            ->whereNull('parent_id')
+            ->orderBy('position')
+            ->with('children')
+            ->get();
+
+        return view(
+            'admin.article_categories.index',
+            compact('article_categories', 'tree_categories')
+        );
     }
 
     public function search(Request $request) {
@@ -94,27 +105,38 @@ class ArticleCategoryController extends Controller
         return redirect()->back()->with('success', 'Категорія успішно оновлена');
     }
 
-    public function updatePosition(UpdatePositionRequest $request): \Illuminate\Http\JsonResponse
+    public function updatePosition(Request $request): \Illuminate\Http\JsonResponse
     {
-        $category = ArticleCategory::query()->find($request->id);
-        if (!$category) {
-            return response()->json([
-                'message' => 'Article not found'
-            ], 404);
-        }
+        $positions = $request->post('positions');
+
         try {
-            $this->updateOrderOfRelated($category, $request->position);
-            $result = $category->update([
-                'position' => $request->position
+            if (is_array($positions))
+                $this->processCategories($positions);
+
+            return response()->json([
+                'success' => true
             ]);
-            if ($result)
-                return response()->json([
-                    'sucecss' => true
-                ]);
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
         }
         return response()->json(['error' => 'Не вдалось оновити дані'], 500);
+    }
+
+    private function processCategories($categories, $parent = null)
+    {
+        foreach ($categories as $i => $item) {
+            $category = ArticleCategory::find($item['id']);
+
+            if ($category) {
+                $category->update([
+                    'parent_id' => $parent->id ?? null,
+                    'position' => $i
+                ]);
+
+                if (isset($item['children']))
+                    $this->processCategories($item['children'], $category);
+            }
+        }
     }
 
     public function updateParent(Request $request): \Illuminate\Http\JsonResponse
