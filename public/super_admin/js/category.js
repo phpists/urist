@@ -3,9 +3,9 @@ function cookieNameGenerator(el) {
 }
 $('.dd-item').each(function (idx, el) {
     let cookie_name = cookieNameGenerator(el);
-    let val = getCookie(cookie_name);
+    let val = getFromLocalStorage(cookie_name);
     if(val === null) {
-        writeCookie(cookie_name, '1', 24)
+        writeToLocalStorage(cookie_name, '1')
         val = '1';
     }
     if (val === '0') {
@@ -15,44 +15,18 @@ $('.dd-item').each(function (idx, el) {
         el.classList.remove('dd-collapsed')
     }
 })
-$('.dd-item button').on('click', function(ev) {
+$(document).on('click', '.dd-item button', function(ev) {
     let el = ev.currentTarget.parentNode;
     let cookie_name = cookieNameGenerator(el);
-    let val = getCookie(cookie_name);
+    let val = getFromLocalStorage(cookie_name);
     val = val === '1'? '0': '1';
-    writeCookie(cookie_name, val, 24)
+    writeToLocalStorage(cookie_name, val)
 });
-function writeCookie(name,value,hours) {
-    let expires;
-    if (hours) {
-        const date = new Date();
-        date.setTime(date.getTime()+(hours*60*60*1000));
-        expires = "; expires=" + date.toGMTString();
-    }
-    else {
-        expires = "";
-    }
-    document.cookie = name+"="+value+expires+"; path=/";
+function writeToLocalStorage(name,value) {
+    localStorage.setItem(name, value);
 }
-function getCookie(name) {
-    var dc = document.cookie;
-    var prefix = name + "=";
-    var begin = dc.indexOf("; " + prefix);
-    if (begin == -1) {
-        begin = dc.indexOf(prefix);
-        if (begin != 0) return null;
-    }
-    else
-    {
-        begin += 2;
-        var end = document.cookie.indexOf(";", begin);
-        if (end == -1) {
-            end = dc.length;
-        }
-    }
-    // because unescape has been deprecated, replaced with decodeURI
-    //return unescape(dc.substring(begin + prefix.length, end));
-    return decodeURI(dc.substring(begin + prefix.length, end));
+function getFromLocalStorage(name) {
+    return localStorage.getItem(name);
 }
 
 function makeAjaxCategorySearch() {
