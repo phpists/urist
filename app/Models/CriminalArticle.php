@@ -38,9 +38,15 @@ class CriminalArticle extends Model
         return $this->date?->format('d.m.Y');
     }
 
+    /** @deprecated  */
     public function category(): BelongsTo
     {
         return $this->belongsTo(ArticleCategory::class, 'article_category_id', 'id');
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(ArticleCategory::class, (new CriminalArticleCategory)->getTable());
     }
 
     public function tags(): BelongsToMany

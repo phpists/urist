@@ -40,7 +40,7 @@
     <div class="d-flex flex-column-fluid">
         <!--begin::Container-->
         <div class="container-fluid">
-            @include('admin.layouts.includes.success_message')
+            @include('admin.layouts.includes.messages')
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-toolbar">
@@ -65,7 +65,7 @@
                                 <div class="form-group">
                                     <label for="createArticleName">Назва</label>
                                     <div class="input-wrapper">
-                                        <input id="createArticleName" type="text" name="name" class="form-control" required/>
+                                        <input id="createArticleName" type="text" name="name" class="form-control" value="{{ old('name') }}" required/>
                                         @error('name')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -74,11 +74,14 @@
                             </div>
                             <div class="col-12 col-md-4">
                                 <div class="form-group">
-                                    <label for="createArticleCategory">Категорія</label>
+                                    <label for="createArticleCategory">Категорії</label>
                                     <div class="input-wrapper">
-                                        <select class="required_inp form-control" name="article_category_id" id="createArticleCategory">
+                                        <select class="required_inp form-control" name="article_categories[]" id="createArticleCategory" multiple>
+                                            @foreach(old('article_categories', []) as $category_id)
+                                                <option selected value="{{ $category_id }}">{{ \App\Models\ArticleCategory::getNameById($category_id) }}</option>
+                                            @endforeach
                                         </select>
-                                        @error('article_category_id')
+                                        @error('article_categories')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -88,7 +91,7 @@
                                 <div class="form-group">
                                     <label for="createArticleDate">Дата</label>
                                     <div class="input-wrapper">
-                                        <input id="createArticleDate" type="date" name="date" class="form-control" required/>
+                                        <input id="createArticleDate" type="date" name="date" class="form-control" value="{{ old('date') }}" required/>
                                         @error('date')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -98,7 +101,7 @@
                             <div class="col-md-6">
                                 <div class="form-group"><label for="courtDecisionLinkInp">Посилання на рішення суду</label>
                                     <div class="input-wrapper">
-                                        <input type="text" class="form-control" name="court_decision_link" id="courtDecisionLinkInp">
+                                        <input type="text" class="form-control" name="court_decision_link" id="courtDecisionLinkInp" value="{{ old('court_decision_link') }}">
                                         @error('court_decision_link')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -117,7 +120,7 @@
                             <div class="col-12">
                                 <div class="form-group"><label for="descriptionEditor">Короткий опис</label>
                                     <div class="input-wrapper">
-                                        <textarea class="form-control" name="description" id="descriptionEditor" rows="5" required></textarea>
+                                        <textarea class="form-control" name="description" id="descriptionEditor" rows="5" required>{{ old('description') }}</textarea>
                                     </div>
                                     @error('description')
                                     <div class="alert alert-danger">{{ $message }}</div>
@@ -128,7 +131,7 @@
                                 <div class="form-group">
                                     <label for="contentEditor">ПП</label>
                                     <div class="input-wrapper">
-                                        <textarea class="required_inp" style="height: 600px" id="contentEditor1" name="pp"></textarea>
+                                        <textarea class="required_inp" style="height: 600px" id="contentEditor1" name="pp">{!! old('pp') !!}</textarea>
                                         @error('pp')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -139,7 +142,7 @@
                                 <div class="form-group">
                                     <label for="contentEditor">Судове рішення</label>
                                     <div class="input-wrapper">
-                                        <textarea class="required_inp" style="height: 600px" id="contentEditor2" name="statya_kk"></textarea>
+                                        <textarea class="required_inp" style="height: 600px" id="contentEditor2" name="statya_kk">{!! old('statya_kk') !!}</textarea>
                                         @error('statya_kk')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror

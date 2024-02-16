@@ -27,7 +27,8 @@ class CriminalArticleUpdateRequest extends FormRequest
             'name' => ['required', 'string', Rule::unique('criminal_articles')->ignore($this->input('id'))],
             'pp' => 'string|required',
             'statya_kk' => 'string|required',
-            'article_category_id' => 'required|exists:article_categories,id',
+            'article_categories' => 'required|array',
+            'article_categories.*' => 'required|exists:article_categories,id',
             'description' => 'required|string',
             'court_decision_link' => 'nullable|string',
             'tag_list' => 'array',
@@ -42,8 +43,8 @@ class CriminalArticleUpdateRequest extends FormRequest
             'name.unique' => 'Значення для поля "Назва" вже використвується, спробуйте іншу.',
             'content.required' => 'Поле "Текст" обов’язкове для заповнення.',
             'description.required' => 'Поле "Короткий Опис" обов’язкове для заповнення.',
-            'article_category_id.required' => 'Поле "Категорія" обов’язкове для заповнення.',
-            'article_category_id.exists' => 'Вибрана категорія не існує, виберіть іншу',
+            'article_categories.required' => 'Поле "Категорії" обов’язкове для заповнення.',
+            'article_categories.exists' => 'Вибраної категорії не існує, виберіть іншу',
             'court_decision_link.required' => 'Поле "Посилання на рішення суду" обов’язкове для заповнення.'
         ];
     }

@@ -50,9 +50,14 @@ class CriminalArticleController extends Controller
         }
 
         $article = new CriminalArticle(array_merge($request->all(), ['position' => $last_pos + 1]));
-        $article->save();
-        $this->insertArticleTags($request, $article);
-        return redirect()->back()->with('success', 'Стаття успішно збережена');
+        if ($article->save()) {
+            $article->categories()->sync($request->post('article_categories'), []);
+
+            $this->insertArticleTags($request, $article);
+            return redirect()->back()->with('success', 'Стаття успішно збережена');
+        }
+
+        return back()->with('error', 'Не вдалось зберегти дані');
     }
     public function update(CriminalArticleUpdateRequest $request): bool|\Illuminate\Http\RedirectResponse
     {
@@ -61,6 +66,7 @@ class CriminalArticleController extends Controller
             return redirect()->back()->withErrors('Стаття не знайдена');
         }
         $this->insertArticleTags($request, $article);
+        $article->categories()->sync($request->post('article_categories'), []);
         $article->fill($request->all());
         if ($article->update()) {
             return redirect()->back()->with('success', 'Стаття успішно оновлена');

@@ -33,7 +33,9 @@ class ArticleFilterService
 
         return $articles
             ->when(!empty($categories), function ($q) use ($categories) {
-                return $q->whereIn('article_category_id', $categories);
+                return $q->whereHas('categories', function ($q) use ($categories) {
+                    return $q->whereIn('article_categories.id', $categories);
+                });
             })
             ->when($sort = request('sort'), function ($q) use ($sort) {
                 [$column, $direction] = explode(':', $sort);

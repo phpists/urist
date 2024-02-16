@@ -42,9 +42,7 @@
     <div class="d-flex flex-column-fluid">
         <!--begin::Container-->
         <div class="container-fluid">
-            <div class="validation_messages">
-                @include('admin.layouts.includes.success_message')
-            </div>
+            @include('admin.layouts.includes.messages')
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-toolbar">
@@ -91,12 +89,14 @@
                             </div>
                             <div class="col-12 col-md-4">
                                 <div class="form-group">
-                                    <label for="editArticleCategory">Категорія</label>
+                                    <label for="editArticleCategory">Категорії</label>
                                     <div class="input-wrapper">
-                                        <select class="form-control required_inp" name="article_category_id" id="editArticleCategory">
-                                            <option selected value="{{$criminal_article->category->id}}">{{$criminal_article->category->name}}</option>
+                                        <select class="form-control required_inp" name="article_categories[]" id="editArticleCategory" multiple>
+                                            @foreach($criminal_article->categories as $category)
+                                                <option selected value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endforeach
                                         </select>
-                                        @error('article_category_id')
+                                        @error('article_categories')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>

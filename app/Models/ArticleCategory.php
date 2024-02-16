@@ -52,4 +52,9 @@ class ArticleCategory extends Model
         return $ids;
     }
 
+    public static function getNameById($id)
+    {
+        return self::find($id)?->name;
+    }
+
 }
