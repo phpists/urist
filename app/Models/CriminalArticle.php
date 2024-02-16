@@ -49,6 +49,11 @@ class CriminalArticle extends Model
         return $this->belongsToMany(ArticleCategory::class, (new CriminalArticleCategory)->getTable());
     }
 
+    public function criminalArticleCategories()
+    {
+        return $this->hasMany(CriminalArticleCategory::class);
+    }
+
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'article_tags');

@@ -5,12 +5,12 @@
         <th>
             <span>Дата</span>
             <div class="sort">
-                <button class="sort__button filter-sort" data-value="created_at:asc" type="button" aria-label="Sort up">
+                <button class="sort__button filter-sort" data-value="date:asc" type="button" aria-label="Sort up">
                     <svg class="sort__icon" width="16" height="12">
                         <use xlink:href="{{ asset('img/sprite.svg#sort-up-arrow') }}"></use>
                     </svg>
                 </button>
-                <button class="sort__button filter-sort" data-value="created_at:desc" type="button" aria-label="Sort up">
+                <button class="sort__button filter-sort" data-value="date:desc" type="button" aria-label="Sort up">
                     <svg class="sort__icon" width="16" height="12">
                         <use xlink:href="{{ asset('img/sprite.svg#sort-down-arrow') }}"></use>
                     </svg>

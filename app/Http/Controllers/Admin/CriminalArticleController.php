@@ -204,4 +204,23 @@ class CriminalArticleController extends Controller
             DB::table('article_tags')->insert($tag_records);
         }
     }
+
+
+
+    public function checkName(Request $request)
+    {
+        $article = CriminalArticle::whereName($request->get('name'))->first();
+        if ($article) {
+            $url = route('admin.criminal_article.edit', ['id' => $article->id]);
+            return [
+                'result' => false,
+                'message' => "Стаття з такою назвою вже існує, ось посилання на оригінал: <a href='{$url}' target='_blank'>{$url}</a>"
+            ];
+        }
+
+        return [
+            'result' => true
+        ];
+    }
+
 }

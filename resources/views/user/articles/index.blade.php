@@ -36,8 +36,8 @@
             <form class="sort-form collection-section__sort-form" id="sort-form" autocomplete="off" novalidate="novalidate">
                 <div class="sort-form__group">
                     <select class="select" id="selectSortBy" name="selectSortBy" aria-label="Sort by" required="required">
-                        <option value="created_at:asc">Сортувати за зростанням</option>
-                        <option value="created_at:desc">Сортувати за спаданням</option>
+                        <option value="date:asc">Сортувати за зростанням</option>
+                        <option value="date:desc">Сортувати за спаданням</option>
                     </select>
                 </div>
             </form>

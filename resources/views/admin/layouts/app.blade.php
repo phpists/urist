@@ -379,6 +379,7 @@ fill="#000000" fill-rule="nonzero"/>
 <script src="{{ asset('super_admin/js/select2-uk.js') }}"></script>
 
 <script src="{{ asset('super_admin/js/toastr.min.js') }}"></script>
+<script src="{{ asset('super_admin/js/scripts.js') }}"></script>
 @yield('js_after')
 @stack('scripts')
 <!--end::Page Scripts-->

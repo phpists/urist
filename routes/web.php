@@ -209,6 +209,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin'], 'as' 
         ->name('criminal_article.update_position');
     Route::put('/criminal_article/update_status', [CriminalArticleController::class, 'updateStatus'])
         ->name('criminal_article.update_status');
+    Route::get('criminal_article/check-name', [CriminalArticleController::class, 'checkName'])
+        ->name('criminal-article.check-name');
+
     // Favourites
     Route::get('/favourites', [FavoritesController::class, 'index'])
         ->name('favourites.index');

@@ -14,4 +14,6 @@ class CriminalArticleCategory extends Model
         'article_category_id',
     ];
 
+    public $timestamps = false;
+
 }

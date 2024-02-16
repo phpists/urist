@@ -41,6 +41,7 @@
         <!--begin::Container-->
         <div class="container-fluid">
             @include('admin.layouts.includes.messages')
+            <div id="message"></div>
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-toolbar">
@@ -65,7 +66,9 @@
                                 <div class="form-group">
                                     <label for="createArticleName">Назва</label>
                                     <div class="input-wrapper">
-                                        <input id="createArticleName" type="text" name="name" class="form-control" value="{{ old('name') }}" required/>
+                                        <input id="createArticleName" type="text" name="name" class="form-control"
+                                               data-url="{{ route('admin.criminal-article.check-name') }}"
+                                               value="{{ old('name') }}" required/>
                                         @error('name')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -162,6 +165,26 @@
     <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
     <script src="{{ asset('js/helpers.js') }} "></script>
     <script>
+        $(function () {
+
+            $(document).on('keyup', 'input[name="name"]', delay(function (e) {
+                $('#message').html('')
+                let value = this.value;
+
+                $.ajax({
+                    url: this.dataset.url,
+                    data: {
+                        name: value
+                    },
+                    success: function (response) {
+                        if (response && !response.result) {
+                            $('#message').html(`<div class="alert alert-warning" role="alert">${response.message}</div>`)
+                        }
+                    }
+                })
+            }, 500))
+
+        })
         function makeAjaxCategorySearch() {
             return {
                 url: '/admin/article_category/search',
