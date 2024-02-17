@@ -1,24 +1,23 @@
 const isDropdown = () => {
 
-    $(document).on('click', '.is-dropdown', function (e) {
-        const activeItem = $('.is-dropdown.is-active')[0] ?? null;
+    $(document).on('click', '.is-dropdown .is-dropdown__toggle', function (e) {
+        const activeItem = document.querySelector('.is-dropdown.is-active'),
+            parent = this.parentNode;
 
         e.preventDefault();
 
-        if (activeItem != this) {
+        if (activeItem != parent) {
             activeItem?.classList.remove('is-active');
         }
 
-        this.classList.toggle('is-active');
+        parent.classList.toggle('is-active');
     })
 
     $(document).on('click', 'body', function (e) {
         const isDropdown = e.target.closest('.is-dropdown');
 
         if (!isDropdown) {
-            $('.is-dropdown').each((i, item) => {
-                item.classList.remove('is-active');
-            });
+            $('.is-dropdown').removeClass('is-active');
         }
     })
 

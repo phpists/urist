@@ -27,7 +27,7 @@
                     <td>#{{ $firstRowOnThisPage + $loop->index }}</td>
                     <td>
                         <h4 class="collection-table__title">{{ $registry->title }}</h4>
-                        <a class="blue-link collection-table__link" href="{{ $registry->link }}">Посилання на реєстр</a>
+                        <a class="blue-link collection-table__link" href="{{ $registry->link }}" target="_blank">Посилання на реєстр</a>
                     </td>
                 </tr>
                 @endforeach

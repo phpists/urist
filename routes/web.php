@@ -129,6 +129,8 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
         ->name('profile.update');
     Route::post('update-password', [UserProfileController::class, 'changePassword'])
         ->name('profile.change-password');
+    Route::get('search-city', [UserProfileController::class, 'searchCity'])
+        ->name('profile.search-city');
 
     // Articles
     Route::resource('articles', \App\Http\Controllers\User\ArticleController::class)

@@ -28,6 +28,17 @@ class CriminalArticle extends Model
         'date' => 'date'
     ];
 
+    protected static function booted () {
+
+        static::deleted(function(self $model) {
+            File::whereCriminalArticleId($model->id)->delete();
+            Favourite::whereCriminalArticleId($model->id)->delete();
+        });
+
+    }
+
+
+
     public function getPrettyCreatedAtAttribute()
     {
         return $this->created_at->format('d.m.Y');

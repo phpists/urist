@@ -20,8 +20,10 @@ class FileController extends Controller
         $search = \request('files_search');
 
         $folders = Folder::query()
-            ->when($search, function ($q) use($search) {
-                $q->where('name', 'LIKE', "%{$search}%");
+            ->when($search, function ($q) use ($search) {
+                foreach (explode(' ', $search) as $value) {
+                    $q->where('name', 'LIKE', "%{$value}%");
+                }
             })
             ->where('user_id', $request->user()->id)
             ->where('folder_type', FolderType::FILE_FOLDER)
@@ -29,7 +31,9 @@ class FileController extends Controller
             ->get();
         $files = File::query()
             ->when($search, function ($q) use($search) {
-                $q->where('name', 'LIKE', "%{$search}%");
+                foreach (explode(' ', $search) as $value) {
+                    $q->where('name', 'LIKE', "%{$value}%");
+                }
             })
             ->where('user_id', $request->user()->id)
             ->where('folder_id', $folder_id)

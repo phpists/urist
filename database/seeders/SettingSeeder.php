@@ -25,6 +25,16 @@ class SettingSeeder extends Seeder
                 'title' => 'К-сть статтей на сторінці збірника',
                 'value' => 100
             ],
+            [
+                'name' => SettingEnum::KPK_MODULE_BTN,
+                'title' => 'Посилання для "Модуль КПК"',
+                'value' => route('user.articles.index')
+            ],
+            [
+                'name' => SettingEnum::KK_MODULE_BTN,
+                'title' => 'Посилання для "Модуль КК"',
+                'value' => route('user.articles.index')
+            ],
         ];
 
         foreach ($settings as $setting) {

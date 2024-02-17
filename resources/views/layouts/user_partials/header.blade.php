@@ -5,8 +5,8 @@
             <div class="burger__line"></div>
             <div class="burger__line"></div>
         </button>
-        <a class="button header__button" href="{{ route('user.articles.index') }}">Модуль КК</a>
-        <a class="button button--outline header__button" href="{{ route('user.articles.index') }}">Модуль КПК</a>
+        <a class="button header__button" href="{{ get_setting_value_by_name(\App\Enums\SettingEnum::KK_MODULE_BTN->value) }}">Модуль КК</a>
+        <a class="button button--outline header__button" href="{{ get_setting_value_by_name(\App\Enums\SettingEnum::KPK_MODULE_BTN->value) }}">Модуль КПК</a>
         <form class="search header__search" action="{{ route('user.articles.index') }}" id="search-form" autocomplete="off" novalidate="novalidate">
             <div class="search__group">
                 <input class="input search__input" id="inputSearch" type="text" name="search" placeholder="Пошук по збірнику" autocomplete="off" value="{{ request('search') }}" required="required"/>
@@ -33,7 +33,7 @@
                                 <div class="notification-card__info">
                                     <h3 class="notification-card__title">{{ $userNotification->title }}</h3>
                                     @if($userNotification->url)
-                                    <a class="button button--outline notification-card__more" href="{{ $userNotification->url }}">
+                                    <a class="button button--outline notification-card__more" href="{{ $userNotification->url }}" target="_blank">
                                         <svg class="button__icon" width="17" height="12">
                                             <use xlink:href="{{('/assets/img/user/sprite.svg#long-arrow-right')}}"></use>
                                         </svg>

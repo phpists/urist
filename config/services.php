@@ -38,4 +38,8 @@ return [
         'sender' => env('TURBO_SMS_SENDER', null),
     ],
 
+    'geonames' => [
+        'username' => env('GEONAMES_USERNAME'),
+    ]
+
 ];

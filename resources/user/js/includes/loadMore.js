@@ -1,29 +1,25 @@
 const loadMore = () => {
-    const loadMoreAll = document.querySelectorAll('.collection-descr');
 
-    loadMoreAll?.forEach(item => {
-        const loadMoreToggle = item.querySelector('.collection-descr__more');
-        const loadMoreHidden = item.querySelector('.collection-descr__hidden');
+    $(document).on('click', '.collection-descr__more', function (e) {
+        let $btn = $(this),
+            $btnSpan = $btn.find('span'),
+            $parent = $btn.parent(),
+            $text = $parent.find('.collection-descr__text p'),
+            $hidden = $parent.find('.collection-descr__hidden');
 
-        loadMoreToggle?.addEventListener('click', function () {
-            loadMoreHidden.classList.toggle('is-visible');
-            loadMoreToggle.classList.toggle('is-active');
+        $hidden.toggleClass('is-visible');
+        $btn.toggleClass('is-active');
 
-            let previousShortEl = this.previousElementSibling.children[0];
-
-            if (loadMoreToggle.querySelector('span').innerText === 'Читати детальніше') {
-                if (previousShortEl.innerText.slice(-3) === '...') {
-                    previousShortEl.innerText = previousShortEl.innerText.slice(0, -3);
-                }
-                loadMoreToggle.querySelector('span').innerText = 'Згорнути';
-            } else {
-                previousShortEl.innerText = previousShortEl.innerText + '...';
-                loadMoreToggle.querySelector('span').innerText = 'Читати детальніше';
+        if ($btnSpan.text() === 'Читати детальніше') {
+            if ($text.text().slice(-3) === '...') {
+                $text.html($text.html().slice(0, -3));
             }
-
-        });
-    });
-
+            $btnSpan.text('Згорнути');
+        } else {
+            $text.html($text.html() + '...');
+            $btnSpan.text('Читати детальніше');
+        }
+    })
 }
 
 export default loadMore;

@@ -18,6 +18,20 @@ class ArticleFilterService
             ->get();
     }
 
+    public function isMustBeExpanded(ArticleCategory $category): bool
+    {
+        $result = false;
+        $category_ids = ArticleCategory::getChildIds($category->id);
+
+        foreach (request('categories', []) as $request_category_id) {
+            if (in_array($request_category_id, $category_ids)) {
+                $result = true;
+            }
+        }
+
+        return $result;
+    }
+
     public function getArticles()
     {
         $perPage = SettingService::getValueByName(SettingEnum::CRIMINAL_ARTICLES_PER_PAGE->value) ?? 20;

@@ -46,7 +46,6 @@ class FileController extends Controller
         }
         $file = new File([
             'name' => $request->name,
-            'nazva_pp' => $article->nazva_pp,
             'pp' => $article->pp,
             'statya_kk' => $article->statya_kk,
             'folder_id' => $request->folder_id,

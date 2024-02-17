@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class ProfileController extends Controller
 {
@@ -59,6 +61,34 @@ class ProfileController extends Controller
         }
 
         return back()->with('success', 'Пароль змінено');
+    }
+
+    public function searchCity(Request $request)
+    {
+        $response = Http::get('http://api.geonames.org/searchJSON', [
+            'type' => 'json',
+            'name' => $request->input('search'),
+            'cities' => 'cities5000',
+            'country' => 'UA',
+            'lang' => 'uk',
+            'maxRows' => 20,
+            'username' => config('services.geonames.username')
+        ]);
+
+        $result = $response->json();
+        $cities = [];
+        if (isset($result['geonames'])) {
+            foreach ($result['geonames'] as $city) {
+                $cities[] = [
+                    'id' => $city['name'],
+                    'text' => $city['name']
+                ];
+            }
+        }
+
+        return response()->json([
+            'results' => $cities
+        ]);
     }
 
 }

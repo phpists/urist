@@ -12,7 +12,9 @@
                     </a>
                     <div class="page-section__info">
                         <h1 class="page-title page-section__title">{{ $file->name }}</h1>
+                        @if($file->criminalArticle?->court_decision_link)
                         <a class="blue-link page-section__link" href="{{ $file->criminalArticle?->court_decision_link ?? '#' }}" target="_blank">Посилання на рішення </a>
+                        @endif
                     </div>
                 </div>
             </header>
@@ -22,44 +24,38 @@
                 @method('PUT')
 
 
-                <div class="tabs page-section__tabs" data-tabs="tabs-1" data-active="0">
+                <div class="tabs page-section__tabs" data-tabs="tabs-1" data-active="0" style="display: flex;justify-content: space-between;">
                     <ul class="tabs__nav">
-                        <li class="tabs__nav-item">
-                            <button class="button button--outline tabs__nav-btn" type="button">Назва ПП</button>
-                        </li>
                         <li class="tabs__nav-item">
                             <button class="button button--outline tabs__nav-btn" type="button">ПП</button>
                         </li>
                         <li class="tabs__nav-item">
-                            <button class="button button--outline tabs__nav-btn" type="button">Стаття КК</button>
+                            <button class="button button--outline tabs__nav-btn" type="button">Судове рішення</button>
                         </li>
                     </ul>
-                </div>
-                <div class="tabs-content page-section__tabs-content" data-tabs-content="tabs-1">
-                    <div class="tabs-panel">
-                        <div class="page-section__editor">
-                            <textarea id="textEditor" name="nazva_pp">{{ $file->nazva_pp }}</textarea>
-                        </div>
-                    </div>
-                    <div class="tabs-panel">
-                        <div class="page-section__editor">
-                            <textarea id="textEditor1" name="pp">{{ $file->pp }}</textarea>
-                        </div>
-                    </div>
-                    <div class="tabs-panel">
-                        <div class="page-section__editor">
-                            <textarea id="textEditor2" name="statya_kk">{{ $file->statya_kk }}</textarea>
-                        </div>
+
+                    <div class="page-section__buttons">
+                        <button class="button page-section__button" type="submit">Зберегти</button>
+                        <button class="button button--outline page-section__button" type="button">Экспорт у Word
+                            <svg class="button__icon" width="28" height="28">
+                                <use xlink:href="{{asset('assets/img/user/sprite.svg#word')}}"></use>
+                            </svg>
+                        </button>
                     </div>
                 </div>
 
-                <div class="page-section__buttons">
-                    <button class="button page-section__button" type="submit">Зберегти</button>
-                    <button class="button button--outline page-section__button" type="button">Экспорт у Word
-                        <svg class="button__icon" width="28" height="28">
-                            <use xlink:href="{{asset('assets/img/user/sprite.svg#word')}}"></use>
-                        </svg>
-                    </button>
+
+                <div class="tabs-content page-section__tabs-content" data-tabs-content="tabs-1">
+                    <div class="tabs-panel">
+                        <div class="page-section__editor">
+                            <textarea id="textEditor" name="pp">{{ $file->pp }}</textarea>
+                        </div>
+                    </div>
+                    <div class="tabs-panel">
+                        <div class="page-section__editor">
+                            <textarea id="textEditor1" name="statya_kk">{{ $file->statya_kk }}</textarea>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
@@ -73,7 +69,6 @@
         document.addEventListener('DOMContentLoaded', function () {
             CKEDITOR.replace( 'textEditor', CKEditorDocumentConfig );
             CKEDITOR.replace( 'textEditor1', CKEditorDocumentConfig );
-            CKEDITOR.replace( 'textEditor2', CKEditorDocumentConfig );
 
             // var KTCkeditor = function () {
             //     // Private functions

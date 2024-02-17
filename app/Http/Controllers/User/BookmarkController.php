@@ -23,26 +23,30 @@ class BookmarkController extends Controller
             ->where('user_id', $request->user()->id)
             ->where('folder_type', FolderType::FAVOURITES_FOLDER)
             ->where('parent_id', $folderId)
-            ->when($search, function ($q) use($search) {
-                $q->where('name', 'LIKE', "%{$search}%");
+            ->when($search, function ($q) use ($search) {
+                foreach (explode(' ', $search) as $value) {
+                    $q->where('name', 'LIKE', "%{$value}%");
+                }
             })
             ->get();
         $favourites = Favourite::query()
             ->where('user_id', $request->user()->id)
             ->where('folder_id', $folderId)
             ->when($search, function ($q) use($search) {
-                $q->where('name', 'LIKE', "%{$search}%");
+                foreach (explode(' ', $search) as $value) {
+                    $q->where('name', 'LIKE', "%{$value}%");
+                }
             })
             ->get();
 
-        $parent_id = null;
+        $folder_id = null;
         if ($folderId)
-            $parent_id = $folderId;
+            $folder_id = $folderId;
 
         if ($request->ajax())
-            return view('user.bookmark._items', compact('fav_folder', 'folders', 'favourites', 'parent_id'));
+            return view('user.bookmark._items', compact('fav_folder', 'folders', 'favourites', 'folder_id'));
 
-        return view('user.bookmark.index', compact('fav_folder', 'folders', 'favourites', 'parent_id'));
+        return view('user.bookmark.index', compact('fav_folder', 'folders', 'favourites', 'folder_id'));
     }
 
 }

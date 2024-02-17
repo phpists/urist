@@ -18,6 +18,10 @@
             gap: 10px;
             vertical-align: middle;
         }
+
+        #itemsContainer table thead tr th:first-child span {
+            padding-top: 2px;
+        }
     </style>
     <section class="collection-section">
         <div class="container collection-section__container">

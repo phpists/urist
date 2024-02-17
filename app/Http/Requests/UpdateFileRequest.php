@@ -24,7 +24,6 @@ class UpdateFileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nazva_pp' => 'required|string',
             'pp' => 'required|string',
             'statya_kk' => 'required|string'
         ];

@@ -28,3 +28,10 @@ if (!function_exists('truncate_by_words')) {
         return $truncatedText . $end;
     }
 }
+
+if (!function_exists('get_setting_value_by_name')) {
+    function get_setting_value_by_name($name): string
+    {
+        return \App\Services\SettingService::getValueByName($name);
+    }
+}

@@ -10,14 +10,14 @@
             </label>
         </div>
         @if($category->children->isNotEmpty())
-        <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="accordion-content-{{ $category->id }}">
+        <button type="button" class="accordion__trigger" aria-expanded="{{ $filterService->isMustBeExpanded($category) ? 'true' : 'false' }}" aria-controls="accordion-content-{{ $category->id }}">
             <svg class="accordion__icon" width="15" height="8">
                 <use xlink:href="{{ asset('img/sprite.svg#dropdown-arrow') }}"></use>
             </svg>
         </button>
         @endif
     </div>
-    <div class="accordion__content" id="accordion-content-{{ $category->id }}" role="region" aria-labelledby="accordion-header-{{ $category->id }}" aria-hidden="true">
+    <div class="accordion__content" id="accordion-content-{{ $category->id }}" role="region" aria-labelledby="accordion-header-{{ $category->id }}" aria-hidden="{{ $filterService->isMustBeExpanded($category) ? 'false' : 'true' }}">
         @if($category->children->isNotEmpty())
         <div class="accordion__inner">
             @foreach($category->children as $child)
