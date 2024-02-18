@@ -181,7 +181,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         })
     })
-    $('.dd').nestable()
+    $('.dd').nestable({
+        maxDepth: 10
+    })
         .on('change', function (e) {
             let list = e.length ? e : $(e.target);
             $.ajax({
