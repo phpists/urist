@@ -26,6 +26,11 @@ class ArticleCategory extends Model
             ->orderBy('position');
     }
 
+    public function parent()
+    {
+        return $this->hasOne(ArticleCategory::class, 'id', 'parent_id');
+    }
+
     public function subcategories(): HasMany
     {
         return $this->hasMany(ArticleCategory::class, 'parent_id')
@@ -52,9 +57,25 @@ class ArticleCategory extends Model
         return $ids;
     }
 
-    public static function getNameById($id)
+    public function getFullPath()
     {
-        return self::find($id)?->name;
+        $parent = $this->parent;
+        $parents = [];
+        do {
+            if ($parent) {
+                $parents[] = $parent?->name;
+                $parent = $parent?->parent;
+            }
+        } while ($parent);
+
+        $parents[] = $this->name;
+
+        return implode(' > ', $parents);
+    }
+
+    public static function getFullPathById($id)
+    {
+        return self::find($id)?->getFullPath();
     }
 
 }

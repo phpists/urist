@@ -64,6 +64,19 @@
                     @include('admin.layouts.includes.messages')
                     <div class="tab-content">
                         <div class="tab-pane fade show active" role="tabpanel" id="table_tab">
+
+                            <div class="card-toolbar w-100">
+                                <form id="filterDataForm" class="w-100" action="">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <input placeholder="Пошук по назві" class="form-control" type="text" name="search" id="nameSearch">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
                             <div id="table_data">
                                 @include('admin.article_categories._table')
                             </div>

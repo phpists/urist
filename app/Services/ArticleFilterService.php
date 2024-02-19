@@ -41,12 +41,14 @@ class ArticleFilterService
 
         $categories = array_unique($categories);
 
-        $articles = request()->has('search')
+        $isFromSearch = request()->has('search');
+
+        $articles = $isFromSearch
             ? CriminalArticle::search(request('search'))
             : CriminalArticle::query();
 
         return $articles
-            ->when(!empty($categories), function ($q) use ($categories) {
+            ->when((!$isFromSearch && !empty($categories)), function ($q) use ($categories) {
                 return $q->whereHas('categories', function ($q) use ($categories) {
                     return $q->whereIn('article_categories.id', $categories);
                 });
@@ -58,6 +60,9 @@ class ArticleFilterService
                     return $q->orderBy($column, $direction);
 
                 return $q;
+            })
+            ->when(!$sort, function ($query) { // default sort
+                $query->orderBy('date', 'DESC');
             })
             ->paginate($perPage)
             ->withQueryString();

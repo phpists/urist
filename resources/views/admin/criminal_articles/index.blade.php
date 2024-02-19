@@ -49,7 +49,7 @@
                     <div class="card-toolbar w-100">
                         <form id="filterDataForm" class="w-100" action="{{ route('admin.criminal_articles.index') }}">
                             <div class="row">
-                                <div class="col-5">
+                                <div class="col-4">
                                     <div class="form-group">
                                         <select multiple="multiple" class="form-control" name="article_category_list[]" id="category_select"></select>
                                     </div>
@@ -57,6 +57,17 @@
                                 <div class="col-4">
                                     <div class="form-group">
                                         <input placeholder="Пошук по назві" class="form-control" type="text" name="name" id="nameSearch">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <div class="input-daterange input-group" id="date_range_picker">
+                                            <input type="text" class="form-control" name="date_from" placeholder="Дата від"/>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" name="date_to" placeholder="Дата до"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

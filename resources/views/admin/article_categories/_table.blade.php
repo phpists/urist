@@ -27,7 +27,7 @@
         </thead>
         <tbody id="articleCategoriesTable">
         @foreach($article_categories as $article_category)
-            <tr class="handle table-sortable-drag" data-value="{{$article_category->id}}">
+            <tr class="table-sortable-drag" data-value="{{$article_category->id}}">
                 <td class="text-center pl-0">
                                             <span style="width: 20px;">
                                                 <label class="checkbox checkbox-single">
@@ -46,9 +46,9 @@
                     {{ $article_category?->name }}
                 </td>
                 <td class="justify-content-center pr-0 d-flex" id="row_{{ $article_category->id }}">
-                    <a class="btn btn-icon btn-clean btn-sm">
-                        <i class="flaticon2-resize"></i>
-                    </a>
+{{--                    <a class="btn btn-icon btn-clean btn-sm">--}}
+{{--                        <i class="flaticon2-resize"></i>--}}
+{{--                    </a>--}}
                     <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateArticleCategory"
                        data-toggle="modal" data-target="#updateArticleCategoryModal"
                        data-id="{{ $article_category->id }}">
@@ -78,4 +78,4 @@
     </table>
 </div>
 <!--end::Table-->
-{{--{{ $article_categories->links('vendor.pagination.super_admin_pagination') }}--}}
+{{ $article_categories->links('vendor.pagination.super_admin_pagination') }}

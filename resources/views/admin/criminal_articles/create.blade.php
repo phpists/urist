@@ -81,7 +81,7 @@
                                     <div class="input-wrapper">
                                         <select class="required_inp form-control" name="article_categories[]" id="createArticleCategory" multiple>
                                             @foreach(old('article_categories', []) as $category_id)
-                                                <option selected value="{{ $category_id }}">{{ \App\Models\ArticleCategory::getNameById($category_id) }}</option>
+                                                <option selected value="{{ $category_id }}">{{ \App\Models\ArticleCategory::getFullPathById($category_id) }}</option>
                                             @endforeach
                                         </select>
                                         @error('article_categories')
@@ -200,7 +200,7 @@
                     data = data.map((el) => {
                         return {
                             id: el.id,
-                            text: el.name
+                            text: el.full_path
                         }
                     })
                     return {

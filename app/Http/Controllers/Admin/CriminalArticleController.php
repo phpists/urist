@@ -21,9 +21,23 @@ use Illuminate\Support\Facades\Log;
 class CriminalArticleController extends Controller
 {
     public function index(Request $request) {
-        $criminal_articles = CriminalArticle::query();
+        $criminal_articles = CriminalArticle::query()
+            ->when($date_from = $request->input('date_from'), function ($query) use ($date_from) {
+                $query->where('date', '>=', $date_from);
+            })
+            ->when($date_to = $request->input('date_to'), function ($query) use ($date_to) {
+                $query->where('date', '<=', $date_to);
+            });
+
+
         if (isset($request->article_category_list) && (gettype($request->article_category_list) === 'array')) {
-            $criminal_articles = $criminal_articles->whereIn('article_category_id', $request->article_category_list);
+            $category_ids = $request->article_category_list;
+            foreach ($category_ids as $category_id)
+                $category_ids = array_merge($category_ids, ArticleCategory::getChildIds($category_id));
+
+            $criminal_articles = $criminal_articles->whereHas('categories', function ($q) use ($category_ids) {
+                return $q->whereIn('article_categories.id', $category_ids);
+            });
         }
         if (isset($request->name)) {
             $criminal_articles = $criminal_articles->where('name', 'like', '%'.$request->name.'%');
@@ -66,7 +80,7 @@ class CriminalArticleController extends Controller
             return redirect()->back()->withErrors('Стаття не знайдена');
         }
         $this->insertArticleTags($request, $article);
-        $article->categories()->sync($request->post('article_categories'), []);
+        $article->categories()->sync($request->post('article_categories', []));
         $article->fill($request->all());
         if ($article->update()) {
             return redirect()->back()->with('success', 'Стаття успішно оновлена');

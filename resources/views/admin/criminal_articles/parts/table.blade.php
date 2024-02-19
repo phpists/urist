@@ -13,6 +13,12 @@
             ID
         </th>
         <th class="pr-0 text-center">
+            Дата
+        </th>
+        <th class="pr-0 text-center">
+            Категорії
+        </th>
+        <th class="pr-0 text-center">
             Назва
         </th>
         <th class="pr-0 text-center">
@@ -36,6 +42,12 @@
             </td>
             <td class="text-center pl-0">
                 {{ $item->id }}
+            </td>
+            <td class="text-center pl-0">
+                {{ $item->date?->format('d.m.Y') }}
+            </td>
+            <td class="text-center pl-0">
+                {{ $item->categories()->pluck('name')->join(', ') }}
             </td>
             <td class="pr-0 text-center">
                 <a href="{{ route('admin.criminal_article.edit', $item->id) }}">{{ $item->name }}</a>

@@ -24,9 +24,44 @@ class Folder extends Model
         };
     }
 
-    public function getFilesCountTitle(): string
+    public function childs()
+    {
+        return $this->hasMany(Folder::class, 'parent_id');
+    }
+
+    public function parent()
+    {
+        return $this->hasOne(Folder::class, 'id', 'parent_id');
+    }
+
+    public static function getChildIds($folder_id): array
+    {
+        $ids = [$folder_id];
+        $folder = self::find($folder_id);
+
+        if ($folder->childs) {
+            foreach ($folder->childs as $subcategory) {
+                $ids = array_merge($ids, self::getChildIds($subcategory->id));
+            }
+        }
+
+        return $ids;
+    }
+
+    public function getFilesCount(): int
     {
         $count = $this->files()->count();
+
+        foreach ($this->childs as $child) {
+            $count += $child->getFilesCount();
+        }
+
+        return $count;
+    }
+
+    public function getFilesCountTitle(): string
+    {
+        $count = $this->getFilesCount();
 
         if ($count == 1) {
             return "$count правова позиція";

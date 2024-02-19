@@ -15,16 +15,29 @@ use Illuminate\Support\Facades\Log;
 
 class ArticleCategoryController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
         $article_categories = ArticleCategory::query()
             ->orderBy('position')
-            ->get();
+            ->when($search = $request->get('search'), function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'LIKE', "%{$search}%")
+                        ->orWhere('sub_title', 'LIKE', "%{$search}%");
+                });
+            })
+            ->paginate();
 
         $tree_categories = ArticleCategory::query()
             ->whereNull('parent_id')
             ->orderBy('position')
             ->with('children')
             ->get();
+
+        if ($request->ajax()) {
+            $table = view('admin.article_categories._table', compact('article_categories'))->render();
+            return response()->json([
+                'table' => $table,
+            ]);
+        }
 
         return view(
             'admin.article_categories.index',
@@ -46,6 +59,12 @@ class ArticleCategoryController extends Controller
         $article_categories = $article_categories
             ->limit(30)
             ->get();
+
+        $article_categories = $article_categories->map(function ($item) {
+            $item->full_path = $item->getFullPath();
+            return $item;
+        });
+
         return response()->json($article_categories);
     }
 

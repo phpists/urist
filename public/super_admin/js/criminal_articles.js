@@ -79,9 +79,21 @@ jQuery(document).ready(function () {
     $('#category_select').on('change', function () {
         request('filterDataForm')
     })
+    $('#filterDataForm').on('change', function () {
+        request('filterDataForm')
+    })
     $('#nameSearch').on('input', function () {
         request('filterDataForm')
     })
+
+    $('#date_range_picker').datepicker({
+        todayHighlight: true,
+        format: "yyyy-mm-dd",
+        templates: {
+            leftArrow: '<i class="la la-angle-left"></i>',
+            rightArrow: '<i class="la la-angle-right"></i>'
+        }
+    });
 
     // Sorting table
     let tbody = document.getElementById('criminal_articles_table')

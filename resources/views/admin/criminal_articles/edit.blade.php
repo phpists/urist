@@ -97,7 +97,7 @@
                                     <div class="input-wrapper">
                                         <select class="form-control required_inp" name="article_categories[]" id="editArticleCategory" multiple>
                                             @foreach($criminal_article->categories as $category)
-                                                <option selected value="{{ $category->id }}">{{ $category->name }}</option>
+                                                <option selected value="{{ $category->id }}">{{ $category->getFullPath() }}</option>
                                             @endforeach
                                         </select>
                                         @error('article_categories')
@@ -225,7 +225,7 @@
                             data = data.map((el) => {
                                 return {
                                     id: el.id,
-                                    text: el.name
+                                    text: el.full_path
                                 }
                             })
                             return {
