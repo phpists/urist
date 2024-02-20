@@ -48,8 +48,10 @@
                     </div>
                     <div class="card-toolbar w-100">
                         <form id="filterDataForm" class="w-100" action="{{ route('admin.criminal_articles.index') }}">
+                            <input type="hidden" name="sort">
+                            <input type="hidden" name="per-page">
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-8">
                                     <div class="form-group">
                                         <select multiple="multiple" class="form-control" name="article_category_list[]" id="category_select"></select>
                                     </div>
@@ -91,6 +93,8 @@
     </div>
     @include('admin.criminal_articles.parts.add_to_fav_modal')
     @include('admin.criminal_articles.parts.create_file_modal')
+
+    @include('admin.layouts.modals.show_category_full_path')
 @endsection
 
 @section('js_after')

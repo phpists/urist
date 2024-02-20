@@ -68,6 +68,8 @@ class ArticleCategory extends Model
             }
         } while ($parent);
 
+        uksort($parents, fn($a, $b) => -strnatcasecmp($a, $b));
+
         $parents[] = $this->name;
 
         return implode(' > ', $parents);

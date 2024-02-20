@@ -12,7 +12,7 @@ function makeSelect2AjaxSearch(url, element_id) {
             data = data.map((el) => {
                 return {
                     id: el.id,
-                    text: el.name
+                    text: el.full_path ?? el.name
                 }
             })
             return {
@@ -103,3 +103,31 @@ function checkRequiredInputs(id) {
         })
     })
 }
+
+
+$(function () {
+
+    $(document).on('click', '.showCategoryFullPath', function (e) {
+        $('#showFullPathModalLabel').text('');
+        $('#showFullPathModal').find('.modal-body').text('');
+
+        $('#showFullPathModal').modal('show')
+
+        $.ajax({
+            url: $(this).data('url'),
+            dataType: 'json',
+            success: function (response) {
+                $('#showFullPathModalLabel').text(response.name);
+                $('#showFullPathModal .modal-body').text(response.full_path);
+            }
+        })
+    })
+
+    $(document).on('click', '.filter-sort', function (e) {
+        let $form = $(this.dataset.form);
+
+        $(`input[name="${this.dataset.name}"]`).val(this.dataset.value);
+        $form.trigger('change')
+    })
+
+})

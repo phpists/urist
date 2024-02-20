@@ -43,7 +43,7 @@
                     {{ $article_category?->sub_title }}
                 </td>
                 <td class="text-center pl-0">
-                    {{ $article_category?->name }}
+                    <span class="cursor-pointer showCategoryFullPath" data-url="{{ route('admin.article_categories.show-full-path', $article_category) }}">{{ $article_category?->name }}</span>
                 </td>
                 <td class="justify-content-center pr-0 d-flex" id="row_{{ $article_category->id }}">
 {{--                    <a class="btn btn-icon btn-clean btn-sm">--}}
@@ -78,4 +78,4 @@
     </table>
 </div>
 <!--end::Table-->
-{{ $article_categories->links('vendor.pagination.super_admin_pagination') }}
+{{ $article_categories->withQueryString()->links('vendor.pagination.product_pagination') }}

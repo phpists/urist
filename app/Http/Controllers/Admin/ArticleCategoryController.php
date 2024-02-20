@@ -9,6 +9,7 @@ use App\Http\Requests\BulkDeleteItemsRequest;
 use App\Http\Requests\UpdatePositionRequest;
 use App\Models\ArticleCategory;
 use App\Models\CriminalArticle;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -24,7 +25,7 @@ class ArticleCategoryController extends Controller
                         ->orWhere('sub_title', 'LIKE', "%{$search}%");
                 });
             })
-            ->paginate();
+            ->paginate(\request('per-page', 100));
 
         $tree_categories = ArticleCategory::query()
             ->whereNull('parent_id')
@@ -219,4 +220,11 @@ class ArticleCategoryController extends Controller
         }
         return response()->json(['error' => 'Не вдалось оновити дані'], 500);
     }
+
+    public function showFullPath(Request $request, ArticleCategory $articleCategory)
+    {
+        $articleCategory->full_path = $articleCategory->getFullPath();
+        return new JsonResponse($articleCategory);
+    }
+
 }

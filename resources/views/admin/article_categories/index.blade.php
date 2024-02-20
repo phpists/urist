@@ -67,6 +67,7 @@
 
                             <div class="card-toolbar w-100">
                                 <form id="filterDataForm" class="w-100" action="">
+                                    <input type="hidden" name="per-page">
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
@@ -128,6 +129,8 @@
 
     @include('admin.article_categories.modals.create')
     @include('admin.article_categories.modals.update')
+
+    @include('admin.layouts.modals.show_category_full_path')
 @endsection
 
 @section('js_after')

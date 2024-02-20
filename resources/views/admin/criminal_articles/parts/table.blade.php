@@ -14,6 +14,11 @@
         </th>
         <th class="pr-0 text-center">
             Дата
+            @if(str_contains(request('sort', ''), 'asc'))
+                <button class="btn btn-sm btn-light px-2 py-1 filter-sort" data-form="#filterDataForm" data-name="sort" data-value="date:desc"><i class="fas fa-sort-numeric-down p-0"></i></button>
+            @else
+                <button class="btn btn-sm btn-light px-2 py-1 filter-sort" data-form="#filterDataForm" data-name="sort" data-value="date:asc"><i class="fas fa-sort-numeric-up-alt p-0"></i></button>
+            @endif
         </th>
         <th class="pr-0 text-center">
             Категорії
@@ -47,7 +52,9 @@
                 {{ $item->date?->format('d.m.Y') }}
             </td>
             <td class="text-center pl-0">
-                {{ $item->categories()->pluck('name')->join(', ') }}
+                @foreach($item->categories()->pluck('name', 'article_categories.id') as $item_category_id => $item_category_name)
+                    <span class="cursor-pointer showCategoryFullPath badge badge-light" data-url="{{ route('admin.article_categories.show-full-path', $item_category_id) }}">{{ $item_category_name }}</span>
+                @endforeach
             </td>
             <td class="pr-0 text-center">
                 <a href="{{ route('admin.criminal_article.edit', $item->id) }}">{{ $item->name }}</a>

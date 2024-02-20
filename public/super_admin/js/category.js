@@ -44,7 +44,7 @@ function makeAjaxCategorySearch() {
             data = data.map((el) => {
                 return {
                     id: el.id,
-                    text: el.name
+                    text: el.full_path
                 }
             })
             return {
@@ -98,10 +98,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     $("#createCategoryParent").select2({
+        width: '100%',
         placeholder: "Виберіть батьківську категорію",
         ajax: makeAjaxCategorySearch()
     });
     $("#updateCategoryParent").select2({
+        width: '100%',
         placeholder: "Виберіть батьківську категорію",
         ajax: makeAjaxCategorySearch()
     })
@@ -219,6 +221,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     $('#nameSearch').on('input', function () {
+        request('filterDataForm')
+    })
+    $('#filterDataForm').on('change', function () {
         request('filterDataForm')
     })
 })

@@ -29,6 +29,13 @@ class CriminalArticleController extends Controller
                 $query->where('date', '<=', $date_to);
             });
 
+        if ($sort = $request->get('sort')){
+            [$column, $direction] = explode(':', $sort);
+            if ($column && $direction)
+                $criminal_articles->orderBy($column, $direction);
+        } else {
+            $criminal_articles->orderBy('date', 'DESC');
+        }
 
         if (isset($request->article_category_list) && (gettype($request->article_category_list) === 'array')) {
             $category_ids = $request->article_category_list;
@@ -42,7 +49,11 @@ class CriminalArticleController extends Controller
         if (isset($request->name)) {
             $criminal_articles = $criminal_articles->where('name', 'like', '%'.$request->name.'%');
         }
-        $criminal_articles = $criminal_articles->with('category')->orderBy('position')->paginate(30);
+
+        $criminal_articles = $criminal_articles
+            ->with('category')
+            ->paginate(\request('per-page', 100));
+
         if ($request->ajax()) {
             $table = view('admin.criminal_articles.parts.table', compact('criminal_articles'))->render();
             $pagination = view('admin.criminal_articles.parts.paginate', compact('criminal_articles'))->render();

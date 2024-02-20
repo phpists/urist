@@ -189,6 +189,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin'], 'as' 
         ->name('article_category.update_status');
     Route::delete('article_category/bulk_delete', [ArticleCategoryController::class, 'deleteBulk'])
         ->name('article_categories.bulk_delete');
+    Route::get('article_categories/{article_category}/show-full-path', [ArticleCategoryController::class, 'showFullPath'])
+        ->name('article_categories.show-full-path');
 
     // Criminal articles
     Route::get('/criminal_articles', [CriminalArticleController::class, 'index'])
