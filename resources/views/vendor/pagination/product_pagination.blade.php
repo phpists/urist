@@ -26,11 +26,11 @@
                     <select id="paginate" form="product_form" name="paginate" class="form-control form-control-sm text-primary font-weight-bold mr-4 border-0 bg-light-primary pagination_select"
                             style="width: 75px;"
                             onchange='$("input[name=\"per-page\"]:hidden").val(this.value).trigger("change")'>
-                        <option @if(request()->get('per-page') == 10) selected @endif value="10">10</option>
-                        <option @if(request()->get('per-page') == 20) selected @endif value="20">20</option>
-                        <option @if(request()->get('per-page') == 30) selected @endif value="30">30</option>
-                        <option @if(request()->get('er-page') == 50) selected @endif value="50">50</option>
-                        <option @if(request()->get('per-page') == 100) selected @endif value="100">100</option>
+                        <option @if($paginator->perPage() == 10) selected @endif value="10">10</option>
+                        <option @if($paginator->perPage() == 20) selected @endif value="20">20</option>
+                        <option @if($paginator->perPage() == 30) selected @endif value="30">30</option>
+                        <option @if($paginator->perPage() == 50) selected @endif value="50">50</option>
+                        <option @if($paginator->perPage() == 100) selected @endif value="100">100</option>
                     </select>
                 <span class="text-muted">Показано: {{ $paginator->lastItem() }} из {{ $paginator->total() }}</span>
             </div>
