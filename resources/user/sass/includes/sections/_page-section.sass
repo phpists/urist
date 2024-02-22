@@ -28,6 +28,23 @@
         @media ($max-md)
             font-size: 16px
             margin-bottom: 0
+    
+    &__date
+        display: block
+        margin-bottom: 4px
+
+    &__tags
+        margin: 0 0 4px
+        padding: 0
+        list-style: none
+        display: flex
+        align-items: center
+        flex-wrap: wrap
+        gap: 16px
+
+        &-item
+            text-transform: uppercase
+            font-weight: 600
 
     &__link
 
@@ -57,12 +74,28 @@
             margin-left: 0
 
     &__text
-        max-width: 1445px
+        text-align: justify
 
         @media ($max-md)
             font-size: 12px
 
+    &__tabs
+        margin-right: auto
+
+        @media ($max-md)
+            margin-right: 0
+
     &__buttons
         display: flex
+        flex-wrap: wrap
         gap: 15px
         margin-bottom: 20px
+
+        @media ($max-md)
+            flex-direction: column
+    
+    &__button
+
+        @media ($max-md)
+            height: 40px
+            font-size: 14px

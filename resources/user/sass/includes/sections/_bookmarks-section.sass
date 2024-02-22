@@ -2,30 +2,32 @@
     padding: 30px 0
 
     &__header
-        display: flex
-        align-items: center
-        gap: 25px
-        margin-bottom: 90px
+        margin-bottom: 25px
 
-        @media ($max-lg)
-            flex-wrap: wrap
-            margin-bottom: 30px
+        &-row
+            display: flex
+            align-items: center
+            gap: 25px
 
-        @media ($max-md)
-            flex-direction: column
-            align-items: stretch
-            gap: 15px
-            margin-bottom: 20px
+            &:not(:last-child)
+                margin-bottom: 15px
+
+            @media ($max-lg)
+                flex-wrap: wrap
+                flex-direction: column
+                align-items: stretch
+                gap: 15px
 
     &__title
         margin-right: auto
         white-space: nowrap
 
         @media ($max-lg)
+            text-align: center
             width: 100%
 
-        @media ($max-md)
-            text-align: center
+    &__back-button
+        margin-right: auto
 
     &__search
         max-width: 290px
@@ -33,8 +35,6 @@
 
         @media ($max-lg)
             margin-right: auto
-
-        @media ($max-md)
             max-width: 100%
 
     &__buttons
@@ -42,19 +42,19 @@
         align-items: center
         gap: 25px
 
-        @media ($max-md)
+        @media ($max-lg)
             gap: 15px
 
     &__button
 
-        @media ($max-md)
+        @media ($max-lg)
             width: 100%
             font-size: 14px
             padding: 5px
 
     &__list
         display: grid
-        grid-template-columns: repeat(12, 1fr)
+        grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr))
         gap: 30px
         margin: 0
         padding: 0
@@ -62,15 +62,3 @@
 
         @media ($max-md)
             gap: 20px
-    
-    &__item
-        grid-column: 2 span
-
-        @media ($max-xl)
-            grid-column: 3 span
-
-        @media ($max-lg)
-            grid-column: 4 span
-
-        @media ($max-md)
-            grid-column: 6 span

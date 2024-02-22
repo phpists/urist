@@ -4,7 +4,7 @@
             <input class="checkbox__input" id="accordion-checkbox-{{ $category->id }}" type="checkbox" name="categories[]" value="{{ $category->id }}" @checked($filterService->isCategoryActive($category->id))>
             <label class="checkbox__label" for="accordion-checkbox-{{ $category->id }}">
                 @if($category->sub_title)
-                    <span class="blue-color"><b>{{ $category->sub_title }}</b></span>
+                    <strong class="red-color"><b>{{ $category->sub_title }}</b></strong>
                 @endif
                 {{ $category->name }}
             </label>

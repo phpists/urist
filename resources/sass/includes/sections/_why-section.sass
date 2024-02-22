@@ -47,11 +47,22 @@
             border-right: 1px solid var(--white)
             border-bottom: 1px solid var(--white)
 
+            &:last-child
+                border: none
+
             @media ($max-md)
                 border: none
 
         &--6
             grid-column: 6 span
+            border-right: 1px solid var(--white)
+            border-bottom: 1px solid var(--white)
+
+            @media ($max-md)
+                border: none
+        
+        &--8
+            grid-column: 8 span
             border-right: 1px solid var(--white)
 
             @media ($max-md)
@@ -62,7 +73,8 @@
             border-right: none
 
         &:nth-child(1),
-        &:nth-child(4)
+        &:nth-child(4),
+        &:nth-child(6)
             padding-left: 0
     
     &__number

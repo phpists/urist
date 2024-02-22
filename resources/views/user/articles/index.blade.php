@@ -17,6 +17,7 @@
             justify-content: center;
             gap: 10px;
             vertical-align: middle;
+            width: auto;
         }
 
         #itemsContainer table thead tr th:first-child span {

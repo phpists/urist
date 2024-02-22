@@ -1,18 +1,3 @@
-@if(isset($fav_folder))
-    <li data-zone="folder_{{$fav_folder->parent_id}}" data-label="folder_{{$fav_folder->parent_id}}" class="folder_container bookmarks-section__item">
-        <div class="bookmark-card">
-            <a class="bookmark-card__link" href="{{ route('user.bookmarks.index', $fav_folder->parent_id) }}">
-                <div class="bookmark-card__pic">
-                    <svg class="bookmark-card__icon" width="110" height="86">
-                        <use xlink:href="{{asset('assets/img/user/sprite.svg#case')}}"></use>
-                    </svg>
-                </div>
-                <h3 class="bookmark-card__title">Повернутись назад</h3>
-            </a>
-        </div>
-    </li>
-@endif
-
 @foreach($folders as $folder)
     <li data-zone="folder_{{$folder->id}}" data-label="folder_{{$folder->id}}" class="folder_container bookmarks-section__item">
         <div class="bookmark-card">

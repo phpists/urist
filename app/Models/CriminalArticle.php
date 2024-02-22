@@ -38,6 +38,22 @@ class CriminalArticle extends Model
     }
 
 
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return [
+            'name' => $this->name,
+            'description' => $this->description,
+            'pp' => strip_tags($this->pp, ['<br>']),
+            'statya_kk' => strip_tags($this->statya_kk, ['<br>']),
+        ];
+    }
+
+
 
     public function getPrettyCreatedAtAttribute()
     {

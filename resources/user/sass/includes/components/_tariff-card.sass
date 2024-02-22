@@ -5,7 +5,7 @@
     height: 100%
     border-radius: 10px
     background: var(--white)
-    box-shadow: 0 7px 10px 0 rgba(0, 0, 0, .2)
+    box-shadow:  0 5px 15px 0 rgba(0, 0, 0, .1)
 
     &__body
         flex: 1
@@ -76,6 +76,7 @@
         display: flex
         align-items: center
         justify-content: space-between
+        flex-wrap: wrap
         gap: 15px
         margin-top: auto
 
@@ -86,7 +87,7 @@
         display: flex
         align-items: center
         justify-content: space-between
-        gap: 30px
+        gap: 10px
         padding: 25px 35px
         border-top: 1px solid #E0E0E0
 
@@ -94,7 +95,6 @@
             padding: 20px 15px
             flex-direction: column
             text-align: center
-            gap: 10px
 
     &__price
         font-size: 25px
@@ -107,9 +107,3 @@
 
     &__buy-button
         min-width: 180px
-    
-    &__play-button
-        margin-left: auto
-
-        @media ($max-md)
-            margin-left: 0

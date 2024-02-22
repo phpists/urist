@@ -40,6 +40,12 @@
 
                 .button__icon
                     transform: rotateY(180deg)
+                
+                &[data-tooltip-left]
+
+                    &:before,
+                    &:after
+                        display: none
             
             .filter__panel
                 max-width: 128px

@@ -1,10 +1,11 @@
 <header class="header">
     <div class="container header__container">
-        <div class="logo header__logo"><a class="logo__link" href="/" aria-label="logo">
-                <svg class="logo__img" width="46" height="38">
-                    <use xlink:href="{{ asset('/assets/img/sprite.svg#logo') }}"></use>
-                </svg>
-                <span class="logo__title">Збірник</span></a></div>
+        <div class="logo header__logo">
+            <a class="logo__link" href="/" aria-label="logo">
+                <img class="logo__img" src="{{ asset('/assets/img/logo.png') }}" srcset="{{ asset('assets/img/logo@2x.png') }} 2x" width="101" height="73" alt="logo"/>
+            </a>
+        </div>
+
         <nav class="menu header__menu">
             <ul class="menu__list">
                 <li class="menu__item"><a class="menu__link @if(request()->routeIs('home')) is-active @endif" href="/#tariffs-section">Тарифи</a></li>
@@ -14,10 +15,15 @@
             </ul>
         </nav>
         <ul class="actions">
+            <li class="actions__item actions__item--hidden-md"><a class="button button--app actions__button" href="#">
+                    <svg class="button__icon" width="78" height="22">
+                        <use xlink:href="{{ asset('assets/img/sprite.svg#app-store') }}"></use>
+                    </svg></a></li>
+            <li class="actions__item actions__item--hidden-md"><a class="button button--app actions__button" href="#">
+                    <svg class="button__icon" width="85" height="21">
+                        <use xlink:href="{{ asset('assets/img/sprite.svg#google-play') }}"></use>
+                    </svg></a></li>
             @guest
-                <li class="actions__item actions__item--hidden-md"><a class="button actions__button"
-                                                                      href="{{route('register.page')}}">Зареєструватися</a>
-                </li>
                 <li class="actions__item actions__item--hidden-md"><a class="button button--outline actions__button"
                                                                       href="{{route('login')}}" data-modal="modal-login">Вхід</a></li>
             @endguest

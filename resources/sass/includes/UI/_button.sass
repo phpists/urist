@@ -75,3 +75,34 @@
         &:focus-visible
             color: var(--white)
             background: var(--blue)
+
+    &--app
+        background: var(--black)
+        border: 1px solid #A2A2A1
+        color: var(--white)
+
+        &:hover,
+        &:active,
+        &:focus-visible
+            color: var(--white)
+            background: var(--blue)
+
+    &--big
+        height: 90px
+        width: 100%
+        border-radius: 15px
+        background: none
+        border: 1px solid #E2E2E2
+        color: var(--black)
+        font-size: 21px
+        font-weight: 300
+
+        @media ($max-md)
+            height: 60px
+
+        &:hover,
+        &:active,
+        &:focus-visible
+            border-color: var(--blue)
+            color: var(--black)
+            background: none

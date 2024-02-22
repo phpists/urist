@@ -17,7 +17,13 @@ class BookmarkController extends Controller
         if ($folderId !== null)
             $fav_folder = Folder::findOrFail($folderId);
 
+        $column = 'id';
+        $direction = 'desc';
+
         $search = \request('bookmarks_search');
+        $sort = $request->input('sort');
+        if ($sort)
+            [$column, $direction] = explode(':', $sort);
 
         $folders = Folder::query()
             ->where('user_id', $request->user()->id)
@@ -28,6 +34,9 @@ class BookmarkController extends Controller
                     $q->where('name', 'LIKE', "%{$value}%");
                 }
             })
+            ->when($sort, function ($query) use ($column, $direction) {
+                $query->orderBy($column, $direction);
+            })
             ->get();
         $favourites = Favourite::query()
             ->where('user_id', $request->user()->id)
@@ -36,6 +45,9 @@ class BookmarkController extends Controller
                 foreach (explode(' ', $search) as $value) {
                     $q->where('name', 'LIKE', "%{$value}%");
                 }
+            })
+            ->when($sort, function ($query) use ($column, $direction) {
+                $query->orderBy($column, $direction);
             })
             ->get();
 

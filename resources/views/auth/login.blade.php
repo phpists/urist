@@ -48,5 +48,39 @@
             </div>
         </div>
     </section>
+
+
+    <section class="login-section">
+        <div class="container login-section__container">
+            <div class="login-section__inner">
+                <form class="form login-section__form" id="sign-in-form" autocomplete="off" novalidate="novalidate">
+                    <h1 class="section-title form__title section-title form__title--mb-15">Вхід</h1>
+                    <div class="form__group">
+                        <div class="form__info">за допомогою сервісів</div>
+                    </div>
+                    <div class="form__row">
+                        <div class="form__col">
+                            <a class="button button--big" href="#">
+                                <svg class="button__icon" width="37" height="38">
+                                    <use xlink:href="{{ asset('assets/img/sprite.svg#google') }}"></use>
+                                </svg>Google</a>
+                        </div>
+                        <div class="form__col">
+                            <a class="button button--big" href="#">
+                                <svg class="button__icon" width="30" height="38">
+                                    <use xlink:href="{{ asset('assets/img/sprite.svg#apple') }}"></use>
+                                </svg>Apple</a>
+                        </div>
+                    </div>
+                    <div class="form__group">
+                        <div class="form__info">Я прочитав і погоджуюся з <a class="blue-link" href="#">Політикою конфіденційності</a></div>
+                    </div>
+                    <div class="form__group">
+                        <div class="form__info">Я прочитав і погоджуюся з <a class="blue-link" href="#">Публічна оферта</a></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
 @endsection
 

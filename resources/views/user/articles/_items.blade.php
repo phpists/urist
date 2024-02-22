@@ -19,7 +19,6 @@
         </th>
         <th>Назва статті</th>
         <th>Опис</th>
-        <th></th>
     </tr>
     </thead>
     <tbody class="collection-table__tbody">
@@ -55,45 +54,6 @@
                     </button>
                     @endif
                 </div>
-            </td>
-            <td>
-                <ul class="actions collection-table__actions">
-                    <li class="actions__item">
-                        <button class="button button--outline actions__button" type="button" aria-label="Copy" data-tooltip="Копіювати" onclick="copyText('{{ route('user.articles.show', $article) }}')">
-                            <svg class="button__icon" width="22" height="22">
-                                <use xlink:href="{{ asset('assets/img/user/sprite.svg#copy') }}"></use>
-                            </svg>
-                        </button>
-                    </li>
-                    <li class="actions__item">
-                        <button class="button button--outline actions__button modal-self-completing" type="button" aria-label="Add to bookmarks" data-tooltip="В закладки" data-modal="modal-bookmark" data-json='@json(['criminal_article_id' => $article->id])' data-id="{{$article->id}}">
-                            <svg class="button__icon" width="19" height="24">
-                                <use xlink:href="{{ asset('img/sprite.svg#bookmark') }}"></use>
-                            </svg>
-                        </button>
-                    </li>
-                    <li class="actions__item">
-                        <button class="button button--outline actions__button modal-self-completing" type="button" aria-label="Add page" data-tooltip="Створити" data-modal="modal-file" data-json='@json(['criminal_article_id' => $article->id, 'name' => $article->name])'>
-                            <svg class="button__icon" width="22" height="24">
-                                <use xlink:href="{{ asset('assets/img/user/sprite.svg#create') }}"></use>
-                            </svg>
-                        </button>
-                    </li>
-                    <li class="actions__item">
-                        <button class="button button--outline actions__button" type="button" aria-label="Word" data-tooltip="Word">
-                            <svg class="button__icon" width="18" height="21">
-                                <use xlink:href="{{ asset('img/sprite.svg#word-simple') }}"></use>
-                            </svg>
-                        </button>
-                    </li>
-                    <li class="actions__item">
-                        <button class="button button--outline actions__button" type="button" aria-label="Read more" data-tooltip="Перейти" onclick="location.href = '{{ route('user.articles.show', $article) }}'">
-                            <svg class="button__icon" width="17" height="12">
-                                <use xlink:href="{{ asset('img/sprite.svg#long-arrow-right') }}"></use>
-                            </svg>
-                        </button>
-                    </li>
-                </ul>
             </td>
         </tr>
     @endforeach

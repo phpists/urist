@@ -5,9 +5,7 @@
         <div class="filter__top">
             <div class="logo filter__logo">
                 <a class="logo__link" href="/" aria-label="logo">
-                    <svg class="logo__img" width="38" height="32">
-                        <use xlink:href="{{ asset('img/sprite.svg#logo') }}"></use>
-                    </svg><span class="logo__title">База правових позицій</span>
+                    <img class="logo__img" src="{{ asset('assets/img/user/logo-white.png') }}" srcset="{{ asset('assets/img/user/logo-white@2x.png') }} 2x" width="82" height="61" alt="logo"/>
                 </a>
             </div>
             <button class="burger filter__burger" type="button" aria-label="Open sidebar" aria-expanded="false" data-sidebar-toggle="data-sidebar-toggle">
@@ -23,7 +21,7 @@
                         <use xlink:href="{{ asset('img/sprite.svg#filter') }}"></use>
                     </svg><span>Фільтр</span>
                 </h3>
-                <button class="button button--outline filter__hide-button" type="button" aria-label="Hide Filter" data-filter-hide="data-filter-hide">
+                <button class="button button--outline filter__hide-button" type="button" aria-label="Hide Filter" data-tooltip-left="Регулювання масштабу" data-filter-hide="data-filter-hide">
                     <svg class="button__icon" width="10" height="19">
                         <use xlink:href="{{ asset('img/sprite.svg#arrow-left') }}"></use>
                     </svg>

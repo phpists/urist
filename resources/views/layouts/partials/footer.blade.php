@@ -1,11 +1,11 @@
 <footer class="footer">
     <div class="container footer__container">
         <div class="footer__col footer__col--3">
-            <div class="logo footer__logo"><a class="logo__link" href="{{route('home')}}" aria-label="logo">
-                    <svg class="logo__img" width="46" height="38">
-                        <use xlink:href="/assets/img/sprite.svg#logo"></use>
-                    </svg>
-                    <span class="logo__title">Збірник</span></a></div>
+            <div class="logo footer__logo">
+                <a class="logo__link" href="#" aria-label="logo">
+                    <img class="logo__img" src="{{ asset('assets/img/logo.png') }}" srcset="{{ asset('assets/img/logo@2x.png') }} 2x" width="101" height="73" alt="logo"/>
+                </a>
+            </div>
             <ul class="payment footer__payment">
                 <li class="payment__item">
                     <svg class="payment__icon" width="25" height="8">
@@ -44,6 +44,18 @@
                     </li>
                     <li class="footer-menu__item">
                         <a class="footer-menu__link" href="{{ route('offer') }}">Оферта</a>
+                    </li>
+                    <li class="mobile-nav-menu__item">
+                        <a class="button mobile-nav-menu__button" href="{{ route('register.page') }}">Зареєструватися</a>
+                        <a class="button button--outline mobile-nav-menu__button" href="{{ route('login') }}">Вхід</a>
+                        <a class="button button--app mobile-nav-menu__button" href="#">
+                            <svg class="button__icon" width="78" height="22">
+                                <use xlink:href="{{ asset('assets/img/sprite.svg#app-store') }}"></use>
+                            </svg></a><a class="button button--app mobile-nav-menu__button" href="#">
+                            <svg class="button__icon" width="85" height="21">
+                                <use xlink:href="{{ asset('assets/img/sprite.svg#google-play') }}"></use>
+                            </svg>
+                        </a>
                     </li>
                 </ul>
             </nav>
