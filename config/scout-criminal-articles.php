@@ -19,8 +19,6 @@ return [
     'searchableAttributes' => [
         'name',
         'description',
-        'pp',
-        'statya_kk',
     ],
 
     /*
@@ -37,7 +35,7 @@ return [
     |
     */
 
-    'customRanking' => ['desc(created_at)', 'desc(updated_at)'],
+    'customRanking' => null,
 
     /*
     |--------------------------------------------------------------------------

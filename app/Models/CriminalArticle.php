@@ -43,13 +43,11 @@ class CriminalArticle extends Model
      *
      * @return array
      */
-    public function toSearchableArray()
+    final public function toSearchableArray(): array
     {
         return [
             'name' => $this->name,
             'description' => $this->description,
-            'pp' => strip_tags($this->pp, ['<br>']),
-            'statya_kk' => strip_tags($this->statya_kk, ['<br>']),
         ];
     }
 
