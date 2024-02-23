@@ -14,7 +14,16 @@ class ArticleFilterService
     {
         return ArticleCategory::whereNull('parent_id')
             ->orderBy('position')
-            ->with('children')
+            ->with([
+                'children',
+                'children.children',
+                'children.children.children',
+                'children.children.children.children',
+                'children.children.children.children.children',
+                'children.children.children.children.children.children',
+                'children.children.children.children.children.children.children',
+                'children.children.children.children.children.children.children.children',
+            ])
             ->get();
     }
 
@@ -48,10 +57,19 @@ class ArticleFilterService
             : CriminalArticle::query();
 
         return $articles
-            ->when((!$isFromSearch && !empty($categories)), function ($q) use ($categories) {
-                return $q->whereHas('categories', function ($q) use ($categories) {
-                    return $q->whereIn('article_categories.id', $categories);
-                });
+            ->when((!empty($categories)), function ($q) use ($categories, $isFromSearch) {
+                if ($isFromSearch) {
+                    $filterCategories = \Arr::map($categories, function ($category) {
+                        return "categories: \"{$category}\"";
+                    });
+                    return $q->with([
+                        'filters' => implode(' OR ', $filterCategories)
+                    ]);
+                } else {
+                    return $q->whereHas('categories', function ($q) use ($categories) {
+                        return $q->whereIn('article_categories.id', $categories);
+                    });
+                }
             })
             ->when($sort = request('sort'), function ($q) use ($sort) {
                 [$column, $direction] = explode(':', $sort);

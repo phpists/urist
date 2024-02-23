@@ -19,6 +19,7 @@ return [
     'searchableAttributes' => [
         'name',
         'description',
+        'categories'
     ],
 
     /*

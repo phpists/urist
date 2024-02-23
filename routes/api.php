@@ -28,4 +28,8 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::group(['middleware' => 'jwt'], function () {
     Route::get('me', [\App\Http\Controllers\Api\User\ProfileController::class, 'index']);
+
+    /** Articles */
+    Route::get('criminal-articles', [\App\Http\Controllers\Api\CriminalArticleController::class, 'articles']);
+    Route::get('criminal-articles/categories', [\App\Http\Controllers\Api\CriminalArticleController::class, 'categories']);
 });
