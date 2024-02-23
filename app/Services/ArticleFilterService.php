@@ -60,8 +60,9 @@ class ArticleFilterService
             ->when((!empty($categories)), function ($q) use ($categories, $isFromSearch) {
                 if ($isFromSearch) {
                     $filterCategories = \Arr::map($categories, function ($category) {
-                        return "categories: \"{$category}\"";
+                        return "categories={$category}";
                     });
+
                     return $q->with([
                         'filters' => implode(' OR ', $filterCategories)
                     ]);
