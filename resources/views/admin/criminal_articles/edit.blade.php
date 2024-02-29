@@ -198,7 +198,8 @@
                         $.ajax({
                             url: this.dataset.url,
                             data: {
-                                name: value
+                                name: value,
+                                id: $('[name="id"]').val()
                             },
                             success: function (response) {
                                 if (response && !response.result) {

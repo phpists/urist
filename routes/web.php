@@ -280,4 +280,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin'], 'as' 
     Route::resource('settings', \App\Http\Controllers\Admin\SettingController::class)
         ->only(['index', 'show', 'update']);
 
+    // System Pages
+    Route::resource('system-pages', \App\Http\Controllers\Admin\SystemPageController::class);
+
 });

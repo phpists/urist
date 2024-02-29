@@ -73,10 +73,10 @@
                         </div>
                     </div>
                     <div class="form__group">
-                        <div class="form__info">Я прочитав і погоджуюся з <a class="blue-link" href="#">Політикою конфіденційності</a></div>
+                        <div class="form__info">Я прочитав і погоджуюся з <a class="blue-link" href="{{ route('policy') }}">Політикою конфіденційності</a></div>
                     </div>
                     <div class="form__group">
-                        <div class="form__info">Я прочитав і погоджуюся з <a class="blue-link" href="#">Публічна оферта</a></div>
+                        <div class="form__info">Я прочитав і погоджуюся з <a class="blue-link" href="{{ route('offer') }}">Публічна оферта</a></div>
                     </div>
                 </form>
             </div>

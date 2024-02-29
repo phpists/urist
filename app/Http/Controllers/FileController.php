@@ -53,14 +53,19 @@ class FileController extends Controller
             'criminal_article_id' => $article->id
         ]);
         if ($file->save()) {
+            $url = route('user.files.edit', $file);
+            $article_name = \Str::limit($article->name, 30);
+            $message = "Файл успішно створений<br><a href='{$url}'><u>{$article_name}</u></a>";
+
             if ($request->ajax()) {
                 return response()->json([
                     'success' => true,
                     'result' => true,
-                    'message' => 'Файл успішно створений'
+                    'message' => $message
                 ]);
             }
-            return redirect()->back()->with('success', 'Файл успішно створений');
+
+            return redirect()->back()->with('success', $message);
         }
         if ($request->ajax()) {
             return response()->json([

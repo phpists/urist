@@ -45,8 +45,7 @@
                     <li class="footer-menu__item">
                         <a class="footer-menu__link" href="{{ route('offer') }}">Оферта</a>
                     </li>
-                    <li class="mobile-nav-menu__item">
-                        <a class="button mobile-nav-menu__button" href="{{ route('register.page') }}">Зареєструватися</a>
+                    <li class="mobile-nav-menu__item" style="flex-direction: row;">
                         <a class="button button--outline mobile-nav-menu__button" href="{{ route('login') }}">Вхід</a>
                         <a class="button button--app mobile-nav-menu__button" href="#">
                             <svg class="button__icon" width="78" height="22">

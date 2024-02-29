@@ -146,13 +146,17 @@ class CriminalArticleController extends Controller
         ]);
 
         if ($favourite->save()) {
+            $url = route('user.files.edit', $favourite);
+            $article_name = \Str::limit($favourite->name, 30);
+            $message = "Статтю успішно додано в закладки<br><a href='{$url}'><u>{$article_name}</u></a>";
+
             if ($request->wantsJson())
                 return new JsonResponse([
                     'result' => true,
-                    'message' => 'Статтю успішно додано в закладки'
+                    'message' => $message
                 ]);
 
-            return redirect()->back()->with('success', 'Статтю успішно додано в закладки');
+            return redirect()->back()->with('success', $message);
         }
 
         if ($request->wantsJson())
@@ -234,7 +238,7 @@ class CriminalArticleController extends Controller
 
     public function checkName(Request $request)
     {
-        $article = CriminalArticle::whereName($request->get('name'))->first();
+        $article = CriminalArticle::whereName($request->get('name'))->whereNot('id', $request->get('id'))->first();
         if ($article) {
             $url = route('admin.criminal_article.edit', ['id' => $article->id]);
             return [

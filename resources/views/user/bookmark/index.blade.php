@@ -30,6 +30,8 @@
                             <use xlink:href="{{ asset('img/sprite.svg#arrow-left') }}"></use>
                         </svg>
                     </button>
+                    @else
+                        <span style="margin-right: auto"></span>
                     @endif
                     <form class="search bookmarks-section__search ajax-form"
                           id="bookmark-search-form" autocomplete="off" data-target-container="#itemsContainer" novalidate="novalidate">

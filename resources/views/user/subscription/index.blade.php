@@ -28,47 +28,57 @@
                     </li>
                 </ul>
 
-                @foreach($plans as $plan)
-                <div class="tariff-card tariffs__card">
-                    <div class="tariff-card__body">
-                        <h3 class="tariff-card__title">Тариф {{ $plan->title }}</h3>
-                        <ul class="tariff-card__list">
-                            @foreach($features as $feature)
-                                @if($plan->activeFeatures->contains($feature))
-                                    <li class="tariff-card__item"><strong>{{ $feature->title }}</strong>
-                                        <div class="tariff-card__status tariff-card__status--green">
-                                            <svg class="tariff-card__status-icon" width="15" height="11">
-                                                <use xlink:href="{{asset('assets/img/user/sprite.svg#check')}}"></use>
-                                            </svg>
-                                        </div>
-                                    </li>
-                                @else
-                                    <li class="tariff-card__item"><span>{{ $feature->title }}</span>
-                                        <div class="tariff-card__status">
-                                            <svg class="tariff-card__status-icon" width="15" height="15">
-                                                <use xlink:href="{{asset('assets/img/user/sprite.svg#cross')}}"></use>
-                                            </svg>
-                                        </div>
-                                    </li>
-                                @endif
-                            @endforeach
-                        </ul>
-                    </div>
-                    <div class="tariff-card__footer">
-                        <div class="tariff-card__total">
-                            <div class="tariff-card__price">Вартість <span>{{ $plan->price_monthly }}$</span></div>
-                            <div class="tariff-card__discount" data-months="1" data-price="{{ $plan->price_monthly }}$" style="display: none">{{ $plan->price_monthly }}$ / 1 мес</div>
-                            <div class="tariff-card__discount" data-months="6" data-price="{{ $plan->price_semiannual }}$">{{ $plan->price_semiannual }}$ / 6 мес (-{{ $plan->getSemiannualDiscountPercent() }}%)</div>
-                            <div class="tariff-card__discount" data-months="12" data-price="{{ $plan->price_annual }}$">{{ $plan->price_annual }}$ / 12 мес (-{{ $plan->getAnnualDiscountPercent() }}%)</div>
+                <div class="swiper tariffs-slider">
+                    <div class="swiper-wrapper">
+                        @foreach($plans as $plan)
+                        <div class="swiper-slide tariffs-slider__slide">
+                            <div class="tariff-card">
+                                <div class="tariff-card__body">
+                                    <h3 class="tariff-card__title">Тариф {{ $plan->title }}</h3>
+                                    <ul class="tariff-card__list">
+                                        @foreach($features as $feature)
+                                            @if($plan->activeFeatures->contains($feature))
+                                                <li class="tariff-card__item"><strong>{{ $feature->title }}</strong>
+                                                    <div class="tariff-card__status tariff-card__status--green">
+                                                        <svg class="tariff-card__status-icon" width="15" height="11">
+                                                            <use xlink:href="{{asset('assets/img/user/sprite.svg#check')}}"></use>
+                                                        </svg>
+                                                    </div>
+                                                </li>
+                                            @else
+                                                <li class="tariff-card__item"><span>{{ $feature->title }}</span>
+                                                    <div class="tariff-card__status">
+                                                        <svg class="tariff-card__status-icon" width="15" height="15">
+                                                            <use xlink:href="{{asset('assets/img/user/sprite.svg#cross')}}"></use>
+                                                        </svg>
+                                                    </div>
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                    <div class="tariff-card__buttons">
+                                        <button class="button button--outline tariff-card__button" type="button">1 день безкоштовне демо</button>
+                                        <button class="play-button" type="button" data-modal="modal-video"><span class="play-button__pic">
+                      <svg class="play-button__icon" width="11" height="14">
+                        <use xlink:href="img/sprite.svg#play"></use>
+                      </svg></span>Як це працює?</button>
+                                    </div>
+                                </div>
+                                <div class="tariff-card__footer">
+                                    <div class="tariff-card__total">
+                                        <div class="tariff-card__price">Вартість <span>{{ $plan->price_monthly }}$</span></div>
+                                        <div class="tariff-card__discount" data-months="1" data-price="{{ $plan->price_monthly }}$" style="display: none">{{ $plan->price_monthly }}$ / 1 міс</div>
+                                        <div class="tariff-card__discount" data-months="6" data-price="{{ $plan->price_semiannual }}$">{{ $plan->price_semiannual }}$ / 6 міс (-{{ $plan->getSemiannualDiscountPercent() }}%)</div>
+                                        <div class="tariff-card__discount" data-months="12" data-price="{{ $plan->price_annual }}$">{{ $plan->price_annual }}$ / 12 міс (-{{ $plan->getAnnualDiscountPercent() }}%)</div>
+                                    </div>
+                                    <button class="button tariff-card__buy-button" type="button">Обрати</button>
+                                </div>
+                            </div>
                         </div>
-                        <button class="play-button tariff-card__play-button" type="button" data-modal="modal-video"><span class="play-button__pic">
-              <svg class="play-button__icon" width="11" height="14">
-                <use xlink:href="{{asset('assets/img/user/sprite.svg#play')}}"></use>
-              </svg></span>Як це працює?</button>
-                        <button class="button tariff-card__buy-button" type="button" data-modal="modal-period">Обрати</button>
+                        @endforeach
                     </div>
+                    <div class="swiper-pagination tariffs-slider__pagination"></div>
                 </div>
-                @endforeach
 
             </div>
             <div class="subscription-section__buttons">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\SettingEnum;
+use App\Enums\SystemPageEnum;
 use App\Mail\FeedbackFormMail;
 use App\Models\Plan\Feature;
 use App\Models\Plan\Plan;
@@ -17,6 +18,7 @@ class HomeController extends Controller
     public function index()
     {
         return view('home', [
+            'systemPage' => SystemPageEnum::HOME->getPage(),
             'plans' => Plan::active()->orderBy('pos')->get(),
             'features' => Feature::active()->orderBy('pos')->get()
         ]);

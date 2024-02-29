@@ -5,15 +5,26 @@
         <div class="container page-section__container">
             <header class="page-section__header">
                 <div class="page-section__descr">
-                    <a href="{{ url()->previous() }}" class="button button--outline page-section__back-button" aria-label="Back" data-tooltip="Назад">
+                    <a href="{{ url()->previous() }}" class="button button--outline page-section__back-button"
+                       aria-label="Back" data-tooltip="Назад">
                         <svg class="button__icon" width="10" height="19">
                             <use xlink:href="{{asset('assets/img/user/sprite.svg#arrow-left')}}"></use>
                         </svg>
                     </a>
                     <div class="page-section__info">
                         <h1 class="page-title page-section__title">{{ $file->name }}</h1>
+                        @if($file->criminalArticle)
+                            <time class="page-section__date">{{ $file->criminalArticle->pretty_date }}</time>
+                            <ul class="page-section__tags">
+                                @foreach($file->criminalArticle->getTagsArray() as $tag)
+                                    <li class="page-section__tags-item">{{ $tag }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
                         @if($file->criminalArticle?->court_decision_link)
-                        <a class="blue-link page-section__link" href="{{ $file->criminalArticle?->court_decision_link ?? '#' }}" target="_blank">Посилання на рішення </a>
+                            <a class="blue-link page-section__link"
+                               href="{{ $file->criminalArticle?->court_decision_link ?? '#' }}" target="_blank">Посилання
+                                на рішення </a>
                         @endif
                     </div>
                 </div>
@@ -24,7 +35,8 @@
                 @method('PUT')
 
 
-                <div class="tabs page-section__tabs" data-tabs="tabs-1" data-active="0" style="display: flex;justify-content: space-between;">
+                <div class="tabs page-section__tabs" data-tabs="tabs-1" data-active="0"
+                     style="display: flex;justify-content: space-between;">
                     <ul class="tabs__nav">
                         <li class="tabs__nav-item">
                             <button class="button button--outline tabs__nav-btn" type="button">ПП</button>
@@ -67,8 +79,8 @@
     <script src="{{ asset('user/ckeditor/document-config.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            CKEDITOR.replace( 'textEditor', CKEditorDocumentConfig );
-            CKEDITOR.replace( 'textEditor1', CKEditorDocumentConfig );
+            CKEDITOR.replace('textEditor', CKEditorDocumentConfig);
+            CKEDITOR.replace('textEditor1', CKEditorDocumentConfig);
 
             // var KTCkeditor = function () {
             //     // Private functions

@@ -9,6 +9,15 @@ const closeAlert = () => {
     });
 
     setTimeout(() => {
+        document.addEventListener('click', function (event) {
+            if (!event.handled) {
+                activeAlert?.classList.remove('is-visible');
+                event.handled = true;
+            }
+        }, {once: true});
+    }, 300)
+
+    setTimeout(() => {
         activeAlert?.classList.remove('is-visible');
     }, 3000);
 }

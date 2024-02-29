@@ -17,13 +17,22 @@ class FileController extends Controller
         if ($folder_id !== null)
             $file_folder = Folder::findOrFail($folder_id);
 
-        $search = \request('files_search');
+        $column = 'id';
+        $direction = 'desc';
+
+        $search = \request('bookmarks_search');
+        $sort = $request->input('sort');
+        if ($sort)
+            [$column, $direction] = explode(':', $sort);
 
         $folders = Folder::query()
             ->when($search, function ($q) use ($search) {
                 foreach (explode(' ', $search) as $value) {
                     $q->where('name', 'LIKE', "%{$value}%");
                 }
+            })
+            ->when($sort, function ($query) use ($column, $direction) {
+                $query->orderBy($column, $direction);
             })
             ->where('user_id', $request->user()->id)
             ->where('folder_type', FolderType::FILE_FOLDER)
@@ -34,6 +43,9 @@ class FileController extends Controller
                 foreach (explode(' ', $search) as $value) {
                     $q->where('name', 'LIKE', "%{$value}%");
                 }
+            })
+            ->when($sort, function ($query) use ($column, $direction) {
+                $query->orderBy($column, $direction);
             })
             ->where('user_id', $request->user()->id)
             ->where('folder_id', $folder_id)

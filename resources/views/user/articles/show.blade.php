@@ -1,5 +1,10 @@
 @extends('layouts.user_app')
 @section('title', 'Редагування файлу')
+
+@push('style')
+    <link rel="stylesheet" href="{{ asset('assets/css/ckeditor.css') }}">
+@endpush
+
 @section('page')
     <section class="page-section">
         <div class="container page-section__container">
@@ -12,6 +17,14 @@
                     </a>
                     <div class="page-section__info">
                         <h1 class="page-title page-section__title">{{ $article->name }}</h1>
+                        @if($article->date)
+                            <time class="page-section__date">{{ $article->pretty_date }}</time>
+                        @endif
+                        <ul class="page-section__tags">
+                            @foreach($article->getTagsArray() as $tag)
+                                <li class="page-section__tags-item">{{ $tag }}</li>
+                            @endforeach
+                        </ul>
                         @if($article->court_decision_link)
                         <a class="blue-link page-section__link" href="{{ $article->court_decision_link }}" target="_blank">Посилання на рішення </a>
                         @endif
@@ -67,7 +80,7 @@
                     </div>
                 </div>
                 <div class="tabs-panel">
-                    <div class="page-section__text">
+                    <div class="page-section__text ck-content">
                         {!! $article->statya_kk !!}
                     </div>
                 </div>
