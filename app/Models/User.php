@@ -87,6 +87,11 @@ class User extends Authenticatable implements JWTSubject
             ->whereFolderType(FolderType::FAVOURITES_FOLDER->value);
     }
 
+    public function bookmarks(): HasMany
+    {
+        return $this->hasMany(Favourite::class);
+    }
+
     public function fileFolders()
     {
         return $this->allFolders()

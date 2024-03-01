@@ -30,10 +30,14 @@ Route::group(['middleware' => 'jwt'], function () {
     Route::get('me', [\App\Http\Controllers\Api\User\ProfileController::class, 'index']);
 
     /** Articles */
-    Route::get('criminal-articles', [\App\Http\Controllers\Api\CriminalArticleController::class, 'articles']);
+    Route::resource('criminal-articles', \App\Http\Controllers\Api\CriminalArticleController::class)
+        ->only(['index', 'show']);
     Route::get('criminal-articles/categories', [\App\Http\Controllers\Api\CriminalArticleController::class, 'categories']);
 
     /** Bookmarks */
-    Route::get('bookmarks', [\App\Http\Controllers\Api\User\BookmarkController::class, 'index']);
+    Route::resource('bookmarks', \App\Http\Controllers\Api\User\BookmarkController::class)
+        ->except(['show', 'update']);
+    Route::resource('bookmarks/folder', \App\Http\Controllers\Api\User\BookmarkFolderController::class)
+        ->only(['store', 'update', 'destroy']);
 
 });
