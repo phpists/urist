@@ -27,6 +27,27 @@ $(function () {
         })
     })
 
+    $(document).on('click', '#mobileNotificationsButton', function (e) {
+        let $container = $('#mobileNotificationsContainer'),
+            ids = $('#mobileNotificationsContainer li.modal__notifications-item').map(function () {
+                return $(this).data('id');
+            }).get()
+
+        $.ajax({
+            type: 'POST',
+            url: $container.data('read-url'),
+            data: {
+                ids: ids
+            },
+            dataType: 'json',
+            success: function (response) {
+                if (response.result > 0) {
+                    $('#mobileNotificationsCount').text('0').hide()
+                }
+            }
+        })
+    })
+
     $(document).on('input', '.just-validate-error-field', function (e) {
         $(this).removeClass('just-validate-error-field');
         let $next = $(this).next();

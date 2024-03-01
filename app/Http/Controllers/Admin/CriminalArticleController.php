@@ -54,14 +54,14 @@ class CriminalArticleController extends Controller
             ->with('category')
             ->paginate(\request('per-page', 100));
 
-        if ($request->ajax()) {
-            $table = view('admin.criminal_articles.parts.table', compact('criminal_articles'))->render();
-            $pagination = view('admin.criminal_articles.parts.paginate', compact('criminal_articles'))->render();
-            return response()->json([
-                'table' => $table,
-                'pagination' => $pagination
-            ]);
-        }
+//        if ($request->ajax()) {
+//            $table = view('admin.criminal_articles.parts.table', compact('criminal_articles'))->render();
+//            $pagination = view('admin.criminal_articles.parts.paginate', compact('criminal_articles'))->render();
+//            return response()->json([
+//                'table' => $table,
+//                'pagination' => $pagination
+//            ]);
+//        }
         return view('admin.criminal_articles.index', compact('criminal_articles'));
     }
     public function create() {

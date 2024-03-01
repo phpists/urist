@@ -39,10 +39,14 @@
     @include('layouts.user_partials.sidebar')
 </main>
 
+<div class="modal-wrap">
+    @stack('modals')
+</div>
+
 
 <img id="spinner" src="{{ asset('img/spinner.gif') }}" alt="loading..." style="display: none">
 
-{{--@include('user.articles.filter._filter')--}}
+@include('user.articles.filter._filter')
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script type="module" crossorigin src="{{ asset('user/build/main.js')}}"></script>

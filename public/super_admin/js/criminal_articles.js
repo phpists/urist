@@ -76,15 +76,11 @@ jQuery(document).ready(function () {
         });
 
     }
-    $('#category_select').on('change', function () {
-        request('filterDataForm')
+
+    $(document).on('change', '#filterDataForm', function (e) {
+        $('#filterDataForm').submit()
     })
-    $('#filterDataForm').on('change', function () {
-        request('filterDataForm')
-    })
-    $('#nameSearch').on('input', function () {
-        request('filterDataForm')
-    })
+
 
     $('#date_range_picker').datepicker({
         todayHighlight: true,

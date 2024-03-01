@@ -3,6 +3,15 @@
 @section('page')
     <section class="top-section">
         <div class="container top-section__container">
+            <header class="faq-section__header">
+                <h1 class="page-title">Публічна Оферта</h1>
+                <nav class="breadcrumbs" aria-label="breadcrumb">
+                    <ul class="breadcrumbs__list">
+                        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Головна</a></li>
+                        <li class="breadcrumbs__item" aria-current="page">Публічна Оферта</li>
+                    </ul>
+                </nav>
+            </header>
             <div class="goal-card">
                 <h1>Публічна Оферта</h1>
 

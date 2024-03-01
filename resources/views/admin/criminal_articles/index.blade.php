@@ -48,27 +48,33 @@
                     </div>
                     <div class="card-toolbar w-100">
                         <form id="filterDataForm" class="w-100" action="{{ route('admin.criminal_articles.index') }}">
-                            <input type="hidden" name="sort">
-                            <input type="hidden" name="per-page">
+                            <input type="hidden" name="sort" value="{{ request('sort') }}">
+                            <input type="hidden" name="per-page" value="{{ request('per-page') }}">
                             <div class="row">
                                 <div class="col-8">
                                     <div class="form-group">
-                                        <select multiple="multiple" class="form-control" name="article_category_list[]" id="category_select"></select>
+                                        <select multiple="multiple" class="form-control" name="article_category_list[]" id="category_select">
+                                            @if($selectedCategories = request('article_category_list', []))
+                                                @foreach($selectedCategories as $selectedCategory)
+                                                    <option selected value="{{ $selectedCategory }}">{{ \App\Models\ArticleCategory::getNameById($selectedCategory) }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <input placeholder="Пошук по назві" class="form-control" type="text" name="name" id="nameSearch">
+                                        <input placeholder="Пошук по назві" class="form-control" type="text" name="name" value="{{ request('name') }}" id="nameSearch">
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <div class="input-daterange input-group" id="date_range_picker">
-                                            <input type="text" class="form-control" name="date_from" placeholder="Дата від"/>
+                                        <div class="input-group">
+                                            <input type="date" class="form-control" name="date_from" value="{{ request('date_from') }}" placeholder="Дата від"/>
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
                                             </div>
-                                            <input type="text" class="form-control" name="date_to" placeholder="Дата до"/>
+                                            <input type="date" class="form-control" name="date_to" value="{{ request('date_to') }}" placeholder="Дата до"/>
                                         </div>
                                     </div>
                                 </div>

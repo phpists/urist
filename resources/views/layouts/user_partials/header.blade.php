@@ -48,17 +48,23 @@
                     <div id="notificationsCount" class="actions__count" @if($unreadCount < 1) style="display: none" @endif>{{ $unreadCount }}</div>
             </li>
             <li class="actions__item is-dropdown actions__item--visible-md">
-                <button class="button button--outline actions__button" type="button" aria-label="Show notifications modal" data-modal="modal-notifications">
+                <button class="button button--outline actions__button" id="mobileNotificationsButton" type="button" aria-label="Show notifications modal" data-modal="modal-notifications">
                     <svg class="button__icon" width="21" height="22">
                         <use xlink:href="{{asset('assets/img/user/sprite.svg#bell')}}"></use>
                     </svg>
                 </button>
-                <div class="actions__count">2</div>
+                @push('modals')
+                    @include('layouts.user_partials.modal-notifications')
+                @endpush
+                <div id="mobileNotificationsCount" class="actions__count" @if($unreadCount < 1) style="display: none" @endif>{{ $unreadCount }}</div>
             </li>
             <li class="actions__item actions__item--hidden-md">
                 <a class="button actions__button actions__button--big" href="{{ route('user.subscription.index') }}">Моя підписка</a>
             </li>
             <li class="actions__item actions__item--visible-md">
+                @push('modals')
+                    @include('layouts.user_partials.modal-search')
+                @endpush
                 <button class="button button--outline actions__button" type="button" data-modal="modal-search" aria-label="Show search modal">
                     <svg class="button__icon" width="21" height="21">
                         <use xlink:href="{{asset('assets/img/user/sprite.svg#search')}}"></use>

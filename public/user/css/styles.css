@@ -5,3 +5,7 @@
 .bookmarks-section__header form.bookmarks-section__search {
     margin-bottom: 0!important;
 }
+
+.collection-descr__hidden.is-visible {
+    display: inline!important;
+}

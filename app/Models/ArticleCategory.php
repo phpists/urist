@@ -80,4 +80,9 @@ class ArticleCategory extends Model
         return self::find($id)?->getFullPath();
     }
 
+    public static function getNameById($id)
+    {
+        return self::find($id)?->name;
+    }
+
 }

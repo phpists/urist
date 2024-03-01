@@ -17,8 +17,8 @@
                 </button>
             </div>
         </th>
-        <th>Назва статті</th>
-        <th>Опис</th>
+        <th>Назва ПП</th>
+        <th>ПП</th>
     </tr>
     </thead>
     <tbody class="collection-table__tbody">

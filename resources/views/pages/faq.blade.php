@@ -7,7 +7,7 @@
                 <h1 class="page-title">FAQ</h1>
                 <nav class="breadcrumbs" aria-label="breadcrumb">
                     <ul class="breadcrumbs__list">
-                        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="#">Головна</a></li>
+                        <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Головна</a></li>
                         <li class="breadcrumbs__item" aria-current="page">FAQ</li>
                     </ul>
                 </nav>
