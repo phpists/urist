@@ -228,7 +228,7 @@
                                     </li>
 
                                     @foreach(\App\Models\SystemPage::all() as $page)
-                                    <li class="menu-item {{ request()->routeIs('admin.system-pages.edit', $page) ? 'menu-item-active' : '' }}">
+                                    <li class="menu-item {{ url()->current() == route('admin.system-pages.edit', $page) ? 'menu-item-active' : '' }}">
                                         <a href="{{ route('admin.system-pages.edit', $page) }}" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot"><span></span></i>
                                             <span class="menu-text">{{ $page->title }}</span>

@@ -88,7 +88,7 @@
         </div>
     </section>@endsection
 
-<div class="modal-wrap">
+@push('modals')
     @include('layouts.user_partials.modal-bookmark')
     @include('layouts.user_partials.modal-file')
-</div>
+@endpush

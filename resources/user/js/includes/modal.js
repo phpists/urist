@@ -37,8 +37,8 @@ const modal = () => {
 
     const openModal = (modal) => {
         body.classList.add('scroll-disabled');
-        body.style.paddingRight = paddingRight + 'px';
-        header.style.paddingRight = paddingRight + 'px';
+        // body.style.paddingRight = paddingRight + 'px';
+        // header.style.paddingRight = paddingRight + 'px';
         modalWrap.classList.add('is-visible');
         modal.classList.add('is-visible');
 

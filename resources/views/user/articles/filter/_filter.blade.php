@@ -1,4 +1,4 @@
-@php($filterService = isset($filterService) ? $filterService : new \App\Services\ArticleFilterService())
+@php($filterService = $filterService ?? new \App\Services\ArticleFilterService())
 
 <aside class="filter {{ $is_menu_hidden ? 'is-hide' : '' }}">
     <div class="filter__panel">
@@ -48,30 +48,7 @@
                 @if($search = request('search'))
                     <input type="hidden" name="search" value="{{ $search }}">
                 @endif
-                <div class="accordion filter__accordion">
-                    @foreach($filterService->getCategories() as $category)
-                        <div class="accordion__panel">
-                            <div class="accordion__header" id="accordion-header-{{ $category->id }}">
-                                <h3 class="accordion__title">{{ $category->name }}</h3>
-                                @if($category->children->isNotEmpty())
-                                <button type="button" class="accordion__trigger" aria-expanded="{{ request()->has('categories') ? 'true' : 'false' }}" aria-controls="accordion-content-{{ $category->id }}">
-                                    <svg class="accordion__icon" width="15" height="8">
-                                        <use xlink:href="{{ asset('img/sprite.svg#dropdown-arrow') }}"></use>
-                                    </svg>
-                                </button>
-                                @endif
-                            </div>
-                            <div class="accordion__content" id="accordion-content-{{ $category->id }}" role="region" aria-labelledby="accordion-header-{{ $category->id }}" aria-hidden="{{ request()->has('categories') ? 'false' : 'true' }}">
-                                @if($category->children->isNotEmpty())
-                                    <div class="accordion__inner">
-                                        @foreach($category->children as $child)
-                                            @include('user.articles.filter.__category', ['category' => $child, 'padding' => 15])
-                                        @endforeach
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    @endforeach
+                <div id="filterAccordionItemsContainer" data-load-url="{{ route('user.filter') }}" class="accordion filter__accordion">
                 </div>
             </form>
         </div>
@@ -85,6 +62,17 @@
 @push('scripts')
     <script>
         $(function () {
+            const $filterAccordionItemsContainer = $('#filterAccordionItemsContainer');
+            let $filterSpinner = $('#spinner').clone();
+            $filterAccordionItemsContainer
+                .html($filterSpinner.show())
+                .css({
+                    "text-align": 'center'
+                })
+            $filterAccordionItemsContainer.load($filterAccordionItemsContainer.data('load-url'), function () {
+                $filterSpinner.hide()
+            })
+
             $(document).on('keyup', '#inputFilterSearch', function (e) {
                 let value = $(this).val().toLowerCase();
 

@@ -58,4 +58,19 @@ class ArticleController extends Controller
         return back();
     }
 
+    public function searchItems(Request $request)
+    {
+        $search = $request->input('search');
+        $items = [];
+
+        if ($search)
+            $items = CriminalArticle::where('name', 'LIKE', "%{$search}%")
+                ->limit(5)
+                ->get();
+
+        return view('user.articles.__search-items', [
+            'items' => $items
+        ])->render();
+    }
+
 }

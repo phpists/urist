@@ -134,6 +134,21 @@ $(function () {
         $(this).parents('form').submit()
     })
 
+    $(document).on('keyup', '.search__input', delay(function () {
+        let url = $(this).data('url');
+
+        if (url)
+            $.ajax({
+                url: url,
+                data: {
+                    search: $(this).val(),
+                },
+                success: function (response) {
+                    $('.searchItemsContainer').html(response)
+                }
+            })
+    }, 600))
+
 })
 
 
@@ -205,4 +220,16 @@ const copyText = async (text) => {
     } catch (err) {
         console.error('Failed to copy: ', err);
     }
+}
+
+
+function delay(callback, ms) {
+    var timer = 0;
+    return function() {
+        var context = this, args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+            callback.apply(context, args);
+        }, ms || 0);
+    };
 }

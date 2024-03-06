@@ -138,6 +138,12 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
     Route::get('articles-total-count', [\App\Http\Controllers\User\ArticleController::class, 'articlesCount'])
         ->name('articles.total-count');
 
+    Route::get('search/items', [\App\Http\Controllers\User\ArticleController::class, 'searchItems'])
+        ->name('search.items');
+
+    // Filter
+    Route::get('filter', [ArticleCategoryController::class, 'getFilter'])->name('filter');
+
     // Bookmarks
     Route::get('bookmarks/{folderId?}', [\App\Http\Controllers\User\BookmarkController::class, 'index'])
         ->name('bookmarks.index');

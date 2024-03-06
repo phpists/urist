@@ -9,3 +9,40 @@
 .collection-descr__hidden.is-visible {
     display: inline!important;
 }
+
+
+input[name="search"]:focus + .searchItemsContainer {
+    display: grid;
+}
+.searchItemsContainer:hover {
+    display: grid;
+}
+
+.searchItemsContainer:has(a) {
+    display: grid;
+}
+
+.searchItemsContainer {
+    display: none;
+    position: absolute;
+    /*gap: 5px;*/
+    background-color: #ffff;
+    width: 100%;
+    border: 1px solid #e2e2e2;
+    border-radius: 0.5rem;
+}
+
+.searchItemsContainer a {
+    padding: 10px 20px;
+}
+.searchItemsContainer a:hover {
+    background-color: #f6f6f6;
+}
+
+@media (max-width: 500px) {
+    .pagenav__item a {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+    }
+}

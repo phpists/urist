@@ -151,7 +151,7 @@
     </section>
 @endsection
 
-<div class="modal-wrap">
+@push('modals')
     <div class="modal" id="modal-edit-password">
         <div class="modal__inner">
             <div class="modal__window">
@@ -179,7 +179,7 @@
             </div>
         </div>
     </div>
-</div>
+@endpush
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

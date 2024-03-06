@@ -11,25 +11,36 @@
             </li>
             @endif
 
-            {{-- Pagination Elements --}}
-            @foreach ($elements as $element)
-                {{-- "Three Dots" Separator --}}
-                @if (is_string($element))
+
+                @if($paginator->currentPage() > 2)
+                    @if(1 == $paginator->currentPage())
+                        <li class="pagenav__item is-active" aria-current="page"><a class="pagenav__link" href="#">1</a></li>
+                    @else
+                        <li class="pagenav__item"><a class="pagenav__link" href="{{ $paginator->url(1) }}">1</a></li>
+                    @endif
+                @endif
+                @if($paginator->currentPage() > 3)
                     <li class="pagenav__item"><span>...</span></li>
                 @endif
-
-                {{-- Array Of Links --}}
-                @if (is_array($element))
-                    @foreach ($element as $page => $url)
-                        @if($page == $paginator->currentPage())
-                            <li class="pagenav__item is-active" aria-current="page"><a class="pagenav__link" href="#">{{ $page }}</a></li>
+                @foreach(range(1, $paginator->lastPage()) as $i)
+                    @if($i >= $paginator->currentPage() - 1 && $i <= $paginator->currentPage() + 1)
+                        @if($i == $paginator->currentPage())
+                            <li class="pagenav__item is-active" aria-current="page"><a class="pagenav__link" href="#">{{ $i }}</a></li>
                         @else
-                            <li class="pagenav__item"><a class="pagenav__link" href="{{ $url }}">{{ $page }}</a></li>
+                            <li class="pagenav__item"><a class="pagenav__link" href="{{ $paginator->url($i) }}">{{ $i }}</a></li>
                         @endif
-                    @endforeach
+                    @endif
+                @endforeach
+                @if($paginator->currentPage() < $paginator->lastPage() - 2)
+                    <li class="pagenav__item"><span>...</span></li>
                 @endif
-
-            @endforeach
+                @if($paginator->currentPage() < $paginator->lastPage() - 1)
+                    @if($paginator->lastPage() == $paginator->currentPage())
+                        <li class="pagenav__item is-active" aria-current="page"><a class="pagenav__link" href="#">{{ $paginator->lastPage() }}</a></li>
+                    @else
+                        <li class="pagenav__item"><a class="pagenav__link" href="{{ $paginator->url($paginator->lastPage()) }}">{{ $paginator->lastPage() }}</a></li>
+                    @endif
+                @endif
 
                 @if(!$paginator->onLastPage())
             <li class="pagenav__item">

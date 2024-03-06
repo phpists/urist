@@ -25,10 +25,10 @@
                     <a href="{{ route('admin.dashboard') }}" class="text-muted">Головна</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('admin.blog.index') }}" class="text-muted">Блог</a>
+                    Системні сторінки
                 </li>
                 <li class="breadcrumb-item">
-                    Редагувати статтю "{{ $model->title }}"
+                    Редагувати сторінку "{{ $model->title }}"
                 </li>
                 <!--end::Page Title-->
             </div>
@@ -294,21 +294,71 @@
 
                                 <hr class="w-75 my-10">
 
+                                <div class="row justify-content-center">
+                                    <div class="col-12 col-md-8">
+                                        <div class="form-group">
+                                            <div class="input-wrapper">
+                                                <input type="text" class="form-control" name="data[3][title]" value="{{ old('data.3.title', $model->data[3]['title']) }}" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    @for($i = 0; $i < 8; $i++)
+                                    <div class="col-12">
+                                        <input type="hidden" name="data[3][items][{{ $i }}][img]" value="{{ $model->data[3]['items'][$i]['img'] ?? '' }}">
+                                        <div class="row">
+                                            <div class="col-12 col-md-3">
+                                                <div class="image-input image-input-outline kt-image" style="width: 100%;">
+                                                    <div class="image-input-wrapper" style="background-image: url('{{ $model->getDataImgSrcByDot("3.items.{$i}.img") }}'); width: 100%"></div>
+
+                                                    <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                                                        <i class="fa fa-pen icon-sm text-muted"></i>
+                                                        <input type="file" name="data[3][items][{{ $i }}][img]" accept="image/*"/>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <div class="form-group">
+                                                    <div class="input-wrapper">
+                                                        <input type="text" class="form-control" name="data[3][items][{{ $i }}][title]" value="{{ old("data.3.items.{$i}.title", $model->data[3]['items'][$i]['title']) }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="input-wrapper">
+                                                        <input type="text" class="form-control" name="data[3][items][{{ $i }}][quote]" value="{{ old("data.3.items.{$i}.quote", $model->data[3]['items'][$i]['quote']) }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="input-wrapper">
+                                                        <textarea rows="6" class="form-control ckeditor" name="data[3][items][{{ $i }}][body]" required>{!! old("data.3.items.{$i}.body", $model->data[3]['items'][$i]['body']) !!}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endfor
+                                </div>
+
+                                <hr class="w-75 my-10">
+
                                 <div class="row">
                                     <div class="col-12 col-md-8">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="data[3][title]" value="{{ old('data.3.title', $model->data[3]['title']) }}" placeholder="Заголовок" required>
+                                            <input type="text" class="form-control" name="data[4][title]" value="{{ old('data.4.title', $model->data[4]['title']) }}" placeholder="Заголовок" required>
                                             <span class="form-text text-muted">Обрамте текст символами "<" i ">" щоб висвітлити текст</span>
                                         </div>
                                         <div class="form-group">
-                                            <textarea rows="6" class="form-control" name="data[3][body]" placeholder="Вміст" required>{{ old('data.3.body', $model->data[3]['body']) }}</textarea>
+                                            <textarea rows="6" class="form-control" name="data[4][body]" placeholder="Вміст" required>{{ old('data.4.body', $model->data[4]['body']) }}</textarea>
                                         </div>
                                         <div class="row">
                                             <div class="col-12 col-md-6">
-                                                <input type="text" class="form-control" name="data[3][button_text]" value="{{ old('data.3.button_text', $model->data[3]['button_text']) }}" placeholder="Текст кнопки" required>
+                                                <input type="text" class="form-control" name="data[4][button_text]" value="{{ old('data.4.button_text', $model->data[4]['button_text']) }}" placeholder="Текст кнопки" required>
                                             </div>
                                             <div class="col-12 col-md-6">
-                                                <input type="text" class="form-control" name="data[3][button_link]" value="{{ old('data.3.button_link', $model->data[3]['button_link']) }}" placeholder="Посилання кнопки" required>
+                                                <input type="text" class="form-control" name="data[4][button_link]" value="{{ old('data.4.button_link', $model->data[4]['button_link']) }}" placeholder="Посилання кнопки" required>
                                             </div>
                                         </div>
                                     </div>
@@ -334,10 +384,10 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="data[4][title]" value="{{ old('data.4.title', $model->data[4]['title']) }}" placeholder="Заголовок" required>
+                                            <input type="text" class="form-control" name="data[5][title]" value="{{ old('data.5.title', $model->data[5]['title']) }}" placeholder="Заголовок" required>
                                         </div>
                                         <div class="form-group">
-                                            <textarea rows="6" class="form-control ckeditor" name="data[4][body]" placeholder="Вміст" required>{!! old('data.4.body', $model->data[4]['body']) !!}</textarea>
+                                            <textarea rows="6" class="form-control ckeditor" name="data[5][body]" placeholder="Вміст" required>{!! old('data.5.body', $model->data[5]['body']) !!}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -355,6 +405,11 @@
 
                                     let thumbnailImage = new KTImageInput('thumbnailImage');
                                     let thumbnailImage1 = new KTImageInput('thumbnailImage1');
+
+                                    $('.kt-image').each(function (i, item) {
+                                        new KTImageInput(this)
+                                    })
+
                                 })
                             </script>
                         @endpush

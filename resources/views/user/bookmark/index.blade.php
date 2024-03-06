@@ -50,6 +50,26 @@
                         <button class="button button--outline bookmarks-section__button" type="button" data-modal="modal-create">Створити папку</button>
                     </div>
                 </div>
+
+                @if(isset($folder_id))
+                <div>
+                    <a href="{{ route('user.bookmarks.index') }}">Закладки</a>
+                    <span style="margin: 0 7px">/</span>
+                    @if($fav_folder->parent)
+                        @foreach($fav_folder->getParentBreadcrumbs(false) as $tmp_folder_id => $tmp_folder_name)
+                            @if($folder_id == $tmp_folder_id)
+                                <span>{{ $tmp_folder_name }}</span>
+                            @else
+                                <a href="{{ route('user.bookmarks.index', $tmp_folder_id) }}">{{ $tmp_folder_name }}</a>
+                                <span style="margin: 0 7px">/</span>
+                            @endif
+                        @endforeach
+                    @else
+                        <span>{{ $fav_folder->name }}</span>
+                    @endif
+                </div>
+                @endif
+
             </header>
             <ul class="bookmarks-section__list" id="itemsContainer">
                 @include('user.bookmark._items')
@@ -59,11 +79,11 @@
 @endsection
 
 
-<div class="modal-wrap">
+@push('modals')
     @include('layouts.user_partials.modal-create', ['folder_type' => \App\Enums\FolderType::FAVOURITES_FOLDER->value])
     @include('layouts.user_partials.modal-edit', ['folder_type' => \App\Enums\FolderType::FAVOURITES_FOLDER->value])
     @include('layouts.user_partials.modal-delete')
-</div>
+@endpush
 
 @section('scripts_footer')
     <script type="module" src="{{ asset('js/helpers.js') }}"></script>

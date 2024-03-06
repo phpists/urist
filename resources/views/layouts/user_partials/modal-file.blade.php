@@ -17,7 +17,7 @@
                     <select class="select" id="selectFileFolder" name="folder_id" aria-label="Виберіть папку" required="required">
                         <option value="0">Без додавання папки</option>
                         @foreach(auth()->user()->fileFolders as $fileFolder)
-                            <option value="{{ $fileFolder->id }}">{{ $fileFolder->name }}</option>
+                            <option value="{{ $fileFolder->id }}">{{ $fileFolder->getParentBreadcrumbs() }}</option>
                         @endforeach
                     </select>
                 </div>

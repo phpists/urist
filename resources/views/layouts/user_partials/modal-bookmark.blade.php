@@ -14,7 +14,7 @@
             <select class="select" id="selectBookmarkFolder" name="folder_id" aria-label="Виберіть папку" required="required">
               <option value="0">Без додавання папки</option>
                 @foreach(Auth::user()->bookmarkFolders as $bookmarkFolder)
-                    <option value="{{ $bookmarkFolder->id }}">{{ $bookmarkFolder->name }}</option>
+                    <option value="{{ $bookmarkFolder->id }}">{{ $bookmarkFolder->getParentBreadcrumbs() }}</option>
                 @endforeach
             </select>
           </div>

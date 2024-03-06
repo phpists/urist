@@ -12,7 +12,10 @@ class SystemPageController extends Controller
 
     public function edit(SystemPage $systemPage)
     {
-        return view('admin.system-pages.edit', [
+        if (!view()->exists("admin.system-pages.{$systemPage->name}"))
+            abort(404);
+
+        return view("admin.system-pages.{$systemPage->name}", [
             'model' => $systemPage
         ]);
     }
@@ -20,10 +23,26 @@ class SystemPageController extends Controller
     public function update(Request $request, SystemPage $systemPage)
     {
         $systemPage->title = $request->post('title');
-        $systemPage->data = $request->post('data');
-        $images = $systemPage->images ?? [];
+        $data = $request->post('data');
+        foreach ($request->allFiles()['data'] ?? [] as $dI => $datum) {
+            if (isset($datum['items'])) {
+                foreach ($datum['items'] as $iI => $item) {
+                    if (isset($item['img'])) {
+                        if (Storage::put(SystemPage::IMG_PATH, $item['img'])) {
+                            $oldImg = $systemPage->getDataImgSrcByDot("{$dI}.items.{$iI}.img");
+                            if ($oldImg && !str_contains($oldImg, '/assets/img'))
+                                Storage::delete(SystemPage::IMG_PATH . $oldImg);
 
-        foreach($request->allFiles() as $allFiles) {
+                            $data[$dI]['items'][$iI]['img'] = $item['img']->hashName();
+                        }
+                    }
+                }
+            }
+        }
+        $systemPage->data = $data;
+
+        $images = $systemPage->images ?? [];
+        foreach($request->allFiles()['images'] ?? [] as $allFiles) {
             foreach ($allFiles as $i => $file) {
                 if (Storage::put(SystemPage::IMG_PATH, $file)) {
                     if ($systemPage->getImageSrc($i))

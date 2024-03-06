@@ -67,6 +67,7 @@ jQuery(document).ready(function () {
             type: "GET",
             url: url,
             dataType: "json",
+            cache: false,
             success: function (response) {
                 $('#table_container').html(response.table);
                 $('#pagination_container').html(response.pagination);
@@ -77,8 +78,14 @@ jQuery(document).ready(function () {
 
     }
 
-    $(document).on('change', '#filterDataForm', function (e) {
-        $('#filterDataForm').submit()
+    $('#category_select').on('change', function () {
+        request('filterDataForm')
+    })
+    $('#filterDataForm').on('change', function () {
+        request('filterDataForm')
+    })
+    $('#nameSearch').on('input', function () {
+        request('filterDataForm')
     })
 
 

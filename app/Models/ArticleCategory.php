@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class ArticleCategory extends Model
 {
@@ -45,12 +46,34 @@ class ArticleCategory extends Model
 
     public static function getChildIds($category_id): array
     {
-        $ids = [$category_id];
-        $category = self::find($category_id);
+        $ids = [];
+        $categories = DB::select("
+        SELECT id FROM article_categories WHERE id = ?
+        UNION ALL
+        SELECT c.id FROM article_categories c
+        JOIN (
+            SELECT id FROM article_categories WHERE id = ?
+            UNION ALL
+            SELECT id FROM article_categories WHERE parent_id IN (?)
+        ) t ON c.parent_id = t.id
+    ", [$category_id, $category_id, $category_id]);
 
-        if ($category->children) {
-            foreach ($category->children as $subcategory) {
-                $ids = array_merge($ids, self::getChildIds($subcategory->id));
+        foreach ($categories as $category) {
+            $ids[] = $category->id;
+        }
+
+        return $ids;
+
+        $ids = [];
+        $categories = self::with('children')->find($category_id);
+
+        $stack = [$categories];
+        while (!empty($stack)) {
+            $category = array_pop($stack);
+            $ids[] = $category->id;
+
+            foreach ($category->children as $child) {
+                $stack[] = $child;
             }
         }
 

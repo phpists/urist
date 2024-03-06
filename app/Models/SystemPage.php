@@ -56,6 +56,22 @@ class SystemPage extends Model
         return '';
     }
 
+    public function getDataImgSrcByDot(string $path): ?string
+    {
+        $img = $this->getDataByDotPath($path);
+        if ($img) {
+            if (str_contains($img, '/assets/img/'))
+                return $img;
+
+            $filePath = self::IMG_PATH . $img;
+
+            if (\Storage::fileExists($filePath))
+                return \Storage::url($filePath);
+        }
+
+        return null;
+    }
+
     public function getHtmlString(string $path): string
     {
         return strtr($this->getDataByDotPath($path), ['<' => '<span>', '>' => '</span>']);

@@ -40,10 +40,6 @@
 
 @endsection
 
-
-<div class="modal-wrap">
-</div>
-
 @section('scripts_footer')
     <script type="module">
     </script>

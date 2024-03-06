@@ -1,15 +1,21 @@
 const newAccordion = () => {
     const accordion = document.querySelector(".accordion");
-    
-    const accordionTriggerAll = document.querySelectorAll(".accordion__trigger");
 
-    accordionTriggerAll?.forEach(item => {
-        item.addEventListener("click", (e) => {
-            const activePanel = e.target.closest(".accordion__panel");
-            if (!activePanel) return;
-            toggleAccordion(activePanel);
-        });
-    });
+    $(document).on('click', '.accordion__trigger', function (e) {
+        const activePanel = e.target.closest(".accordion__panel");
+        if (!activePanel) return;
+        toggleAccordion(activePanel);
+    })
+
+    // const accordionTriggerAll = document.querySelectorAll(".accordion__trigger");
+    //
+    // accordionTriggerAll?.forEach(item => {
+    //     item.addEventListener("click", (e) => {
+    //         const activePanel = e.target.closest(".accordion__panel");
+    //         if (!activePanel) return;
+    //         toggleAccordion(activePanel);
+    //     });
+    // });
 
     function toggleAccordion(panelToActivate) {
         const activeButton = panelToActivate.querySelector(".accordion__trigger");

@@ -8,6 +8,7 @@ enum SystemPageEnum:string
 {
 
     case HOME = 'home';
+    case DASHBOARD = 'dashboard';
 
     public function getPage(): SystemPage
     {

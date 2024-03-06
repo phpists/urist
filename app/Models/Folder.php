@@ -16,6 +16,20 @@ class Folder extends Model
 
     protected $fillable = ['name', 'parent_id', 'folder_type', 'user_id'];
 
+    protected static function booted () {
+
+        static::deleted(function(self $model) {
+            if ($model->files)
+                foreach ($model->files as $file)
+                    $file->delete();
+
+            if ($model->childs)
+                foreach ($model->childs as $child)
+                    $child->delete();
+        });
+
+    }
+
     public function files()
     {
         return match ($this->folder_type) {
@@ -69,6 +83,28 @@ class Folder extends Model
             return "$count правові позиції";
         } else {
             return "$count правових позицій";
+        }
+    }
+
+    public function getParentBreadcrumbs(bool $asString = true): string|array
+    {
+        $result = [$this->id => $this->name];
+        $parent = $this->parent;
+
+        do {
+            if ($parent) {
+                $result[$parent?->id] = $parent?->name;
+                $parent = $parent?->parent;
+            }
+        } while ($parent);
+
+        $result = array_reverse($result, true);
+//        uksort($result, fn($a, $b) => -strnatcasecmp($a, $b));
+
+        if ($asString) {
+            return implode(' / ', $result);
+        } else {
+            return $result;
         }
     }
 

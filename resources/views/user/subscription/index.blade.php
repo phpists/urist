@@ -87,10 +87,11 @@
         </div>
     </section>
 
-    <div class="modal-wrap">
-        @include('layouts.modals.video')
-    </div>
 @endsection
+
+@push('modals')
+    @include('layouts.modals.video')
+@endpush
 
 @push('scripts')
     <script src="{{ asset('user/js/subscription.js') }}"></script>

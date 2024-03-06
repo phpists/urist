@@ -72,6 +72,43 @@
         </div>
     </section>
 
+    <section class="decision-section"> {{-- Є рішення --}}
+        <div class="container decision-section__container">
+            <h2 class="section-title decision-section__title">{{ $systemPage->getDataByDotPath('3.title') }}</h2>
+            <ul class="decision-section__list">
+                @if(isset($systemPage->data[3]['items']) && is_array($systemPage->data[3]['items']))
+                    @foreach($systemPage->data[3]['items'] as $i => $item)
+                        @continue(empty($item['title']))
+                        <li class="decision-section__item">
+                            <div class="decision-section__col">
+                                @if(isset($item['img']))
+                                    <picture class="decision-section__picture">
+                                        <img class="decision-section__img"
+                                             src="{{ $systemPage->getDataImgSrcByDot("3.items.{$i}.img") }}"
+                                             loading="lazy" width="626" height="380" alt="alt"/>
+                                    </picture>
+                                @endif
+                                <div class="decision-section__number">{{ $i + 1 }}</div>
+
+                                @if(isset($item['quote']))
+                                    <div class="decision-section__quote">
+                                        <p>{{ $item['quote'] }}</p>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="decision-section__col">
+                                <h3 class="decision-section__sub-title">{{ $item['title'] ?? '' }}</h3>
+                                <div class="decision-section__text">
+                                    {!! $item['body'] ?? '' !!}
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                @endif
+            </ul>
+        </div>
+    </section>
+
     <section class="tariffs-section" id="tariffs-section">
         <div class="container tariffs-section__container">
             <h2 class="section-title tariffs-section__title">Тарифи</h2>
@@ -145,9 +182,9 @@
     <section class="try-section">
         <div class="container try-section__container">
             <div class="try-section__left">
-                <h2 class="section-title try-section__title">{!! $systemPage->getHtmlString('3.title') !!}</h2>
-                <p class="try-section__descr">{{ $systemPage->getDataByDotPath('3.body') }}</p><a
-                    class="button button--white try-section__button" href="{{ $systemPage->getDataByDotPath('3.button_link') }}">{{ $systemPage->getDataByDotPath('3.button_text') }}</a>
+                <h2 class="section-title try-section__title">{!! $systemPage->getHtmlString('4.title') !!}</h2>
+                <p class="try-section__descr">{{ $systemPage->getDataByDotPath('4.body') }}</p><a
+                    class="button button--white try-section__button" href="{{ $systemPage->getDataByDotPath('4.button_link') }}">{{ $systemPage->getDataByDotPath('4.button_text') }}</a>
             </div>
             <div class="try-section__right">
                 <picture class="try-section__picture">
@@ -160,9 +197,9 @@
 
     <section class="seo-section">
         <div class="container seo-section__container">
-            <h2 class="section-title seo-section__title">{{ $systemPage->getDataByDotPath('4.title') }}</h2>
+            <h2 class="section-title seo-section__title">{{ $systemPage->getDataByDotPath('5.title') }}</h2>
             <div class="seo-section__text">
-                {!! $systemPage->getDataByDotPath('4.body') !!}
+                {!! $systemPage->getDataByDotPath('5.body') !!}
             </div>
             <button class="seo-section__more" type="button">Читати детальніше
                 <svg class="arrow-button__icon" width="8" height="4">
