@@ -63,7 +63,7 @@ class FavoritesController extends Controller
 
     public function moveFavourite(MoveItemRequest $request): \Illuminate\Http\JsonResponse
     {
-        $favourite = Favourite::query()->where('user_id', $request->user()->id)->find($request->item_id);
+        $favourite = Favourite::find($request->item_id);
         $result = $favourite->update($request->all());
         return response()->json([
             'success' => true,

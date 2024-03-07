@@ -1,5 +1,5 @@
 @foreach($folders as $folder)
-    <li data-zone="folder_{{$folder->id}}" data-label="folder_{{$folder->id}}" class="folder_container bookmarks-section__item">
+    <li data-id="{{ $folder->id }}" data-zone="folder_{{$folder->id}}" data-label="folder_{{$folder->id}}" class="folder_container bookmarks-section__item drag_element">
         <div class="bookmark-card">
             <div class="bookmark-card-menu is-dropdown">
                 <button class="bookmark-card-menu__toggle is-dropdown__toggle">
@@ -18,7 +18,7 @@
                     </li>
                 </ul>
             </div>
-            <a class="drag_element bookmark-card__link" href="{{ route('user.files.index', $folder) }}" draggable="true"
+            <a class="bookmark-card__link" href="{{ route('user.files.index', $folder) }}" draggable="true"
                data-item="folder_{{ $folder->id }}">
                 <div class="bookmark-card__pic">
                     <svg class="bookmark-card__icon" width="110" height="86">
@@ -32,7 +32,7 @@
     </li>
 @endforeach
 @foreach($files as $file)
-    <li class="bookmarks-section__item" data-label="file_{{ $file->id }}">
+    <li data-file data-id="{{ $file->id }}" class="bookmarks-section__item drag_element" data-label="file_{{ $file->id }}">
         <div class="bookmark-card">
             <div class="bookmark-card-menu is-dropdown">
                 <button class="bookmark-card-menu__toggle is-dropdown__toggle">
@@ -51,7 +51,7 @@
                     </li>
                 </ul>
             </div>
-            <a class="bookmark-card__link drag_element" draggable="true" data-item="file_{{$file->id}}" href="{{ route('user.files.edit', $file) }}">
+            <a class="bookmark-card__link" draggable="true" data-item="file_{{$file->id}}" href="{{ route('user.files.edit', $file) }}">
                 <div class="bookmark-card__pic">
                     <svg class="bookmark-card__icon" width="110" height="86">
                         <use xlink:href="{{asset('assets/img/user/sprite.svg#proposition')}}"></use>

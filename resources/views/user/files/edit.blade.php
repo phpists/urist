@@ -34,26 +34,23 @@
                 @csrf
                 @method('PUT')
 
-
-                <div class="tabs page-section__tabs" data-tabs="tabs-1" data-active="0"
-                     style="display: flex;justify-content: space-between;">
-                    <ul class="tabs__nav">
-                        <li class="tabs__nav-item">
-                            <button class="button button--outline tabs__nav-btn" type="button">ПП</button>
-                        </li>
-                        <li class="tabs__nav-item">
-                            <button class="button button--outline tabs__nav-btn" type="button">Судове рішення</button>
-                        </li>
-                    </ul>
-
-                    <div class="page-section__buttons">
-                        <button class="button page-section__button" type="submit">Зберегти</button>
-                        <button class="button button--outline page-section__button" type="button">Экспорт у Word
-                            <svg class="button__icon" width="28" height="28">
-                                <use xlink:href="{{asset('assets/img/user/sprite.svg#word')}}"></use>
-                            </svg>
-                        </button>
+                <div class="page-section__buttons">
+                    <div class="tabs page-section__tabs" data-tabs="tabs-1" data-active="0">
+                        <ul class="tabs__nav" role="tablist">
+                            <li class="tabs__nav-item">
+                                <button class="button button--outline tabs__nav-btn" type="button">ПП</button>
+                            </li>
+                            <li class="tabs__nav-item">
+                                <button class="button button--outline tabs__nav-btn" type="button">Судове рішення</button>
+                            </li>
+                        </ul>
                     </div>
+                    <button class="button page-section__button" type="submit">Зберегти</button>
+                    <button class="button button--outline page-section__button" type="button">Экспорт у Word
+                        <svg class="button__icon" width="28" height="28">
+                            <use xlink:href="{{asset('assets/img/user/sprite.svg#word')}}"></use>
+                        </svg>
+                    </button>
                 </div>
 
 

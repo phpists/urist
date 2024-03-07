@@ -1,12 +1,11 @@
 <aside class="sidebar">
     <div class="sidebar__panel">
         <div class="sidebar__inner">
-            <div class="logo sidebar__logo"><a class="logo__link" href="{{ route('user.dashboard.index') }}"
-                                               aria-label="logo">
-                    <svg class="logo__img" width="38" height="32">
-                        <use xlink:href="{{asset('assets/img/user/sprite.svg#logo')}}"></use>
-                    </svg>
-                    <span class="logo__title">Збірник</span></a></div>
+            <div class="logo sidebar__logo">
+                <a class="logo__link" href="{{ route('user.dashboard.index') }}" aria-label="logo">
+                    <img class="logo__img" src="{{ asset('assets/img/user/logo-white.png') }}" srcset="{{ asset('assets/img/user/logo-white@2x.png') }} 2x" width="82" height="61" alt="logo"/>
+                </a>
+            </div>
             <nav class="sidebar-menu">
                 <ul class="sidebar-menu__list">
                     <li class="sidebar-menu__item">
@@ -25,7 +24,7 @@
                             href="{{route('user.articles.index')}}">
                             <span class="sidebar-menu__pic">
                                 <svg class="sidebar-menu__icon" width="22" height="18">
-                                    <use xlink:href="{{asset('assets/img/user/sprite.svg#book')}}"></use>
+                                    <use xlink:href="{{asset('assets/img/user/sprite.svg#hammer')}}"></use>
                                 </svg>
                             </span>
                             <span class="sidebar-menu__title">Модуль КК</span>
@@ -36,7 +35,7 @@
                             href="{{route('user.articles.index')}}">
                             <span class="sidebar-menu__pic">
                                 <svg class="sidebar-menu__icon" width="22" height="18">
-                                    <use xlink:href="{{asset('assets/img/user/sprite.svg#book')}}"></use>
+                                    <use xlink:href="{{asset('assets/img/user/sprite.svg#hammer')}}"></use>
                                 </svg>
                             </span>
                             <span class="sidebar-menu__title">Модуль КПК</span>

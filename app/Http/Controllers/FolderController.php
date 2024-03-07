@@ -112,7 +112,7 @@ class FolderController extends Controller
     }
 
     public function moveFolder(MoveFolderRequest $request) {
-        $folder = Folder::query()->where('user_id', $request->user()->id)->find($request->item_id);
+        $folder = Folder::find($request->item_id);
         if (!$folder) {
             return response()->json([
                 'error' => 'Не вдалось знайти папку'

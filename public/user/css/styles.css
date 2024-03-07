@@ -39,6 +39,11 @@ input[name="search"]:focus + .searchItemsContainer {
     background-color: #f6f6f6;
 }
 
+
+.drag_element {
+    touch-action: none;
+}
+
 @media (max-width: 500px) {
     .pagenav__item a {
         width: 30px;

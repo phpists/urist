@@ -1,5 +1,5 @@
 @foreach($folders as $folder)
-    <li data-zone="folder_{{$folder->id}}" data-label="folder_{{$folder->id}}" class="folder_container bookmarks-section__item">
+    <li data-id="{{ $folder->id }}" data-zone="folder_{{$folder->id}}" data-label="folder_{{$folder->id}}" class="folder_container bookmarks-section__item drag_element">
         <div class="bookmark-card">
             <div class="bookmark-card-menu is-dropdown">
                 <button class="bookmark-card-menu__toggle is-dropdown__toggle">
@@ -16,7 +16,7 @@
                     </li>
                 </ul>
             </div>
-            <a class="drag_element bookmark-card__link" href="{{ route('user.bookmarks.index', $folder) }}" draggable="true"
+            <a class="bookmark-card__link" href="{{ route('user.bookmarks.index', $folder) }}" draggable="true"
                data-item="folder_{{ $folder->id }}">
                 <div class="bookmark-card__pic">
                     <svg class="bookmark-card__icon" width="110" height="86">
@@ -31,7 +31,7 @@
 @endforeach
 
 @foreach($favourites as $favourite)
-    <li class="bookmarks-section__item" data-label="file_{{$favourite->id}}">
+    <li data-file data-id="{{ $favourite->id }}" class="bookmarks-section__item drag_element" data-label="file_{{$favourite->id}}">
         <div class="bookmark-card">
             <div class="bookmark-card-menu is-dropdown">
                 <button class="bookmark-card-menu__toggle is-dropdown__toggle">
@@ -45,7 +45,7 @@
                     </li>
                 </ul>
             </div>
-            <a class="bookmark-card__link drag_element" draggable="true" data-item="file_{{$favourite->id}}" href="{{ route('user.articles.show', $favourite->criminal_article_id) }}">
+            <a class="bookmark-card__link" draggable="true" data-item="file_{{$favourite->id}}" href="{{ route('user.articles.show', $favourite->criminal_article_id) }}">
                 <div class="bookmark-card__pic">
                     <svg class="bookmark-card__icon" width="110" height="86">
                         <use xlink:href="{{asset('assets/img/user/sprite.svg#proposition')}}"></use>

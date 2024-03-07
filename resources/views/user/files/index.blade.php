@@ -87,6 +87,9 @@
 
 @section('scripts_footer')
     <script type="module" src="{{ asset('js/helpers.js') }}"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js" integrity="sha512-0bEtK0USNd96MnO4XhH8jhv3nyRF0eK87pJke6pkYf3cM0uDIhNJy9ltuzqgypoIFXw3JSuiy04tVk4AjpZdZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script type="module">
         $.ajaxSetup({
             headers: {
@@ -181,15 +184,58 @@
             ev.dataTransfer.setData("text/plain", ev.currentTarget.dataset.item);
         }
         document.addEventListener('DOMContentLoaded', function (ev) {
-            document.querySelectorAll('.drag_element').forEach((el) => {
-                console.log(el)
-                el.addEventListener('dragstart', handleDragStart);
-            })
-            document.querySelectorAll('.folder_container').forEach((el) => {
-                el.addEventListener('dragenter', handleDragEnter)
-                el.addEventListener('dragover', handleDragOver)
-                el.addEventListener('drop', handleDrop)
-            })
+            // document.querySelectorAll('.drag_element').forEach((el) => {
+            //     console.log(el)
+            //     el.addEventListener('dragstart', handleDragStart);
+            // })
+            // document.querySelectorAll('.folder_container').forEach((el) => {
+            //     el.addEventListener('dragenter', handleDragEnter)
+            //     el.addEventListener('dragover', handleDragOver)
+            //     el.addEventListener('drop', handleDrop)
+            // })
         })
+
+
+        $(function () {
+
+            initDragAndDrop()
+
+            $(document).on('ajaxComplete', initDragAndDrop)
+
+        })
+
+
+        function initDragAndDrop() {
+            $('.drag_element').draggable({
+                scroll: true,
+                revert: 'invalid',
+                start: function() {
+                    this.style.zIndex = 9
+                },
+                stop: function() {
+                    this.style.zIndex = 'inherit'
+                }
+            });
+
+            $('.folder_container').droppable({
+                accept: '.drag_element',
+                drop: function(e, ui) {
+                    if (ui.draggable.length) {
+                        let draggable = ui.draggable[0],
+                            folder_id = this.dataset.id,
+                            draggable_id = draggable.dataset.id;
+
+                        if (draggable.dataset.file !== undefined) {
+                            moveFavourite(folder_id, draggable_id)
+                        } else {
+                            moveFolder(folder_id, draggable_id)
+                        }
+
+                        draggable.remove()
+                    }
+                }
+            });
+        }
+
     </script>
 @endsection

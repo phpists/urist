@@ -13,7 +13,7 @@
     <section class="collection-section">
         <div class="container collection-section__container">
             <h1 class="page-title profile-section__title">Реєстр</h1>
-            <table class="collection-table">
+            <table class="collection-table collection-table--auto">
                 <thead class="collection-table__thead">
                 <tr>
                     <th>Номер</th>
