@@ -16,6 +16,18 @@
                     <div class="row">
                         <div class="col-12 px-0">
                             <div class="form-group w-100">
+                                <label for="createCategoryType" class="col-auto col-form-label font-weight-bold">Модуль</label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" name="type" id="createCategoryType">
+                                        @foreach(\App\Enums\CriminalArticleTypeEnum::cases() as $case)
+                                            <option value="{{ $case->value }}">{{ $case->getTitle() }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 px-0">
+                            <div class="form-group w-100">
                                 <label for="createCategoryName" class="col-auto col-form-label font-weight-bold">Назва</label>
                                 <div class="col-sm-12">
                                     <input type="text" class="form-control" id="createCategoryName" name="name" required>

@@ -78,6 +78,10 @@ class CriminalArticleController extends Controller
         if ($article->save()) {
             $article->categories()->sync($request->post('article_categories'), []);
 
+            $article->update([
+                'type' => $article->categories->first()->type
+            ]);
+
             $this->insertArticleTags($request, $article);
             return redirect()->back()->with('success', 'Стаття успішно збережена');
         }
