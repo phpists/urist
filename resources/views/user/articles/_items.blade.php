@@ -39,9 +39,24 @@
                 @endif
             </td>
             <td>
-                <div class="collection-descr">
+                <div class="collection-descr default">
                     <a class="black-link collection-descr__text" href="{{ route('user.articles.show', $article) }}" style="display:block;">
                         <p style="display: inline;">{!! $short = str_replace("\r\n", '<br>', truncate_by_words($article->description, 370)) !!}</p>
+                        <div class="collection-descr__hidden">
+                            {!! str_replace("\r\n", '<br>', Str::substr($article->description, mb_strlen($short) - 3)) !!}
+                        </div>
+                    </a>
+                    @if(strlen($short) < strlen($article->description))
+                    <button class="collection-descr__more" type="button"><span>Читати детальніше</span>
+                        <svg class="collection-descr__more-icon" width="8" height="4">
+                            <use xlink:href="{{ asset('assets/img/user/sprite.svg#dropdown-arrow') }}"></use>
+                        </svg>
+                    </button>
+                    @endif
+                </div>
+                <div class="collection-descr more-width">
+                    <a class="black-link collection-descr__text" href="{{ route('user.articles.show', $article) }}" style="display:block;">
+                        <p style="display: inline;">{!! $short = str_replace("\r\n", '<br>', truncate_by_words($article->description, 500)) !!}</p>
                         <div class="collection-descr__hidden">
                             {!! str_replace("\r\n", '<br>', Str::substr($article->description, mb_strlen($short) - 3)) !!}
                         </div>

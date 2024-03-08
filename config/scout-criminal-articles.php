@@ -36,7 +36,7 @@ return [
     |
     */
 
-    'customRanking' => null,
+    'customRanking' => ['desc(date_timestamp)'],
 
     /*
     |--------------------------------------------------------------------------

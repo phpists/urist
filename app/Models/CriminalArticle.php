@@ -49,7 +49,8 @@ class CriminalArticle extends Model
         return [
             'name' => $this->name,
             'description' => $this->description,
-            'categories' =>$this->categories()->pluck('article_categories.id')->toArray()
+            'categories' => $this->categories()->pluck('article_categories.id')->toArray(),
+            'date_timestamp' => $this->date->timestamp
         ];
     }
 

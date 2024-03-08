@@ -43,7 +43,7 @@
                 </div>
             </form>
 
-            <form id="filterForm" action="{{ route('user.articles.index', $filterService->getType()) }}" data-count-url="{{ route('user.articles.total-count') }}" style="margin-bottom: 0">
+            <form id="filterForm" action="{{ route('user.articles.index', $filterService->getType()) }}" data-count-url="{{ route('user.articles.total-count', $filterService->getType()) }}" style="margin-bottom: 0">
                 <input type="hidden" name="sort">
                 @if($search = request('search'))
                     <input type="hidden" name="search" value="{{ $search }}">

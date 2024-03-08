@@ -52,10 +52,10 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function articlesCount()
+    public function articlesCount(string $type)
     {
         return new JsonResponse([
-            'count' => (new ArticleFilterService())->getTotalCount()
+            'count' => (new ArticleFilterService($type))->getTotalCount()
         ]);
     }
 
@@ -85,7 +85,6 @@ class ArticleController extends Controller
 
         if ($search)
             $items = CriminalArticle::where('name', 'LIKE', "%{$search}%")
-                ->limit(5)
                 ->get();
 
         return view('user.articles.__search-items', [
