@@ -46,7 +46,7 @@
                         </div>
                     </form>
                     <div class="bookmarks-section__buttons">
-                        <a href="{{ route('user.articles.index') }}" class="button button--outline bookmarks-section__button" type="button">Додати статтю</a>
+                        <a href="{{ route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KPK->value) }}" class="button button--outline bookmarks-section__button" type="button">Додати статтю</a>
                         <button class="button button--outline bookmarks-section__button" type="button" data-modal="modal-create">Створити папку</button>
                     </div>
                 </div>

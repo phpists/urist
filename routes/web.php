@@ -137,7 +137,7 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
         ->name('articles.index');
     Route::get('articles/search', [\App\Http\Controllers\User\ArticleController::class, 'search'])
         ->name('articles.search');
-    Route::get('articles/{article}', [\App\Http\Controllers\User\ArticleController::class, 'show'])
+    Route::get('article/{article}', [\App\Http\Controllers\User\ArticleController::class, 'show'])
         ->name('articles.show');
 //    Route::resource('articles/{type}', \App\Http\Controllers\User\ArticleController::class)
 //        ->only(['index', 'show']);
