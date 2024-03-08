@@ -21,7 +21,8 @@ class CriminalArticle extends Model
         'is_active',
         'pp',
         'statya_kk',
-        'date'
+        'date',
+        'type'
     ];
 
     protected $casts = [

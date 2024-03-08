@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\CriminalArticleTypeEnum;
 use App\Enums\SettingEnum;
 use App\Models\ArticleCategory;
 use App\Models\CriminalArticle;
@@ -10,9 +11,19 @@ use Illuminate\Support\Facades\Cache;
 class ArticleFilterService
 {
 
+    public function __construct(public ?string $type = null)
+    {
+    }
+
+    public function getType(): string
+    {
+        return $this->type ?? CriminalArticleTypeEnum::KPK->value;
+    }
+
     public function getCategories()
     {
         return ArticleCategory::whereNull('parent_id')
+            ->whereType($this->getType())
             ->orderBy('position')
             ->with([
                 'children',
@@ -56,7 +67,11 @@ class ArticleFilterService
             ? CriminalArticle::search(request('search'))
             : CriminalArticle::query();
 
+
         return $articles
+            ->when(!$isFromSearch, function ($query) {
+                $query->whereType($this->getType());
+            })
             ->when((!empty($categories)), function ($q) use ($categories, $isFromSearch) {
                 if ($isFromSearch) {
                     $filterCategories = \Arr::map($categories, function ($category) {

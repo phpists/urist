@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\CriminalArticleTypeEnum;
 use App\Enums\SettingEnum;
 use App\Models\Setting;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -28,12 +29,12 @@ class SettingSeeder extends Seeder
             [
                 'name' => SettingEnum::KPK_MODULE_BTN,
                 'title' => 'Посилання для "Модуль КПК"',
-                'value' => route('user.articles.index')
+                'value' => route('user.articles.index', CriminalArticleTypeEnum::KPK->value)
             ],
             [
                 'name' => SettingEnum::KK_MODULE_BTN,
                 'title' => 'Посилання для "Модуль КК"',
-                'value' => route('user.articles.index')
+                'value' => route('user.articles.index', CriminalArticleTypeEnum::KK->value)
             ],
         ];
 

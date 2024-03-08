@@ -20,8 +20,8 @@
                         </a>
                     </li>
                     <li class="sidebar-menu__item">
-                        <a class="sidebar-menu__link @if(request()->routeIs('user.articles.*')) is-active @endif"
-                            href="{{route('user.articles.index')}}">
+                        <a class="sidebar-menu__link @if(url()->current() == route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KK->value)) is-active @endif"
+                            href="{{route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KK->value)}}">
                             <span class="sidebar-menu__pic">
                                 <svg class="sidebar-menu__icon" width="22" height="18">
                                     <use xlink:href="{{asset('assets/img/user/sprite.svg#hammer')}}"></use>
@@ -31,8 +31,8 @@
                         </a>
                     </li>
                     <li class="sidebar-menu__item">
-                        <a class="sidebar-menu__link @if(request()->routeIs('user.articles.*')) is-active @endif"
-                            href="{{route('user.articles.index')}}">
+                        <a class="sidebar-menu__link @if(url()->current() == route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KPK->value)) is-active @endif"
+                            href="{{route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KPK->value)}}">
                             <span class="sidebar-menu__pic">
                                 <svg class="sidebar-menu__icon" width="22" height="18">
                                     <use xlink:href="{{asset('assets/img/user/sprite.svg#hammer')}}"></use>

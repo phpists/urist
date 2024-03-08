@@ -71,12 +71,6 @@ body
     word-wrap: break-word;
 }
 
-@media screen and (max-width: 768px) {
-    .cke_editable {
-        font-size: 16px;
-    }
-}
-
 blockquote
 {
     font-style: italic;
@@ -444,4 +438,17 @@ body.spreadsheet-editor table:not( .htCore ) th,
 body.spreadsheet-editor table:not( .htCore ) td {
     border: 1px solid #ccc;
     line-height: 21px;
+}
+
+@media screen and (max-width: 768px) {
+    .cke_editable {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    body.document-editor {
+        width: inherit;
+        padding: 0.5cm 1cm 1cm;
+    }
 }

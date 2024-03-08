@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Events\ArticleCategoryDeleted;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
@@ -14,11 +15,11 @@ class ArticleCategory extends Model
     use HasFactory;
     use Notifiable;
 
-    protected $fillable = ['name', 'parent_id', 'position', 'is_active', 'sub_title'];
+    protected $fillable = ['name', 'parent_id', 'position', 'is_active', 'sub_title', 'type'];
 
-    public function articles(): HasMany
+    public function articles(): BelongsToMany
     {
-        return $this->hasMany(CriminalArticle::class);
+        return $this->belongsToMany(CriminalArticle::class, 'criminal_article_categories');
     }
 
     public function children(): HasMany

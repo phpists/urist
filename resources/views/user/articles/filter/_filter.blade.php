@@ -1,4 +1,4 @@
-@php($filterService = $filterService ?? new \App\Services\ArticleFilterService())
+@php($filterService = $filterService ?? new \App\Services\ArticleFilterService(request('type')))
 
 <aside class="filter {{ $is_menu_hidden ? 'is-hide' : '' }}">
     <div class="filter__panel">
@@ -43,18 +43,18 @@
                 </div>
             </form>
 
-            <form id="filterForm" action="{{ route('user.articles.index') }}" data-count-url="{{ route('user.articles.total-count') }}" style="margin-bottom: 0">
+            <form id="filterForm" action="{{ route('user.articles.index', $filterService->getType()) }}" data-count-url="{{ route('user.articles.total-count') }}" style="margin-bottom: 0">
                 <input type="hidden" name="sort">
                 @if($search = request('search'))
                     <input type="hidden" name="search" value="{{ $search }}">
                 @endif
-                <div id="filterAccordionItemsContainer" data-load-url="{{ route('user.filter') }}" class="accordion filter__accordion">
+                <div id="filterAccordionItemsContainer" data-load-url="{{ route('user.filter', $filterService->getType()) }}" class="accordion filter__accordion">
                 </div>
             </form>
         </div>
         <div class="filter__bottom">
-            <button class="button button--outline filter__button" type="button" onclick="location.href = '{{ route('user.articles.index') }}'">Скинути</button>
-            <button class="button filter__button" type="submit" form="filterForm" @if(!str_contains(route('user.articles.index'), url()->current())) data-redirect="true" @endif disabled>Показати ({{ $filterService->getTotalCount() }})</button>
+            <button class="button button--outline filter__button" type="button" onclick="location.href = '{{ route('user.articles.index', $filterService->getType()) }}'">Скинути</button>
+            <button class="button filter__button" type="submit" form="filterForm" @if(!str_contains(route('user.articles.index', $filterService->getType()), url()->current())) data-redirect="true" @endif disabled>Показати ({{ $filterService->getTotalCount() }})</button>
         </div>
     </div>
 </aside>

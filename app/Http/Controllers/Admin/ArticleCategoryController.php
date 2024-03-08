@@ -227,11 +227,4 @@ class ArticleCategoryController extends Controller
         return new JsonResponse($articleCategory);
     }
 
-    public function getFilter(Request $request)
-    {
-        return view('user.articles.filter.__accordion-items', [
-            'filterService' => new \App\Services\ArticleFilterService()
-        ])->render();
-    }
-
 }

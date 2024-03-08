@@ -133,8 +133,14 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
         ->name('profile.search-city');
 
     // Articles
-    Route::resource('articles', \App\Http\Controllers\User\ArticleController::class)
-        ->only(['index', 'show']);
+    Route::get('articles/{type}', [\App\Http\Controllers\User\ArticleController::class, 'index'])
+        ->name('articles.index');
+    Route::get('articles/search', [\App\Http\Controllers\User\ArticleController::class, 'search'])
+        ->name('articles.search');
+    Route::get('articles/{article}', [\App\Http\Controllers\User\ArticleController::class, 'show'])
+        ->name('articles.show');
+//    Route::resource('articles/{type}', \App\Http\Controllers\User\ArticleController::class)
+//        ->only(['index', 'show']);
     Route::get('articles-total-count', [\App\Http\Controllers\User\ArticleController::class, 'articlesCount'])
         ->name('articles.total-count');
 
@@ -142,7 +148,7 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
         ->name('search.items');
 
     // Filter
-    Route::get('filter', [ArticleCategoryController::class, 'getFilter'])->name('filter');
+    Route::get('filter/{type}', [\App\Http\Controllers\User\ArticleController::class, 'getFilter'])->name('filter');
 
     // Bookmarks
     Route::get('bookmarks/{folderId?}', [\App\Http\Controllers\User\BookmarkController::class, 'index'])
