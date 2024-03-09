@@ -6,6 +6,7 @@ use App\Enums\CriminalArticleTypeEnum;
 use App\Enums\SettingEnum;
 use App\Models\ArticleCategory;
 use App\Models\CriminalArticle;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
 class ArticleFilterService
@@ -87,15 +88,20 @@ class ArticleFilterService
                     });
                 }
             })
-            ->when($sort = request('sort'), function ($q) use ($sort) {
+            ->when($sort = request('sort'), function ($q) use ($sort, $isFromSearch) {
                 [$column, $direction] = explode(':', $sort);
 
-                if (isset($column) && isset($direction))
-                    return $q->orderBy($column, $direction);
+                if (isset($column) && isset($direction)) {
+                    if ($isFromSearch) {
+                        return $q->within('criminal_articles_date_' . strtolower($direction));
+                    } else {
+                        return $q->orderBy($column, $direction);
+                    }
+                }
 
                 return $q;
             })
-            ->when(!$sort, function ($query) { // default sort
+            ->when(!$sort && !$isFromSearch, function ($query) { // default sort
                 $query->orderBy('date', 'DESC');
             })
             ->paginate($perPage)

@@ -159,4 +159,10 @@ return [
     | configuration, just use the command `scout:sync` to get remote settings in this file.
     |
     */
+
+    'replicas' => [
+        'virtual(criminal_articles_date_asc)',
+        'virtual(criminal_articles_date_desc)'
+    ]
+
 ];
