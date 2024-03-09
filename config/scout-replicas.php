@@ -3,12 +3,14 @@
 return [
     'criminal-articles' => [
         'criminal_articles_date_asc' => [
-            'customRanking' => ['asc(date_timestamp)'],
-            'relevancyStrictness' => 0
+            'ranking' => ['asc(date_timestamp)'],
+//            'customRanking' => ['asc(date_timestamp)'],
+//            'relevancyStrictness' => 0 // only for virtual
         ],
         'criminal_articles_date_desc' => [
-            'customRanking' => ['desc(date_timestamp)'],
-            'relevancyStrictness' => 0
+            'ranking' => ['desc(date_timestamp)'],
+//            'customRanking' => ['desc(date_timestamp)'],
+//            'relevancyStrictness' => 0 // only for virtual
         ]
     ]
 ];

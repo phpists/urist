@@ -101,8 +101,12 @@ class ArticleFilterService
 
                 return $q;
             })
-            ->when(!$sort && !$isFromSearch, function ($query) { // default sort
-                $query->orderBy('date', 'DESC');
+            ->when(!$sort, function ($query) use ($isFromSearch) { // default sort
+                if ($isFromSearch) {
+                    return $query->within('criminal_articles_date_desc');
+                } else {
+                    return $query->orderBy('date', 'DESC');
+                }
             })
             ->paginate($perPage)
             ->withQueryString();

@@ -161,8 +161,8 @@ return [
     */
 
     'replicas' => [
-        'virtual(criminal_articles_date_asc)',
-        'virtual(criminal_articles_date_desc)'
+        'criminal_articles_date_asc',
+        'criminal_articles_date_desc'
     ]
 
 ];
