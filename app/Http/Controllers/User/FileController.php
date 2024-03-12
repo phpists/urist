@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Enums\FolderType;
 use App\Http\Controllers\Controller;
+use App\Jobs\DeleteTempFileJob;
 use App\Models\File;
 use App\Models\Folder;
 use Illuminate\Http\JsonResponse;
@@ -76,6 +77,27 @@ class FileController extends Controller
         }
 
         return back();
+    }
+
+    public function exportDoc(Request $request, File $file)
+    {
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $phpWord->addTitleStyle(1, 'Heading1', ['alignment' => 'center']);
+
+        $pp = $phpWord->addSection();
+        $pp->addTitle('ПП');
+        \PhpOffice\PhpWord\Shared\Html::addHtml($pp, $file->pp, false, false);
+
+        $statya_kk = $phpWord->addSection();
+        $statya_kk->addTitle('Судове рішення');
+        \PhpOffice\PhpWord\Shared\Html::addHtml($statya_kk, $file->statya_kk, false, false);
+
+        $objectWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord);
+        header('Content-Type: text/html');
+        header("Content-Disposition: attatchement;Filename={$file->getProgramTitle()}.docx");
+        $objectWriter->save('php://output');
+
+        exit(418);
     }
 
 }

@@ -63,9 +63,10 @@ const feedbackFormValidation = () => {
                 dataType: 'json',
                 data: $form.serialize(),
                 success: function (response) {
-                    console.log($form.find('button[data-modal]'));
                     $form.find('button[data-modal]').click()
                     $form[0].reset()
+
+                    throwSuccessToaster('Повідомлення успішно відправлено. Ми зв\'яжемося з вами найближчим часом')
                 }
             })
         });

@@ -19,21 +19,22 @@
                     </svg>
                     E-mail:
                 </h3>
-                <a class="email__link" href="mailto:zbirnyk@gmail.com">zbirnyk@gmail.com</a>
+                <a class="email__link" href="mailto:{{ $adminEmail }}">{{ $adminEmail }}</a>
             </div>
-            <form class="form contacts-section__form" id="feedback-form" autocomplete="off" novalidate="novalidate">
+            <form action="{{ route('home.form') }}" class="form contacts-section__form" id="feedback-form" autocomplete="off" novalidate="novalidate" method="POST">
+                @csrf
                 <div class="form__row">
                     <div class="form__col">
-                        <input class="input form__input" id="inputName" type="text" name="inputName"
+                        <input class="input form__input" id="inputName" type="text" name="name"
                                placeholder="Ім’я *" autocomplete="off" required="required"/>
                     </div>
                     <div class="form__col">
-                        <input class="input form__input" id="inputEmail" type="email" name="inputEmail"
+                        <input class="input form__input" id="inputEmail" type="email" name="email"
                                placeholder="Email *" autocomplete="off" required="required"/>
                     </div>
                 </div>
                 <div class="form__group">
-                    <textarea class="textarea form__input" id="textareaFeedback" name="textareaFeedback" rows="8"
+                    <textarea class="textarea form__input" id="textareaFeedback" name="message" rows="8"
                               placeholder="Побажання *" autocomplete="off" required="required"></textarea>
                 </div>
                 <div class="form__group form__group--center">

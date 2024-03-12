@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\SystemPageEnum;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -14,6 +15,8 @@ class FaqController extends Controller
      */
     function index(): Application|Factory|View|\Illuminate\Foundation\Application
     {
-        return view('pages.faq');
+        return view('pages.faq', [
+            'systemPage' => SystemPageEnum::FAQ->getPage()
+        ]);
     }
 }

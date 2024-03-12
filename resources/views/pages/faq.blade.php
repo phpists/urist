@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'FAQ')
+@section('title', $systemPage->title)
 @section('page')
     <section class="faq-section">
         <div class="container faq-section__container">
@@ -13,156 +13,29 @@
                 </nav>
             </header>
             <div class="faq-section__row">
-                <div class="faq-section__col">
-                    <h2 class="faq-section__sub-title">Назва категорії</h2>
-                    <ul class="faq-section__list">
-                        <li class="faq-section__item">
-                            <div class="accordion is-open">
-                                <button class="accordion__toggle" type="button" aria-expanded="false">
-                                    <div class="accordion__icon"></div>
-                                    Як це працює?
-                                </button>
-                                <div class="accordion__content" aria-hidden="true">
-                                    <div class="accordion__text">
-                                        <p>Вам знайома ситуація, коли Ви шукаєте те, що колись читали, серед тисяч
-                                            скріншотів різних юридичних ресурсів</p>
+                @foreach($systemPage->data as $datum)
+                    <div class="faq-section__col">
+                        <h2 class="faq-section__sub-title">{{ $datum['title'] }}</h2>
+                        <ul class="faq-section__list">
+                            @foreach($datum['items'] as $item)
+                                @continue(!isset($item['title']))
+                                <li class="faq-section__item">
+                                    <div class="accordion @if($loop->first) is-open @endif">
+                                        <button class="accordion__toggle" type="button" aria-expanded="false">
+                                            <div class="accordion__icon"></div>
+                                            {{ $item['title'] }}
+                                        </button>
+                                        <div class="accordion__content" aria-hidden="true">
+                                            <div class="accordion__text">
+                                                <p>{{ $item['body'] }}</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="faq-section__item">
-                            <div class="accordion">
-                                <button class="accordion__toggle" type="button" aria-expanded="false">
-                                    <div class="accordion__icon"></div>
-                                    Як користуватись сервісом
-                                </button>
-                                <div class="accordion__content" aria-hidden="true">
-                                    <div class="accordion__text">
-                                        <p>Вам знайома ситуація, коли Ви шукаєте те, що колись читали, серед тисяч
-                                            скріншотів різних юридичних ресурсів</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="faq-section__item">
-                            <div class="accordion">
-                                <button class="accordion__toggle" type="button" aria-expanded="false">
-                                    <div class="accordion__icon"></div>
-                                    Як користуватись сервісом
-                                </button>
-                                <div class="accordion__content" aria-hidden="true">
-                                    <div class="accordion__text">
-                                        <p>Вам знайома ситуація, коли Ви шукаєте те, що колись читали, серед тисяч
-                                            скріншотів різних юридичних ресурсів</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="faq-section__item">
-                            <div class="accordion">
-                                <button class="accordion__toggle" type="button" aria-expanded="false">
-                                    <div class="accordion__icon"></div>
-                                    Як користуватись сервісом
-                                </button>
-                                <div class="accordion__content" aria-hidden="true">
-                                    <div class="accordion__text">
-                                        <p>Вам знайома ситуація, коли Ви шукаєте те, що колись читали, серед тисяч
-                                            скріншотів різних юридичних ресурсів</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="faq-section__item">
-                            <div class="accordion">
-                                <button class="accordion__toggle" type="button" aria-expanded="false">
-                                    <div class="accordion__icon"></div>
-                                    Як користуватись сервісом
-                                </button>
-                                <div class="accordion__content" aria-hidden="true">
-                                    <div class="accordion__text">
-                                        <p>Вам знайома ситуація, коли Ви шукаєте те, що колись читали, серед тисяч
-                                            скріншотів різних юридичних ресурсів</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="faq-section__col">
-                    <h2 class="faq-section__sub-title">Назва категорії</h2>
-                    <ul class="faq-section__list">
-                        <li class="faq-section__item">
-                            <div class="accordion is-open">
-                                <button class="accordion__toggle" type="button" aria-expanded="false">
-                                    <div class="accordion__icon"></div>
-                                    Як це працює?
-                                </button>
-                                <div class="accordion__content" aria-hidden="true">
-                                    <div class="accordion__text">
-                                        <p>Вам знайома ситуація, коли Ви шукаєте те, що колись читали, серед тисяч
-                                            скріншотів різних юридичних ресурсів</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="faq-section__item">
-                            <div class="accordion">
-                                <button class="accordion__toggle" type="button" aria-expanded="false">
-                                    <div class="accordion__icon"></div>
-                                    Як користуватись сервісом
-                                </button>
-                                <div class="accordion__content" aria-hidden="true">
-                                    <div class="accordion__text">
-                                        <p>Вам знайома ситуація, коли Ви шукаєте те, що колись читали, серед тисяч
-                                            скріншотів різних юридичних ресурсів</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="faq-section__item">
-                            <div class="accordion">
-                                <button class="accordion__toggle" type="button" aria-expanded="false">
-                                    <div class="accordion__icon"></div>
-                                    Як користуватись сервісом
-                                </button>
-                                <div class="accordion__content" aria-hidden="true">
-                                    <div class="accordion__text">
-                                        <p>Вам знайома ситуація, коли Ви шукаєте те, що колись читали, серед тисяч
-                                            скріншотів різних юридичних ресурсів</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="faq-section__item">
-                            <div class="accordion">
-                                <button class="accordion__toggle" type="button" aria-expanded="false">
-                                    <div class="accordion__icon"></div>
-                                    Як користуватись сервісом
-                                </button>
-                                <div class="accordion__content" aria-hidden="true">
-                                    <div class="accordion__text">
-                                        <p>Вам знайома ситуація, коли Ви шукаєте те, що колись читали, серед тисяч
-                                            скріншотів різних юридичних ресурсів</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="faq-section__item">
-                            <div class="accordion">
-                                <button class="accordion__toggle" type="button" aria-expanded="false">
-                                    <div class="accordion__icon"></div>
-                                    Як користуватись сервісом
-                                </button>
-                                <div class="accordion__content" aria-hidden="true">
-                                    <div class="accordion__text">
-                                        <p>Вам знайома ситуація, коли Ви шукаєте те, що колись читали, серед тисяч
-                                            скріншотів різних юридичних ресурсів</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>

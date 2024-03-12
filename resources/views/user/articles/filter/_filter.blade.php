@@ -48,7 +48,7 @@
                 @if($search = request('search'))
                     <input type="hidden" name="search" value="{{ $search }}">
                 @endif
-                <div id="filterAccordionItemsContainer" data-load-url="{{ route('user.filter', $filterService->getType()) }}" class="accordion filter__accordion">
+                <div id="filterAccordionItemsContainer" data-load-url="{{ route('user.filter', ['type' => $filterService->getType(), ...request()->query()]) }}" class="accordion filter__accordion">
                 </div>
             </form>
         </div>
@@ -186,6 +186,16 @@
                                 }
                             })
                     })
+
+
+                $('.accordion__content[aria-hidden="true"]:has(div.sub-category:visible)')
+                    .each(function (i, item) {
+                        const $parent = $(item).parent('.accordion__panel')
+
+                        $(item).attr('aria-hidden', false);
+                        $parent.find('.accordion__trigger')
+                            .attr('aria-expanded', true)
+                    })
             } else {
                 $('div.accordion__panel.sub-category').each(function (i, el) {
                     let title = $(el).find('label');
@@ -197,6 +207,28 @@
                         }
                     }
                 })
+
+                $('.accordion__content[aria-hidden="true"]:has(div.sub-category:visible)')
+                    .each(function (i, item) {
+                        const $parent = $(item).parent('.accordion__panel')
+
+                        $(item).attr('aria-hidden', false);
+                        $parent.find('.accordion__trigger')
+                            .attr('aria-expanded', true)
+                    })
+
+                if (value.length < 1) {
+                    $('.accordion__content[aria-hidden="false"]')
+                        .each(function (i, item) {
+                            const $parent = $(item).parent('.accordion__panel')
+
+                            if (!$parent.find('.accordion__header input')[0].checked) {
+                                $(item).attr('aria-hidden', true);
+                                $parent.find('.accordion__trigger')
+                                    .attr('aria-expanded', false)
+                            }
+                        })
+                }
             }
         }
 

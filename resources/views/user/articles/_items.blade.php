@@ -41,9 +41,9 @@
             <td>
                 <div class="collection-descr default">
                     <a class="black-link collection-descr__text" href="{{ route('user.articles.show', $article) }}" style="display:block;">
-                        <p style="display: inline;">{!! $short = str_replace("\r\n", '<br>', truncate_by_words($article->description, 370)) !!}</p>
+                        <p style="display: inline;">{!! $short = str_replace("\r\n", '<br>', truncate_by_words($article->getDescriptionWithHighlightedWord(request('search')), 370)) !!}</p>
                         <div class="collection-descr__hidden">
-                            {!! str_replace("\r\n", '<br>', Str::substr($article->description, mb_strlen($short) - 3)) !!}
+                            {!! str_replace("\r\n", '<br>', Str::substr($article->getDescriptionWithHighlightedWord(request('search')), mb_strlen($short) - 3)) !!}
                         </div>
                     </a>
                     @if(strlen($short) < strlen($article->description))
@@ -56,9 +56,9 @@
                 </div>
                 <div class="collection-descr more-width">
                     <a class="black-link collection-descr__text" href="{{ route('user.articles.show', $article) }}" style="display:block;">
-                        <p style="display: inline;">{!! $short = str_replace("\r\n", '<br>', truncate_by_words($article->description, 500)) !!}</p>
+                        <p style="display: inline;">{!! $short = str_replace("\r\n", '<br>', truncate_by_words($article->getDescriptionWithHighlightedWord(request('search')), 700)) !!}</p>
                         <div class="collection-descr__hidden">
-                            {!! str_replace("\r\n", '<br>', Str::substr($article->description, mb_strlen($short) - 3)) !!}
+                            {!! str_replace("\r\n", '<br>', Str::substr($article->getDescriptionWithHighlightedWord(request('search')), mb_strlen($short) - 3)) !!}
                         </div>
                     </a>
                     @if(strlen($short) < strlen($article->description))

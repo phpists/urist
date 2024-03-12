@@ -46,11 +46,11 @@
                         </ul>
                     </div>
                     <button class="button page-section__button" type="submit">Зберегти</button>
-                    <button class="button button--outline page-section__button" type="button">Экспорт у Word
+                    <a href="{{ route('user.files.export-doc', $file) }}" class="button button--outline page-section__button" type="button">Экспорт у Word
                         <svg class="button__icon" width="28" height="28">
                             <use xlink:href="{{asset('assets/img/user/sprite.svg#word')}}"></use>
                         </svg>
-                    </button>
+                    </a>
                 </div>
 
 

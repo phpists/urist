@@ -22,4 +22,9 @@ class File extends Model
         return $this->belongsTo(CriminalArticle::class);
     }
 
+    public function getProgramTitle(): string
+    {
+        return \Str::replace(' ', '_', $this->name);
+    }
+
 }
