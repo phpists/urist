@@ -28,6 +28,7 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::group(['middleware' => 'jwt'], function () {
     Route::get('me', [\App\Http\Controllers\Api\User\ProfileController::class, 'index']);
+    Route::put('me', [\App\Http\Controllers\Api\User\ProfileController::class, 'update']);
 
     /** Articles */
     Route::resource('criminal-articles', \App\Http\Controllers\Api\CriminalArticleController::class)
@@ -40,4 +41,17 @@ Route::group(['middleware' => 'jwt'], function () {
     Route::resource('bookmarks/folder', \App\Http\Controllers\Api\User\BookmarkFolderController::class)
         ->only(['store', 'update', 'destroy']);
 
+    /** Registries */
+    Route::get('registries', [\App\Http\Controllers\Api\RegistryController::class, 'index']);
+
+    /** Blog */
+    Route::get('blog-tags', [\App\Http\Controllers\Api\BlogController::class, 'tags']);
+    Route::get('blog', [\App\Http\Controllers\Api\BlogController::class, 'index']);
+    Route::get('blog/a/{article}', [\App\Http\Controllers\Api\BlogController::class, 'show']);
+
+    /** Pages */
+    Route::get('pages/{page}', [\App\Http\Controllers\Api\PageController::class, 'index']);
+
+    /** Contact Form */
+    Route::post('contact-form', [\App\Http\Controllers\Api\ContactController::class, 'form']);
 });
