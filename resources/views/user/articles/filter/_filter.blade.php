@@ -48,8 +48,9 @@
                 @if($search = request('search'))
                     <input type="hidden" name="search" value="{{ $search }}">
                 @endif
-                <div id="filterAccordionItemsContainer" data-load-url="{{ route('user.filter', ['type' => $filterService->getType(), ...request()->query()]) }}" class="accordion filter__accordion">
-                </div>
+                <div id="filterAccordionItemsContainer"
+                     data-load-url="{{ route('user.filter', ['type' => $filterService->getType(), ...request()->query()]) }}"
+                     class="accordion filter__accordion"></div>
             </form>
         </div>
         <div class="filter__bottom">

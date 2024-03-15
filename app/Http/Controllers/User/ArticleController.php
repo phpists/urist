@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class ArticleController extends Controller
 {
 
-    public function index(Request $request, string $type)
+    public function index(Request $request, ?string $type = null)
     {
         $filterService = new ArticleFilterService($type);
 
@@ -52,7 +52,7 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function articlesCount(string $type)
+    public function articlesCount(?string $type = null)
     {
         return new JsonResponse([
             'count' => (new ArticleFilterService($type))->getTotalCount()

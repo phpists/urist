@@ -6,7 +6,7 @@
                     <use xlink:href="{{asset('assets/img/user/sprite.svg#close-modal')}}"></use>
                 </svg>
             </button>
-            <form class="search modal__search" id="modal-search-form" autocomplete="off" action="{{ route('user.articles.search') }}" novalidate="novalidate">
+            <form class="search modal__search" id="modal-search-form" autocomplete="off" action="{{ route('user.articles.index') }}" novalidate="novalidate">
                 <div class="search__group">
                     <input class="input search__input" id="inputModalSearch" type="text" name="search" placeholder="Пошук по збірнику" autocomplete="off" required="required" data-url="{{ route('user.search.items') }}"/>
                     <div class="searchItemsContainer"></div>

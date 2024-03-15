@@ -16,15 +16,17 @@ class ArticleFilterService
     {
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
-        return $this->type ?? CriminalArticleTypeEnum::KPK->value;
+        return $this->type ?? null;
     }
 
     public function getCategories()
     {
         return ArticleCategory::whereNull('parent_id')
-            ->whereType($this->getType())
+            ->when($type = $this->getType(), function ($query) use ($type) {
+                return $query->whereType($type);
+            })
             ->orderBy('position')
             ->with([
                 'children',
@@ -62,15 +64,15 @@ class ArticleFilterService
 
         $categories = array_unique($categories);
 
-        $isFromSearch = request()->has('search');
+        $isFromSearch = request()->has('search') && !empty(request('search'));
 
         $articles = $isFromSearch
             ? CriminalArticle::search(request('search'))
             : CriminalArticle::query();
 
-
+        $type = $this->getType();
         return $articles
-            ->when(!$isFromSearch, function ($query) {
+            ->when(!$isFromSearch && $type, function ($query) {
                 $query->whereType($this->getType());
             })
             ->when((!empty($categories)), function ($q) use ($categories, $isFromSearch) {

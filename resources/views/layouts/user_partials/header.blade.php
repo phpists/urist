@@ -7,7 +7,7 @@
         </button>
         <a class="button @if(url()->current() == route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KK->value)) header__button @else button--outline header__button @endif" href="{{ get_setting_value_by_name(\App\Enums\SettingEnum::KK_MODULE_BTN->value) }}">Модуль КК</a>
         <a class="button @if(url()->current() == route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KPK->value)) header__button @else button--outline header__button @endif" href="{{ get_setting_value_by_name(\App\Enums\SettingEnum::KPK_MODULE_BTN->value) }}">Модуль КПК</a>
-        <form class="search header__search" action="{{ route('user.articles.search') }}" id="search-form" autocomplete="off" novalidate="novalidate">
+        <form class="search header__search" action="{{ request('type') ? route('user.articles.index', ['type' => request('type')]) : route('user.articles.index') }}" id="search-form" autocomplete="off" novalidate="novalidate">
             <div class="search__group">
                 <input class="input search__input" id="inputSearch" type="text" name="search" placeholder="Пошук по збірнику" autocomplete="off" value="{{ request('search') }}" required="required" data-url="{{ route('user.search.items') }}"/>
                 <div class="searchItemsContainer"></div>

@@ -142,6 +142,15 @@ class CriminalArticleController extends Controller
                 'error' => 'Article not found'
             ], 404);
         }
+
+        if (Favourite::whereCriminalArticleId($request->post('criminal_article_id'))->whereFolderId($request->validated('folder_id'))->exists()) {
+            if ($request->wantsJson())
+                return new JsonResponse([
+                    'result' => false,
+                    'message' => 'Ця стаття вже є у вас в закладках в обраній папці'
+                ]);
+        }
+
         $favourite = new Favourite([
             'user_id' => $request->user()->id,
             'folder_id' => $request->folder_id,
@@ -150,9 +159,7 @@ class CriminalArticleController extends Controller
         ]);
 
         if ($favourite->save()) {
-            $url = route('user.files.edit', $favourite);
-            $article_name = \Str::limit($favourite->name, 30);
-            $message = "Статтю успішно додано в закладки<br><a href='{$url}'><u>{$article_name}</u></a>";
+            $message = "Статтю успішно додано в закладки";
 
             if ($request->wantsJson())
                 return new JsonResponse([

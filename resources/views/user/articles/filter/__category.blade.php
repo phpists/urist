@@ -12,9 +12,9 @@
                     <strong class="red-color"><b>{{ $category->sub_title }}</b></strong>
                 @endif
                 @if($iii == 1 || $iii == 2)
-                    <b>{{ $category->name }}</b>
+                        <b><span class="name-text">{{ $category->name }}</span></b>
                 @else
-                    {{ $category->name }}
+                    <span class="name-text">{{ $category->name }}</span>
                 @endif
             </label>
         </div>

@@ -133,22 +133,23 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
         ->name('profile.search-city');
 
     // Articles
-    Route::get('articles/{type}', [\App\Http\Controllers\User\ArticleController::class, 'index'])
+    Route::get('articles/{type?}', [\App\Http\Controllers\User\ArticleController::class, 'index'])
         ->name('articles.index');
-    Route::get('articles/search', [\App\Http\Controllers\User\ArticleController::class, 'search'])
+    Route::get('search', [\App\Http\Controllers\User\ArticleController::class, 'search'])
         ->name('articles.search');
     Route::get('article/{article}', [\App\Http\Controllers\User\ArticleController::class, 'show'])
         ->name('articles.show');
 //    Route::resource('articles/{type}', \App\Http\Controllers\User\ArticleController::class)
 //        ->only(['index', 'show']);
-    Route::get('articles-total-count/{type}', [\App\Http\Controllers\User\ArticleController::class, 'articlesCount'])
+    Route::get('articles-total-count/{type?}', [\App\Http\Controllers\User\ArticleController::class, 'articlesCount'])
         ->name('articles.total-count');
 
     Route::get('search/items', [\App\Http\Controllers\User\ArticleController::class, 'searchItems'])
         ->name('search.items');
 
     // Filter
-    Route::get('filter/{type}', [\App\Http\Controllers\User\ArticleController::class, 'getFilter'])->name('filter');
+    Route::get('filter/{type?}', [\App\Http\Controllers\User\ArticleController::class, 'getFilter'])
+        ->name('filter');
 
     // Bookmarks
     Route::get('bookmarks/{folderId?}', [\App\Http\Controllers\User\BookmarkController::class, 'index'])
