@@ -31,9 +31,9 @@ Route::group(['middleware' => 'jwt'], function () {
     Route::put('me', [\App\Http\Controllers\Api\User\ProfileController::class, 'update']);
 
     /** Articles */
+    Route::get('criminal-articles/categories', [\App\Http\Controllers\Api\CriminalArticleController::class, 'categories']);
     Route::resource('criminal-articles', \App\Http\Controllers\Api\CriminalArticleController::class)
         ->only(['index', 'show']);
-    Route::get('criminal-articles/categories', [\App\Http\Controllers\Api\CriminalArticleController::class, 'categories']);
 
     /** Bookmarks */
     Route::resource('bookmarks', \App\Http\Controllers\Api\User\BookmarkController::class)
