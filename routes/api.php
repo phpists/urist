@@ -31,14 +31,19 @@ Route::group(['middleware' => 'jwt'], function () {
     Route::put('me', [\App\Http\Controllers\Api\User\ProfileController::class, 'update']);
 
     /** Articles */
-    Route::get('criminal-articles/categories', [\App\Http\Controllers\Api\CriminalArticleController::class, 'categories']);
-    Route::resource('criminal-articles', \App\Http\Controllers\Api\CriminalArticleController::class)
-        ->only(['index', 'show']);
+    Route::get('criminal-articles/categories/{type?}', [\App\Http\Controllers\Api\CriminalArticleController::class, 'categories']);
+    Route::get('criminal-articles/{type?}', [\App\Http\Controllers\Api\CriminalArticleController::class, 'index']);
+    Route::get('criminal-article/{criminalArticle}', [\App\Http\Controllers\Api\CriminalArticleController::class, 'show']);
 
     /** Bookmarks */
     Route::resource('bookmarks', \App\Http\Controllers\Api\User\BookmarkController::class)
-        ->except(['show', 'update']);
+        ->except(['show']);
     Route::resource('bookmarks/folder', \App\Http\Controllers\Api\User\BookmarkFolderController::class)
+        ->only(['store', 'update', 'destroy']);
+
+    /** Files */
+    Route::resource('files', \App\Http\Controllers\Api\User\FileController::class);
+    Route::resource('files/folder', \App\Http\Controllers\Api\User\FileFolderController::class)
         ->only(['store', 'update', 'destroy']);
 
     /** Registries */

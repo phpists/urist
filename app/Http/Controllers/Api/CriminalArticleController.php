@@ -12,8 +12,11 @@ use Illuminate\Http\Request;
 class CriminalArticleController extends Controller
 {
 
-    public function __construct(private readonly ArticleFilterService $filterService)
+    private ArticleFilterService $filterService;
+
+    public function __construct()
     {
+        $this->filterService = new ArticleFilterService(request()->route('type'));
     }
 
     public function index()

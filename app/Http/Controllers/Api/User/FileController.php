@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Enums\FolderType;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\BookmarkStoreRequest;
-use App\Http\Requests\Api\BookmarkUpdateRequest;
+use App\Http\Requests\Api\User\Files\FileStoreRequest;
+use App\Http\Requests\Api\User\Files\FileUpdateRequest;
 use App\Models\CriminalArticle;
-use App\Models\Favourite;
+use App\Models\File;
 use App\Models\Folder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class BookmarkController extends Controller
+class FileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,7 +31,7 @@ class BookmarkController extends Controller
 
         $folders = Folder::query()
             ->where('user_id', $request->user()->id)
-            ->where('folder_type', FolderType::FAVOURITES_FOLDER)
+            ->where('folder_type', FolderType::FILE_FOLDER)
             ->where('parent_id', $parent_id)
             ->when($search, function ($q) use ($search) {
                 foreach (explode(' ', $search) as $value) {
@@ -42,7 +42,7 @@ class BookmarkController extends Controller
                 $query->orderBy($column, $direction);
             })
             ->get();
-        $favourites = Favourite::query()
+        $files = File::query()
             ->where('user_id', $request->user()->id)
             ->where('folder_id', $parent_id)
             ->when($search, function ($q) use($search) {
@@ -57,7 +57,7 @@ class BookmarkController extends Controller
 
         return new JsonResponse([
             'folders' => $folders,
-            'articles' => $favourites,
+            'files' => $files,
             'parent_id' => $parent_id
         ]);
     }
@@ -65,21 +65,23 @@ class BookmarkController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(BookmarkStoreRequest $request)
+    public function store(FileStoreRequest $request)
     {
         $article = CriminalArticle::find($request->criminal_article_id);
 
         try {
-            $bookmark = $request->user()->bookmarks()->create([
+            $file = $request->user()->files()->create([
                 'folder_id' => $request->folder_id,
                 'criminal_article_id' => $article->id,
-                'name' => $request->name ?? $article->name
+                'name' => $request->name ?? $article->name,
+                'pp' => $article->pp,
+                'statya_kk' => $article->statya_kk
             ]);
 
             return new JsonResponse([
                 'result' => true,
-                'message' => 'Статтю успішно додано в закладки',
-                'bookmark' => $bookmark
+                'message' => 'Файл успішно створено',
+                'file' => $file
             ]);
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
@@ -92,17 +94,25 @@ class BookmarkController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show(File $file)
+    {
+        return $file;
+    }
+
+    /**
      * Update the specified resource in storage.
      */
-    public function update(BookmarkUpdateRequest $request, Favourite $bookmark)
+    public function update(FileUpdateRequest $request, File $file)
     {
         try {
-            $bookmark->update($request->validated());
+            $file->update($request->validated());
 
             return new JsonResponse([
                 'result' => true,
-                'message' => 'Закладку успішно оновлено',
-                'bookmark' => $bookmark
+                'message' => 'Файл успішно оновлено',
+                'file' => $file
             ]);
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
@@ -117,18 +127,18 @@ class BookmarkController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Favourite $bookmark)
+    public function destroy(File $file)
     {
-        if ($bookmark->delete()) {
+        if ($file->delete()) {
             return new JsonResponse([
                 'result' => true,
-                'message' => 'Закладку успішно видалено',
+                'message' => 'Файл успішно видалено',
             ]);
         }
 
         return new JsonResponse([
             'result' => false,
-            'message' => 'Не вдалось видалити закладку'
+            'message' => 'Не вдалось видалити файл'
         ]);
     }
 }

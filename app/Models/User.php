@@ -99,6 +99,12 @@ class User extends Authenticatable implements JWTSubject
     }
 
 
+    public function files(): HasMany
+    {
+        return $this->hasMany(File::class);
+    }
+
+
     public function userNotifications()
     {
         return $this->hasMany(UserNotification::class);

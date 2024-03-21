@@ -23,7 +23,7 @@ class ArticleFilterService
 
     public function getCategories()
     {
-        return ArticleCategory::whereNull('parent_id')
+        $mainCategory = ArticleCategory::whereNull('parent_id')
             ->when($type = $this->getType(), function ($query) use ($type) {
                 return $query->whereType($type);
             })
@@ -38,7 +38,9 @@ class ArticleFilterService
                 'children.children.children.children.children.children.children',
                 'children.children.children.children.children.children.children.children',
             ])
-            ->get();
+            ->first();
+
+        return $mainCategory->children;
     }
 
     public function isMustBeExpanded(ArticleCategory $category): bool
