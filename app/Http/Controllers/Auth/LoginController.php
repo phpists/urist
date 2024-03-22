@@ -106,13 +106,16 @@ class LoginController extends Controller
         if($existing_user){
             auth()->login($existing_user, true);
         } else {
+            $column = $driver . '_id';
+
             $new_user = new User;
             $new_user->first_name = explode(' ', $user->name)[0] ?? "User";
             $new_user->last_name = explode(' ', $user->name)[1] ?? "";
             $new_user->email = $user->email;
-            $new_user->google_id = $user->id;
+            $new_user->$$column = $user->id;
             $new_user->password = Hash::make(Str::random(8));
             $new_user->save();
+
             auth()->login($new_user, true);
         }
 
