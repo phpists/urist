@@ -35,7 +35,7 @@
             <form class="search filter__search" id="filter-search-form" autocomplete="off" novalidate="novalidate">
                 <div class="search__group">
                     <input class="input search__input" id="inputFilterSearch" type="text" name="inputFilterSearch" placeholder="Пошук..." autocomplete="off" required="required">
-                    <button class="search__button">
+                    <button type="button" class="search__button">
                         <svg class="search__icon" width="21" height="21">
                             <use xlink:href="{{ asset('img/sprite.svg#search') }}"></use>
                         </svg>
@@ -63,6 +63,11 @@
 @push('scripts')
     <script>
         $(function () {
+
+            $(document).on('submit', '#filter-search-form', function (e) {
+                e.preventDefault()
+            })
+
             const $filterAccordionItemsContainer = $('#filterAccordionItemsContainer');
             let $filterSpinner = $('#spinner').clone();
             $filterAccordionItemsContainer
@@ -167,6 +172,10 @@
         function filterCategories(value) {
             value = value.toLowerCase();
 
+            document.getElementById('filterForm').querySelectorAll('span.name-text').forEach(function (item, i) {
+                item.innerHTML = item.textContent
+            })
+
             if (value.length > 0 && $('#filterForm input[name="categories[]"]:checked').length > 0) {
                 $('#filterForm div.accordion__panel.sub-category .accordion__header input[name="categories[]"]:not(:checked)').each(function (i, el) {
                     $(el).parents('div.accordion__panel.sub-category:first').hide()
@@ -183,6 +192,7 @@
                                         $(el).hide();
                                     } else {
                                         $(el).show();
+                                        el.querySelector('span.name-text').innerHTML = el.querySelector('span.name-text').innerHTML.replace(value, `<span style="background-color: yellow;color: black">${value}</span>`)
                                     }
                                 }
                             })
@@ -205,6 +215,7 @@
                             $(el).hide();
                         } else {
                             $(el).show();
+                            el.querySelector('span.name-text').innerHTML = el.querySelector('span.name-text').innerHTML.replace(value, `<span style="background-color: yellow;color: black">${value}</span>`)
                         }
                     }
                 })

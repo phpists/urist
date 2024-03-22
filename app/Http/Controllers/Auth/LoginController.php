@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserLoginRequest;
+use App\Models\Session;
+use App\Models\User;
 use App\Services\UserAuthService;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -11,8 +13,12 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -36,6 +42,10 @@ class LoginController extends Controller
         if (auth()->attempt($credentials, $remember)) {
             $user = auth()->user();
             if (!is_null($user->phone_verified_at)) {
+                Session::whereUserId($user->id)
+                    ->whereNot('id', \Session::getId())
+                    ->delete();
+
                 return to_route('user.dashboard.index');
             }
             auth()->logout();
@@ -73,4 +83,40 @@ class LoginController extends Controller
             Log::info("An error with turbo sms service : " . $e->getMessage());
         }
     }
+
+    public function driverLogin(\Request $request, string $driver)
+    {
+        try {
+            return Socialite::driver($driver)->redirect();
+        } catch (\Exception $e) {
+            return back()->with('error', 'Помилка');
+        }
+    }
+
+    public function driverLoginCallback(\Request $request, string $driver)
+    {
+        try {
+            $user = Socialite::driver($driver)->user();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return redirect('/');
+        }
+
+        $existing_user = User::where('email', $user->email)->first();
+        if($existing_user){
+            auth()->login($existing_user, true);
+        } else {
+            $new_user = new User;
+            $new_user->first_name = explode(' ', $user->name)[0] ?? "User";
+            $new_user->last_name = explode(' ', $user->name)[1] ?? "";
+            $new_user->email = $user->email;
+            $new_user->google_id = $user->id;
+            $new_user->password = Hash::make(Str::random(8));
+            $new_user->save();
+            auth()->login($new_user, true);
+        }
+
+        return redirect()->to('/');
+    }
+
 }

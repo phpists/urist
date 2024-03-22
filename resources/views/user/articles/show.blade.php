@@ -41,7 +41,7 @@
                         </button>
                     </li>
                     <li class="actions__item">
-                        <button class="button button--outline actions__button modal-self-completing" type="button" aria-label="Add page" data-tooltip="Робота з файлом" data-json='@json(['criminal_article_id' => $article->id, 'name' => $article->name])' data-modal="modal-file">
+                        <button class="button button--outline actions__button modal-self-completing" type="button" aria-label="Add page" data-tooltip="Робота з файлом" data-json='@json(['criminal_article_id' => $article->id, 'name' => htmlspecialchars($article->name)])' data-modal="modal-file">
                             <svg class="button__icon" width="22" height="24">
                                 <use xlink:href="{{ asset('assets/img/user/sprite.svg#create') }}"></use>
                             </svg>
@@ -55,11 +55,11 @@
                         </button>
                     </li>
                     <li class="actions__item">
-                        <button class="button button--outline actions__button" type="button" aria-label="Word" data-tooltip="Word">
+                        <a href="{{ route('user.articles.export-doc', $article) }}" class="button button--outline actions__button" type="button" aria-label="Word" data-tooltip="Word">
                             <svg class="button__icon" width="18" height="21">
                                 <use xlink:href="{{ asset('img/sprite.svg#word-simple') }}"></use>
                             </svg>
-                        </button>
+                        </a>
                     </li>
                 </ul>
             </header>

@@ -24,8 +24,13 @@ class ArticleCategoryController extends Controller
                     $query->where('name', 'LIKE', "%{$search}%")
                         ->orWhere('sub_title', 'LIKE', "%{$search}%");
                 });
-            })
-            ->paginate(\request('per-page', 100));
+            });
+
+        $perPage = request('per-page', 100);
+        if ($perPage == 'all')
+            $article_categories = $article_categories->get();
+        else
+            $article_categories = $article_categories->paginate($perPage);
 
         $tree_categories = ArticleCategory::query()
             ->whereNull('parent_id')

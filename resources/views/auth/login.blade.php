@@ -60,7 +60,7 @@
                     </div>
                     <div class="form__row">
                         <div class="form__col">
-                            <a class="button button--big" href="#">
+                            <a class="button button--big" href="{{ route('login.driver', 'google') }}">
                                 <svg class="button__icon" width="37" height="38">
                                     <use xlink:href="{{ asset('assets/img/sprite.svg#google') }}"></use>
                                 </svg>Google</a>

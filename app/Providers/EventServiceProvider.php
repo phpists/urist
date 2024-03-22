@@ -35,6 +35,11 @@ class EventServiceProvider extends ServiceProvider
         UserSendResetPasswordCodeEvent::class => [
             UserSendVerifyCodeResetPasswordListener::class
         ],
+
+        // Socialite
+        \SocialiteProviders\Manager\SocialiteWasCalled::class => [
+            \SocialiteProviders\Apple\AppleExtendSocialite::class.'@handle',
+        ],
     ];
 
     /**

@@ -78,4 +78,7 @@
     </table>
 </div>
 <!--end::Table-->
-{{ $article_categories->withQueryString()->links('vendor.pagination.product_pagination') }}
+
+@if(method_exists($article_categories, 'links'))
+    {{ $article_categories->withQueryString()->links('vendor.pagination.product_pagination') }}
+@endif

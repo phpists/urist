@@ -51,8 +51,13 @@ class CriminalArticleController extends Controller
         }
 
         $criminal_articles = $criminal_articles
-            ->with('category')
-            ->paginate(\request('per-page', 100));
+            ->with('category');
+
+        $perPage = request('per-page', 100);
+        if ($perPage == 'all')
+            $criminal_articles = $criminal_articles->get();
+        else
+            $criminal_articles = $criminal_articles->paginate($perPage);
 
         if ($request->ajax()) {
             $table = view('admin.criminal_articles.parts.table', compact('criminal_articles'))->render();

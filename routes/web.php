@@ -34,6 +34,10 @@ use App\Http\Controllers\User\ProfileController as UserProfileController;
 
 //Auth routes and pages
 Route::get('login', [LoginController::class, 'index'])->name('login');
+
+Route::get('login/{driver}', [LoginController::class, 'driverLogin'])->name('login.driver');
+Route::get('login/{driver}/callback', [LoginController::class, 'driverLoginCallback'])->name('login.driver.callback');
+
 Route::get('register', [RegisterController::class, 'index'])->name('register.page');
 Route::post('sing-in', [LoginController::class, 'login'])->name('sing-in')->middleware('throttle:5,1');
 Route::post('sing-up', [RegisterController::class, 'register'])->name('sing-up')->middleware('throttle:5,1');
@@ -143,6 +147,9 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
 //        ->only(['index', 'show']);
     Route::get('articles-total-count/{type?}', [\App\Http\Controllers\User\ArticleController::class, 'articlesCount'])
         ->name('articles.total-count');
+    // Download DOC
+    Route::get('articles/{article}/export-doc', [\App\Http\Controllers\User\ArticleController::class, 'exportDoc'])
+        ->name('articles.export-doc');
 
     Route::get('search/items', [\App\Http\Controllers\User\ArticleController::class, 'searchItems'])
         ->name('search.items');

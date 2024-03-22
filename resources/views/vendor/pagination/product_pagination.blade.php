@@ -31,6 +31,7 @@
                         <option @if($paginator->perPage() == 30) selected @endif value="30">30</option>
                         <option @if($paginator->perPage() == 50) selected @endif value="50">50</option>
                         <option @if($paginator->perPage() == 100) selected @endif value="100">100</option>
+                        <option @if($paginator->perPage() == 'all') selected @endif value="all">Всі</option>
                     </select>
                 <span class="text-muted">Показано: {{ $paginator->lastItem() }} из {{ $paginator->total() }}</span>
             </div>

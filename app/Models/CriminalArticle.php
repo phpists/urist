@@ -105,4 +105,9 @@ class CriminalArticle extends Model
         return \Str::replace($word, "<span style='background-color: yellow'>{$word}</span>", $this->description);
     }
 
+    public function getProgramTitle(): string
+    {
+        return \Str::replace(' ', '_', $this->name);
+    }
+
 }

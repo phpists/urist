@@ -64,6 +64,27 @@ class ArticleController extends Controller
         return view('user.articles.show', compact('article'));
     }
 
+    public function exportDoc(Request $request, CriminalArticle $article)
+    {
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $phpWord->addTitleStyle(1, 'Heading1', ['alignment' => 'center']);
+
+        $pp = $phpWord->addSection();
+        $pp->addTitle('ПП');
+        \PhpOffice\PhpWord\Shared\Html::addHtml($pp, $article->pp, false, false);
+
+        $statya_kk = $phpWord->addSection();
+        $statya_kk->addTitle('Судове рішення');
+        \PhpOffice\PhpWord\Shared\Html::addHtml($statya_kk, $article->statya_kk, false, false);
+
+        $objectWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord);
+        header('Content-Type: text/html');
+        header("Content-Disposition: attatchement;Filename={$article->getProgramTitle()}.docx");
+        $objectWriter->save('php://output');
+
+        exit(418);
+    }
+
 //    public function search(Request $request)
 //    {
 //        $articles = CriminalArticle::search($request->get('search'))->limit(10)->get();
