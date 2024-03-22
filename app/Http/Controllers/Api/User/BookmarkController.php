@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Enums\FolderType;
+use App\Enums\PermissionEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\BookmarkStoreRequest;
 use App\Http\Requests\Api\BookmarkUpdateRequest;

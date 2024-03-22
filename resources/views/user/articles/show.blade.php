@@ -10,7 +10,8 @@
         <div class="container page-section__container">
             <header class="page-section__header">
                 <div class="page-section__descr">
-                    <a href="{{ url()->previous() }}" class="button button--outline page-section__back-button" type="button" aria-label="Back" data-tooltip="Назад">
+                    <a href="{{ url()->previous() }}" class="button button--outline page-section__back-button"
+                       type="button" aria-label="Back" data-tooltip="Назад">
                         <svg class="button__icon" width="10" height="19">
                             <use xlink:href="{{ asset('assets/img/user/sprite.svg#arrow-left') }}"></use>
                         </svg>
@@ -26,41 +27,58 @@
                             @endforeach
                         </ul>
                         @if($article->court_decision_link)
-                        <a class="blue-link page-section__link" href="{{ $article->court_decision_link }}" target="_blank">Посилання на рішення </a>
+                            <a class="blue-link page-section__link" href="{{ $article->court_decision_link }}"
+                               target="_blank">Посилання на рішення </a>
                         @endif
                     </div>
                 </div>
                 <ul class="actions page-section__actions">
-                    <li class="actions__item">
-                        <button class="button button--outline actions__button modal-self-completing" type="button"
-                                aria-label="Add to bookmarks" data-tooltip="В закладки" data-modal="modal-bookmark"
-                            data-json='@json(['criminal_article_id' => $article->id])'>
-                            <svg class="button__icon" width="19" height="24">
-                                <use xlink:href="{{ asset('assets/img/user/sprite.svg#bookmark') }}"></use>
-                            </svg>
-                        </button>
-                    </li>
-                    <li class="actions__item">
-                        <button class="button button--outline actions__button modal-self-completing" type="button" aria-label="Add page" data-tooltip="Робота з файлом" data-json='@json(['criminal_article_id' => $article->id, 'name' => htmlspecialchars($article->name)])' data-modal="modal-file">
-                            <svg class="button__icon" width="22" height="24">
-                                <use xlink:href="{{ asset('assets/img/user/sprite.svg#create') }}"></use>
-                            </svg>
-                        </button>
-                    </li>
-                    <li class="actions__item">
-                        <button class="button button--outline actions__button" type="button" aria-label="Copy" data-tooltip="Копіювати" onclick="copyText('{{ route('user.articles.show', $article) }}')">
-                            <svg class="button__icon" width="22" height="22">
-                                <use xlink:href="{{ asset('assets/img/user/sprite.svg#copy') }}"></use>
-                            </svg>
-                        </button>
-                    </li>
-                    <li class="actions__item">
-                        <a href="{{ route('user.articles.export-doc', $article) }}" class="button button--outline actions__button" type="button" aria-label="Word" data-tooltip="Word">
-                            <svg class="button__icon" width="18" height="21">
-                                <use xlink:href="{{ asset('img/sprite.svg#word-simple') }}"></use>
-                            </svg>
-                        </a>
-                    </li>
+                    @if(request()->user()->can(\App\Enums\PermissionEnum::CREATE_BOOKMARKS->value))
+                        <li class="actions__item">
+                            <button class="button button--outline actions__button modal-self-completing" type="button"
+                                    aria-label="Add to bookmarks" data-tooltip="В закладки" data-modal="modal-bookmark"
+                                    data-json='@json(['criminal_article_id' => $article->id])'>
+                                <svg class="button__icon" width="19" height="24">
+                                    <use xlink:href="{{ asset('assets/img/user/sprite.svg#bookmark') }}"></use>
+                                </svg>
+                            </button>
+                        </li>
+                    @endif
+
+                    @if(request()->user()->can(\App\Enums\PermissionEnum::CREATE_OWN_PAGES->value))
+                        <li class="actions__item">
+                            <button class="button button--outline actions__button modal-self-completing" type="button"
+                                    aria-label="Add page" data-tooltip="Робота з файлом"
+                                    data-json='@json(['criminal_article_id' => $article->id, 'name' => htmlspecialchars($article->name)])'
+                                    data-modal="modal-file">
+                                <svg class="button__icon" width="22" height="24">
+                                    <use xlink:href="{{ asset('assets/img/user/sprite.svg#create') }}"></use>
+                                </svg>
+                            </button>
+                        </li>
+                    @endif
+                    @if(request()->user()->can(\App\Enums\PermissionEnum::COPY_PAGE->value))
+                        <li class="actions__item">
+                            <button class="button button--outline actions__button" type="button" aria-label="Copy"
+                                    data-tooltip="Копіювати"
+                                    onclick="copyText('{{ route('user.articles.show', $article) }}')">
+                                <svg class="button__icon" width="22" height="22">
+                                    <use xlink:href="{{ asset('assets/img/user/sprite.svg#copy') }}"></use>
+                                </svg>
+                            </button>
+                        </li>
+                    @endif
+                    @if(request()->user()->can(\App\Enums\PermissionEnum::EXPORT_PAGE->value))
+                        <li class="actions__item">
+                            <a href="{{ route('user.articles.export-doc', $article) }}"
+                               class="button button--outline actions__button" type="button" aria-label="Word"
+                               data-tooltip="Word">
+                                <svg class="button__icon" width="18" height="21">
+                                    <use xlink:href="{{ asset('img/sprite.svg#word-simple') }}"></use>
+                                </svg>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </header>
             <div class="tabs page-section__tabs" data-tabs="tabs-1" data-active="0">
@@ -86,7 +104,8 @@
                 </div>
             </div>
         </div>
-    </section>@endsection
+    </section>
+@endsection
 
 @push('modals')
     @include('layouts.user_partials.modal-bookmark')

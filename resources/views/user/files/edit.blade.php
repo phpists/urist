@@ -30,6 +30,7 @@
                 </div>
             </header>
 
+            @if(request()->user()->can(\App\Enums\PermissionEnum::MARK_NEEDED->value))
             <form id="editForm" action="{{ route('file.update', ['file_id' => $file->id]) }}" method="POST">
                 @csrf
                 @method('PUT')
@@ -46,11 +47,14 @@
                         </ul>
                     </div>
                     <button class="button page-section__button" type="submit">Зберегти</button>
+
+                    @if(request()->user()->can(\App\Enums\PermissionEnum::EXPORT_PAGE->value))
                     <a href="{{ route('user.files.export-doc', $file) }}" class="button button--outline page-section__button" type="button">Экспорт у Word
                         <svg class="button__icon" width="28" height="28">
                             <use xlink:href="{{asset('assets/img/user/sprite.svg#word')}}"></use>
                         </svg>
                     </a>
+                    @endif
                 </div>
 
 
@@ -67,6 +71,30 @@
                     </div>
                 </div>
             </form>
+            @else
+                <div class="tabs page-section__tabs" data-tabs="tabs-1" data-active="0">
+                    <ul class="tabs__nav">
+                        <li class="tabs__nav-item">
+                            <button class="button button--outline tabs__nav-btn" type="button">ПП</button>
+                        </li>
+                        <li class="tabs__nav-item">
+                            <button class="button button--outline tabs__nav-btn" type="button">Судове рішення</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tabs-content page-section__tabs-content" data-tabs-content="tabs-1">
+                    <div class="tabs-panel">
+                        <div class="page-section__text">
+                            {!! $article->pp !!}
+                        </div>
+                    </div>
+                    <div class="tabs-panel">
+                        <div class="page-section__text ck-content">
+                            {!! $article->statya_kk !!}
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </section>
 @endsection

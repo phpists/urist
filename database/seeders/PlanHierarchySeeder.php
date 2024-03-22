@@ -62,7 +62,7 @@ class PlanHierarchySeeder extends Seeder
             [
                 'id' => 5,
                 'permission_id' => $permission_ids[PermissionEnum::MARK_NEEDED->value],
-                'title' => 'Можливість відмічати жовтим кольором потрібне',
+                'title' => 'Можливість редагування тексту та відмічати жовтим кольором потрібне',
             ],
             [
                 'id' => 6,
@@ -73,6 +73,16 @@ class PlanHierarchySeeder extends Seeder
                 'id' => 7,
                 'permission_id' => $permission_ids[PermissionEnum::COPY_PAGE->value],
                 'title' => 'Можливість копіювати сторінку',
+            ],
+            [
+                'id' => 8,
+                'permission_id' => $permission_ids[PermissionEnum::MODULE_KPK->value],
+                'title' => 'Модуль КПК',
+            ],
+            [
+                'id' => 9,
+                'permission_id' => $permission_ids[PermissionEnum::MODULE_KK->value],
+                'title' => 'Модуль КК',
             ],
         ];
         foreach ($features as $i => $feature) {
@@ -88,7 +98,7 @@ class PlanHierarchySeeder extends Seeder
                 'price_monthly' => 5,
                 'price_semiannual' => 27,
                 'price_annual' => 48,
-                'features' => [1, 2],
+                'features' => [2, 8],
             ],
             [
                 'role_id' => $role_ids[RoleEnum::BASE->value],
@@ -96,7 +106,7 @@ class PlanHierarchySeeder extends Seeder
                 'price_monthly' => 7,
                 'price_semiannual' => 37,
                 'price_annual' => 65,
-                'features' => [1, 2, 3, 4],
+                'features' => [1, 2, 3, 4, 5, 6, 7, 8],
             ],
             [
                 'role_id' => $role_ids[RoleEnum::MAX->value],
@@ -104,7 +114,7 @@ class PlanHierarchySeeder extends Seeder
                 'price_monthly' => 10,
                 'price_semiannual' => 55,
                 'price_annual' => 80,
-                'features' => [1, 2, 3, 4, 5, 6, 7],
+                'features' => [1, 2, 3, 4, 5, 6, 7, 8, 9],
             ],
         ];
         foreach ($plans as $i => $plan) {

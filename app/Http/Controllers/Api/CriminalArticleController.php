@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\PermissionEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\CriminalArticleCategoryResource;
 use App\Http\Resources\Api\CriminalArticleResource;
@@ -21,6 +22,11 @@ class CriminalArticleController extends Controller
 
     public function index()
     {
+        if ($this->filterService->getType() == 'kk')
+            $this->authorize(PermissionEnum::MODULE_KK->value);
+        elseif ($this->filterService->getType() == 'kpk')
+            $this->authorize(PermissionEnum::MODULE_KPK->value);
+
         $articles = $this->filterService->getArticles();
 
         return CriminalArticleResource::collection($articles);
@@ -28,6 +34,8 @@ class CriminalArticleController extends Controller
 
     public function show(CriminalArticle $criminalArticle)
     {
+        $this->authorize(PermissionEnum::LEGAL_BASE->value);
+
         return $criminalArticle;
     }
 

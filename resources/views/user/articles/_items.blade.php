@@ -23,24 +23,26 @@
     </thead>
     <tbody class="collection-table__tbody">
     @foreach($articles as $article)
+        @php($url = request()->user()->can(\App\Enums\PermissionEnum::LEGAL_BASE->value) ? route('user.articles.show', $article) : '#')
         <tr>
             <td>
                 <time class="collection-table__date">
-                    <a class="black-link" href="{{ route('user.articles.show', $article) }}">{{ $article->pretty_date }}</a>
+                    <a class="black-link" href="{{ $url }}">{{ $article->pretty_date }}</a>
                 </time>
                 <span class="collection-table__info">
-                    <a class="black-link" href="{{ route('user.articles.show', $article) }}">{{ $article->getTagsString() }}</a>
+                    <a class="black-link" href="{{ $url }}">{{ $article->getTagsString() }}</a>
                 </span>
             </td>
             <td>
-                <h4 class="collection-table__title"><a class="black-link" href="{{ route('user.articles.show', $article) }}">{{ $article->name }}</a></h4>
+                <h4 class="collection-table__title">
+                    <a class="black-link" href="{{ $url }}">{{ $article->name }}</a></h4>
                 @if($article->court_decision_link)
                 <a class="blue-link collection-table__link" href="{{ $article->court_decision_link }}" target="_blank">Посилання на рішення</a>
                 @endif
             </td>
             <td>
                 <div class="collection-descr default">
-                    <a class="black-link collection-descr__text" href="{{ route('user.articles.show', $article) }}" style="display:block;">
+                    <a class="black-link collection-descr__text" href="{{ $url }}" style="display:block;">
                         <p style="display: inline;">{!! $short = str_replace("\r\n", '<br>', truncate_by_words($article->getDescriptionWithHighlightedWord(request('search')), 370)) !!}</p>
                         <div class="collection-descr__hidden">
                             {!! str_replace("\r\n", '<br>', Str::substr($article->getDescriptionWithHighlightedWord(request('search')), mb_strlen($short) - 3)) !!}
@@ -55,7 +57,7 @@
                     @endif
                 </div>
                 <div class="collection-descr more-width">
-                    <a class="black-link collection-descr__text" href="{{ route('user.articles.show', $article) }}" style="display:block;">
+                    <a class="black-link collection-descr__text" href="{{ $url }}" style="display:block;">
                         <p style="display: inline;">{!! $short = str_replace("\r\n", '<br>', truncate_by_words($article->getDescriptionWithHighlightedWord(request('search')), 700)) !!}</p>
                         <div class="collection-descr__hidden">
                             {!! str_replace("\r\n", '<br>', Str::substr($article->getDescriptionWithHighlightedWord(request('search')), mb_strlen($short) - 3)) !!}

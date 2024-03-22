@@ -11,7 +11,7 @@ class FileStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can(\App\Enums\PermissionEnum::CREATE_OWN_PAGES->value);
     }
 
     /**

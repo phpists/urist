@@ -12,5 +12,7 @@ enum PermissionEnum: string
     case MARK_NEEDED = 'mark_needed';
     case CREATE_OWN_PAGES = 'create_own_pages';
     case COPY_PAGE = 'copy_page';
+    case MODULE_KPK = 'module_kpk';
+    case MODULE_KK = 'module_kk';
 
 }

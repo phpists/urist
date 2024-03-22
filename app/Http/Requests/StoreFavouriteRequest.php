@@ -13,8 +13,7 @@ class StoreFavouriteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
-//        return $this->user()->can(Permissions::FILE_CREATE->value);
+        return $this->user()->can(\App\Enums\PermissionEnum::CREATE_BOOKMARKS->value);
     }
 
     protected function prepareForValidation()

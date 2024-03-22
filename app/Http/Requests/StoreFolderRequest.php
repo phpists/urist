@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\FolderType;
+use App\Enums\PermissionEnum;
 use App\Enums\Permissions;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -14,8 +15,10 @@ class StoreFolderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
-//        return $this->user()->can(Permissions::FILE_CREATE->value);
+        if ($this->post('folder_type') == FolderType::FAVOURITES_FOLDER->value)
+            return $this->user()->can(PermissionEnum::CREATE_BOOKMARKS->value);
+        else
+            return $this->user()->can(PermissionEnum::CREATE_OWN_PAGES->value);
     }
 
     /**

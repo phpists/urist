@@ -66,7 +66,9 @@ class ArticleFilterService
 
         $categories = array_unique($categories);
 
-        $isFromSearch = request()->has('search') && !empty(request('search'));
+        $isFromSearch = request()->has('search')
+            && !empty(request('search'))
+            && request()->user()->can(\App\Enums\PermissionEnum::SMART_SEARCH->value);
 
         $articles = $isFromSearch
             ? CriminalArticle::search(request('search'))

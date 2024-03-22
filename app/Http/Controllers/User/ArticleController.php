@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Enums\PermissionEnum;
 use App\Http\Controllers\Controller;
 use App\Models\ArticleCategory;
 use App\Models\CriminalArticle;
@@ -14,6 +15,11 @@ class ArticleController extends Controller
 
     public function index(Request $request, ?string $type = null)
     {
+        if ($type == 'kk')
+            $this->authorize(PermissionEnum::MODULE_KK->value);
+        elseif ($type == 'kpk')
+            $this->authorize(PermissionEnum::MODULE_KPK->value);
+
         $filterService = new ArticleFilterService($type);
 
         if (request()->wantsJson()) {
@@ -61,11 +67,14 @@ class ArticleController extends Controller
 
     public function show(CriminalArticle $article)
     {
+        $this->authorize(PermissionEnum::LEGAL_BASE->value);
         return view('user.articles.show', compact('article'));
     }
 
     public function exportDoc(Request $request, CriminalArticle $article)
     {
+        $this->authorize(PermissionEnum::EXPORT_PAGE->value);
+
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $phpWord->addTitleStyle(1, 'Heading1', ['alignment' => 'center']);
 

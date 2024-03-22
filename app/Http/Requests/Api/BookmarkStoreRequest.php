@@ -11,7 +11,7 @@ class BookmarkStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can(\App\Enums\PermissionEnum::CREATE_BOOKMARKS->value);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Enums\FolderType;
+use App\Enums\PermissionEnum;
 use App\Http\Controllers\Controller;
 use App\Jobs\DeleteTempFileJob;
 use App\Models\File;
@@ -65,6 +66,8 @@ class FileController extends Controller
 
     public function updateFileName(Request $request, File $file)
     {
+        $this->authorize(PermissionEnum::MARK_NEEDED->value);
+
         $result = $file->update(['name' => $request->post('name')]);
 
         if ($request->wantsJson()) {
@@ -81,6 +84,8 @@ class FileController extends Controller
 
     public function exportDoc(Request $request, File $file)
     {
+        $this->authorize(PermissionEnum::EXPORT_PAGE->value);
+
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $phpWord->addTitleStyle(1, 'Heading1', ['alignment' => 'center']);
 
