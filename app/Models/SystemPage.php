@@ -15,11 +15,13 @@ class SystemPage extends Model
         'title',
         'data',
         'images',
+        'meta'
     ];
 
     protected $casts = [
         'data' => 'json',
         'images' => 'json',
+        'meta' => 'array'
     ];
 
 
@@ -80,6 +82,14 @@ class SystemPage extends Model
     public function getRouteKeyName()
     {
         return 'name';
+    }
+
+    public function getMeta(string $key): ?string
+    {
+        if (is_array($this->meta))
+            return $this->meta[$key] ?? null;
+
+        return null;
     }
 
 }

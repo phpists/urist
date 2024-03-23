@@ -15,7 +15,8 @@ const modalSearchFormValidation = () => {
             ]);
 
         validator.onSuccess((event) => {
-            event.currentTarget.submit();
+            event.preventDefault();
+            this.dispatchEvent(new Event('submit'))
         });
     }
 }

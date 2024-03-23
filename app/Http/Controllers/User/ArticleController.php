@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Enums\PermissionEnum;
+use App\Enums\SystemPageEnum;
 use App\Http\Controllers\Controller;
 use App\Models\ArticleCategory;
 use App\Models\CriminalArticle;
 use App\Services\ArticleFilterService;
+use App\Services\PermissionService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -16,9 +18,9 @@ class ArticleController extends Controller
     public function index(Request $request, ?string $type = null)
     {
         if ($type == 'kk')
-            $this->authorize(PermissionEnum::MODULE_KK->value);
+            PermissionService::authorize(PermissionEnum::MODULE_KK->value);
         elseif ($type == 'kpk')
-            $this->authorize(PermissionEnum::MODULE_KPK->value);
+            PermissionService::authorize(PermissionEnum::MODULE_KPK->value);
 
         $filterService = new ArticleFilterService($type);
 
@@ -34,7 +36,8 @@ class ArticleController extends Controller
 
         return view('user.articles.index', [
             'categories' => $filterService->getCategories(),
-            'articles' => $filterService->getArticles()
+            'articles' => $filterService->getArticles(),
+            'systemPage' => SystemPageEnum::ARTICLES->getPage()
         ]);
     }
 

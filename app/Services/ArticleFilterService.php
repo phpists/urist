@@ -23,7 +23,7 @@ class ArticleFilterService
 
     public function getCategories()
     {
-        $mainCategory = ArticleCategory::whereNull('parent_id')
+        return ArticleCategory::whereNull('parent_id')
             ->when($type = $this->getType(), function ($query) use ($type) {
                 return $query->whereType($type);
             })
@@ -38,9 +38,7 @@ class ArticleFilterService
                 'children.children.children.children.children.children.children',
                 'children.children.children.children.children.children.children.children',
             ])
-            ->first();
-
-        return $mainCategory->children;
+            ->get();
     }
 
     public function isMustBeExpanded(ArticleCategory $category): bool
@@ -68,7 +66,7 @@ class ArticleFilterService
 
         $isFromSearch = request()->has('search')
             && !empty(request('search'))
-            && request()->user()->can(\App\Enums\PermissionEnum::SMART_SEARCH->value);
+            && can_user(\App\Enums\PermissionEnum::SMART_SEARCH->value);
 
         $articles = $isFromSearch
             ? CriminalArticle::search(request('search'))

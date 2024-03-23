@@ -6,12 +6,12 @@
             <div class="burger__line"></div>
         </button>
         <a class="button @if(url()->current() == route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KK->value)) header__button @else button--outline header__button @endif"
-           href="{{ !request()->user()->can(\App\Enums\PermissionEnum::MODULE_KK->value) ? '#' : get_setting_value_by_name(\App\Enums\SettingEnum::KK_MODULE_BTN->value) }}">Модуль КК</a>
+           href="{{ !can_user(\App\Enums\PermissionEnum::MODULE_KK->value) ? '#' : get_setting_value_by_name(\App\Enums\SettingEnum::KK_MODULE_BTN->value) }}">Модуль КК</a>
         <a class="button @if(url()->current() == route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KPK->value)) header__button @else button--outline header__button @endif"
-           href="{{ !request()->user()->can(\App\Enums\PermissionEnum::MODULE_KPK->value) ? '#' : get_setting_value_by_name(\App\Enums\SettingEnum::KPK_MODULE_BTN->value) }}">Модуль КПК</a>
+           href="{{ !can_user(\App\Enums\PermissionEnum::MODULE_KPK->value) ? '#' : get_setting_value_by_name(\App\Enums\SettingEnum::KPK_MODULE_BTN->value) }}">Модуль КПК</a>
 
-        @if(request()->user()->can(\App\Enums\PermissionEnum::SMART_SEARCH->value))
-        <form class="search header__search" action="{{ request('type') ? route('user.articles.index', ['type' => request('type')]) : route('user.articles.index') }}" id="search-form" autocomplete="off" novalidate="novalidate">
+        @if(can_user(\App\Enums\PermissionEnum::SMART_SEARCH->value))
+        <form class="search header__search articles-search" action="{{ request('type') ? route('user.articles.index', ['type' => request('type')]) : route('user.articles.index') }}" id="search-form" autocomplete="off" novalidate="novalidate">
             <div class="search__group">
                 <input class="input search__input" id="inputSearch" type="text" name="search" placeholder="Пошук по збірнику" autocomplete="off" value="{{ request('search') }}" required="required" data-url="{{ route('user.search.items') }}"/>
                 <div class="searchItemsContainer"></div>

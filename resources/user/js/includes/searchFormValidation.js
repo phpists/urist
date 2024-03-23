@@ -13,9 +13,10 @@ const searchFormValidation = () => {
                     errorMessage: "Заповніть це поле",
                 },
             ]);
-        
+
         validator.onSuccess((event) => {
-            event.currentTarget.submit();
+            event.preventDefault();
+            this.dispatchEvent(new Event('submit'))
         });
     }
 }

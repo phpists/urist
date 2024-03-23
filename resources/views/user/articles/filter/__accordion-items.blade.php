@@ -1,9 +1,9 @@
-@foreach($filterService->getCategories() as $category)
-    @if($category->children->isNotEmpty())
-        <div class="accordion__inner">
-            @foreach($category->children as $child)
-                @include('user.articles.filter.__category', ['category' => $child, 'padding' => 0, 'iii' => 1])
+<div class="accordion__inner">
+    @foreach($filterService->getCategories() as $mainCategory)
+        @if($mainCategory->children->isNotEmpty())
+            @foreach($mainCategory->children as $category)
+                @include('user.articles.filter.__category', ['padding' => 0, 'iii' => 1])
             @endforeach
-        </div>
-    @endif
-@endforeach
+        @endif
+    @endforeach
+</div>

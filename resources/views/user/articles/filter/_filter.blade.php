@@ -45,9 +45,7 @@
 
             <form id="filterForm" action="{{ route('user.articles.index', $filterService->getType()) }}" data-count-url="{{ route('user.articles.total-count', $filterService->getType()) }}" style="margin-bottom: 0">
                 <input type="hidden" name="sort">
-                @if($search = request('search'))
-                    <input type="hidden" name="search" value="{{ $search }}">
-                @endif
+                <input type="hidden" name="search" value="{{ request('search') }}">
                 <div id="filterAccordionItemsContainer"
                      data-load-url="{{ route('user.filter', ['type' => $filterService->getType(), ...request()->query()]) }}"
                      class="accordion filter__accordion"></div>

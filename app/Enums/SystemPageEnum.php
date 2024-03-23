@@ -14,6 +14,8 @@ enum SystemPageEnum:string
 
     case CONTACTS = 'contacts';
 
+    case ARTICLES = 'articles';
+
     public function getPage(): SystemPage
     {
         return SystemPage::whereName($this->value)->first();

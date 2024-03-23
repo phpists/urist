@@ -23,7 +23,8 @@ class SystemPageController extends Controller
     public function update(Request $request, SystemPage $systemPage)
     {
         $systemPage->title = $request->post('title');
-        $data = $request->post('data');
+
+        $data = $request->post('data', []);
         foreach ($request->allFiles()['data'] ?? [] as $dI => $datum) {
             if (isset($datum['items'])) {
                 foreach ($datum['items'] as $iI => $item) {
@@ -54,6 +55,8 @@ class SystemPageController extends Controller
         }
 
         $systemPage->images = $images;
+
+        $systemPage->meta = $request->post('meta', []);
 
         if ($systemPage->save()) {
             return to_route('admin.system-pages.edit', $systemPage)

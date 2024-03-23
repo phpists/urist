@@ -156,6 +156,11 @@ class SystemPageSeeder extends Seeder
                 ]
             ]
         ];
+        $articles = [
+            'images' => [],
+            'data' => [],
+            'meta' => []
+        ];
 
         if (!SystemPage::whereName(SystemPageEnum::HOME->value)->exists()) {
             SystemPage::create([
@@ -235,5 +240,17 @@ class SystemPageSeeder extends Seeder
                 'images' => [],
             ]);
         }
+
+
+        if (!SystemPage::whereName(SystemPageEnum::ARTICLES->value)->exists()) {
+            SystemPage::create([
+                'name' => SystemPageEnum::ARTICLES->value,
+                'title' => 'Збірник',
+                'data' => $articles['data'],
+                'images' => $articles['images'],
+                'meta' => $articles['meta'],
+            ]);
+        }
+
     }
 }

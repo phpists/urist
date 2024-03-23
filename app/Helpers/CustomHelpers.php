@@ -35,3 +35,11 @@ if (!function_exists('get_setting_value_by_name')) {
         return \App\Services\SettingService::getValueByName($name);
     }
 }
+
+
+if (!function_exists('can_user')) {
+    function can_user(string $action): bool
+    {
+        return request()->user()->isSuperAdmin() || request()->user()->can($action);
+    }
+}
