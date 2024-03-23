@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\Api\CheckLiqPaySignature;
 use App\Http\Middleware\Api\ForceJson;
 use App\Http\Middleware\Api\JWTAuth;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -69,6 +70,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' => \App\Http\Middleware\RoleMiddleware::class,
         'plan' => \App\Http\Middleware\PlanMiddleware::class,
-        'jwt' => JWTAuth::class
+        'jwt' => JWTAuth::class,
+        'liqpay.check.signature' => CheckLiqPaySignature::class
     ];
 }

@@ -268,4 +268,87 @@ class CriminalArticleController extends Controller
         ];
     }
 
+    public function updateCategory(Request $request, CriminalArticle $article)
+    {
+        $oldCategory = ArticleCategory::findOrFail($request->post('old_category_id'));
+        $category = ArticleCategory::findOrFail($request->post('category_id'));
+
+        DB::beginTransaction();
+        try {
+            $article->criminalArticleCategories()->whereArticleCategoryId($oldCategory->id)->delete();
+            $article->criminalArticleCategories()->create([
+                'article_category_id' => $category->id
+            ]);
+            DB::commit();
+
+            return [
+                'result' => true,
+                'html' => [
+                    $oldCategory->id => view('admin.article_categories.parts.category-articles', ['category' => $oldCategory])->render(),
+                    $category->id => view('admin.article_categories.parts.category-articles', ['category' => $category])->render()
+                ]
+            ];
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return [
+                'result' => false
+            ];
+        }
+    }
+
+    public function showFullName(Request $request, CriminalArticle $article)
+    {
+        return [
+            'name' => 'Стаття',
+            'full_path' => $article->name
+        ];
+    }
+
+    public function deleteCategory(Request $request, CriminalArticle $article)
+    {
+        $category = ArticleCategory::findOrFail($request->post('category_id'));
+        try {
+            $article->criminalArticleCategories()->whereArticleCategoryId($category->id)->delete();
+            return [
+                'result' => true
+            ];
+        } catch (\Exception $e) {
+            return [
+                'result' => false
+            ];
+        }
+    }
+
+    public function addCategory(Request $request)
+    {
+        $article = CriminalArticle::findOrFail($request->post('article_id'));
+        $category = ArticleCategory::findOrFail($request->post('category_id'));
+        try {
+            $article->criminalArticleCategories()->create([
+                'article_category_id' => $category->id
+            ]);
+
+            return [
+                'result' => true,
+                'html' => [
+                    $category->id => view('admin.article_categories.parts.category-articles', ['category' => $category])->render()
+                ]
+            ];
+        } catch (\Exception $e) {
+            return [
+                'result' => false
+            ];
+        }
+    }
+
+    public function getAllArticlesForSelect(Request $request)
+    {
+        $request->validate([
+            'search_string' => 'sometimes|string'
+        ]);
+        $search = $request->get('search_string');
+        return response()->json(CriminalArticle::where('name', 'LIKE', "%{$search}%")->get(['id', 'name']));
+    }
+
 }

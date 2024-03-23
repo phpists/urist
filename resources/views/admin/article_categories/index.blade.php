@@ -3,7 +3,16 @@
 @section('styles')
     <link rel="stylesheet" href="{{asset('js/jstree/dist/themes/default/style.min.css')}}" />
     <link rel="stylesheet" href="{{asset('super_admin/css/category.css')}}" />
-    <link rel="stylesheet" href="{{asset('super_admin/css/nestable.min.css')}}"></link>
+    <link rel="stylesheet" href="{{asset('super_admin/css/nestable.min.css')}}">
+    <style>
+        a.non-draggable, svg.non-draggable, img.non-draggable {
+            -webkit-user-drag: none;
+            user-select: none;
+        }
+        .select2-container {
+            width: 100%;
+        }
+    </style>
 @endsection
 
 @section('title')
@@ -131,15 +140,118 @@
     @include('admin.article_categories.modals.update')
 
     @include('admin.layouts.modals.show_category_full_path')
+    @include('admin.article_categories.modals.add-article')
 @endsection
 
 @section('js_after')
+    <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script src="{{asset('js/jstree/dist/jstree.min.js')}}"></script>
     <script src="{{asset('super_admin/js/jquery.nestable.min.js')}}"></script>
     <script src="{{asset('super_admin/js/category.js')}}"></script>
     <script src="{{ asset('js/helpers.js') }}"></script>
+
+
     <script>
+        $(function () {
+            initDragAndDrop()
+
+            $(document).on('ajaxComplete', initDragAndDrop);
+
+            $(document).on('click', '.delete-article-category', function (e) {
+                if (!confirm('Ви впевнені, що хочете видалити статтю з категорії?'))
+                    return;
+
+                const el = this;
+
+                $.ajax({
+                    type: 'POST',
+                    url: this.dataset.url,
+                    data: {
+                        category_id: this.dataset.categoryId,
+                    },
+                    success: function (response) {
+                        if(response.result)
+                            $(el).parent().remove()
+                    }
+                })
+            })
+
+            $(document).on('click', '.add-article-btn', function (e) {
+                let categoryId = this.dataset.id;
+                $('#addCriminalArticleModal form input[name="category_id"]').val(categoryId)
+            })
+
+            $("#addCriminalArticleId").select2({
+                placeholder: "Стаття",
+                minimumInputLength: 3,
+                ajax: makeSelect2AjaxSearch('{{ route('admin.criminal-articles.data-for-select') }}', 'addCriminalArticleId')
+            })
+
+            $(document).on('submit', '#addCriminalArticleModal form', function (e) {
+                e.preventDefault();
+                let category_id = $('#addCriminalArticleModal form input[name="category_id"]').val()
+
+                $.ajax({
+                    type: this.method,
+                    url: this.action,
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        console.log(category_id, $(`.droppable[data-id="${category_id}"]`), response.html[category_id])
+                        $(`.droppable[data-id="${category_id}"]`).html(response.html[category_id]);
+                        $('#addCriminalArticleModal').modal('hide');
+                    }
+                })
+            })
+        })
+
+        function initDragAndDrop() {
+            $('.drag-element').draggable({
+                scroll: true,
+                revert: 'invalid',
+                handle: '.handle',
+                start: function() {
+                    console.log('start')
+                    this.style.zIndex = 9
+                },
+                stop: function() {
+                    console.log('stop')
+                    this.style.zIndex = 'inherit'
+                }
+            });
+
+            $('.droppable').droppable({
+                accept: '.drag-element',
+                drop: function(e, ui) {
+                    console.log('drop')
+                    if (ui.draggable.length) {
+                        let draggable = ui.draggable[0],
+                            old_category_id = draggable.dataset.categoryId,
+                            category_id = this.dataset.id;
+
+                        if (old_category_id !== category_id) {
+                            $.ajax({
+                                // async: false,
+                                type: 'POST',
+                                url: draggable.dataset.url,
+                                data: {
+                                    old_category_id: old_category_id,
+                                    category_id: category_id,
+                                },
+                                success: function (response) {
+                                    console.log('SUCCESS', response)
+                                    $(`.droppable[data-id="${old_category_id}"]`).html(response.html[old_category_id])
+                                    $(`.droppable[data-id="${category_id}"]`).html(response.html[category_id])
+                                    draggable.remove()
+                                }
+                            })
+                        }
+                    }
+                }
+            });
+        }
+
 
     </script>
 @endsection

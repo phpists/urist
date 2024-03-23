@@ -238,6 +238,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin'], 'as' 
         ->name('criminal_article.update_status');
     Route::get('criminal_article/check-name', [CriminalArticleController::class, 'checkName'])
         ->name('criminal-article.check-name');
+    Route::post('criminal_articles/{article}/update_category', [CriminalArticleController::class, 'updateCategory'])
+        ->name('criminal-article.update-category');
+    Route::get('criminal_article/{article}/full_name', [CriminalArticleController::class, 'showFullName'])
+        ->name('criminal-article.show-full-name');
+    Route::post('criminal_article/{article}/delete_category', [CriminalArticleController::class, 'deleteCategory'])
+        ->name('criminal-article.delete-category');
+    Route::post('criminal_article/add_category', [CriminalArticleController::class, 'addCategory'])
+        ->name('criminal-article.add-category');
+    Route::get('criminal_articles-data-for-select', [CriminalArticleController::class, 'getAllArticlesForSelect'])
+        ->name('criminal-articles.data-for-select');
 
     // Favourites
     Route::get('/favourites', [FavoritesController::class, 'index'])
@@ -304,6 +314,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin'], 'as' 
         ->only(['index', 'show', 'update']);
 
     // System Pages
-    Route::resource('system-pages', \App\Http\Controllers\Admin\SystemPageController::class);
+    Route::resource('system-pages', \App\Http\Controllers\Admin\SystemPageController::class)
+        ->only(['edit', 'update']);
 
 });

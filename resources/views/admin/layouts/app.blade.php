@@ -388,6 +388,7 @@ fill="#000000" fill-rule="nonzero"/>
 
 <!--begin::Global Theme Bundle(used by all pages)-->
 <script src="{{ asset('super_admin/plugins/global/plugins.bundle.js') }}"></script>
+<script src="https://code.jquery.com/ui/1.9.2/jquery-ui.min.js" integrity="sha256-eEa1kEtgK9ZL6h60VXwDsJ2rxYCwfxi40VZ9E0XwoEA=" crossorigin="anonymous"></script>    <script src="{{asset('js/jstree/dist/jstree.min.js')}}"></script>
 <script src="{{ asset('super_admin/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
 <script src="{{ asset('super_admin/js/scripts.bundle.js') }}"></script>
 

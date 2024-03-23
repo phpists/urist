@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,3 +61,9 @@ Route::group(['middleware' => 'jwt'], function () {
     /** Contact Form */
     Route::post('contact-form', [\App\Http\Controllers\Api\ContactController::class, 'form']);
 });
+
+
+// LiqPay
+Route::post('callback', [PaymentController::class, 'callback'])
+    ->middleware(['liqpay.check.signature'])
+    ->name('liqpay_callback');

@@ -77,7 +77,7 @@ class SystemPage extends Model
         return strtr($this->getDataByDotPath($path), ['<' => '<span>', '>' => '</span>']);
     }
 
-    public function getKeyName()
+    public function getRouteKeyName()
     {
         return 'name';
     }
