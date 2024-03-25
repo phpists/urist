@@ -21,7 +21,7 @@
                             <span class="sidebar-menu__title">Мій профіль</span>
                         </a>
                     </li>
-                    @if(request()->user()->can(\App\Enums\PermissionEnum::MODULE_KK->value))
+                    @if(can_user(\App\Enums\PermissionEnum::MODULE_KK->value))
                         <li class="sidebar-menu__item">
                             <a class="sidebar-menu__link @if(url()->current() == route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KK->value)) is-active @endif"
                                href="{{route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KK->value)}}">
@@ -34,7 +34,7 @@
                             </a>
                         </li>
                     @endif
-                    @if(request()->user()->can(\App\Enums\PermissionEnum::MODULE_KPK->value))
+                    @if(can_user(\App\Enums\PermissionEnum::MODULE_KPK->value))
                         <li class="sidebar-menu__item">
                             <a class="sidebar-menu__link @if(url()->current() == route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KPK->value)) is-active @endif"
                                href="{{route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KPK->value)}}">
@@ -47,7 +47,7 @@
                             </a>
                         </li>
                     @endif
-                    @if(request()->user()->can(\App\Enums\PermissionEnum::CREATE_BOOKMARKS->value))
+                    @if(can_user(\App\Enums\PermissionEnum::CREATE_BOOKMARKS->value))
                         <li class="sidebar-menu__item"><a
                                 class="sidebar-menu__link @if(request()->routeIs('user.bookmarks.*')) is-active @endif"
                                 href="{{route('user.bookmarks.index')}}"><span class="sidebar-menu__pic">
@@ -55,7 +55,7 @@
                   <use xlink:href="{{asset('assets/img/user/sprite.svg#bookmark')}}"></use>
                 </svg></span><span class="sidebar-menu__title">Кабінет</span></a></li>
                     @endif
-                    @if(request()->user()->can(\App\Enums\PermissionEnum::CREATE_OWN_PAGES->value))
+                    @if(can_user(\App\Enums\PermissionEnum::CREATE_OWN_PAGES->value))
                         <li class="sidebar-menu__item">
                             <a class="sidebar-menu__link @if(request()->routeIs('user.files.*')) is-active @endif"
                                href="{{ route('user.files.index') }}">

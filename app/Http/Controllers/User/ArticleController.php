@@ -70,13 +70,13 @@ class ArticleController extends Controller
 
     public function show(CriminalArticle $article)
     {
-        $this->authorize(PermissionEnum::LEGAL_BASE->value);
+        can_user(PermissionEnum::LEGAL_BASE->value);
         return view('user.articles.show', compact('article'));
     }
 
     public function exportDoc(Request $request, CriminalArticle $article)
     {
-        $this->authorize(PermissionEnum::EXPORT_PAGE->value);
+        can_user(PermissionEnum::EXPORT_PAGE->value);
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $phpWord->addTitleStyle(1, 'Heading1', ['alignment' => 'center']);

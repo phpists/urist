@@ -12,7 +12,7 @@ class StoreFileRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can(\App\Enums\PermissionEnum::CREATE_OWN_PAGES->value);
+        return can_user(\App\Enums\PermissionEnum::CREATE_OWN_PAGES->value);
     }
 
 

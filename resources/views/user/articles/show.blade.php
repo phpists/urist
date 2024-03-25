@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <ul class="actions page-section__actions">
-                    @if(request()->user()->can(\App\Enums\PermissionEnum::CREATE_BOOKMARKS->value))
+                    @if(can_user(\App\Enums\PermissionEnum::CREATE_BOOKMARKS->value))
                         <li class="actions__item">
                             <button class="button button--outline actions__button modal-self-completing" type="button"
                                     aria-label="Add to bookmarks" data-tooltip="В закладки" data-modal="modal-bookmark"
@@ -45,7 +45,7 @@
                         </li>
                     @endif
 
-                    @if(request()->user()->can(\App\Enums\PermissionEnum::CREATE_OWN_PAGES->value))
+                    @if(can_user(\App\Enums\PermissionEnum::CREATE_OWN_PAGES->value))
                         <li class="actions__item">
                             <button class="button button--outline actions__button modal-self-completing" type="button"
                                     aria-label="Add page" data-tooltip="Робота з файлом"
@@ -57,7 +57,7 @@
                             </button>
                         </li>
                     @endif
-                    @if(request()->user()->can(\App\Enums\PermissionEnum::COPY_PAGE->value))
+                    @if(can_user(\App\Enums\PermissionEnum::COPY_PAGE->value))
                         <li class="actions__item">
                             <button class="button button--outline actions__button" type="button" aria-label="Copy"
                                     data-tooltip="Копіювати"
@@ -68,7 +68,7 @@
                             </button>
                         </li>
                     @endif
-                    @if(request()->user()->can(\App\Enums\PermissionEnum::EXPORT_PAGE->value))
+                    @if(can_user(\App\Enums\PermissionEnum::EXPORT_PAGE->value))
                         <li class="actions__item">
                             <a href="{{ route('user.articles.export-doc', $article) }}"
                                class="button button--outline actions__button" type="button" aria-label="Word"

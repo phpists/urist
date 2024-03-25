@@ -23,9 +23,9 @@ class CriminalArticleController extends Controller
     public function index()
     {
         if ($this->filterService->getType() == 'kk')
-            $this->authorize(PermissionEnum::MODULE_KK->value);
+            can_user(PermissionEnum::MODULE_KK->value);
         elseif ($this->filterService->getType() == 'kpk')
-            $this->authorize(PermissionEnum::MODULE_KPK->value);
+            can_user(PermissionEnum::MODULE_KPK->value);
 
         $articles = $this->filterService->getArticles();
 
@@ -34,7 +34,7 @@ class CriminalArticleController extends Controller
 
     public function show(CriminalArticle $criminalArticle)
     {
-        $this->authorize(PermissionEnum::LEGAL_BASE->value);
+        can_user(PermissionEnum::LEGAL_BASE->value);
 
         return $criminalArticle;
     }

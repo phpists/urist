@@ -45,7 +45,7 @@
                             </button>
                         </div>
                     </form>
-                        @if(request()->user()->can(\App\Enums\PermissionEnum::CREATE_BOOKMARKS->value))
+                        @if(can_user(\App\Enums\PermissionEnum::CREATE_BOOKMARKS->value))
                             <div class="bookmarks-section__buttons">
                                 <a href="{{ route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KPK->value) }}" class="button button--outline bookmarks-section__button" type="button">Додати статтю</a>
                                 <button class="button button--outline bookmarks-section__button" type="button" data-modal="modal-create">Створити папку</button>

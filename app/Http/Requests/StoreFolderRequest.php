@@ -16,9 +16,9 @@ class StoreFolderRequest extends FormRequest
     public function authorize(): bool
     {
         if ($this->post('folder_type') == FolderType::FAVOURITES_FOLDER->value)
-            return $this->user()->can(PermissionEnum::CREATE_BOOKMARKS->value);
+            return can_user(PermissionEnum::CREATE_BOOKMARKS->value);
         else
-            return $this->user()->can(PermissionEnum::CREATE_OWN_PAGES->value);
+            return can_user(PermissionEnum::CREATE_OWN_PAGES->value);
     }
 
     /**

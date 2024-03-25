@@ -107,7 +107,7 @@ class CriminalArticle extends Model
 
     public function getProgramTitle(): string
     {
-        return \Str::replace(' ', '_', $this->name);
+        return \Str::slug($this->name);
     }
 
 }

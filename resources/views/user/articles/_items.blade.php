@@ -23,7 +23,7 @@
     </thead>
     <tbody class="collection-table__tbody">
     @foreach($articles as $article)
-        @php($url = request()->user()->can(\App\Enums\PermissionEnum::LEGAL_BASE->value) ? route('user.articles.show', $article) : '#')
+        @php($url = can_user(\App\Enums\PermissionEnum::LEGAL_BASE->value) ? route('user.articles.show', $article) : '#')
         <tr>
             <td>
                 <time class="collection-table__date">

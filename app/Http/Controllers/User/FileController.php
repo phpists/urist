@@ -66,7 +66,7 @@ class FileController extends Controller
 
     public function updateFileName(Request $request, File $file)
     {
-        $this->authorize(PermissionEnum::MARK_NEEDED->value);
+        can_user(PermissionEnum::MARK_NEEDED->value);
 
         $result = $file->update(['name' => $request->post('name')]);
 
@@ -84,7 +84,7 @@ class FileController extends Controller
 
     public function exportDoc(Request $request, File $file)
     {
-        $this->authorize(PermissionEnum::EXPORT_PAGE->value);
+        can_user(PermissionEnum::EXPORT_PAGE->value);
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $phpWord->addTitleStyle(1, 'Heading1', ['alignment' => 'center']);

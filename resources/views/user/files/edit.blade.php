@@ -30,7 +30,7 @@
                 </div>
             </header>
 
-            @if(request()->user()->can(\App\Enums\PermissionEnum::MARK_NEEDED->value))
+            @if(can_user(\App\Enums\PermissionEnum::MARK_NEEDED->value))
             <form id="editForm" action="{{ route('file.update', ['file_id' => $file->id]) }}" method="POST">
                 @csrf
                 @method('PUT')
@@ -48,7 +48,7 @@
                     </div>
                     <button class="button page-section__button" type="submit">Зберегти</button>
 
-                    @if(request()->user()->can(\App\Enums\PermissionEnum::EXPORT_PAGE->value))
+                    @if(can_user(\App\Enums\PermissionEnum::EXPORT_PAGE->value))
                     <a href="{{ route('user.files.export-doc', $file) }}" class="button button--outline page-section__button" type="button">Экспорт у Word
                         <svg class="button__icon" width="28" height="28">
                             <use xlink:href="{{asset('assets/img/user/sprite.svg#word')}}"></use>

@@ -13,7 +13,7 @@ class UpdateFileRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can(PermissionEnum::MARK_NEEDED->value);
+        return can_user(PermissionEnum::MARK_NEEDED->value);
     }
 
     /**
