@@ -112,7 +112,7 @@ class LoginController extends Controller
             $new_user->first_name = explode(' ', $user->name)[0] ?? "User";
             $new_user->last_name = explode(' ', $user->name)[1] ?? "";
             $new_user->email = $user->email;
-            $new_user->$$column = $user->id;
+            $new_user->$column = $user->id;
             $new_user->password = Hash::make(Str::random(8));
             $new_user->save();
 
