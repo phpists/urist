@@ -43,3 +43,15 @@ if (!function_exists('can_user')) {
         return request()->user()->isSuperAdmin() || request()->user()->can($action);
     }
 }
+
+
+
+if (!function_exists('get_highlighted_text')) {
+    function get_highlighted_text(string $text, string $needle = null): string
+    {
+        if (!$needle)
+            return $text;
+
+        return \Str::replace($needle, "<span style='background-color: yellow'>{$needle}</span>", $text);
+    }
+}

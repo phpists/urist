@@ -130,7 +130,7 @@
                         </li>
                         <li class="menu-item {{ request()->routeIs('admin.article_categories') ? 'menu-item-active' : '' }}"
                             aria-haspopup="true">
-                            <a href="{{route('admin.article_categories')}}" class="menu-link">
+                            <a href="{{route('admin.article_categories', ['tab' => 'table'])}}" class="menu-link">
                                 <i class="fas fa-pen menu-icon"></i>
                                 <span class="menu-text">Категорії</span>
                             </a>

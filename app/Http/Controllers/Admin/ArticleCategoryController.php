@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Log;
 
 class ArticleCategoryController extends Controller
 {
-    public function index(Request $request) {
+    public function index(Request $request, string $tab = null, ArticleCategory $category = null) {
         $article_categories = ArticleCategory::query()
             ->orderBy('position')
             ->when($search = $request->get('search'), function ($query) use ($search) {
@@ -47,7 +47,7 @@ class ArticleCategoryController extends Controller
 
         return view(
             'admin.article_categories.index',
-            compact('article_categories', 'tree_categories')
+            compact('article_categories', 'tree_categories', 'tab', 'category')
         );
     }
 
@@ -130,13 +130,13 @@ class ArticleCategoryController extends Controller
         return redirect()->back()->with('success', 'Категорія успішно оновлена');
     }
 
-    public function updatePosition(Request $request): \Illuminate\Http\JsonResponse
+    public function updatePosition(Request $request, ArticleCategory $category): \Illuminate\Http\JsonResponse
     {
         $positions = $request->post('positions');
 
         try {
             if (is_array($positions))
-                $this->processCategories($positions);
+                $this->processCategories($positions, $category);
 
             return response()->json([
                 'success' => true

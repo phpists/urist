@@ -75,27 +75,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Sorting table
     let tbody = document.getElementById('articleCategoriesTable')
-    new Sortable(tbody, {
-        animation: 150,
-        handle: '.handle',
-        dragClass: 'table-sortable-drag',
-        onEnd: function (/**Event*/ evt) {
-            let article_id = evt.item.dataset.value
-            let newIndex = evt.newIndex;
-            $.ajax({
-                method: 'put',
-                url: '/admin/article_category/update_position',
-                data: {
-                    id: article_id,
-                    position: newIndex
-                },
-                error: function (resp) {
-                    console.log(resp)
-                }
-            });
+    if (tbody) {
+        new Sortable(tbody, {
+            animation: 150,
+            handle: '.handle',
+            dragClass: 'table-sortable-drag',
+            onEnd: function (/**Event*/ evt) {
+                let article_id = evt.item.dataset.value
+                let newIndex = evt.newIndex;
+                $.ajax({
+                    method: 'put',
+                    url: '/admin/article_category/update_position',
+                    data: {
+                        id: article_id,
+                        position: newIndex
+                    },
+                    error: function (resp) {
+                        console.log(resp)
+                    }
+                });
 
-        }
-    });
+            }
+        });
+    }
 
     $("#createCategoryParent").select2({
         width: '100%',
@@ -130,53 +132,6 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     })
 
-    $('#jstree_container').jstree({
-        core: {
-            'check_callback': true
-        },
-        "plugins" : [ "dnd" ]
-    });
-    let jstreeEl = $('#jstree_container');
-    jstreeEl.on('open_node.jstree', function (ev, node) {
-        if(node.node.children.length === 0 || (node.node.children.length < node.node.children_d.length)) {
-            return;
-        }
-        let el_ids = node.node.children.map((el) => {
-            return el.split('_')[1];
-        })
-        $.ajax({
-            url: "/admin/article_category/get_children",
-            data: {
-                id_list: el_ids
-            },
-            success: function (resp) {
-                resp.forEach((el) => {
-                    jstreeEl.jstree('create_node', $('#node_' + el.parent_id), {
-                        "id": "node_" + el.id,
-                        "text": el.name
-                    }, 'last', false, false)
-                })
-            }
-        })
-    });
-    jstreeEl.on('activate_node.jstree', function (ev, node) {
-        if (!node.node.state.opened) {
-            jstreeEl.jstree('open_node', $('#' + node.node.id));
-        }
-        else {
-            jstreeEl.jstree('close_node', $('#' + node.node.id));
-        }
-    });
-    jstreeEl.on('move_node.jstree', function (ev, node) {
-        let parent_id = node.parent.split('_');
-        if(parent_id.length > 1) {
-            parent_id = parent_id[1]
-        }
-        else {
-            parent_id = null;
-        }
-        changeParent(node.node.id.split('_')[1], parent_id)
-    })
     $('.updateStatusBtn').each((id, el) => {
         el.addEventListener('click', () => {
             updateStatus('/admin/article_category/update_status', el)
@@ -187,9 +142,11 @@ document.addEventListener('DOMContentLoaded', function () {
         maxDepth: 10
     })
         .on('change', function (e) {
-            let list = e.length ? e : $(e.target);
+            let list = e.length ? e : $(e.target),
+                url = document.getElementById('nestable3').dataset.updateUrl;
+
             $.ajax({
-                url: '/admin/article_category/update_position',
+                url: url,
                 method: 'put',
                 data: {
                     positions: list.nestable('serialize')

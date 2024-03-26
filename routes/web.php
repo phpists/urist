@@ -190,7 +190,7 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin'], 'as' => 'admin.'], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('article_categories', [ArticleCategoryController::class, 'index'])
+    Route::get('article_categories_all/{tab?}/{category?}', [ArticleCategoryController::class, 'index'])
         ->name('article_categories');
     Route::get('article_category', [ArticleCategoryController::class, 'view'])
         ->name('article_categories.view');
@@ -206,7 +206,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin'], 'as' 
         ->name('article_category.delete');
     Route::put('/article_category/update_parent', [ArticleCategoryController::class, 'updateParent'])
         ->name('article_category.update_parent');
-    Route::put('/article_category/update_position', [ArticleCategoryController::class, 'updatePosition'])
+    Route::put('/article_category/update_position/{category}', [ArticleCategoryController::class, 'updatePosition'])
         ->name('article_category.update_position');
     Route::put('/article_category/update_status', [ArticleCategoryController::class, 'updateStatus'])
         ->name('article_category.update_status');

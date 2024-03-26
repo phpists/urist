@@ -97,14 +97,6 @@ class CriminalArticle extends Model
         return implode(', ', $this->getTagsArray());
     }
 
-    public function getDescriptionWithHighlightedWord(string $word = null): string
-    {
-        if (!$word)
-            return $this->description;
-
-        return \Str::replace($word, "<span style='background-color: yellow'>{$word}</span>", $this->description);
-    }
-
     public function getProgramTitle(): string
     {
         return \Str::slug($this->name);

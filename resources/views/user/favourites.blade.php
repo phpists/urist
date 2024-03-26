@@ -1,5 +1,5 @@
 @extends('layouts.user_app')
-@section('title', 'Закладки')
+@section('title', 'Кабінет')
 @section('styles')
     <style>
         a.non-draggable, svg.non-draggable, img.non-draggable {

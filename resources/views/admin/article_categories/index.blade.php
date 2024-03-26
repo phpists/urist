@@ -1,14 +1,15 @@
 @extends('admin.layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="{{asset('js/jstree/dist/themes/default/style.min.css')}}" />
-    <link rel="stylesheet" href="{{asset('super_admin/css/category.css')}}" />
+    <link rel="stylesheet" href="{{asset('js/jstree/dist/themes/default/style.min.css')}}"/>
+    <link rel="stylesheet" href="{{asset('super_admin/css/category.css')}}"/>
     <link rel="stylesheet" href="{{asset('super_admin/css/nestable.min.css')}}">
     <style>
         a.non-draggable, svg.non-draggable, img.non-draggable {
             -webkit-user-drag: none;
             user-select: none;
         }
+
         .select2-container {
             width: 100%;
         }
@@ -21,7 +22,7 @@
 @section('content')
     <style>
         .dd {
-            max-width: none!important;
+            max-width: none !important;
         }
     </style>
 
@@ -37,17 +38,14 @@
                     <div class="card-toolbar">
                         <ul class="nav nav-tabs nav-bold nav-tabs-line">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#table_tab">
-                                    <span class="nav-text">Створити</span>
+                                <a class="nav-link @if(!$tab || $tab == 'table') active @endif"
+                                   href="{{ route('admin.article_categories', ['tab' => 'table']) }}">
+                                    <span class="nav-text">Список</span>
                                 </a>
                             </li>
-{{--                            <li class="nav-item">--}}
-{{--                                <a class="nav-link" data-toggle="tab" href="#tree_tab">--}}
-{{--                                    <span class="nav-text">Дерево</span>--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tree_nested_tab">
+                                <a class="nav-link @if($tab == 'tree_nested_tab') active @endif"
+                                   href="{{ route('admin.article_categories', ['tab' => 'tree_nested_tab']) }}">
                                     <span class="nav-text">Дерево</span>
                                 </a>
                             </li>
@@ -55,7 +53,8 @@
                     </div>
                     <div class="card-toolbar">
                         <div class="dropdown dropdown-inline d-flex mr-2">
-                            <form class="mr-2" id="bulkRecordsDeleteForm" action="{{route('admin.article_categories.bulk_delete')}}">
+                            <form class="mr-2" id="bulkRecordsDeleteForm"
+                                  action="{{route('admin.article_categories.bulk_delete')}}">
                                 <button onclick="confirm('Ви дійсно хочете видалити записи?')"
                                         class="btn btn-success font-weight-bolder">
                                     <span class="svg-icon svg-icon-md"><i class="fas fa-trash mr-2"></i></span> Видалити
@@ -72,59 +71,56 @@
                 <div class="card-body pb-3">
                     @include('admin.layouts.includes.messages')
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" role="tabpanel" id="table_tab">
+                        @if(!$tab || $tab == 'table')
+                            <div class="tab-pane fade show active" role="tabpanel" id="table_tab">
 
-                            <div class="card-toolbar w-100">
-                                <form id="filterDataForm" class="w-100" action="">
-                                    <input type="hidden" name="per-page">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <input placeholder="Пошук по назві" class="form-control" type="text" name="search" id="nameSearch">
+                                <div class="card-toolbar w-100">
+                                    <form id="filterDataForm" class="w-100" action="">
+                                        <input type="hidden" name="per-page">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <input placeholder="Пошук по назві" class="form-control" type="text"
+                                                           name="search" id="nameSearch">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
+
+                                <div id="table_data">
+                                    @include('admin.article_categories._table')
+                                </div>
                             </div>
+                        @elseif($tab == 'tree_nested_tab')
+                            <div class="tab-pane fade show active" role="tabpanel" id="tree_nested_tab">
+                                <div class="card card-custom">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                @foreach($tree_categories as $main_category)
+                                                    <a class="btn @if($category?->id == $main_category->id) btn-primary @else btn-outline-primary @endif" href="{{ route('admin.article_categories', ['tab' => 'tree_nested_tab', 'category' => $main_category]) }}">{{ $main_category->name }}</a>
+                                                @endforeach
+                                            </div>
+                                        </div>
 
-                            <div id="table_data">
-                                @include('admin.article_categories._table')
-                            </div>
-                        </div>
-{{--                        <div class="tab-pane fade show" role="tabpanel" id="tree_tab">--}}
-{{--                            <div id="jstree_container">--}}
-{{--                                <ul>--}}
-{{--                                    @foreach($tree_categories as $article_category)--}}
-{{--                                        <li id="node_{{$article_category->id}}">{{$article_category->name}}--}}
-{{--                                            @if(sizeof($article_category->children) > 0)--}}
-{{--                                                <ul>--}}
-{{--                                                    @foreach($article_category->children as $article_subcategory)--}}
-{{--                                                        <li id="node_{{$article_subcategory->id}}">{{$article_subcategory->name}}</li>--}}
-{{--                                                    @endforeach--}}
-{{--                                                </ul>--}}
-{{--                                            @endif--}}
-{{--                                        </li>--}}
+                                        <hr class="my-3">
 
-{{--                                    @endforeach--}}
-{{--                                </ul>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-                        <div class="tab-pane fade" role="tabpanel" id="tree_nested_tab">
-                            <div class="card card-custom">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="dd w-100" id="nestable3">
-                                                <ol class="dd-list">
-                                                    @include('admin.article_categories.parts.table', ['categories' => $tree_categories])
-
-                                                </ol>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                @if($category)
+                                                <div class="dd w-100" id="nestable3" data-update-url="{{ route('admin.article_category.update_position', $category) }}">
+                                                    <ol class="dd-list" data-id="{{ $category->id }}">
+                                                        @include('admin.article_categories.parts.table', ['categories' => $category->children])
+                                                    </ol>
+                                                </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
                 <!--end::Body-->
@@ -146,7 +142,8 @@
 @section('js_after')
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script src="{{asset('js/jstree/dist/jstree.min.js')}}"></script>
     <script src="{{asset('super_admin/js/jquery.nestable.min.js')}}"></script>
     <script src="{{asset('super_admin/js/category.js')}}"></script>
@@ -172,7 +169,7 @@
                         category_id: this.dataset.categoryId,
                     },
                     success: function (response) {
-                        if(response.result)
+                        if (response.result)
                             $(el).parent().remove()
                     }
                 })
@@ -209,13 +206,18 @@
         function initDragAndDrop() {
             $('.drag-element').draggable({
                 scroll: true,
-                revert: 'invalid',
+                revert: function ($droppable) {
+                    if (!$droppable)
+                        return true;
+
+                    return this.data('category-id') === $droppable.data('id');
+                },
                 handle: '.handle',
-                start: function() {
+                start: function () {
                     console.log('start')
                     this.style.zIndex = 9
                 },
-                stop: function() {
+                stop: function () {
                     console.log('stop')
                     this.style.zIndex = 'inherit'
                 }
@@ -223,7 +225,7 @@
 
             $('.droppable').droppable({
                 accept: '.drag-element',
-                drop: function(e, ui) {
+                drop: function (e, ui) {
                     console.log('drop')
                     if (ui.draggable.length) {
                         let draggable = ui.draggable[0],
@@ -240,9 +242,8 @@
                                     category_id: category_id,
                                 },
                                 success: function (response) {
-                                    console.log('SUCCESS', response)
-                                    $(`.droppable[data-id="${old_category_id}"]`).html(response.html[old_category_id])
-                                    $(`.droppable[data-id="${category_id}"]`).html(response.html[category_id])
+                                    document.querySelector(`.droppable[data-id="${old_category_id}"]`).innerHTML = response.html[old_category_id];
+                                    document.querySelector(`.droppable[data-id="${category_id}"]`).innerHTML = response.html[category_id];
                                     draggable.remove()
                                 }
                             })

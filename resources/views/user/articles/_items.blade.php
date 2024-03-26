@@ -35,7 +35,7 @@
             </td>
             <td>
                 <h4 class="collection-table__title">
-                    <a class="black-link" href="{{ $url }}">{{ $article->name }}</a></h4>
+                    <a class="black-link" href="{{ $url }}">{!! get_highlighted_text($article->name, request('search')) !!}</a></h4>
                 @if($article->court_decision_link)
                 <a class="blue-link collection-table__link" href="{{ $article->court_decision_link }}" target="_blank">Посилання на рішення</a>
                 @endif
@@ -43,9 +43,9 @@
             <td>
                 <div class="collection-descr default">
                     <a class="black-link collection-descr__text" href="{{ $url }}" style="display:block;">
-                        <p style="display: inline;">{!! $short = str_replace("\r\n", '<br>', truncate_by_words($article->getDescriptionWithHighlightedWord(request('search')), 370)) !!}</p>
+                        <p style="display: inline;">{!! $short = str_replace("\r\n", '<br>', truncate_by_words(get_highlighted_text($article->description, request('search')), 370)) !!}</p>
                         <div class="collection-descr__hidden">
-                            {!! str_replace("\r\n", '<br>', Str::substr($article->getDescriptionWithHighlightedWord(request('search')), mb_strlen($short) - 3)) !!}
+                            {!! str_replace("\r\n", '<br>', Str::substr(get_highlighted_text($article->description, request('search')), mb_strlen($short) - 3)) !!}
                         </div>
                     </a>
                     @if(strlen($short) < strlen($article->description))
@@ -58,9 +58,9 @@
                 </div>
                 <div class="collection-descr more-width">
                     <a class="black-link collection-descr__text" href="{{ $url }}" style="display:block;">
-                        <p style="display: inline;">{!! $short = str_replace("\r\n", '<br>', truncate_by_words($article->getDescriptionWithHighlightedWord(request('search')), 700)) !!}</p>
+                        <p style="display: inline;">{!! $short = str_replace("\r\n", '<br>', truncate_by_words(get_highlighted_text($article->description, request('search')), 700)) !!}</p>
                         <div class="collection-descr__hidden">
-                            {!! str_replace("\r\n", '<br>', Str::substr($article->getDescriptionWithHighlightedWord(request('search')), mb_strlen($short) - 3)) !!}
+                            {!! str_replace("\r\n", '<br>', Str::substr(get_highlighted_text($article->description, request('search')), mb_strlen($short) - 3)) !!}
                         </div>
                     </a>
                     @if(strlen($short) < strlen($article->description))

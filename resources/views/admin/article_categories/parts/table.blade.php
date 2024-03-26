@@ -1,9 +1,13 @@
 @foreach($categories->sortBy('position') as $category)
     <li class="dd-item dd3-item" data-id="{{$category->id}}">
         <div class="dd-handle dd3-handle">Drag</div>
-        <div class="dd3-content">
+        <div class="dd3-content accordion accordion-toggle-arrow" id="accordion_{{ $category->id }}">
+
             <div class="w-100 d-flex justify-content-between">
-            <span style="margin-top: 5px">{{$category->name}}</span>
+            <span style="margin-top: 5px">
+                <button data-toggle="collapse" data-target="#collapse_{{ $category->id }}" class="btn btn-sm btn-clean btn-icon"><i class="las la-chevron-down"></i></button>
+                <b>{{ $category->sub_title }}</b>
+                {{$category->name}}</span>
             <div>
                 <form action="{{ route('admin.article_category.delete') }}" method="POST">
                     @csrf
@@ -21,13 +25,15 @@
                 </form>
             </div>
             </div>
-            <div class="card">
-                <div class="card-header p-2">
-                    <button class="add-article-btn btn btn-sm btn-light-success" data-toggle="modal" data-target="#addCriminalArticleModal" data-id="{{ $category->id }}">Додати статтю</button>
+            <div id="collapse_{{ $category->id }}" class="collapse" data-parent="#accordion_{{ $category->id }}">
+                <div class="card">
+                    <div class="card-header p-2">
+                        <button class="add-article-btn btn btn-sm btn-light-success" data-toggle="modal" data-target="#addCriminalArticleModal" data-id="{{ $category->id }}">Додати статтю</button>
+                    </div>
+                <div class="card-body p-1 droppable" data-id="{{ $category->id }}" style="min-height: 50px">
+                    @include('admin.article_categories.parts.category-articles')
                 </div>
-            <div class="card-body p-1 droppable" data-id="{{ $category->id }}" style="min-height: 50px">
-                @include('admin.article_categories.parts.category-articles')
-            </div>
+                </div>
             </div>
         </div>
         @if(sizeof($category->subcategories) > 0)

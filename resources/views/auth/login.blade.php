@@ -66,7 +66,7 @@
                                 </svg>Google</a>
                         </div>
                         <div class="form__col">
-                            <a class="button button--big" href="#">
+                            <a class="button button--big" href="{{ route('login.driver', 'apple') }}">
                                 <svg class="button__icon" width="30" height="38">
                                     <use xlink:href="{{ asset('assets/img/sprite.svg#apple') }}"></use>
                                 </svg>Apple</a>
