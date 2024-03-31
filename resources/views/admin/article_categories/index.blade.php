@@ -98,8 +98,8 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-12">
-                                                @foreach($tree_categories as $main_category)
-                                                    <a class="btn @if($category?->id == $main_category->id) btn-primary @else btn-outline-primary @endif" href="{{ route('admin.article_categories', ['tab' => 'tree_nested_tab', 'category' => $main_category]) }}">{{ $main_category->name }}</a>
+                                                @foreach(\App\Enums\CriminalArticleTypeEnum::cases() as $case)
+                                                    <a class="btn @if($category?->type == $case->value) btn-primary @else btn-outline-primary @endif" href="{{ route('admin.article_categories', ['tab' => 'tree_nested_tab', 'category' => $caseCategory = $case->getCategory()]) }}">{{ $caseCategory->name }}</a>
                                                 @endforeach
                                             </div>
                                         </div>

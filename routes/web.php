@@ -178,14 +178,22 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
         ->name('registries.index');
 
     // Subscription
-    Route::get('/subscription', [\App\Http\Controllers\User\SubscriptionController::class, 'index'])
+    Route::get('subscription', [\App\Http\Controllers\User\SubscriptionController::class, 'index'])
         ->name('subscription.index');
+    Route::post('subscription/{plan}', [\App\Http\Controllers\User\SubscriptionController::class, 'paymentData'])
+        ->name('subscription.payment-data');
+    Route::delete('subscription/cancel', [\App\Http\Controllers\User\SubscriptionController::class, 'cancel'])
+        ->name('subscription.cancel');
 
     // Notifications
     Route::post('notifications/bulk-mark-as-read', [\App\Http\Controllers\User\NotificationController::class, 'bulkMarkAsRead'])
         ->name('notifications.bulk-mark-as-read');
 
 });
+
+Route::post('subscription', [\App\Http\Controllers\User\SubscriptionController::class, 'checkout'])
+    ->middleware(['liqpay.check.signature'])
+    ->name('subscription.checkout');
 
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin'], 'as' => 'admin.'], function () {

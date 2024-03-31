@@ -20,7 +20,7 @@
                                 <div class="col-sm-12">
                                     <select class="form-control" name="type" id="createCategoryType">
                                         @foreach(\App\Enums\CriminalArticleTypeEnum::cases() as $case)
-                                            <option value="{{ $case->value }}">{{ $case->getTitle() }}</option>
+                                            <option value="{{ $case->value }}" @selected(isset($category) && $category->type == $case->value)>{{ $case->getTitle() }}</option>
                                         @endforeach
                                     </select>
                                 </div>

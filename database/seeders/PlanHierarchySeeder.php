@@ -22,17 +22,25 @@ class PlanHierarchySeeder extends Seeder
 
         \DB::table('roles')->truncate();
         foreach (RoleEnum::cases() as $roleEnum) {
-            Role::create([
-                'name' => $roleEnum->value
-            ]);
+            if ($roleEnum->value == RoleEnum::MAX->value) {
+                $maxRole = Role::create([
+                        'name' => $roleEnum->value
+                    ]);
+            } else {
+                Role::create([
+                    'name' => $roleEnum->value
+                ]);
+            }
         }
         $role_ids = Role::pluck('id', 'name')->toArray();
 
         \DB::table('permissions')->truncate();
         foreach (PermissionEnum::cases() as $permissionEnum) {
-            Permission::create([
+            $permission = Permission::create([
                 'name' => $permissionEnum->value
             ]);
+
+            $maxRole->givePermissionTo($permission);
         }
         $permission_ids = Permission::pluck('id', 'name')->toArray();
 
@@ -92,28 +100,27 @@ class PlanHierarchySeeder extends Seeder
 
         \DB::table('plans')->truncate();
         $plans = [
-            [
-                'role_id' => $role_ids[RoleEnum::LITE->value],
-                'title' => 'Lite',
-                'price_monthly' => 5,
-                'price_semiannual' => 27,
-                'price_annual' => 48,
-                'features' => [2, 8],
-            ],
-            [
-                'role_id' => $role_ids[RoleEnum::BASE->value],
-                'title' => 'Base',
-                'price_monthly' => 7,
-                'price_semiannual' => 37,
-                'price_annual' => 65,
-                'features' => [1, 2, 3, 4, 5, 6, 7, 8],
-            ],
+//            [
+//                'role_id' => $role_ids[RoleEnum::LITE->value],
+//                'title' => 'Lite',
+//                'price_monthly' => 5,
+//                'price_semiannual' => 27,
+//                'price_annual' => 48,
+//                'features' => [2, 8],
+//            ],
+//            [
+//                'role_id' => $role_ids[RoleEnum::BASE->value],
+//                'title' => 'Base',
+//                'price_monthly' => 7,
+//                'price_semiannual' => 37,
+//                'price_annual' => 65,
+//                'features' => [1, 2, 3, 4, 5, 6, 7, 8],
+//            ],
             [
                 'role_id' => $role_ids[RoleEnum::MAX->value],
                 'title' => 'Max',
-                'price_monthly' => 10,
-                'price_semiannual' => 55,
-                'price_annual' => 80,
+                'price_monthly' => 9,
+                'price_annual' => 70,
                 'features' => [1, 2, 3, 4, 5, 6, 7, 8, 9],
             ],
         ];

@@ -71,4 +71,14 @@ class Plan extends Model
         };
     }
 
+    public function getPriceWithPeriodByPeriod(string $period): string
+    {
+        $periodTitle = match ($period) {
+            'month' => 'місяць',
+            'year' => 'рік'
+        };
+
+        return '$' . $this->getPriceByPeriod($period) . '/' . $periodTitle;
+    }
+
 }

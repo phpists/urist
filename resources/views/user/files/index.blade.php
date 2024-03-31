@@ -56,7 +56,7 @@
 
                 @if(isset($folder_id))
                     <div>
-                        <a href="{{ route('user.files.index') }}">Закладки</a>
+                        <a href="{{ route('user.files.index') }}">Кабінет</a>
                         <span style="margin: 0 7px">/</span>
                         @if($file_folder->parent)
                             @foreach($file_folder->getParentBreadcrumbs(false) as $tmp_folder_id => $tmp_folder_name)

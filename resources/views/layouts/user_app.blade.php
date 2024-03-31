@@ -43,7 +43,13 @@
     @stack('modals')
 </div>
 
-
+<div id="alertsContainer">
+    @foreach(['success', 'error'] as $alertType)
+        @if(session()->has($alertType))
+            <span class="{{ $alertType }}">{{ session()->get($alertType) }}</span>
+        @endif
+    @endforeach
+</div>
 <img id="spinner" src="{{ asset('img/spinner.gif') }}" alt="loading..." style="display: none">
 
 @include('user.articles.filter._filter')

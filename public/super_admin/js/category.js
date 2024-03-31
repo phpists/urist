@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    $("#createCategoryParent").select2({
+    const createCategorySelect = $("#createCategoryParent").select2({
         width: '100%',
         placeholder: "Виберіть батьківську категорію",
         ajax: makeAjaxCategorySearch()
@@ -130,6 +130,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         })
+    })
+
+
+    $(document).on('click', 'button.create_category_inside', function (e) {
+        let option = new Option(this.dataset.name, this.dataset.id, true, true);
+        createCategorySelect.append(option).trigger('change');
     })
 
     $('.updateStatusBtn').each((id, el) => {

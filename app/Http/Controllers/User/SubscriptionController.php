@@ -5,49 +5,83 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Plan\Feature;
 use App\Models\Plan\Plan;
+use App\Models\SubscriptionSession;
+use App\Services\LiqPayService;
+use Carbon\Carbon;
+use DigitalThreads\LiqPay\Dto\StdClassLiqPayPaymentDetails;
 use DigitalThreads\LiqPay\LiqPay;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class SubscriptionController extends Controller
 {
 
-    public function index()
+    function __construct(private readonly LiqPayService $liqPayService)
+    {
+    }
+
+    function index()
     {
         return view('user.subscription.index', [
+            'user' => \Auth::user(),
             'plans' => Plan::active()->orderBy('pos')->get(),
             'features' => Feature::active()->orderBy('pos')->get()
         ]);
     }
 
-    public function paymentData(Request $request, Plan $plan)
+    function checkout(Request $request)
     {
+        $payment = unserialize($request->attributes->get('payment'));
+
+        if (!$payment) {
+            \Log::error('Запит не містить платіжних даних');
+            abort(500);
+        }
+
+        try {
+            $message = $this->liqPayService->handleRequest($payment);
+            return to_route('user.subscription.index')->with('success', $message);
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage() . '|payload:' . json_encode($payment));
+            return to_route('user.subscription.index')->with('error', 'Не вдалось створити підписку');
+        }
+    }
+
+    function paymentData(Request $request, Plan $plan)
+    {
+        if (!$request->ajax())
+            abort(Response::HTTP_NOT_FOUND);
+
         $period = $request->post('period');
-        $data = [
-            'action' => 'subscribe',
-            'subscribe' => '1',
-            'subscribe_periodicity' => $period,
-            'amount' => $plan->getPriceByPeriod($period),
-            'description' => 'Оформлення підписки "'. $plan->title .'"',
-            'result_url' => route('web.checkout'),
-            'server_url' => route('api.liqpay_callback'),
-        ];
 
-        $subscription_code = md5(json_encode(array_merge($data, [
-            'user' => $request->user(),
-            'time' => time(),
-            'uniqid' => uniqid()
-        ])));
+        try {
+            $prerequisites = $this->liqPayService->getCheckoutPrerequisites($request->user(), $plan, $period);
 
-        $data['subscription_id'] = $subscription_code;
+            return new JsonResponse([
+                'action' => $prerequisites->getAction(),
+                'data' => $prerequisites->getData(),
+                'signature' => $prerequisites->getSignature(),
+                'price_title' => $plan->getPriceWithPeriodByPeriod($period)
+            ]);
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return new JsonResponse([
+                'message' => 'ERROR'
+            ], 500);
+        }
+    }
 
-        $prerequisites  = LiqPay::getCheckoutFormPrerequisites($data);
+    function cancel(Request $request)
+    {
+//        try {
+            $message = $this->liqPayService->unsubscribe($request->user()->activeSubscription);
+            return to_route('user.subscription.index')->with('success', $message);
+//        } catch (\Exception $e) {
+//            \Log::error($e->getMessage());
+//            return to_route('user.subscription.index')->with('error', 'Не вдалось скасувати підписку');
+//        }
 
-        return [
-            'subscription_code' => $subscription_code,
-            'action' => $prerequisites->getAction(),
-            'data' => $prerequisites->getData(),
-            'signature' => $prerequisites->getSignature(),
-        ];
     }
 
 }

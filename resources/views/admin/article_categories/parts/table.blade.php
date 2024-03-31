@@ -12,6 +12,8 @@
                 <form action="{{ route('admin.article_category.delete') }}" method="POST">
                     @csrf
                     @method('DELETE')
+
+                    <button type="button" class="btn btn-sm btn-clean btn-icon create_category_inside" data-id="{{ $category->id }}" data-name="{{ $category->name }}" data-toggle="modal" data-target="#createArticleCategoryModal"><i class="las la-plus"></i></button>
                     <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateArticleCategory"
                        data-toggle="modal" data-target="#updateArticleCategoryModal"
                        data-id="{{ $category->id }}">

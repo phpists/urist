@@ -1,5 +1,5 @@
 @extends('layouts.user_app')
-@section('title', 'Закладки')
+@section('title', 'Кабінет')
 @section('styles')
     <style>
         a.non-draggable, svg.non-draggable, img.non-draggable {
@@ -13,7 +13,7 @@
         <div class="container bookmarks-section__container">
             <header class="bookmarks-section__header">
                 <div class="bookmarks-section__header-row">
-                    <h1 class="page-title bookmarks-section__title">Закладки</h1>
+                    <h1 class="page-title bookmarks-section__title">Кабінет</h1>
                     <div class="sort-form bookmarks-section__sort-form" id="sort-form">
                         <div class="sort-form__group">
                             <select class="select" id="selectSortByBookmarks" name="sort" aria-label="Sort by">
@@ -55,7 +55,7 @@
 
                 @if(isset($folder_id))
                 <div>
-                    <a href="{{ route('user.bookmarks.index') }}">Закладки</a>
+                    <a href="{{ route('user.bookmarks.index') }}">Кабінет</a>
                     <span style="margin: 0 7px">/</span>
                     @if($fav_folder->parent)
                         @foreach($fav_folder->getParentBreadcrumbs(false) as $tmp_folder_id => $tmp_folder_name)

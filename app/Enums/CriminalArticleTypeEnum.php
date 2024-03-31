@@ -2,6 +2,8 @@
 
 namespace App\Enums;
 
+use App\Models\ArticleCategory;
+
 enum CriminalArticleTypeEnum: string
 {
 
@@ -14,6 +16,11 @@ enum CriminalArticleTypeEnum: string
             self::KPK->value => 'КПК',
             self::KK->value => 'КК',
         };
+    }
+
+    public function getCategory(): ?ArticleCategory
+    {
+        return ArticleCategory::whereName($this->getTitle())->first();
     }
 
 }

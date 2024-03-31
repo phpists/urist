@@ -5,6 +5,7 @@ namespace App\Http\Middleware\Api;
 use Closure;
 use DigitalThreads\LiqPay\Exceptions\InvalidCallbackRequestException;
 use DigitalThreads\LiqPay\LiqPay;
+use DigitalThreads\LiqPay\LiqPaySdkClient;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,7 +20,7 @@ class CheckLiqPaySignature
     {
         try {
             $payload = LiqPay::validateCallback($request);
-            $request->merge(['payload' => $payload]);
+            $request->attributes->add(['payment' => serialize($payload)]);
 
             return $next($request);
         } catch (\Exception $e) {

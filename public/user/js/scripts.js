@@ -157,6 +157,19 @@ $(function () {
         $form.submit()
     })
 
+    if ((Math.min(window.screen.width, window.screen.height) < 768 || navigator.userAgent.indexOf("Mobi") > -1)
+        && window.location.href.includes('/articles/'))
+        $('.filter-toggle__button').click() // open filter on articles page if mobile device
+
+
+    $('#alertsContainer span.success').each(function (i, item) {
+        throwSuccessToaster(item.textContent)
+    })
+
+    $('#alertsContainer span.error').each(function (i, item) {
+        throwErrorToaster(item.textContent)
+    })
+
 })
 
 

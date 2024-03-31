@@ -64,6 +64,6 @@ Route::group(['middleware' => 'jwt'], function () {
 
 
 // LiqPay
-Route::post('callback', [PaymentController::class, 'callback'])
+Route::post('liqpay/callback', [\App\Http\Controllers\Api\LiqPayController::class, 'callback'])
     ->middleware(['liqpay.check.signature'])
-    ->name('liqpay_callback');
+    ->name('api.liqpay.callback');

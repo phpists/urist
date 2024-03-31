@@ -21,5 +21,30 @@ $(function () {
         }
     })
 
+    $(document).on('click', '.show_payment_modal', function (e) {
+        const $form = $('#paymentForm');
+        let period = $('#selectedPeriod').val(),
+            planTitle = $(this).data('title');
+
+        $.ajax({
+            type: 'POST',
+            url: this.dataset.url,
+            data: {
+                period: period
+            },
+            beforeSend: function () {
+                $form.hide();
+            },
+            success: function (response) {
+                $('#paymentPlanTitle').text(planTitle)
+                $form.attr('action', response.action);
+                $form.find('[name="data"]').val(response.data);
+                $form.find('[name="signature"]').val(response.signature);
+                $('#paymentPlanPrice').text(response.price_title)
+                $form.show();
+            }
+        })
+    })
+
 
 })
