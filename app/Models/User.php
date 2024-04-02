@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\FolderType;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -125,9 +126,20 @@ class User extends Authenticatable implements JWTSubject
         );
     }
 
-    public function activeSubscription(): HasOne
+    public function subscription(): HasOne
     {
         return $this->hasOne(Subscription::class);
+    }
+
+    public function activeSubscription(): HasOne
+    {
+        return $this->subscription()->where(function ($query) {
+            return $query->whereNull('subscriptions.cancelled_at')
+                ->orWhere(function ($query) {
+                    return $query->whereNotNull('subscriptions.cancelled_at')
+                        ->where('expires_at', '>', Carbon::now());
+                });
+        });
     }
 
     public function unreadNotifications()

@@ -28,8 +28,10 @@ class LiqPayService
         $this->payment = $payment;
 
         return match ($this->payment->get('action')) {
-            'subscribe' => $this->handleNewSubscription(),
-            'unsubscribe' => $this->handleUnsubscribe(),
+            'subscribe' => match ($this->payment->get('status')) {
+                'subscribed' => $this->handleNewSubscription(),
+                'unsubscribed' => $this->handleUnsubscribe()
+            },
             'regular' => $this->handleRegularPayment(),
         };
     }
@@ -74,7 +76,7 @@ class LiqPayService
         if (!$subscription->session)
             throw new Exception('Не вдалось оприділити сесію підписки');
 
-        $liqPay = new \LiqPay(env('LIQPAY_PUBLIC_KEY'), env('LIQPAY_PRIVATE_KEY'));
+        $liqPay = new \LiqPay(config('liqpay.public_key'), config('liqpay.private_key'));
         $response = $liqPay->api('request', [
             'action' => 'unsubscribe',
             'version' => '3',
@@ -90,9 +92,6 @@ class LiqPayService
      */
     private function handleNewSubscription(): string
     {
-        if ($this->payment->get('status') !== 'success')
-            throw new Exception('Не вдалось створити підписку');
-
         $subscriptionSession = SubscriptionSession::whereHash($this->payment->get('order_id'))->firstOrFail();
         if (!$subscriptionSession)
             throw new Exception('Не вдалось знайти платіжну сесію');
@@ -128,9 +127,6 @@ class LiqPayService
      */
     private function handleUnsubscribe(): string
     {
-        if ($this->payment->get('status') !== 'success')
-            throw new Exception('Не вдалось скасувати підписку');
-
         $subscription = SubscriptionSession::whereHash($this->payment->get('order_id'))
             ->firstOrFail()
             ->subscription;

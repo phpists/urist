@@ -14,15 +14,21 @@
                                     {{ $user->activeSubscription->plan->title }}</a>
                                 - {{ $user->activeSubscription->plan->getPriceWithPeriodByPeriod($user->activeSubscription->period) }}
                             </strong></h3>
+                        @if($user->activeSubscription->isCancelled())
+                            <div class="current-subscription__date">Підписка скасована. Оплачений період завершується {{ $user->activeSubscription->expires_at->format('d.m.Y') }}</div>
+                            @else
                         <div class="current-subscription__date">Наступний
                             платіж {{ $user->activeSubscription->expires_at->format('d.m.Y') }}</div>
+                        @endif
                     </div>
+                    @if(!$user->activeSubscription->isCancelled())
                     <form action="{{ route('user.subscription.cancel') }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button class="button button--red subscription-section__button" type="submit" onclick="return confirm('Ви впевнені, що хочете скасувати відписку?')">Відмінити підписку
                         </button>
                     </form>
+                    @endif
                 @else
                     <div class="current-subscription__info">
                         <h3 class="current-subscription__title">Наразі у вас немає активної підписки!</h3>

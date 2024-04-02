@@ -168,7 +168,7 @@
                                     <div class="tariff-card__discount" data-months="6" data-price="{{ $plan->price_semiannual }}$">{{ $plan->price_semiannual }}$ / 6 мес (-{{ $plan->getSemiannualDiscountPercent() }}%)</div>
                                     <div class="tariff-card__discount" data-months="12" data-price="{{ $plan->price_annual }}$">{{ $plan->price_annual }}$ / 12 мес (-{{ $plan->getAnnualDiscountPercent() }}%)</div>
                                 </div>
-                                <a class="button tariff-card__buy-button" href="{{ auth()->check() ? route('user.subscription.index') : route('register.page') }}">Обрати</a>
+                                <a class="button tariff-card__buy-button" href="{{ auth()->check() ? route('user.subscription.index') : route('login') }}">Обрати</a>
                             </div>
                         </div>
                     </div>

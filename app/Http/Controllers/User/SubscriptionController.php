@@ -39,13 +39,13 @@ class SubscriptionController extends Controller
             abort(500);
         }
 
-        try {
+//        try {
             $message = $this->liqPayService->handleRequest($payment);
             return to_route('user.subscription.index')->with('success', $message);
-        } catch (\Exception $e) {
-            \Log::error($e->getMessage() . '|payload:' . json_encode($payment));
-            return to_route('user.subscription.index')->with('error', 'Не вдалось створити підписку');
-        }
+//        } catch (\Exception $e) {
+//            \Log::error($e->getMessage() . '|payload:' . json_encode($payment));
+//            return to_route('user.subscription.index')->with('error', 'Не вдалось створити підписку');
+//        }
     }
 
     function paymentData(Request $request, Plan $plan)
