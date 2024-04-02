@@ -1,22 +1,14 @@
-$(document).ready(function () {
+jQuery(document).ready(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
-    function numberSelected() {
-        var data = $('#users_form').serializeArray();
-        var counts = [];
-
-        data.forEach(function (element) {
-            if (!counts[element.name]) {
-                counts[element.name] = 0;
-            }
-            counts[element.name] += 1;
-        });
-    }
-
-    function request(url) {
-        numberSelected();
-
+    function request(formId, url) {
+        formId = '#' + formId;
         if (typeof url === 'undefined') {
-            url = $('#filterUrl').data('url') + '?' + $('#users_form').serialize();
+            url = $(formId).attr('action') + '?' + $(formId).serialize();
         }
 
         $.ajax({
@@ -24,58 +16,20 @@ $(document).ready(function () {
             url: url,
             dataType: "json",
             success: function (response) {
-                $('#table').html(response.usersHtml);
-                $('#pagination').html(response.paginateHtml);
+                $('#table_container').html(response.html);
+
+                window.history.pushState(null, null, url);
             }
         });
+
     }
 
-    /* Id */
-    $(document).on('keyup', '#id', function (e) {
-        e.preventDefault();
-        request();
-    });
+    $('#search').on('input', function () {
+        request('filterDataForm')
+    })
 
-    /* Email */
-    $(document).on('keyup', '#email', function (e) {
-        e.preventDefault();
-        request();
-    });
-
-    /* Name */
-    $(document).on('keyup', '#name', function (e) {
-        e.preventDefault();
-        request();
-    });
-
-    /* Last name */
-    $(document).on('keyup', '#last_name', function (e) {
-        e.preventDefault();
-        request();
-    });
-
-    /* Phone */
-    $(document).on('keyup', '#phone', function (e) {
-        e.preventDefault();
-        request();
-    });
-
-    /* Last active */
-    $(document).on('keyup', '#last_active', function (e) {
-        e.preventDefault();
-        request();
-    });
-
-    /* Created_at */
-    $(document).on('keyup', '#created_at', function (e) {
-        e.preventDefault();
-        request();
-    });
-
-    /* Статус */
-    $(document).on('change', '.status', function (e) {
-        e.preventDefault();
-        request();
-    });
+    $(document).on('click', 'button[data-target="#subscribeUser"]', function (e) {
+        $("#subscribeUser form").attr('action', this.dataset.url);
+    })
 
 });

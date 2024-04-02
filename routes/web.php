@@ -325,4 +325,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin'], 'as' 
     Route::resource('system-pages', \App\Http\Controllers\Admin\SystemPageController::class)
         ->only(['edit', 'update']);
 
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class)
+        ->only(['index']);
+    Route::post('users/{user}/subscribe', [\App\Http\Controllers\Admin\UserController::class, 'subscribe'])
+        ->name('users.subscribe');
+
 });

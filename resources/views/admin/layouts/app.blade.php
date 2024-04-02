@@ -170,6 +170,13 @@
                                 <span class="menu-text">Реєстр</span>
                             </a>
                         </li>
+                        <li class="menu-item {{ request()->routeIs('admin.users.*') ? 'menu-item-active' : '' }}"
+                            aria-haspopup="true">
+                            <a href="{{route('admin.users.index')}}" class="menu-link">
+                                <i class="flaticon-users menu-icon"></i>
+                                <span class="menu-text">Користувачі</span>
+                            </a>
+                        </li>
 {{--                        <li class="menu-item {{ request()->routeIs('admin.subscriptions.index') ? 'menu-item-active' : '' }}"--}}
 {{--                            aria-haspopup="true">--}}
 {{--                            <a href="{{route('admin.subscriptions.index')}}" class="menu-link">--}}

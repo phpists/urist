@@ -13,5 +13,7 @@ return [
     'roles' => [
         \App\Models\User::ROLE_BASE => 'Base',
         \App\Models\User::ROLE_LITE => 'Lite'
-    ]
+    ],
+    'month' => 'Місяць',
+    'year' => 'Рік'
 ];
