@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Блог')
+@section('title',  $systemPage->title ?? 'Блог')
 @section('page')
     <section class="blog-section">
         <div class="container blog-section__container">

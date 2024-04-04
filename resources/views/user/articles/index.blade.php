@@ -2,9 +2,6 @@
 @section('title', $systemPage->title ?? '')
 @section('meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @if($metaDescription = $systemPage->getMeta('description'))
-        <meta name="description" content="{{ $metaDescription }}">
-    @endif
 @endsection
 
 @php($is_menu_hidden = false)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\SystemPageEnum;
 use App\Models\Blog;
 use App\Models\BlogTag;
 use Illuminate\Http\Request;
@@ -24,7 +25,8 @@ class BlogController extends Controller
                 ->customSorted()
                 ->paginate()
                 ->withQueryString(),
-            'currentBlogTag' => $currentBlogTag ?? null
+            'currentBlogTag' => $currentBlogTag ?? null,
+            'systemPage' => SystemPageEnum::BLOG->getPage()
         ]);
     }
 

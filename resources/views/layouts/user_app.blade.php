@@ -23,6 +23,9 @@
     <meta name="msapplication-TileImage" content="{{ asset('/assets/favicon/ms-icon-144x144.png') }}">
     <meta name="theme-color" content="#ffffff">
     @yield('meta')
+    @if(isset($systemPage))
+        @include('layouts.partials.seo', ['model' => $systemPage])
+    @endif
     <link rel="stylesheet" href="{{ asset('user/build/main.css') }}">
     <link rel="stylesheet" href="{{ asset('user/css/styles.css') }}">
     @stack('style')

@@ -83,40 +83,10 @@
                                     </div>
                                 </div>
 
-                                <hr class="my-10">
-
-                                <div class="row mb-5">
-                                    @foreach($model->data as $i => $datum)
-                                        <div class="col-12 col-md-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="data[{{ $i }}][title]" value="{{ old("data.{$i}.title", $model->data[$i]['title']) }}" placeholder="Заголовок" required>
-                                            </div>
-
-                                            <hr class="my-8">
-
-                                            @foreach($datum['items'] as $item)
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" name="data[{{ $i }}][items][{{ $loop->index }}][title]" value="{{ old("data.{$i}.items.{$loop->index}.title", $model->data[$i]['items'][$loop->index]['title']) }}" placeholder="Питання" required>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <textarea class="form-control" name="data[{{ $i }}][items][{{ $loop->index }}][body]" cols="30" rows="5" placeholder="Відповідь">{{ old("data.{$i}.items.{$loop->index}.title", $model->data[$i]['items'][$loop->index]['title']) }}</textarea>
-                                                </div>
-                                            </div>
-
-                                                @if(!$loop->last)
-                                                    <hr class="my-8">
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    @endforeach
-                                </div>
-
                             </div>
                         </div>
                             </div>
+
 
                             <div class="tab-pane fade" role="tabpanel" id="seo_tab">
                                 <div class="row">
@@ -145,6 +115,7 @@
                             </div>
                         </div>
 
+
                     </form>
                 </div>
             </div>
@@ -157,4 +128,20 @@
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
     <script src="{{ asset('js/helpers.js') }} "></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            document.querySelectorAll('.ckeditor', function (item) {
+                let contentEditor = CKEDITOR.replace(item);
+            })
+
+            let thumbnailImage = new KTImageInput('thumbnailImage');
+            let thumbnailImage1 = new KTImageInput('thumbnailImage1');
+
+            $('.kt-image').each(function (i, item) {
+                new KTImageInput(this)
+            })
+
+        })
+    </script>
 @endsection

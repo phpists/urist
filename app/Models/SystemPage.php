@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasMeta;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SystemPage extends Model
 {
+    use HasMeta;
 
     const IMG_PATH = '/uploads/system-pages/';
 
@@ -82,14 +84,6 @@ class SystemPage extends Model
     public function getRouteKeyName()
     {
         return 'name';
-    }
-
-    public function getMeta(string $key): ?string
-    {
-        if (is_array($this->meta))
-            return $this->meta[$key] ?? null;
-
-        return null;
     }
 
 }

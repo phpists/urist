@@ -104,6 +104,32 @@
     </div>
 </div>
 
+<hr class="my-4">
+
+<div class="row">
+    <div class="col-12">
+        <div class="form-group mb-8">
+            <label for="formTitle">Meta Title</label>
+            <div class="input-wrapper">
+                <input id="formTitle" type="text" name="meta[title]" class="form-control"
+                       value="{{ old('meta.title', $model->getMeta('title')) }}"/>
+                @error('meta.title')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="form-group">
+            <label for="formTitle">Meta Description</label>
+            <div class="input-wrapper">
+                <textarea rows="6" class="form-control" name="meta[description]">{!! old('meta.description', $model->getMeta('description')) !!}</textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function () {

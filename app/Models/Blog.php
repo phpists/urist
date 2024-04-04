@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasMeta;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
@@ -9,7 +10,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class Blog extends Model
 {
-    use HasFactory, HasSlug;
+    use HasFactory, HasSlug, HasMeta;
 
 
     const IMG_PATH = '/uploads/blog/';
@@ -23,11 +24,13 @@ class Blog extends Model
         'short_description',
         'content',
         'date',
+        'meta'
     ];
 
     protected $casts = [
         'date' => 'datetime',
-        'is_main' => 'boolean'
+        'is_main' => 'boolean',
+        'meta' => 'json'
     ];
 
     protected static function booted () {

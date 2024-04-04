@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Контакти')
+@section('title',  $systemPage->title ?? 'Контакти')
 @section('page')
     <section class="contacts-section">
         <div class="container contacts-section__container">

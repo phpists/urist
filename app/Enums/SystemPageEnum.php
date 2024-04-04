@@ -16,9 +16,11 @@ enum SystemPageEnum:string
 
     case ARTICLES = 'articles';
 
+    case BLOG = 'blog';
+
     public function getPage(): SystemPage
     {
-        return SystemPage::whereName($this->value)->first();
+        return SystemPage::whereName($this->value)->firstOrFail();
     }
 
 }

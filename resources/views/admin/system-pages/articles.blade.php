@@ -45,6 +45,18 @@
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-toolbar">
+                        <ul class="nav nav-tabs nav-bold nav-tabs-line">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#main_tab">
+                                    <span class="nav-text">Головна інформація</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#seo_tab">
+                                    <span class="nav-text">SEO</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                     <div class="card-toolbar">
                         <button type="submit" form="updateSystemPageForm" class="btn btn-primary">Зберегти</button>
@@ -56,6 +68,10 @@
                         @csrf
                         @method('PUT')
 
+
+                        <div class="tab-content">
+
+                            <div class="tab-pane fade show active" role="tabpanel" id="main_tab">
                         <div class="row">
                             <div class="col">
                                 <div class="form-group mb-8">
@@ -67,37 +83,38 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="form-group mb-8">
-                                    <label for="formMetaDescription">Meta Desciption</label>
-                                    <div class="input-wrapper">
-                                        <textarea id="formMetaDescription" name="meta[description]" class="form-control" required>{{ old('meta.description', $model->getMeta('description')) }}</textarea>
-                                        @error('meta.description')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
 
                             </div>
                         </div>
+                            </div>
 
-                        @push('scripts')
-                            <script>
-                                document.addEventListener('DOMContentLoaded', function () {
 
-                                    document.querySelectorAll('.ckeditor', function (item) {
-                                        let contentEditor = CKEDITOR.replace(item);
-                                    })
+                            <div class="tab-pane fade" role="tabpanel" id="seo_tab">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group mb-8">
+                                            <label for="formTitle">Meta Title</label>
+                                            <div class="input-wrapper">
+                                                <input id="formTitle" type="text" name="meta[title]" class="form-control"
+                                                       value="{{ old('meta.title', $model->meta['title'] ?? '') }}"/>
+                                                @error('meta.title')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                    let thumbnailImage = new KTImageInput('thumbnailImage');
-                                    let thumbnailImage1 = new KTImageInput('thumbnailImage1');
-
-                                    $('.kt-image').each(function (i, item) {
-                                        new KTImageInput(this)
-                                    })
-
-                                })
-                            </script>
-                        @endpush
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="formTitle">Meta Description</label>
+                                            <div class="input-wrapper">
+                                                <textarea rows="6" class="form-control" name="meta[description]">{!! old('meta.description', $model->meta['description'] ?? '') !!}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     </form>
                 </div>
@@ -111,4 +128,20 @@
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
     <script src="{{ asset('js/helpers.js') }} "></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            document.querySelectorAll('.ckeditor', function (item) {
+                let contentEditor = CKEDITOR.replace(item);
+            })
+
+            let thumbnailImage = new KTImageInput('thumbnailImage');
+            let thumbnailImage1 = new KTImageInput('thumbnailImage1');
+
+            $('.kt-image').each(function (i, item) {
+                new KTImageInput(this)
+            })
+
+        })
+    </script>
 @endsection

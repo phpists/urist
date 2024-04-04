@@ -18,7 +18,8 @@ class ContactController extends Controller
     function index(): Application|Factory|View|\Illuminate\Foundation\Application
     {
         return view('pages.contacts', [
-            'adminEmail' => SettingService::getValueByName(SettingEnum::ADMIN_EMAIL->value)
+            'adminEmail' => SettingService::getValueByName(SettingEnum::ADMIN_EMAIL->value),
+            'systemPage' => SystemPageEnum::CONTACTS->getPage()
         ]);
     }
 }

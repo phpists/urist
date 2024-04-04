@@ -24,6 +24,11 @@
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="{{ asset('build/main.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    @if(isset($systemPage))
+        @include('layouts.partials.seo', ['model' => $systemPage])
+    @elseif(isset($blog))
+        @include('layouts.partials.seo', ['model' => $blog])
+    @endif
     @stack('style')
     @stack('scripts_head')
 </head>
