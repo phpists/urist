@@ -32,10 +32,12 @@ class Folder extends Model
 
     public function files()
     {
-        return match ($this->folder_type) {
-            FolderType::FILE_FOLDER => $this->hasMany(File::class),
-            FolderType::FAVOURITES_FOLDER => $this->hasMany(Favourite::class)
-        };
+        return $this->hasMany(File::class);
+    }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Favourite::class);
     }
 
     public function childs()
@@ -73,9 +75,20 @@ class Folder extends Model
         return $count;
     }
 
-    public function getFilesCountTitle(): string
+    public function getBookmarksCount(): int
     {
-        $count = $this->getFilesCount();
+        $count = $this->bookmarks()->count();
+
+        foreach ($this->childs as $child) {
+            $count += $child->getBookmarksCount();
+        }
+
+        return $count;
+    }
+
+    public function getTotalEntriesCountTitle(): string
+    {
+        $count = $this->getFilesCount() + $this->getBookmarksCount();
 
         if ($count == 1) {
             return "$count правова позиція";

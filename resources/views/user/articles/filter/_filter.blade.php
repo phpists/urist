@@ -19,7 +19,7 @@
                 <h3 class="filter__title">
                     <svg class="filter__title-icon" width="38" height="38">
                         <use xlink:href="{{ asset('img/sprite.svg#filter') }}"></use>
-                    </svg><span>Фільтр</span>
+                    </svg><span>Зміст кодексу</span>
                 </h3>
                 <button class="button button--outline filter__hide-button" type="button" aria-label="Hide Filter" data-tooltip-left="Регулювання масштабу" data-filter-hide="data-filter-hide">
                     <svg class="button__icon" width="10" height="19">
@@ -53,7 +53,7 @@
         </div>
         <div class="filter__bottom">
             <button class="button button--outline filter__button" type="button" onclick="location.href = '{{ route('user.articles.index', $filterService->getType()) }}'">Скинути</button>
-            <button class="button filter__button" type="submit" form="filterForm" @if(!str_contains(route('user.articles.index', $filterService->getType()), url()->current())) data-redirect="true" @endif disabled>Показати ({{ $filterService->getTotalCount() }})</button>
+            <button class="button filter__button" type="submit" form="filterForm" @if(!str_contains(route('user.articles.index', $filterService->getType()), url()->current())) data-redirect="true" @endif disabled>Показати</button>
         </div>
     </div>
 </aside>
@@ -156,10 +156,10 @@
                     data: $form.serialize(),
                     dataType: 'json',
                     beforeSend: function () {
-                        $button.text('');
+                        // $button.text('');
                     },
                     success: function (response) {
-                        $button.text(`Показати (${response.count})`)
+                        // $button.text(`Показати (${response.count})`)
                     },
                     complete: function () {
                     }

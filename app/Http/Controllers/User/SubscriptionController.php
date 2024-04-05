@@ -74,13 +74,16 @@ class SubscriptionController extends Controller
 
     function cancel(Request $request)
     {
-//        try {
+        if (!$request->user()->activeSubscription->session)
+            return to_route('user.subscription.index')->with('error', 'Неможливо скасувати безкоштовну підписку');
+
+        try {
             $message = $this->liqPayService->unsubscribe($request->user()->activeSubscription);
             return to_route('user.subscription.index')->with('success', $message);
-//        } catch (\Exception $e) {
-//            \Log::error($e->getMessage());
-//            return to_route('user.subscription.index')->with('error', 'Не вдалось скасувати підписку');
-//        }
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return to_route('user.subscription.index')->with('error', 'Не вдалось скасувати підписку');
+        }
 
     }
 

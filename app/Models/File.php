@@ -13,6 +13,10 @@ class File extends Model
 
     protected $fillable = ['name', 'folder_id', 'user_id', 'criminal_article_id', 'statya_kk', 'pp'];
 
+    protected $casts = [
+        'created_at' => 'datetime'
+    ];
+
     public function folder() {
         return $this->belongsTo(Folder::class);
     }
@@ -25,6 +29,11 @@ class File extends Model
     public function getProgramTitle(): string
     {
         return \Str::replace(' ', '_', $this->name);
+    }
+
+    public function getPrettyCreatedAtAttribute()
+    {
+        return $this->created_at->format('d.m.Y');
     }
 
 }

@@ -105,6 +105,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/favourites', [CriminalArticleController::class, 'addToFavourites'])->name('criminal_articles.favourites.add');
     // File Routes
     Route::post('files', [FileController::class, 'store'])->name('files.store');
+    Route::post('files/new', [FileController::class, 'new'])->name('files.new.store');
     Route::put('file/update', [FileController::class, 'update'])->name('file.update');
     Route::put('file/move', [FileController::class, 'moveFile'])->name('file.move');
     Route::get('files/search', [FileController::class, 'search'])->name('file.search');

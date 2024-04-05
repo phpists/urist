@@ -47,14 +47,6 @@
                             </a>
                         </li>
                     @endif
-                    @if(can_user(\App\Enums\PermissionEnum::CREATE_BOOKMARKS->value))
-                        <li class="sidebar-menu__item"><a
-                                class="sidebar-menu__link @if(request()->routeIs('user.bookmarks.*')) is-active @endif"
-                                href="{{route('user.bookmarks.index')}}"><span class="sidebar-menu__pic">
-                <svg class="sidebar-menu__icon" width="16" height="20">
-                  <use xlink:href="{{asset('assets/img/user/sprite.svg#bookmark')}}"></use>
-                </svg></span><span class="sidebar-menu__title">Кабінет</span></a></li>
-                    @endif
                     @if(can_user(\App\Enums\PermissionEnum::CREATE_OWN_PAGES->value))
                         <li class="sidebar-menu__item">
                             <a class="sidebar-menu__link @if(request()->routeIs('user.files.*')) is-active @endif"

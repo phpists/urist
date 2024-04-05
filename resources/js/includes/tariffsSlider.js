@@ -8,7 +8,7 @@ const tariffsSlider = () => {
         spaceBetween: 30,
         slidesPerView: 2,
         loop: false,
-        centeredSlides: false,
+        centeredSlides: true,
         observer: true,
         speed: 700,
         observeParents: true,

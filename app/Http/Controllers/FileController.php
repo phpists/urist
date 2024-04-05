@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MoveItemRequest;
 use App\Http\Requests\StoreFileRequest;
+use App\Http\Requests\StoreNewFileRequest;
 use App\Http\Requests\UpdateFileRequest;
 use App\Models\ArticleCategory;
 use App\Models\CriminalArticle;
 use App\Models\Favourite;
 use App\Models\File;
+use App\Services\FileService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -78,6 +80,41 @@ class FileController extends Controller
         return redirect()->back()->withErrors('Неполадки на сервері, спробуйте пізніше', 500);
     }
 
+    public function new(StoreNewFileRequest $request) {
+        $file = new File([
+            'name' => $request->name,
+            'pp' => $tead = FileService::getDocumentContent($request->file('document')),
+            'statya_kk' => '',
+            'folder_id' => $request->folder_id,
+            'user_id' => $request->user()->id,
+        ]);
+
+        if ($file->save()) {
+            $url = route('user.files.edit', $file);
+            $article_name = \Str::limit($file->name, 30);
+            $message = "Файл успішно створений<br><a href='{$url}'><u>{$article_name}</u></a>";
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'result' => true,
+                    'message' => $message
+                ]);
+            }
+
+            return redirect()->back()->with('success', $message);
+        }
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => false,
+                'result' => false,
+                'error' => 'Неполадки на сервері, спробуйте пізніше',
+                'message' => 'Неполадки на сервері, спробуйте пізніше'
+            ]);
+        }
+        return redirect()->back()->withErrors('Неполадки на сервері, спробуйте пізніше', 500);
+    }
+
     public function update(UpdateFileRequest $request) {
         $file = File::query()
             ->where('user_id', $request->user()->id)
@@ -102,6 +139,7 @@ class FileController extends Controller
     public function moveFile(MoveItemRequest $request): \Illuminate\Http\JsonResponse
     {
         $file = File::query()->where('user_id', $request->user()->id)->find($request->item_id);
+        dd($request->all());
         $result = $file->update($request->all());
         return response()->json([
             'success' => true,

@@ -13,8 +13,8 @@
           <div class="form__group">
             <select class="select" id="selectBookmarkFolder" name="folder_id" aria-label="Виберіть папку" required="required">
               <option value="0">Без додавання папки</option>
-                @foreach(Auth::user()->bookmarkFolders as $bookmarkFolder)
-                    <option value="{{ $bookmarkFolder->id }}">{{ $bookmarkFolder->getParentBreadcrumbs() }}</option>
+                @foreach(Auth::user()->allFolders as $folder)
+                    <option value="{{ $folder->id }}">{{ $folder->getParentBreadcrumbs() }}</option>
                 @endforeach
             </select>
           </div>

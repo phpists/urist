@@ -142,6 +142,11 @@ class User extends Authenticatable implements JWTSubject
         });
     }
 
+    public function hadSubscription(): bool
+    {
+        return $this->subscription()->exists();
+    }
+
     public function unreadNotifications()
     {
         return $this->notifications()->where('user_notifications.is_read', 0);

@@ -20,6 +20,8 @@
                                     <li class="page-section__tags-item">{{ $tag }}</li>
                                 @endforeach
                             </ul>
+                        @elseif(!$file->criminal_article_id)
+                            <time class="page-section__date">{{ $file->pretty_created_at }}</time>
                         @endif
                         @if($file->criminalArticle?->court_decision_link)
                             <a class="blue-link page-section__link"

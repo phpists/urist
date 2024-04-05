@@ -25,7 +25,7 @@
                 </div>
                 <div class="bookmarks-section__header-row">
                     @if(isset($folder_id))
-                        <button class="button button--outline bookmarks-section__back-button" type="button" aria-label="Back" data-tooltip="Назад" onclick="location.href = '{{ url()->previous() }}'">
+                        <button class="button button--outline bookmarks-section__back-button" type="button" aria-label="Back" data-tooltip="Назад" onclick="location.href = '{{ $file_folder->parent ? route('user.files.index', ['folderId' => $file_folder->parent->id]) : route('user.files.index') }}'">
                             <svg class="button__icon" width="10" height="19">
                                 <use xlink:href="{{ asset('img/sprite.svg#arrow-left') }}"></use>
                             </svg>
@@ -48,7 +48,8 @@
 
                         @if(can_user(\App\Enums\PermissionEnum::CREATE_OWN_PAGES->value))
                     <div class="bookmarks-section__buttons">
-                        <a href="{{ route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KPK->value) }}" class="button button--outline bookmarks-section__button" type="button">Додати статтю</a>
+{{--                        <a href="{{ route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KPK->value) }}" class="button button--outline bookmarks-section__button" type="button">Додати статтю</a>--}}
+                        <button class="button button--outline bookmarks-section__button" type="button" data-modal="modal-create-file">Додати статтю</button>
                         <button class="button button--outline bookmarks-section__button" type="button" data-modal="modal-create">Створити папку</button>
                     </div>
                         @endif
@@ -82,7 +83,8 @@
 
 
 @push('modals')
-    @include('layouts.user_partials.modal-create', ['folder_type' => \App\Enums\FolderType::FILE_FOLDER->value])
+    @include('layouts.user_partials.modal-create')
+    @include('layouts.user_partials.modal-create-file')
     @include('layouts.user_partials.modal-edit', ['folder_type' => \App\Enums\FolderType::FILE_FOLDER->value])
     @include('layouts.user_partials.modal-edit-file')
     @include('layouts.user_partials.modal-delete')
@@ -158,8 +160,12 @@
             })
         }
 
-        function moveFavourite(folder_id, id) {
+        function moveFile(folder_id, id) {
             moveItem('/file/move', folder_id, id);
+        }
+
+        function moveFavourite(folder_id, id) {
+            moveItem('/favourites/move', folder_id, id);
         }
 
         function moveFolder(folder_id, id) {
@@ -229,6 +235,8 @@
                             draggable_id = draggable.dataset.id;
 
                         if (draggable.dataset.file !== undefined) {
+                            moveFile(folder_id, draggable_id)
+                        } else if (draggable.dataset.bookmark !== undefined) {
                             moveFavourite(folder_id, draggable_id)
                         } else {
                             moveFolder(folder_id, draggable_id)

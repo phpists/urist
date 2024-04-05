@@ -68,3 +68,16 @@ input[name="search"]:focus + .searchItemsContainer {
         font-size: 12px;
     }
 }
+
+.bookmark-card__pic:has(+ .item-label) {
+    margin-bottom: 6px!important;
+}
+
+.item-label {
+    font-size: .8rem;
+    text-align: center;
+}
+
+#alertsContainer {
+    display: none;
+}

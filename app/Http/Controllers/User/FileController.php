@@ -6,6 +6,7 @@ use App\Enums\FolderType;
 use App\Enums\PermissionEnum;
 use App\Http\Controllers\Controller;
 use App\Jobs\DeleteTempFileJob;
+use App\Models\Favourite;
 use App\Models\File;
 use App\Models\Folder;
 use Illuminate\Http\JsonResponse;
@@ -37,7 +38,6 @@ class FileController extends Controller
                 $query->orderBy($column, $direction);
             })
             ->where('user_id', $request->user()->id)
-            ->where('folder_type', FolderType::FILE_FOLDER)
             ->where('parent_id', $folder_id)
             ->get();
         $files = File::query()
@@ -52,11 +52,23 @@ class FileController extends Controller
             ->where('user_id', $request->user()->id)
             ->where('folder_id', $folder_id)
             ->get();
+        $favourites = Favourite::query()
+            ->where('user_id', $request->user()->id)
+            ->where('folder_id', $folder_id)
+            ->when($search, function ($q) use($search) {
+                foreach (explode(' ', $search) as $value) {
+                    $q->where('name', 'LIKE', "%{$value}%");
+                }
+            })
+            ->when($sort, function ($query) use ($column, $direction) {
+                $query->orderBy($column, $direction);
+            })
+            ->get();
 
         if ($request->ajax())
-            return view('user.files._items', compact('file_folder', 'folders', 'files'));
+            return view('user.files._items', compact('file_folder', 'folders', 'files', 'favourites'));
 
-        return view('user.files.index', compact('folders', 'files', 'file_folder', 'folder_id'));
+        return view('user.files.index', compact('folders', 'files', 'file_folder', 'folder_id', 'favourites'));
     }
 
     public function edit(Request $request, File $file)

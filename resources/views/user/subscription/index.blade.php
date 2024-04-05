@@ -21,7 +21,7 @@
                             платіж {{ $user->activeSubscription->expires_at->format('d.m.Y') }}</div>
                         @endif
                     </div>
-                    @if(!$user->activeSubscription->isCancelled())
+                    @if(!$user->activeSubscription->isCancelled() && $user->activeSubscription->session)
                     <form action="{{ route('user.subscription.cancel') }}" method="POST">
                         @csrf
                         @method('DELETE')
@@ -90,9 +90,9 @@
                                             @endforeach
                                         </ul>
                                         <div class="tariff-card__buttons">
-                                            <button class="button button--outline tariff-card__button" type="button">1
-                                                день безкоштовне демо
-                                            </button>
+                                            @if(!$user->hadSubscription())
+                                                <button class="button button--outline tariff-card__button" type="button">1 день безкоштовне демо</button>
+                                            @endif
                                             <button class="play-button" type="button" data-modal="modal-video"><span
                                                     class="play-button__pic">
                       <svg class="play-button__icon" width="11" height="14">

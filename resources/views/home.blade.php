@@ -118,9 +118,6 @@
                         <button class="tariffs-plan__button is-active" type="button" data-months="1">В місяць</button>
                     </li>
                     <li class="tariffs-plan__item">
-                        <button class="tariffs-plan__button" type="button" data-months="6">На пів року</button>
-                    </li>
-                    <li class="tariffs-plan__item">
                         <button class="tariffs-plan__button" type="button" data-months="12">На рік</button>
                     </li>
                 </ul>
@@ -154,7 +151,9 @@
                                     @endforeach
                                 </ul>
                                 <div class="tariff-card__buttons">
+                                    @if(!auth()->user()?->hadSubscription())
                                     <button class="button button--outline tariff-card__button" type="button">1 день безкоштовне демо</button>
+                                    @endif
                                     <button class="play-button" type="button" data-modal="modal-video"><span class="play-button__pic">
                     <svg class="play-button__icon" width="11" height="14">
                       <use xlink:href="{{ asset('img/sprite.svg#play') }}"></use>
@@ -165,7 +164,6 @@
                                 <div class="tariff-card__total">
                                     <div class="tariff-card__price">Вартість <span>{{ $plan->price_monthly }}$</span></div>
                                     <div class="tariff-card__discount" data-months="1" data-price="{{ $plan->price_monthly }}$" style="display: none">{{ $plan->price_monthly }}$ / 1 мес</div>
-                                    <div class="tariff-card__discount" data-months="6" data-price="{{ $plan->price_semiannual }}$">{{ $plan->price_semiannual }}$ / 6 мес (-{{ $plan->getSemiannualDiscountPercent() }}%)</div>
                                     <div class="tariff-card__discount" data-months="12" data-price="{{ $plan->price_annual }}$">{{ $plan->price_annual }}$ / 12 мес (-{{ $plan->getAnnualDiscountPercent() }}%)</div>
                                 </div>
                                 <a class="button tariff-card__buy-button" href="{{ auth()->check() ? route('user.subscription.index') : route('login') }}">Обрати</a>
