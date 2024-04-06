@@ -62,6 +62,15 @@
                         data-toggle="modal" data-target="#subscribeUser" class="btn btn-sm btn-clean btn-icon edit-btn">
                     <i class="las la-star"></i>
                 </button>
+                @if($user->activeSubscription)
+                <form method="POST" action="{{ route('admin.users.unsubscribe', $user) }}" style="display: inline">
+                    @csrf
+                <button type="submit" title="Анулювати підписку" data-url="{{ route('admin.users.subscribe', $user) }}"
+                        class="btn btn-sm btn-clean btn-icon edit-btn" onclick="return confirm('Ви впевнені, що хочете анулювати підписку користувача?')">
+                    <i class="fas fa-minus-circle"></i>
+                </button>
+                </form>
+                @endif
             </td>
         </tr>
     @endforeach

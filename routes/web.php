@@ -334,5 +334,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin'], 'as' 
         ->only(['index']);
     Route::post('users/{user}/subscribe', [\App\Http\Controllers\Admin\UserController::class, 'subscribe'])
         ->name('users.subscribe');
+    Route::post('users/{user}/unsubscribe', [\App\Http\Controllers\Admin\UserController::class, 'unsubscribe'])
+        ->name('users.unsubscribe');
 
 });

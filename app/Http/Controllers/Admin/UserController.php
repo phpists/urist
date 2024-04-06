@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\UserSubscriptionExpired;
 use App\Http\Controllers\Controller;
 use App\Models\Plan\Plan;
 use App\Models\Subscription;
@@ -71,6 +72,20 @@ class UserController extends Controller
                 ->with('success', "Створено підписку для користувача {$user->full_name} на " . __('subscription.'.$period));
 
         }
+    }
+
+    public function unsubscribe(Request $request, User $user)
+    {
+        $user->activeSubscription()
+            ->update([
+                'cancelled_at' => Carbon::now(),
+                'expires_at' => Carbon::now()
+            ]);
+
+        UserSubscriptionExpired::dispatch($user, false);
+
+        return to_route('admin.users.index')
+            ->with('success', 'Підписка анульована');
     }
 
 }
