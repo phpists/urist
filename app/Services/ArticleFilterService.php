@@ -69,7 +69,10 @@ class ArticleFilterService
             && can_user(\App\Enums\PermissionEnum::SMART_SEARCH->value);
 
         $articles = $isFromSearch
-            ? CriminalArticle::search(request('search'))
+            ? CriminalArticle::search(request('search'), function($algolia, string $query, array $options) {
+                $options['attributesToHighlight'] = ['name', 'description'];
+                return $algolia->search($query, $options);
+            })
             : CriminalArticle::query();
 
         $type = $this->getType();

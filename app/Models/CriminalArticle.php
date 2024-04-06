@@ -102,4 +102,30 @@ class CriminalArticle extends Model
         return \Str::slug($this->name);
     }
 
+    public function getSearchHighlightedName()
+    {
+        $name = $this->name;
+        $words = $this->scoutMetadata()['_highlightResult']['name']['matchedWords'] ?? [];
+
+        if (!empty($words)) {
+            foreach ($words as $word)
+                $name = \Str::replace($word, "<span style='background-color: yellow'>{$word}</span>", $name);
+        }
+
+        return $name;
+    }
+
+    public function getSearchHighlightedDescription()
+    {
+        $description = $this->description;
+        $words = $this->scoutMetadata()['_highlightResult']['description']['matchedWords'] ?? [];
+
+        if (!empty($words)) {
+            foreach ($words as $word)
+                $description = \Str::replace($word, "<span style='background-color: yellow'>{$word}</span>", $description);
+        }
+
+        return $description;
+    }
+
 }
