@@ -246,6 +246,32 @@
                             </div>
                         </li>
 
+                        <li class="menu-item  menu-item-submenu {{ (request()->routeIs(['admin.system-mails.*'])) ? 'menu-item-open' : '' }}"
+                            aria-haspopup="true" data-menu-toggle="hover">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="flaticon-folder menu-icon"></i>
+                                <span class="menu-text">Системні листи</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item  menu-item-parent" aria-haspopup="true">
+                                        <span class="menu-link"><span class="menu-text">Системні листи</span></span>
+                                    </li>
+
+                                    @foreach(\App\Models\SystemMail::all() as $mail)
+                                    <li class="menu-item {{ url()->current() == route('admin.system-mails.edit', $mail) ? 'menu-item-active' : '' }}">
+                                        <a href="{{ route('admin.system-mails.edit', $mail) }}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                            <span class="menu-text">{{ Str::limit($mail->subject, 26) }}</span>
+                                        </a>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </li>
+
                         <li class="menu-item  menu-item-submenu {{ (request()->routeIs(['admin.plans.*', 'admin.features.*'])) ? 'menu-item-open' : '' }}"
                             aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">

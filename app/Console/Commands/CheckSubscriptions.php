@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Enums\RoleEnum;
+use App\Events\UserSubscriptionExpired;
 use App\Models\User;
 use Illuminate\Console\Command;
 
@@ -30,10 +31,9 @@ class CheckSubscriptions extends Command
         $usersWithSubscription = User::whereHas('activeSubscription')->get();
 
         foreach ($usersWithSubscription as $user) {
-            if ($user->activeSubscription->isCancelled() && $user->activeSubscription->expires_at->isPast()) {
-                if ($user->hasRole([RoleEnum::MAX->value]))
-                    $user->removeRole(RoleEnum::MAX->value);
-            }
+            if (($user->activeSubscription->isCancelled() && $user->activeSubscription->expires_at->isPast())
+                || $user->activeSubscription->expires_at->addHours(6)->isPast())
+                UserSubscriptionExpired::dispatch($user);
         }
     }
 }

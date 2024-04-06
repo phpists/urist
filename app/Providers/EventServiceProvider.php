@@ -4,11 +4,14 @@ namespace App\Providers;
 
 
 use App\Events\ArticleCategoryDeleted;
+use App\Events\UserSubscriptionExpired;
 use App\Listeners\ProcessPostCategoryDelete;
 use App\Events\UserRegisteredEvent;
 use App\Events\UserSendResetPasswordCodeEvent;
 use App\Listeners\User\CreateDefaultFoldersListener;
 use App\Listeners\User\GrantFreeTrialAccess;
+use App\Listeners\User\RemoveRole;
+use App\Listeners\User\SendSubscriptionExpirationNotification;
 use App\Listeners\UserSendVerifyCodeListener;
 use App\Listeners\UserSendVerifyCodeResetPasswordListener;
 use Illuminate\Auth\Events\Registered;
@@ -36,6 +39,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         UserSendResetPasswordCodeEvent::class => [
             UserSendVerifyCodeResetPasswordListener::class
+        ],
+        UserSubscriptionExpired::class => [
+            RemoveRole::class,
+            SendSubscriptionExpirationNotification::class
         ],
 
         // Socialite
