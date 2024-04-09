@@ -1,38 +1,19 @@
 @extends('layouts.app')
-@section('title', 'Політика конфіденційності')
+@section('title', $systemPage->title ?? 'Політика конфіденційності')
 @section('page')
     <section class="top-section">
         <div class="container top-section__container">
             <header class="faq-section__header">
-                <h1 class="page-title">Політика конфідеційності</h1>
+                <h1 class="page-title">{{ $systemPage->title ?? 'Політика конфідеційності' }}</h1>
                 <nav class="breadcrumbs" aria-label="breadcrumb">
                     <ul class="breadcrumbs__list">
                         <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Головна</a></li>
-                        <li class="breadcrumbs__item" aria-current="page">Політика конфідеційності</li>
+                        <li class="breadcrumbs__item" aria-current="page">{{ $systemPage->title ?? 'Політика конфідеційності' }}</li>
                     </ul>
                 </nav>
             </header>
             <div class="goal-card">
-                <h1>Політика конфідеційності</h1>
-                <p>
-                    <strong>1. Збір інформації</strong><br>
-                    Ми можемо збирати особисту інформацію, яку ви нам надаєте, таку як ім'я, електронна адреса, номер телефону, або інша інформація, коли ви використовуєте наш сервіс...
-                </p>
-
-                <p>
-                    <strong>2. Використання інформації</strong><br>
-                    Ми використовуємо зібрану інформацію для надання, підтримки, покращення та розвитку наших послуг...
-                </p>
-
-                <p>
-                    <strong>3. Розкриття інформації</strong><br>
-                    Ми можемо розкривати вашу особисту інформацію третім сторонам лише за вашою згодою або відповідно до законодавства...
-                </p>
-
-                <p>
-                    <strong>4. Захист інформації</strong><br>
-                    Ми вживаємо заходів для захисту вашої особистої інформації від несанкціонованого доступу, використання або розкриття...
-                </p>
+                {!! $systemPage->getDataByDotPath('0.body') !!}
             </div>
         </div>
     </section>

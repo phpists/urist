@@ -24,6 +24,20 @@ class HomeController extends Controller
         ]);
     }
 
+    public function policy()
+    {
+        return view('pages.policy', [
+            'systemPage' => SystemPageEnum::POLICY->getPage()
+        ]);
+    }
+
+    public function offer()
+    {
+        return view('pages.offer', [
+            'systemPage' => SystemPageEnum::OFFER->getPage()
+        ]);
+    }
+
     public function form(Request $request)
     {
         $request->validate([

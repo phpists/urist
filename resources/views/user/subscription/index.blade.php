@@ -63,7 +63,6 @@
                             <div class="swiper-slide tariffs-slider__slide">
                                 <div class="tariff-card">
                                     <div class="tariff-card__body">
-                                        <h3 class="tariff-card__title">Тариф {{ $plan->title }}</h3>
                                         <ul class="tariff-card__list">
                                             @foreach($features as $feature)
                                                 @if($plan->activeFeatures->contains($feature))
@@ -93,12 +92,6 @@
                                             @if(!$user->hadSubscription())
                                                 <button class="button button--outline tariff-card__button" type="button">1 день безкоштовне демо</button>
                                             @endif
-                                            <button class="play-button" type="button" data-modal="modal-video"><span
-                                                    class="play-button__pic">
-                      <svg class="play-button__icon" width="11" height="14">
-                        <use xlink:href="img/sprite.svg#play"></use>
-                      </svg></span>Як це працює?
-                                            </button>
                                         </div>
                                     </div>
                                     <div class="tariff-card__footer">
@@ -111,7 +104,7 @@
                                             </div>
                                             <div class="tariff-card__discount" data-months="12"
                                                  data-price="{{ $plan->price_annual }}$">{{ $plan->price_annual }}$ / 12
-                                                міс (-{{ $plan->getAnnualDiscountPercent() }}%)
+                                                міс (-{{ $plan->getAnnualDiscountSum() }}$)
                                             </div>
                                         </div>
                                         @if(!$user->activeSubscription)

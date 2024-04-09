@@ -9,14 +9,13 @@ enum SystemPageEnum:string
 
     case HOME = 'home';
     case DASHBOARD = 'dashboard';
-
     case FAQ = 'faq';
-
     case CONTACTS = 'contacts';
-
     case ARTICLES = 'articles';
-
     case BLOG = 'blog';
+    case POLICY = 'policy';
+    case OFFER = 'offer';
+
 
     public function getPage(): SystemPage
     {

@@ -404,6 +404,14 @@
                                                                            accept="image/*"/>
                                                                 </label>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label>АБО IFrame код</label>
+                                                                <div class="input-wrapper">
+                                                                    <input type="text" class="form-control"
+                                                                           name="data[3][items][{{ $i }}][iframe]"
+                                                                           value="{{ old("data.3.items.{$i}.iframe", $model->data[3]['items'][$i]['iframe'] ?? '') }}">
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="col-12 col-md-9">
                                                             <div class="form-group">

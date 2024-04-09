@@ -66,8 +66,8 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])
 Route::post('form', [\App\Http\Controllers\HomeController::class, 'form'])
     ->name('home.form');
 
-Route::get('/offer', function () {return view('pages.offer');})->name('offer');
-Route::get('/policy', function () {return view('pages.policy');})->name('policy');
+Route::get('/offer', [\App\Http\Controllers\HomeController::class, 'offer'])->name('offer');
+Route::get('/policy', [\App\Http\Controllers\HomeController::class, 'policy'])->name('policy');
 Route::get('faq', [FaqController::class, 'index'])->name('faq');
 Route::get('contacts', [ContactController::class, 'index'])->name('contacts');
 

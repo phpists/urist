@@ -24,7 +24,7 @@
                         <use xlink:href="{{ asset('assets/img/sprite.svg#google-play') }}"></use>
                     </svg></a></li>
             @guest
-                <li class="actions__item actions__item--hidden-md"><a class="button button--outline actions__button"
+                <li class="actions__item"><a class="button button--outline actions__button"
                                                                       href="{{route('login')}}" data-modal="modal-login">Вхід</a></li>
             @endguest
             @auth

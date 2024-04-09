@@ -14,5 +14,7 @@ enum PermissionEnum: string
     case COPY_PAGE = 'copy_page';
     case MODULE_KPK = 'module_kpk';
     case MODULE_KK = 'module_kk';
+    case MODULE_STROKIV = 'module_strokiv';
+    case MODULE_KLASYFIKACIII = 'module_klasyfikaciii';
 
 }

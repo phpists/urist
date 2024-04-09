@@ -54,10 +54,10 @@
             <a class="bookmark-card__link" draggable="true" data-item="file_{{$file->id}}" href="{{ route('user.files.edit', $file) }}">
                 <div class="bookmark-card__pic">
                     <svg class="bookmark-card__icon" width="110" height="86">
-                        <use xlink:href="{{asset('assets/img/user/sprite.svg#proposition')}}"></use>
+                        <use xlink:href="{{asset('assets/img/user/sprite.svg#proposition-3')}}"></use>
                     </svg>
                 </div>
-                <p class="item-label">Файл</p>
+{{--                <p class="item-label">Файл</p>--}}
                 <h3 class="bookmark-card__title">{{ $file->name }}</h3>
             </a>
         </div>
@@ -81,10 +81,10 @@
             <a class="bookmark-card__link" draggable="true" data-item="file_{{$favourite->id}}" href="{{ route('user.articles.show', $favourite->criminal_article_id) }}">
                 <div class="bookmark-card__pic">
                     <svg class="bookmark-card__icon" width="110" height="86">
-                        <use xlink:href="{{asset('assets/img/user/sprite.svg#proposition')}}"></use>
+                        <use xlink:href="{{asset('assets/img/user/sprite.svg#proposition-2')}}"></use>
                     </svg>
                 </div>
-                <p class="item-label">Закладка</p>
+{{--                <p class="item-label">Закладка</p>--}}
                 <h3 class="bookmark-card__title">{{$favourite->name}}</h3>
             </a>
         </div>

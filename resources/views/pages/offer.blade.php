@@ -1,31 +1,19 @@
 @extends('layouts.app')
-@section('title', 'Публічна оферта')
+@section('title', $systemPage->title ?? 'Публічна оферта')
 @section('page')
     <section class="top-section">
         <div class="container top-section__container">
             <header class="faq-section__header">
-                <h1 class="page-title">Публічна Оферта</h1>
+                <h1 class="page-title">{{ $systemPage->title ?? 'Публічна Оферта' }}</h1>
                 <nav class="breadcrumbs" aria-label="breadcrumb">
                     <ul class="breadcrumbs__list">
                         <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/">Головна</a></li>
-                        <li class="breadcrumbs__item" aria-current="page">Публічна Оферта</li>
+                        <li class="breadcrumbs__item" aria-current="page">{{ $systemPage->title ?? 'Публічна Оферта' }}</li>
                     </ul>
                 </nav>
             </header>
             <div class="goal-card">
-                <h1>Публічна Оферта</h1>
-
-                <p>Ця Публічна Оферта (далі - "Оферта") є публічним пропозиційним документом від {{env('APP_NAME', 'Збірник')}}, що регулює умови надання послуг та використання сайту
-                    <a href="{{route('home')}}">Збірник</a>.</p>
-                <h1>1. Визначення термінів</h1>
-                <p>1.1. <span class="terms">Сайт</span> - інтернет-ресурс <a href="{{route('home')}}">Збірник</a>, який надає користувачам доступ до певних послуг.</p>
-                <p>1.2. <span class="terms">Користувач</span> - фізична або юридична особа, яка користується послугами сайту.</p>
-                <h1>2. Предмет Оферти</h1>
-                <p>2.1. Сайт надає користувачам можливість скористатися рядом послуг, що надаються на умовах, визначених цією Офертою.</p>
-                <p>2.2. Користувач погоджується з умовами цієї Оферти при використанні будь-яких послуг, доступних на сайті.</p>
-                <h1>3. Умови надання послуг</h1>
-                <p>3.1. Користувач зобов'язується не порушувати законодавство при використанні сайту та не допускати дій, що можуть призвести до шкоди функціонуванню сайту.</p>
-                <p>3.2. Адміністрація сайту залишає за собою право змінювати умови надання послуг без попереднього повідомлення.</p>
+                {!! $systemPage->getDataByDotPath('0.body') !!}
             </div>
         </div>
     </section>

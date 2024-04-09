@@ -9,7 +9,6 @@
           <li class="mobile-nav-menu__item"><a class="mobile-nav-menu__link" href="{{route('blog.index')}}">Блог</a></li>
           <li class="mobile-nav-menu__item"><a class="mobile-nav-menu__link" href="#{{route('faq')}}">FAQ</a></li>
           <li class="mobile-nav-menu__item"><a class="mobile-nav-menu__link" href="{{route('contacts')}}">Контакти</a></li>
-          <li class="mobile-nav-menu__item"><a class="button button--outline mobile-nav-menu__button" href="#" data-modal="modal-login">Вхід</a></li>
         </ul>
       </nav>
     </div>

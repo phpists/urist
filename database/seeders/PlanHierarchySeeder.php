@@ -50,7 +50,7 @@ class PlanHierarchySeeder extends Seeder
             [
                 'id' => 1,
                 'permission_id' => $permission_ids[PermissionEnum::SMART_SEARCH->value],
-                'title' => 'Інтелектуальний пошук',
+                'title' => 'Інтелектуальний пошук по слову або по зв\'язці слів за: темами (категоріями) / назвами правових позицій / правовими позиціями',
             ],
             [
                 'id' => 2,
@@ -92,6 +92,16 @@ class PlanHierarchySeeder extends Seeder
                 'permission_id' => $permission_ids[PermissionEnum::MODULE_KK->value],
                 'title' => 'Модуль КК',
             ],
+            [
+                'id' => 10,
+                'permission_id' => $permission_ids[PermissionEnum::MODULE_STROKIV->value],
+                'title' => 'Модуль строків (в розробці)'
+            ],
+            [
+                'id' => 11,
+                'permission_id' => $permission_ids[PermissionEnum::MODULE_KLASYFIKACIII->value],
+                'title' => 'Модуль класифікації правопорушень (в розробці)'
+            ],
         ];
         foreach ($features as $i => $feature) {
             $feature['pos'] = $i;
@@ -120,8 +130,8 @@ class PlanHierarchySeeder extends Seeder
                 'role_id' => $role_ids[RoleEnum::MAX->value],
                 'title' => 'Max',
                 'price_monthly' => 9,
-                'price_annual' => 70,
-                'features' => [1, 2, 3, 4, 5, 6, 7, 8, 9],
+                'price_annual' => 60,
+                'features' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
             ],
         ];
         foreach ($plans as $i => $plan) {

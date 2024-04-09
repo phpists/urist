@@ -63,6 +63,11 @@ class Plan extends Model
         return round((($this->price_monthly * 12) - $this->price_annual) / ($this->price_monthly * 12) * 100);
     }
 
+    public function getAnnualDiscountSum(): int
+    {
+        return round((($this->price_monthly * 12) - $this->price_annual));
+    }
+
     public function getPriceByPeriod(string $period): string
     {
         return match ($period) {

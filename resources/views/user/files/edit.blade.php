@@ -40,12 +40,18 @@
                 <div class="page-section__buttons">
                     <div class="tabs page-section__tabs" data-tabs="tabs-1" data-active="0">
                         <ul class="tabs__nav" role="tablist">
+                            @if($file->criminal_article_id)
                             <li class="tabs__nav-item">
                                 <button class="button button--outline tabs__nav-btn" type="button">ПП</button>
                             </li>
                             <li class="tabs__nav-item">
                                 <button class="button button--outline tabs__nav-btn" type="button">Судове рішення</button>
                             </li>
+                            @else
+                                <li class="tabs__nav-item">
+                                    <button class="button button--outline tabs__nav-btn" type="button">Опис</button>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                     <button class="button page-section__button" type="submit">Зберегти</button>
@@ -61,6 +67,7 @@
 
 
                 <div class="tabs-content page-section__tabs-content" data-tabs-content="tabs-1">
+                    @if($file->criminal_article_id)
                     <div class="tabs-panel">
                         <div class="page-section__editor">
                             <textarea id="textEditor" name="pp">{{ $file->pp }}</textarea>
@@ -71,6 +78,13 @@
                             <textarea id="textEditor1" name="statya_kk">{{ $file->statya_kk }}</textarea>
                         </div>
                     </div>
+                    @else
+                        <div class="tabs-panel">
+                            <div class="page-section__editor">
+                                <textarea id="textEditor" name="pp">{{ $file->pp }}</textarea>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </form>
             @else
