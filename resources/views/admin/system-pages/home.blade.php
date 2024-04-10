@@ -401,7 +401,7 @@
                                                                     <i class="fa fa-pen icon-sm text-muted"></i>
                                                                     <input type="file"
                                                                            name="data[3][items][{{ $i }}][img]"
-                                                                           accept="image/*"/>
+                                                                           accept="image/*,image/webp"/>
                                                                 </label>
                                                             </div>
                                                             <div class="form-group">
@@ -484,7 +484,7 @@
                                                         data-action="change" data-toggle="tooltip" title=""
                                                         data-original-title="Change avatar">
                                                         <i class="fa fa-pen icon-sm text-muted"></i>
-                                                        <input type="file" name="images[1]" accept=".png, .jpg, .jpeg"/>
+                                                        <input type="file" name="images[1]" accept=".png, .jpg, .jpeg, .webp"/>
                                                     </label>
 
                                                     <span

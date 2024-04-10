@@ -119,7 +119,7 @@ class LoginController extends Controller
             auth()->login($new_user, true);
         }
 
-        return redirect()->to('/');
+        return to_route('user.dashboard.index');
     }
 
 }

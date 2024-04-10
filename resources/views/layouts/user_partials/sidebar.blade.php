@@ -21,7 +21,6 @@
                             <span class="sidebar-menu__title">Мій профіль</span>
                         </a>
                     </li>
-                    @if(can_user(\App\Enums\PermissionEnum::MODULE_KK->value))
                         <li class="sidebar-menu__item">
                             <a class="sidebar-menu__link @if(url()->current() == route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KK->value)) is-active @endif"
                                href="{{route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KK->value)}}">
@@ -33,8 +32,6 @@
                                 <span class="sidebar-menu__title">Модуль КК</span>
                             </a>
                         </li>
-                    @endif
-                    @if(can_user(\App\Enums\PermissionEnum::MODULE_KPK->value))
                         <li class="sidebar-menu__item">
                             <a class="sidebar-menu__link @if(url()->current() == route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KPK->value)) is-active @endif"
                                href="{{route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KPK->value)}}">
@@ -46,8 +43,6 @@
                                 <span class="sidebar-menu__title">Модуль КПК</span>
                             </a>
                         </li>
-                    @endif
-                    @if(can_user(\App\Enums\PermissionEnum::CREATE_OWN_PAGES->value))
                         <li class="sidebar-menu__item">
                             <a class="sidebar-menu__link @if(request()->routeIs('user.files.*')) is-active @endif"
                                href="{{ route('user.files.index') }}">
@@ -56,7 +51,6 @@
                                 <span class="sidebar-menu__title">Робота з файлами</span>
                             </a>
                         </li>
-                    @endif
                     <li class="sidebar-menu__item">
                         <a class="sidebar-menu__link @if(request()->routeIs('user.registries.*')) is-active @endif"
                            href="{{ route('user.registries.index') }}"><span class="sidebar-menu__pic">

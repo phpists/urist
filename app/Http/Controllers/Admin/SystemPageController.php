@@ -43,14 +43,12 @@ class SystemPageController extends Controller
         $systemPage->data = $data;
 
         $images = $systemPage->images ?? [];
-        foreach($request->allFiles()['images'] ?? [] as $allFiles) {
-            foreach ($allFiles as $i => $file) {
-                if (Storage::put(SystemPage::IMG_PATH, $file)) {
-                    if ($systemPage->getImageSrc($i))
-                        Storage::delete(SystemPage::IMG_PATH . $systemPage->images[$i]);
+        foreach ($request->allFiles()['images'] ?? [] as $i => $file) {
+            if (Storage::put(SystemPage::IMG_PATH, $file)) {
+                if ($systemPage->getImageSrc($i))
+                    Storage::delete(SystemPage::IMG_PATH . $systemPage->images[$i]);
 
-                    $images[$i] = $file->hashName();
-                }
+                $images[$i] = $file->hashName();
             }
         }
 

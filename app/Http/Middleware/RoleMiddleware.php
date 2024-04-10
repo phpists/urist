@@ -23,7 +23,10 @@ class RoleMiddleware
                 return $next($request);
             }
         }
-        // Change to your custom page
-        abort(403);
+
+        if ($role == 'admin')
+            abort(403);
+
+        return to_route('user.subscription.index')->with('error', 'Для користування цим функціоналом потрібна підписка');
     }
 }

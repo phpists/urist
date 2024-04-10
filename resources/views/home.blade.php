@@ -79,30 +79,42 @@
                 @if(isset($systemPage->data[3]['items']) && is_array($systemPage->data[3]['items']))
                     @foreach($systemPage->data[3]['items'] as $i => $item)
                         @continue(empty($item['title']))
+                    @if(isset($item['iframe']))
                         <li class="decision-section__item">
                             <div class="decision-section__col">
-                                @if(isset($item['img']))
-                                    <picture class="decision-section__picture">
-                                        <img class="decision-section__img"
-                                             src="{{ $systemPage->getDataImgSrcByDot("3.items.{$i}.img") }}"
-                                             loading="lazy" width="626" height="380" alt="alt"/>
-                                    </picture>
-                                @endif
-                                <div class="decision-section__number">{{ $i + 1 }}</div>
-
-                                @if(isset($item['quote']))
-                                    <div class="decision-section__quote">
-                                        <p>{{ $item['quote'] }}</p>
-                                    </div>
-                                @endif
+                                <h3 class="decision-section__sub-title">{{ $item['title'] ?? '' }}</h3>
+                                <div class="decision-section__text">{!! $item['body'] ?? '' !!}</div>
                             </div>
                             <div class="decision-section__col">
-                                <h3 class="decision-section__sub-title">{{ $item['title'] ?? '' }}</h3>
-                                <div class="decision-section__text">
-                                    {!! $item['body'] ?? '' !!}
-                                </div>
+                                <div class="decision-section__video">{!! $item['iframe'] !!}</div>
                             </div>
                         </li>
+                        @elseif(isset($item['img']))
+                            <li class="decision-section__item">
+                                <div class="decision-section__col">
+                                    @if(isset($item['img']))
+                                        <picture class="decision-section__picture">
+                                            <img class="decision-section__img"
+                                                 src="{{ $systemPage->getDataImgSrcByDot("3.items.{$i}.img") }}"
+                                                 loading="lazy" width="626" height="380" alt="alt"/>
+                                        </picture>
+                                    @endif
+                                    <div class="decision-section__number">{{ $i + 1 }}</div>
+
+                                    @if(isset($item['quote']))
+                                        <div class="decision-section__quote">
+                                            <p>{{ $item['quote'] }}</p>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="decision-section__col">
+                                    <h3 class="decision-section__sub-title">{{ $item['title'] ?? '' }}</h3>
+                                    <div class="decision-section__text">
+                                        {!! $item['body'] ?? '' !!}
+                                    </div>
+                                </div>
+                            </li>
+                        @endif
                     @endforeach
                 @endif
             </ul>

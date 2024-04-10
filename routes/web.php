@@ -137,46 +137,48 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
     Route::get('search-city', [UserProfileController::class, 'searchCity'])
         ->name('profile.search-city');
 
-    // Articles
-    Route::get('articles/{type?}', [\App\Http\Controllers\User\ArticleController::class, 'index'])
-        ->name('articles.index');
-    Route::get('search', [\App\Http\Controllers\User\ArticleController::class, 'search'])
-        ->name('articles.search');
-    Route::get('article/{article}', [\App\Http\Controllers\User\ArticleController::class, 'show'])
-        ->name('articles.show');
+    Route::group(['middleware' => ['role:max']], function () {
+        // Articles
+        Route::get('articles/{type?}', [\App\Http\Controllers\User\ArticleController::class, 'index'])
+            ->name('articles.index');
+        Route::get('search', [\App\Http\Controllers\User\ArticleController::class, 'search'])
+            ->name('articles.search');
+        Route::get('article/{article}', [\App\Http\Controllers\User\ArticleController::class, 'show'])
+            ->name('articles.show');
 //    Route::resource('articles/{type}', \App\Http\Controllers\User\ArticleController::class)
 //        ->only(['index', 'show']);
-    Route::get('articles-total-count/{type?}', [\App\Http\Controllers\User\ArticleController::class, 'articlesCount'])
-        ->name('articles.total-count');
-    // Download DOC
-    Route::get('articles/{article}/export-doc', [\App\Http\Controllers\User\ArticleController::class, 'exportDoc'])
-        ->name('articles.export-doc');
+        Route::get('articles-total-count/{type?}', [\App\Http\Controllers\User\ArticleController::class, 'articlesCount'])
+            ->name('articles.total-count');
+        // Download DOC
+        Route::get('articles/{article}/export-doc', [\App\Http\Controllers\User\ArticleController::class, 'exportDoc'])
+            ->name('articles.export-doc');
 
-    Route::get('search/items', [\App\Http\Controllers\User\ArticleController::class, 'searchItems'])
-        ->name('search.items');
+        Route::get('search/items', [\App\Http\Controllers\User\ArticleController::class, 'searchItems'])
+            ->name('search.items');
+
+        // Bookmarks
+        Route::get('bookmarks/{folderId?}', [\App\Http\Controllers\User\BookmarkController::class, 'index'])
+            ->name('bookmarks.index');
+
+        // File Manager
+        Route::get('file-manager/{folderId?}', [\App\Http\Controllers\User\FileController::class, 'index'])
+            ->name('files.index');
+        Route::get('file/{file}/edit', [\App\Http\Controllers\User\FileController::class, 'edit'])
+            ->name('files.edit');
+        Route::put('file/{file}/update-file-name', [\App\Http\Controllers\User\FileController::class, 'updateFileName'])
+            ->name('files.update.file-name');
+        // Download DOC
+        Route::get('file/{file}/export-doc', [\App\Http\Controllers\User\FileController::class, 'exportDoc'])
+            ->name('files.export-doc');
+
+        // Registries
+        Route::get('registries', [\App\Http\Controllers\User\RegistryController::class, 'index'])
+            ->name('registries.index');
+    });
 
     // Filter
     Route::get('filter/{type?}', [\App\Http\Controllers\User\ArticleController::class, 'getFilter'])
         ->name('filter');
-
-    // Bookmarks
-    Route::get('bookmarks/{folderId?}', [\App\Http\Controllers\User\BookmarkController::class, 'index'])
-        ->name('bookmarks.index');
-
-    // File Manager
-    Route::get('file-manager/{folderId?}', [\App\Http\Controllers\User\FileController::class, 'index'])
-        ->name('files.index');
-    Route::get('file/{file}/edit', [\App\Http\Controllers\User\FileController::class, 'edit'])
-        ->name('files.edit');
-    Route::put('file/{file}/update-file-name', [\App\Http\Controllers\User\FileController::class, 'updateFileName'])
-        ->name('files.update.file-name');
-    // Download DOC
-    Route::get('file/{file}/export-doc', [\App\Http\Controllers\User\FileController::class, 'exportDoc'])
-        ->name('files.export-doc');
-
-    // Registries
-    Route::get('registries', [\App\Http\Controllers\User\RegistryController::class, 'index'])
-        ->name('registries.index');
 
     // Subscription
     Route::get('subscription', [\App\Http\Controllers\User\SubscriptionController::class, 'index'])

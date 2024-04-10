@@ -57,7 +57,7 @@
                         <use xlink:href="{{asset('assets/img/user/sprite.svg#proposition-3')}}"></use>
                     </svg>
                 </div>
-{{--                <p class="item-label">Файл</p>--}}
+                <p class="item-label">Файл</p>
                 <h3 class="bookmark-card__title">{{ $file->name }}</h3>
             </a>
         </div>
@@ -84,7 +84,7 @@
                         <use xlink:href="{{asset('assets/img/user/sprite.svg#proposition-2')}}"></use>
                     </svg>
                 </div>
-{{--                <p class="item-label">Закладка</p>--}}
+                <p class="item-label">Закладка</p>
                 <h3 class="bookmark-card__title">{{$favourite->name}}</h3>
             </a>
         </div>
