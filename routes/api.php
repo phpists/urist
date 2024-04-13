@@ -38,17 +38,14 @@ Route::group(['middleware' => 'jwt'], function () {
     Route::get('criminal-articles/{type?}', [\App\Http\Controllers\Api\CriminalArticleController::class, 'index']);
     Route::get('criminal-article/{criminalArticle}', [\App\Http\Controllers\Api\CriminalArticleController::class, 'show']);
 
-    /** Bookmarks */
-    Route::resource('bookmarks', \App\Http\Controllers\Api\User\BookmarkController::class)
-        ->except(['show']);
-    Route::resource('bookmarks/folder', \App\Http\Controllers\Api\User\BookmarkFolderController::class)
-        ->only(['store', 'update', 'destroy']);
-
-    /** Files */
+    /** Cabinet */
     Route::resource('cabinet', \App\Http\Controllers\Api\User\FileController::class)->only('index');
-    Route::resource('files', \App\Http\Controllers\Api\User\FileController::class)->except('index');
-    Route::resource('cabinet/folder', \App\Http\Controllers\Api\User\FileFolderController::class)
+    Route::resource('cabinet/folders', \App\Http\Controllers\Api\User\FileFolderController::class)
         ->only(['store', 'update', 'destroy']);
+    Route::resource('cabinet/files', \App\Http\Controllers\Api\User\FileController::class)
+        ->except('index');
+    Route::resource('cabinet/bookmarks', \App\Http\Controllers\Api\User\BookmarkController::class)
+        ->except(['show']);
 
     /** Registries */
     Route::get('registries', [\App\Http\Controllers\Api\RegistryController::class, 'index']);

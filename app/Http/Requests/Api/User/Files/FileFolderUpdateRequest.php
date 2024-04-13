@@ -11,7 +11,7 @@ class FileFolderUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return can_user(\App\Enums\PermissionEnum::CREATE_OWN_PAGES->value);
     }
 
     /**
