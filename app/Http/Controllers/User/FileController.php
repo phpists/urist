@@ -110,7 +110,7 @@ class FileController extends Controller
         \PhpOffice\PhpWord\Shared\Html::addHtml($statya_kk, $file->statya_kk, false, false);
 
         $objectWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord);
-        header('Content-Type: text/html');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
         header("Content-Disposition: attatchement;Filename={$file->getProgramTitle()}.docx");
         $objectWriter->save('php://output');
 

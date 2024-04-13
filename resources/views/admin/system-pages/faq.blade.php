@@ -85,33 +85,38 @@
 
                                 <hr class="my-10">
 
-                                <div class="row mb-5">
-                                    @foreach($model->data as $i => $datum)
-                                        <div class="col-12 col-md-6">
+                                <div id="categoriesRepeater">
+                                    <div class="row mb-6" data-repeater-list="data[categories]">
+                                        <div data-repeater-item class="col-12 col-md-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="data[{{ $i }}][title]" value="{{ old("data.{$i}.title", $model->data[$i]['title']) }}" placeholder="Заголовок" required>
+                                                <div class="input-group">
+                                                <input type="text" class="form-control" name="title"
+                                                       placeholder="Заголовок категорії" required>
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-sm btn-danger" data-repeater-delete><i class="las la-trash"></i></button>
+                                                </div>
+                                                </div>
                                             </div>
 
-                                            <hr class="my-8">
-
-                                            @foreach($datum['items'] as $item)
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" name="data[{{ $i }}][items][{{ $loop->index }}][title]" value="{{ old("data.{$i}.items.{$loop->index}.title", $model->data[$i]['items'][$loop->index]['title']) }}" placeholder="Питання" required>
+                                            <div class="itemsRepeater mb-8">
+                                                <div class="row" data-repeater-list="items">
+                                                    <div data-repeater-item class="col-12">
+                                                        <div class="form-group mb-2">
+                                                            <div class="input-group mb-1">
+                                                                <input type="text" class="form-control" name="title" placeholder="Питання" required>
+                                                                <div class="input-group-append">
+                                                                    <button type="button" class="btn btn-sm btn-danger" data-repeater-delete><i class="las la-trash"></i></button>
+                                                                </div>
+                                                            </div>
+                                                            <textarea class="form-control" name="body" cols="30" rows="5" placeholder="Відповідь"></textarea>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-12">
-                                                    <textarea class="form-control" name="data[{{ $i }}][items][{{ $loop->index }}][body]" cols="30" rows="5" placeholder="Відповідь">{{ old("data.{$i}.items.{$loop->index}.title", $model->data[$i]['items'][$loop->index]['title']) }}</textarea>
-                                                </div>
+                                                <button type="button" data-repeater-create class="btn btn-outline-info">Додати питання</button>
                                             </div>
-
-                                                @if(!$loop->last)
-                                                    <hr class="my-8">
-                                                @endif
-                                            @endforeach
                                         </div>
-                                    @endforeach
+                                    </div>
+                                    <button type="button" data-repeater-create class="btn btn-outline-primary btn-block">Додати категорію</button>
                                 </div>
 
                             </div>
@@ -151,10 +156,38 @@
             <!--end::Container-->
         </div>
     </div>
+
+
 @endsection
 
 @section('js_after')
-    <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
     <script src="{{ asset('js/helpers.js') }} "></script>
+    <script>
+
+        const $repeater = $('#categoriesRepeater').repeater({
+            initEmpty: true,
+            repeaters: [{
+                // (Required)
+                // Specify the jQuery selector for this nested repeater
+                selector: '.itemsRepeater',
+                show: function () {
+                    $(this).slideDown();
+                },
+                hide: function (deleteElement) {
+                    if (confirm('Ви впевнені, що хочете видалити питання?'))
+                        $(this).slideUp(deleteElement);
+                }
+            }],
+            show: function () {
+                $(this).slideDown();
+            },
+            hide: function (deleteElement) {
+                if (confirm('Ви впевнені, що хочете видалити категорію? Всі питання, які вона містить, будуть видалені вслід'))
+                    $(this).slideUp(deleteElement);
+            }
+        });
+
+        $repeater.setList(@json($model->data['categories'] ?? []));
+    </script>
 @endsection

@@ -16,10 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 /** Auth */
 Route::group(['prefix' => 'auth'], function () {
-    Route::post('register', [\App\Http\Controllers\Api\Auth\RegisterController::class, 'index']);
+//    Route::post('register', [\App\Http\Controllers\Api\Auth\RegisterController::class, 'index']);
     Route::post('login', [\App\Http\Controllers\Api\Auth\LoginController::class, 'index']);
-    Route::post('verify-code', [\App\Http\Controllers\Api\Auth\VerifyController::class, 'index']);
+//    Route::post('verify-code', [\App\Http\Controllers\Api\Auth\VerifyController::class, 'index']);
     Route::post('logout', [\App\Http\Controllers\Api\Auth\LogoutController::class, 'index']);
+    // With providers
+    Route::post('login/{provider}/{token}', [\App\Http\Controllers\Api\Auth\LoginController::class, 'handleProviderLogin']);
 
     // Reset Password
     Route::post('reset-password/request', [\App\Http\Controllers\Api\Auth\ResetPasswordController::class, 'request']);
@@ -43,8 +45,9 @@ Route::group(['middleware' => 'jwt'], function () {
         ->only(['store', 'update', 'destroy']);
 
     /** Files */
-    Route::resource('files', \App\Http\Controllers\Api\User\FileController::class);
-    Route::resource('files/folder', \App\Http\Controllers\Api\User\FileFolderController::class)
+    Route::resource('cabinet', \App\Http\Controllers\Api\User\FileController::class)->only('index');
+    Route::resource('files', \App\Http\Controllers\Api\User\FileController::class)->except('index');
+    Route::resource('cabinet/folder', \App\Http\Controllers\Api\User\FileFolderController::class)
         ->only(['store', 'update', 'destroy']);
 
     /** Registries */
@@ -60,6 +63,11 @@ Route::group(['middleware' => 'jwt'], function () {
 
     /** Contact Form */
     Route::post('contact-form', [\App\Http\Controllers\Api\ContactController::class, 'form']);
+
+    /** Notifications */
+    Route::resource('notifications', \App\Http\Controllers\Api\User\NotificationController::class)->only('index');
+    Route::post('notifications/bulk-read', [\App\Http\Controllers\Api\User\NotificationController::class, 'bulkRead']);
+
 });
 
 
@@ -67,3 +75,6 @@ Route::group(['middleware' => 'jwt'], function () {
 Route::post('liqpay/callback', [\App\Http\Controllers\Api\LiqPayController::class, 'callback'])
     ->middleware(['liqpay.check.signature'])
     ->name('api.liqpay.callback');
+
+// RevenueCat
+Route::post('revenuecat/webhook', [\App\Http\Controllers\Api\RevenueCatController::class, 'webhook']);

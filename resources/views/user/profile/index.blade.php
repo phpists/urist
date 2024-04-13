@@ -63,14 +63,6 @@
                 </div>
                 <div class="form-block">
                     <div class="form-block__left">
-                        <label class="form-block__label">Прізвище</label>
-                    </div>
-                    <div class="form-block__right">
-                        <input class="input form__input" id="inputLastName" type="text" name="last_name" placeholder="Прізвище" autocomplete="off" value="{{ old('last_name', $user->last_name) }}" required="required"/>
-                    </div>
-                </div>
-                <div class="form-block">
-                    <div class="form-block__left">
                         <label class="form-block__label">Email</label>
                     </div>
                     <div class="form-block__right">
@@ -86,63 +78,10 @@
                     </div>
                 </div>
                 <div class="form-block">
-                    <div class="form-block__left">
-                        <label class="form-block__label">Дата народження</label>
-                    </div>
-                    <div class="form-block__right">
-                        <input class="input form__input" id="inputDate" type="date" name="birth_date" placeholder="" autocomplete="off" value="{{ old('birth_date', $user->birth_date) }}" required="required"/>
-                    </div>
-                </div>
-                <div class="form-block">
-                    <div class="form-block__left">
-                        <label class="form-block__label">Місто</label>
-                    </div>
-                    <div class="form-block__right">
-                        <select class="city-select" id="selectCity" name="city"
-                                data-url="{{ route('user.profile.search-city') }}"
-                                aria-label="Виберіть місто" required="required">
-                            @if($user->city)
-                            <option selected>{{ $user->city }}</option>
-                            @endif
-                            <option @selected($user->city == 'Київ')>Київ</option>
-                            <option @selected($user->city == 'Харків')>Харків</option>
-                            <option @selected($user->city == 'Одеса')>Одеса</option>
-                            <option @selected($user->city == 'Дніпро')>Дніпро</option>
-                            <option @selected($user->city == 'Донецьк')>Донецьк</option>
-                            <option @selected($user->city == 'Запоріжжя')>Запоріжжя</option>
-                            <option @selected($user->city == 'Львів')>Львів</option>
-                            <option @selected($user->city == 'Кривий Ріг')>Кривий Ріг</option>
-                            <option @selected($user->city == 'Миколаїв')>Миколаїв</option>
-                            <option @selected($user->city == 'Севастополь')>Севастополь</option>
-                            <option @selected($user->city == 'Маріуполь')>Маріуполь</option>
-                            <option @selected($user->city == 'Луганськ')>Луганськ</option>
-                            <option @selected($user->city == 'Вінниця')>Вінниця</option>
-                            <option @selected($user->city == 'Сімферополь')>Сімферополь</option>
-                            <option @selected($user->city == 'Макіївка')>Макіївка</option>
-                            <option @selected($user->city == 'Херсон')>Херсон</option>
-                            <option @selected($user->city == 'Чернігів')>Чернігів</option>
-                            <option @selected($user->city == 'Полтава')>Полтава</option>
-                            <option @selected($user->city == 'Хмельницький')>Хмельницький</option>
-                            <option @selected($user->city == 'Черкаси')>Черкаси</option>
-                            <option @selected($user->city == 'Чернівці')>Чернівці</option>
-                            <option @selected($user->city == 'Житомир')>Житомир</option>
-                            <option @selected($user->city == 'Суми')>Суми</option>
-                            <option @selected($user->city == 'Рівне')>Рівне</option>
-                            <option @selected($user->city == 'Горлівка')>Горлівка</option>
-                            <option @selected($user->city == 'Івано-Франківськ')>Івано-Франківськ</option>
-                            <option @selected($user->city == 'Кам\'янське')>Кам'янське</option>
-                            <option @selected($user->city == 'Кропивницький')>Кропивницький</option>
-                            <option @selected($user->city == 'Тернопіль')>Тернопіль</option>
-                            <option @selected($user->city == 'Луцьк')>Луцьк</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-block">
                     <div class="form-block__left"></div>
                     <div class="form-block__right">
                         <div class="form__buttons-group">
                             <button type="submit" class="button form__button">Зберегти</button>
-                            <button class="button button--outline form__button" type="button" data-modal="modal-edit-password">Редагувати пароль</button>
                         </div>
                     </div>
                 </div>
@@ -151,38 +90,8 @@
     </section>
 @endsection
 
-@push('modals')
-    <div class="modal" id="modal-edit-password">
-        <div class="modal__inner">
-            <div class="modal__window">
-                <button class="modal__close" aria-label="Close modal" data-modal-close="data-modal-close" type="button">
-                    <svg class="modal__close-icon" width="23" height="22">
-                        <use xlink:href="img/sprite.svg#close-modal"></use>
-                    </svg>
-                </button>
-                <h3 class="modal__title">Редагувати пароль</h3>
-                <form action="{{ route('user.profile.change-password') }}" method="POST" class="form modal__form" id="edit-password-form" autocomplete="off" novalidate="novalidate">
-                    @csrf
-                    <div class="form__group">
-                        <input class="input form__input" id="inputEditPassword" type="password" name="old_password" placeholder="Старий пароль" autocomplete="off" required="required"/>
-                    </div>
-                    <div class="form__group">
-                        <input class="input form__input" id="inputEditNewPassword" type="password" name="new_password" placeholder="Новий пароль" autocomplete="off" required="required"/>
-                    </div>
-                    <div class="form__group">
-                        <input class="input form__input" id="inputEditRepeatPassword" type="password" name="new_password_confirmation" placeholder="Повторити пароль" autocomplete="off" required="required"/>
-                    </div>
-                    <div class="form__buttons-group form__buttons-group--center">
-                        <button class="button form__button modal__button">Зберегти</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-@endpush
 
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/i18n/uk.js"></script>
     <script src="{{ asset('user/js/profile.js') }}"></script>
 @endpush

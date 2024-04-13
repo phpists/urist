@@ -161,7 +161,7 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
             ->name('bookmarks.index');
 
         // File Manager
-        Route::get('file-manager/{folderId?}', [\App\Http\Controllers\User\FileController::class, 'index'])
+        Route::get('cabinet/{folderId?}', [\App\Http\Controllers\User\FileController::class, 'index'])
             ->name('files.index');
         Route::get('file/{file}/edit', [\App\Http\Controllers\User\FileController::class, 'edit'])
             ->name('files.edit');

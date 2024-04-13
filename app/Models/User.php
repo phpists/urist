@@ -123,7 +123,7 @@ class User extends Authenticatable implements JWTSubject
             'id',
             'id',
             'notification_id'
-        );
+        )->select(['notifications.*', 'user_notifications.is_read']);
     }
 
     public function subscription(): HasOne
@@ -140,6 +140,11 @@ class User extends Authenticatable implements JWTSubject
                         ->where('expires_at', '>', Carbon::now());
                 });
         });
+    }
+
+    public function pendingSubscription(): HasOne
+    {
+        return $this->activeSubscription()->latest();
     }
 
     public function hadSubscription(): bool

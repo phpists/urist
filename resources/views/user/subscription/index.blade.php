@@ -9,13 +9,15 @@
             <div class="current-subscription">
                 @if($user->activeSubscription)
                     <div class="current-subscription__info">
-                        <h3 class="current-subscription__title">Зараз ви використовуєте <strong class="blue-color"><a
-                                    class="blue-link" href="#">тариф
-                                    {{ $user->activeSubscription->plan->title }}</a>
-                                - {{ $user->activeSubscription->plan->getPriceWithPeriodByPeriod($user->activeSubscription->period) }}
+                        <h3 class="current-subscription__title">Підписка дійсна, періодичність списання коштів - {{ $user->activeSubscription->plan->getPriceWithPeriodByPeriod($user->activeSubscription->period) }}
                             </strong></h3>
                         @if($user->activeSubscription->isCancelled())
-                            <div class="current-subscription__date">Підписка скасована. Оплачений період завершується {{ $user->activeSubscription->expires_at->format('d.m.Y') }}</div>
+                            <div class="current-subscription__date">Поточна підписка скасована. Оплачений період завершується {{ $user->activeSubscription->expires_at->format('d.m.Y') }}</div>
+                            @if($user->pendingSubscription)
+                                <hr>
+                                <div class="current-subscription__title">Наступний оплачуваний період - {{ $user->pendingSubscription->plan->getPriceWithPeriodByPeriod($user->pendingSubscription->period) }}</div>
+                                <div class="current-subscription__date">Наступний платіж {{ $user->pendingSubscription->expires_at->format('d.m.Y') }}</div>
+                            @endif
                             @else
                         <div class="current-subscription__date">Наступний
                             платіж {{ $user->activeSubscription->expires_at->format('d.m.Y') }}</div>
@@ -107,7 +109,7 @@
                                                 міс (-{{ $plan->getAnnualDiscountSum() }}$)
                                             </div>
                                         </div>
-                                        @if(!$user->activeSubscription)
+                                        @if(!$user->activeSubscription || ($user->activeSubscription && $user->activeSubscription->isCancelled() && !$user->pendingSubscription))
                                             <button class="button tariff-card__buy-button show_payment_modal"
                                                     type="button"
                                                     data-id="{{ $plan->id }}" data-title="{{ $plan->title }}"

@@ -13,7 +13,7 @@
                 </nav>
             </header>
             <div class="faq-section__row">
-                @foreach($systemPage->data as $datum)
+                @foreach($systemPage->data['categories'] ?? [] as $datum)
                     <div class="faq-section__col">
                         <h2 class="faq-section__sub-title">{{ $datum['title'] }}</h2>
                         <ul class="faq-section__list">
@@ -27,7 +27,7 @@
                                         </button>
                                         <div class="accordion__content" aria-hidden="true">
                                             <div class="accordion__text">
-                                                <p>{{ $item['body'] }}</p>
+                                                {!! str_replace("\r\n", "<br>", $item['body']) !!}
                                             </div>
                                         </div>
                                     </div>

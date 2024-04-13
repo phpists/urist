@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\Files\FileStoreRequest;
 use App\Http\Requests\Api\User\Files\FileUpdateRequest;
 use App\Models\CriminalArticle;
+use App\Models\Favourite;
 use App\Models\File;
 use App\Models\Folder;
 use Illuminate\Http\JsonResponse;
@@ -31,7 +32,6 @@ class FileController extends Controller
 
         $folders = Folder::query()
             ->where('user_id', $request->user()->id)
-            ->where('folder_type', FolderType::FILE_FOLDER)
             ->where('parent_id', $parent_id)
             ->when($search, function ($q) use ($search) {
                 foreach (explode(' ', $search) as $value) {
@@ -54,10 +54,23 @@ class FileController extends Controller
                 $query->orderBy($column, $direction);
             })
             ->get();
+        $bookmarks = Favourite::query()
+            ->where('user_id', $request->user()->id)
+            ->where('folder_id', $parent_id)
+            ->when($search, function ($q) use($search) {
+                foreach (explode(' ', $search) as $value) {
+                    $q->where('name', 'LIKE', "%{$value}%");
+                }
+            })
+            ->when($sort, function ($query) use ($column, $direction) {
+                $query->orderBy($column, $direction);
+            })
+            ->get();
 
         return new JsonResponse([
             'folders' => $folders,
             'files' => $files,
+            'bookmarks' => $bookmarks,
             'parent_id' => $parent_id
         ]);
     }

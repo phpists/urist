@@ -16,6 +16,8 @@ class Folder extends Model
 
     protected $fillable = ['name', 'parent_id', 'folder_type', 'user_id'];
 
+    protected $hidden = ['folder_type'];
+
     protected static function booted () {
 
         static::deleted(function(self $model) {

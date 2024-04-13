@@ -38,10 +38,16 @@ class LiqPayService
 
     final function getCheckoutPrerequisites(User $user, Plan $plan, string $period): LiqPayCheckoutFormPrerequisitesInterface
     {
+        if ($user->activeSubscription?->isCancelled()) {
+            $start_date = $user->activeSubscription->expires_at;
+        } else {
+            $start_date = Carbon::now();
+        }
+
         $data = [
             'action' => 'subscribe',
             'subscribe' => '1',
-            'subscribe_date_start' => Carbon::now()->setTimezone('UTC')->format('Y-m-d H:i:s'),
+            'subscribe_date_start' => Carbon::parse($start_date)->setTimezone('UTC')->format('Y-m-d H:i:s'),
             'subscribe_periodicity' => $period,
             'amount' => $plan->getPriceByPeriod($period),
             'description' => 'Оформлення підписки "'. $plan->title .'"',
@@ -97,7 +103,14 @@ class LiqPayService
             throw new Exception('Не вдалось знайти платіжну сесію');
 
         $addPeriod = 'add' . ucfirst($subscriptionSession->period);
-        $endAt = Carbon::createFromTimestamp(substr($this->payment->get('end_date'), 0, -3))
+
+        if ($subscriptionSession->user->activeSubscription) {
+            $endAt = $subscriptionSession->user->activeSubscription->expires_at;
+        } else {
+            $endAt = Carbon::createFromTimestamp(substr($this->payment->get('end_date'), 0, -3));
+        }
+
+        $endAt = Carbon::parse($endAt)
             ->$addPeriod()
             ->format('Y-m-d');
 
