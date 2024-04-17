@@ -48,7 +48,7 @@
                                href="{{ route('user.files.index') }}">
                                 <span class="sidebar-menu__pic"><svg class="sidebar-menu__icon" width="17" height="21"><use
                                             xlink:href="{{asset('assets/img/user/sprite.svg#file')}}"></use></svg></span>
-                                <span class="sidebar-menu__title">Робота з файлами</span>
+                                <span class="sidebar-menu__title">Кабінет</span>
                             </a>
                         </li>
                     <li class="sidebar-menu__item">
@@ -65,14 +65,14 @@
                 </svg></span><span class="sidebar-menu__title">Моя підписка</span></a></li>
 
                     <li class="sidebar-menu__item">
-                        <a class="button button--app mobile-nav-menu__button" href="#">
+                        <a class="button button--app mobile-nav-menu__button" href="{{ \App\Services\SettingService::getValueByName(\App\Enums\SettingEnum::APPLE_STORE_URL->value) }}">
                             <svg class="button__icon" width="78" height="22">
                                 <use xlink:href="{{ asset('assets/img/sprite.svg#app-store') }}"></use>
                             </svg>
                         </a>
                     </li>
                     <li class="sidebar-menu__item">
-                        <a class="button button--app mobile-nav-menu__button" href="#">
+                        <a class="button button--app mobile-nav-menu__button" href="{{ \App\Services\SettingService::getValueByName(\App\Enums\SettingEnum::GOOGLE_STORE_URL->value) }}">
                             <svg class="button__icon" width="85" height="21">
                                 <use xlink:href="{{ asset('assets/img/sprite.svg#google-play') }}"></use>
                             </svg>

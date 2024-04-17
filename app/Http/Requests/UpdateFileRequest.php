@@ -25,7 +25,7 @@ class UpdateFileRequest extends FormRequest
     {
         return [
             'pp' => 'required|string',
-            'statya_kk' => 'required|string'
+            'statya_kk' => 'string'
         ];
     }
 }

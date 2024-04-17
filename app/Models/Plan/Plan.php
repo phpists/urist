@@ -72,7 +72,8 @@ class Plan extends Model
     {
         return match ($period) {
             'month' => $this->price_monthly,
-            'year' => $this->price_annual
+            'year' => $this->price_annual,
+            'day' => 0,
         };
     }
 
@@ -80,7 +81,8 @@ class Plan extends Model
     {
         $periodTitle = match ($period) {
             'month' => 'місяць',
-            'year' => 'рік'
+            'year' => 'рік',
+            'day' => 'день'
         };
 
         return '$' . $this->getPriceByPeriod($period) . '/' . $periodTitle;

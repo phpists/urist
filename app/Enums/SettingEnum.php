@@ -11,4 +11,7 @@ enum SettingEnum: string
     case KPK_MODULE_BTN = 'kpk_module_btn';
     case KK_MODULE_BTN = 'kk_module_btn';
 
+    case APPLE_STORE_URL = 'apple_store_url';
+    case GOOGLE_STORE_URL = 'google_store_url';
+
 }

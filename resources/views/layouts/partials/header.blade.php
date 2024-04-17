@@ -15,11 +15,11 @@
             </ul>
         </nav>
         <ul class="actions">
-            <li class="actions__item actions__item--hidden-md"><a class="button button--app actions__button" href="#">
+            <li class="actions__item actions__item--hidden-md"><a class="button button--app actions__button" href="{{ \App\Services\SettingService::getValueByName(\App\Enums\SettingEnum::APPLE_STORE_URL->value) }}">
                     <svg class="button__icon" width="78" height="22">
                         <use xlink:href="{{ asset('assets/img/sprite.svg#app-store') }}"></use>
                     </svg></a></li>
-            <li class="actions__item actions__item--hidden-md"><a class="button button--app actions__button" href="#">
+            <li class="actions__item actions__item--hidden-md"><a class="button button--app actions__button" href="{{ \App\Services\SettingService::getValueByName(\App\Enums\SettingEnum::GOOGLE_STORE_URL->value) }}">
                     <svg class="button__icon" width="85" height="21">
                         <use xlink:href="{{ asset('assets/img/sprite.svg#google-play') }}"></use>
                     </svg></a></li>
@@ -31,7 +31,7 @@
                 <li class="actions__item actions__item"><a class="button button--outline actions__button"
                                                            href="{{route('user.profile.index')}}">
                         <svg class="button__icon" width="17" height="19">
-                            <use xlink:href="assets/img/sprite.svg#user "></use>
+                            <use xlink:href="{{ asset('assets/img/sprite.svg#user') }}"></use>
                         </svg>
                         <span>Мій профіль</span></a></li>
 {{--                    <li class="actions__item actions__item">--}}

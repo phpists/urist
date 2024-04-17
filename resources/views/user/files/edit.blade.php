@@ -57,11 +57,11 @@
                     <button class="button page-section__button" type="submit">Зберегти</button>
 
                     @if(can_user(\App\Enums\PermissionEnum::EXPORT_PAGE->value))
-                    <a href="{{ route('user.files.export-doc', $file) }}" class="button button--outline page-section__button" type="button">Экспорт у Word
+                    <button data-url="{{ route('user.files.export-doc', $file) }}" class="button button--outline page-section__button" type="button" id="exportDocBtn">Экспорт у Word
                         <svg class="button__icon" width="28" height="28">
                             <use xlink:href="{{asset('assets/img/user/sprite.svg#word')}}"></use>
                         </svg>
-                    </a>
+                    </button>
                     @endif
                 </div>
 
@@ -164,6 +164,14 @@
                     throwErrorToaster(jqXHR?.responseJSON?.message ?? 'Не вдалось обробити запит')
                 }
             })
+        })
+
+        $(document).on('click', '#exportDocBtn', function (e) {
+            e.preventDefault();
+
+            $(this).prev().click();
+
+            location.href = $(this).data('url')
         })
     </script>
 

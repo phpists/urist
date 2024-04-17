@@ -50,7 +50,7 @@ class LiqPayService
             'subscribe_date_start' => Carbon::parse($start_date)->setTimezone('UTC')->format('Y-m-d H:i:s'),
             'subscribe_periodicity' => $period,
             'amount' => $plan->getPriceByPeriod($period),
-            'description' => 'Оформлення підписки "'. $plan->title .'"',
+            'description' => 'Оформлення підписки',
             'result_url' => route('subscription.checkout'),
             'server_url' => route('api.liqpay.callback'),
         ];

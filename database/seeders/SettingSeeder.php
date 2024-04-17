@@ -36,6 +36,16 @@ class SettingSeeder extends Seeder
                 'title' => 'Посилання для "Модуль КК"',
                 'value' => route('user.articles.index', CriminalArticleTypeEnum::KK->value)
             ],
+            [
+                'name' => SettingEnum::APPLE_STORE_URL,
+                'title' => 'Посилання "Apple Store"',
+                'value' => '#'
+            ],
+            [
+                'name' => SettingEnum::GOOGLE_STORE_URL,
+                'title' => 'Посилання "Google Play"',
+                'value' => '#'
+            ],
         ];
 
         foreach ($settings as $setting) {

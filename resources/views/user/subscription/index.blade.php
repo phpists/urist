@@ -8,6 +8,12 @@
             <h1 class="page-title subscription-section__title">Моя підписка</h1>
             <div class="current-subscription">
                 @if($user->activeSubscription)
+                    @if($user->allSubscriptions()->count() == 1)
+                        <div class="current-subscription__info">
+                            <h3 class="current-subscription__title">Наразі діє безкоштовний пробний період</h3>
+                            <div class="current-subscription__date">Дійсний до {{ $user->activeSubscription->expires_at->format('d.m.Y') }}</div>
+                        </div>
+                    @else
                     <div class="current-subscription__info">
                         <h3 class="current-subscription__title">Підписка дійсна, періодичність списання коштів - {{ $user->activeSubscription->plan->getPriceWithPeriodByPeriod($user->activeSubscription->period) }}
                             </strong></h3>
@@ -30,6 +36,7 @@
                         <button class="button button--red subscription-section__button" type="submit" onclick="return confirm('Ви впевнені, що хочете скасувати відписку?')">Відмінити підписку
                         </button>
                     </form>
+                    @endif
                     @endif
                 @else
                     <div class="current-subscription__info">

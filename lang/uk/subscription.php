@@ -15,5 +15,6 @@ return [
         \App\Models\User::ROLE_LITE => 'Lite'
     ],
     'month' => 'Місяць',
-    'year' => 'Рік'
+    'year' => 'Рік',
+    'day' => 'День',
 ];

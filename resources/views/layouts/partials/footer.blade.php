@@ -46,11 +46,13 @@
                         <a class="footer-menu__link" href="{{ route('offer') }}">Оферта</a>
                     </li>
                     <li class="mobile-nav-menu__item" style="flex-direction: row;">
+                        @guest
                         <a class="button button--outline mobile-nav-menu__button" href="{{ route('login') }}">Вхід</a>
-                        <a class="button button--app mobile-nav-menu__button" href="#">
+                        @endguest
+                        <a class="button button--app mobile-nav-menu__button" href="{{ \App\Services\SettingService::getValueByName(\App\Enums\SettingEnum::APPLE_STORE_URL->value) }}">
                             <svg class="button__icon" width="78" height="22">
                                 <use xlink:href="{{ asset('assets/img/sprite.svg#app-store') }}"></use>
-                            </svg></a><a class="button button--app mobile-nav-menu__button" href="#">
+                            </svg></a><a class="button button--app mobile-nav-menu__button" href="{{ \App\Services\SettingService::getValueByName(\App\Enums\SettingEnum::GOOGLE_STORE_URL->value) }}">
                             <svg class="button__icon" width="85" height="21">
                                 <use xlink:href="{{ asset('assets/img/sprite.svg#google-play') }}"></use>
                             </svg>

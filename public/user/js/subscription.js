@@ -23,8 +23,7 @@ $(function () {
 
     $(document).on('click', '.show_payment_modal', function (e) {
         const $form = $('#paymentForm');
-        let period = $('#selectedPeriod').val(),
-            planTitle = $(this).data('title');
+        let period = $('#selectedPeriod').val();
 
         $.ajax({
             type: 'POST',

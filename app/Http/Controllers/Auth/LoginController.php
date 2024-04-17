@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserLoginRequest;
 use App\Models\Session;
 use App\Models\User;
+use App\Services\Apple\AppleToken;
 use App\Services\UserAuthService;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -87,16 +89,19 @@ class LoginController extends Controller
     public function driverLogin(\Request $request, string $driver)
     {
         try {
+            if ($driver == 'apple')
+                config()->set('services.apple.client_secret', (\App::make(AppleToken::class))->generate());
+
             return Socialite::driver($driver)->redirect();
         } catch (\Exception $e) {
             return back()->with('error', 'Помилка');
         }
     }
 
-    public function driverLoginCallback(\Request $request, string $driver)
+    public function handleGoogleLoginCallback(\Request $request)
     {
         try {
-            $user = Socialite::driver($driver)->user();
+            $user = Socialite::driver('google')->user();
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return redirect('/');
@@ -106,7 +111,7 @@ class LoginController extends Controller
         if($existing_user){
             auth()->login($existing_user, true);
         } else {
-            $column = $driver . '_id';
+            $column = 'google_id';
 
             $new_user = new User;
             $new_user->first_name = explode(' ', $user->name)[0] ?? "User";
@@ -120,6 +125,21 @@ class LoginController extends Controller
         }
 
         return to_route('user.dashboard.index');
+    }
+
+    public function handleAppleLoginCallback(AppleToken $appleToken)
+    {
+        // Generate on-the-fly client_secret from the private key
+        // See: https://bannister.me/blog/generating-a-client-secret-for-sign-in-with-apple-on-each-request
+        config()->set('services.apple.client_secret', $appleToken->generate());
+
+        $socialUser = Socialite::driver('apple')
+            ->stateless()
+            ->user();
+
+        dd($socialUser);
+
+        return redirect()->route("profile.index");
     }
 
 }

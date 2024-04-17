@@ -36,7 +36,8 @@ use App\Http\Controllers\User\ProfileController as UserProfileController;
 Route::get('login', [LoginController::class, 'index'])->name('login');
 
 Route::get('login/{driver}', [LoginController::class, 'driverLogin'])->name('login.driver');
-Route::get('login/{driver}/callback', [LoginController::class, 'driverLoginCallback'])->name('login.driver.callback');
+Route::get('login/apple/callback', [LoginController::class, 'handleAppleLoginCallback'])->name('login.apple.callback');
+Route::get('login/google/callback', [LoginController::class, 'handleGoogleLoginCallback'])->name('login.google.callback');
 
 Route::get('register', [RegisterController::class, 'index'])->name('register.page');
 Route::post('sing-in', [LoginController::class, 'login'])->name('sing-in')->middleware('throttle:5,1');
@@ -137,7 +138,7 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
     Route::get('search-city', [UserProfileController::class, 'searchCity'])
         ->name('profile.search-city');
 
-    Route::group(['middleware' => ['role:max']], function () {
+    Route::group(['middleware' => ['subscribed']], function () {
         // Articles
         Route::get('articles/{type?}', [\App\Http\Controllers\User\ArticleController::class, 'index'])
             ->name('articles.index');

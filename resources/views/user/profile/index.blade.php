@@ -66,7 +66,7 @@
                         <label class="form-block__label">Email</label>
                     </div>
                     <div class="form-block__right">
-                        <input class="input form__input" id="inputEmail" type="email" name="email" placeholder="example@gmail.com" autocomplete="off" value="{{ old('email', $user->email) }}" required="required"/>
+                        <input class="input form__input" id="inputEmail" type="email" autocomplete="off" value="{{ $user->email }}" style="text-align: initial" disabled/>
                     </div>
                 </div>
                 <div class="form-block">
@@ -74,7 +74,7 @@
                         <label class="form-block__label">Номер телефону</label>
                     </div>
                     <div class="form-block__right">
-                        <input class="input form__input phone-mask" id="inputPhone" type="text" placeholder="+38 (___) __-__-___" autocomplete="off" value="{{ old('phone', Str::substr($user->phone, 2)) }}" style="text-align: initial" disabled/>
+                        <input class="input form__input phone-mask" id="inputPhone" type="text" name="phone" placeholder="+38 (___) __-__-___" autocomplete="off" value="{{ old('phone', Str::substr($user->phone, 3)) }}"/>
                     </div>
                 </div>
                 <div class="form-block">

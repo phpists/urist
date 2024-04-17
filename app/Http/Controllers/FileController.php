@@ -139,7 +139,6 @@ class FileController extends Controller
     public function moveFile(MoveItemRequest $request): \Illuminate\Http\JsonResponse
     {
         $file = File::query()->where('user_id', $request->user()->id)->find($request->item_id);
-        dd($request->all());
         $result = $file->update($request->all());
         return response()->json([
             'success' => true,
