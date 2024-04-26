@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Enums\SystemPageEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Registry;
 
@@ -13,7 +14,9 @@ class RegistryController extends Controller
         $registries = Registry::paginate()
             ->withQueryString();
 
-        return view('user.registries.index', compact('registries'));
+        $systemPage = SystemPageEnum::USER_REGISTRIES->getPage();
+
+        return view('user.registries.index', compact('registries', 'systemPage'));
     }
 
 }

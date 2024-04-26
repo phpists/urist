@@ -18,6 +18,6 @@ class SubscriptionAccess
         if ($request->user()->isSuperAdmin() || $request->user()->activeSubscription)
             return $next($request);
 
-        abort(403);
+        return to_route('user.subscription.index')->with('error', 'Для користування цим функціоналом потрібна підписка');
     }
 }

@@ -13,5 +13,6 @@ enum SettingEnum: string
 
     case APPLE_STORE_URL = 'apple_store_url';
     case GOOGLE_STORE_URL = 'google_store_url';
+    case FOOTER_TEXT = 'footer_text';
 
 }

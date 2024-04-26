@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Enums\FolderType;
 use App\Enums\PermissionEnum;
+use App\Enums\SystemPageEnum;
 use App\Http\Controllers\Controller;
 use App\Jobs\DeleteTempFileJob;
 use App\Models\Favourite;
@@ -68,7 +69,9 @@ class FileController extends Controller
         if ($request->ajax())
             return view('user.files._items', compact('file_folder', 'folders', 'files', 'favourites'));
 
-        return view('user.files.index', compact('folders', 'files', 'file_folder', 'folder_id', 'favourites'));
+        $systemPage = SystemPageEnum::USER_CABINET->getPage();
+
+        return view('user.files.index', compact('folders', 'files', 'file_folder', 'folder_id', 'favourites', 'systemPage'));
     }
 
     public function edit(Request $request, File $file)

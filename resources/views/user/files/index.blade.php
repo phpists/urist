@@ -1,5 +1,5 @@
 @extends('layouts.user_app')
-@section('title', 'Кабінет')
+@section('title', $systemPage->title ?? 'Кабінет')
 @section('styles')
     <style>
         a.non-draggable, svg.non-draggable, img.non-draggable {
@@ -13,7 +13,7 @@
         <div class="container bookmarks-section__container">
             <header class="bookmarks-section__header">
                 <div class="bookmarks-section__header-row">
-                    <h1 class="page-title bookmarks-section__title">Кабінет</h1>
+                    <h1 class="page-title bookmarks-section__title">{{ $systemPage->title ?? 'Кабінет' }}</h1>
                     <div class="sort-form bookmarks-section__sort-form" id="sort-form">
                         <div class="sort-form__group">
                             <select class="select" id="selectSortByFiles" name="sort" aria-label="Sort by">
@@ -236,8 +236,10 @@
 
                         if (draggable.dataset.file !== undefined) {
                             moveFile(folder_id, draggable_id)
+                            $(this).find('.folder_items_count').text(parseInt($(this).find('.folder_items_count').text()) + 1)
                         } else if (draggable.dataset.bookmark !== undefined) {
                             moveFavourite(folder_id, draggable_id)
+                            $(this).find('.folder_items_count').text(parseInt($(this).find('.folder_items_count').text()) + 1)
                         } else {
                             moveFolder(folder_id, draggable_id)
                         }

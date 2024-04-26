@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Enums\SystemPageEnum;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use Illuminate\Http\JsonResponse;
@@ -14,7 +15,8 @@ class ProfileController extends Controller
     public function index()
     {
         return view('user.profile.index', [
-            'user' => \Auth::user()
+            'user' => \Auth::user(),
+            'systemPage' => SystemPageEnum::USER_PROFILE->getPage()
         ]);
     }
 

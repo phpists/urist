@@ -1,11 +1,10 @@
 @extends('layouts.user_app')
-
-@section('title', 'Моя підписка')
+@section('title', $systemPage->title ?? 'Моя підписка')
 
 @section('page')
     <section class="subscription-section">
         <div class="container subscription-section__container">
-            <h1 class="page-title subscription-section__title">Моя підписка</h1>
+            <h1 class="page-title subscription-section__title">{{ $systemPage->title ?? 'Моя підписка' }}</h1>
             <div class="current-subscription">
                 @if($user->activeSubscription)
                     @if($user->allSubscriptions()->count() == 1)

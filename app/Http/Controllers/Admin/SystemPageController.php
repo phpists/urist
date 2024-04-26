@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\SystemPageEnum;
 use App\Http\Controllers\Controller;
 use App\Models\SystemPage;
 use Illuminate\Http\Request;
@@ -12,10 +13,16 @@ class SystemPageController extends Controller
 
     public function edit(SystemPage $systemPage)
     {
-        if (!view()->exists("admin.system-pages.{$systemPage->name}"))
-            abort(404);
+        $viewName = $systemPage->name;
+        if (!view()->exists("admin.system-pages.{$systemPage->name}")) {
+            if (in_array($systemPage->name, [SystemPageEnum::USER_PROFILE->value, SystemPageEnum::USER_CABINET->value,
+                SystemPageEnum::USER_REGISTRIES->value, SystemPageEnum::USER_SUBSCRIPTION->value]))
+                $viewName = 'templates.empty';
+            else
+                abort(404);
+        }
 
-        return view("admin.system-pages.{$systemPage->name}", [
+        return view("admin.system-pages.{$viewName}", [
             'model' => $systemPage
         ]);
     }

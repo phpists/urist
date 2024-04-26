@@ -93,11 +93,11 @@ class Folder extends Model
         $count = $this->getFilesCount() + $this->getBookmarksCount();
 
         if ($count == 1) {
-            return "$count правова позиція";
+            return "<span class='folder_items_count'>$count</span> правова позиція";
         } elseif ($count > 1 && $count < 5) {
-            return "$count правові позиції";
+            return "<span class='folder_items_count'>$count</span> правові позиції";
         } else {
-            return "$count правових позицій";
+            return "<span class='folder_items_count'>$count</span> правових позицій";
         }
     }
 

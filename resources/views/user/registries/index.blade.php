@@ -1,5 +1,5 @@
 @extends('layouts.user_app')
-@section('title', 'Реєстр')
+@section('title', $systemPage->title ?? 'Реєстр')
 @section('styles')
     <style>
         a.non-draggable, svg.non-draggable, img.non-draggable {
@@ -12,7 +12,7 @@
 
     <section class="collection-section">
         <div class="container collection-section__container">
-            <h1 class="page-title profile-section__title">Реєстр</h1>
+            <h1 class="page-title profile-section__title">{{ $systemPage->title ?? 'Реєстр' }}</h1>
             <table class="collection-table collection-table--auto">
                 <thead class="collection-table__thead">
                 <tr>

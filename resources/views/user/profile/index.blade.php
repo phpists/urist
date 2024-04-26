@@ -1,5 +1,5 @@
 @extends('layouts.user_app')
-@section('title', 'Профіль')
+@section('title', $systemPage->title ?? 'Профіль')
 @section('page')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <style>
@@ -49,7 +49,7 @@
                     </svg>
                 </button>
             </div>
-            <h1 class="page-title profile-section__title">Мій профіль</h1>
+            <h1 class="page-title profile-section__title">{{ $systemPage->title ?? 'Профіль' }}</h1>
             <form action="{{ route('user.profile.update') }}" method="POST" class="form profile-section__form" id="profile-form" autocomplete="off" novalidate="novalidate">
                 @csrf
                 @method('PUT')

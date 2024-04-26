@@ -284,5 +284,45 @@ class SystemPageSeeder extends Seeder
             ]);
         }
 
+        if (!SystemPage::whereName(SystemPageEnum::USER_PROFILE->value)->exists()) {
+            SystemPage::create([
+                'name' => SystemPageEnum::USER_PROFILE->value,
+                'title' => 'Мій профіль',
+                'data' => [],
+                'images' => [],
+                'meta' => [],
+            ]);
+        }
+
+        if (!SystemPage::whereName(SystemPageEnum::USER_CABINET->value)->exists()) {
+            SystemPage::create([
+                'name' => SystemPageEnum::USER_CABINET->value,
+                'title' => 'Кабінет',
+                'data' => [],
+                'images' => [],
+                'meta' => [],
+            ]);
+        }
+
+        if (!SystemPage::whereName(SystemPageEnum::USER_REGISTRIES->value)->exists()) {
+            SystemPage::create([
+                'name' => SystemPageEnum::USER_REGISTRIES->value,
+                'title' => 'Реєстр',
+                'data' => [],
+                'images' => [],
+                'meta' => [],
+            ]);
+        }
+
+        if (!SystemPage::whereName(SystemPageEnum::USER_SUBSCRIPTION->value)->exists()) {
+            SystemPage::create([
+                'name' => SystemPageEnum::USER_SUBSCRIPTION->value,
+                'title' => 'Моя підписка',
+                'data' => [],
+                'images' => [],
+                'meta' => [],
+            ]);
+        }
+
     }
 }

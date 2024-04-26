@@ -16,6 +16,11 @@ enum SystemPageEnum:string
     case POLICY = 'policy';
     case OFFER = 'offer';
 
+    case USER_PROFILE = 'user_profile';
+    case USER_CABINET = 'user_cabinet';
+    case USER_REGISTRIES = 'user_registries';
+    case USER_SUBSCRIPTION = 'user_subscription';
+
 
     public function getPage(): SystemPage
     {

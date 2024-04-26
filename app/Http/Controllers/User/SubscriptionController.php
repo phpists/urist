@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Enums\SystemPageEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Plan\Feature;
 use App\Models\Plan\Plan;
@@ -26,7 +27,8 @@ class SubscriptionController extends Controller
         return view('user.subscription.index', [
             'user' => \Auth::user(),
             'plans' => Plan::active()->orderBy('pos')->get(),
-            'features' => Feature::active()->orderBy('pos')->get()
+            'features' => Feature::active()->orderBy('pos')->get(),
+            'systemPage' => SystemPageEnum::USER_SUBSCRIPTION->getPage()
         ]);
     }
 

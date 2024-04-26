@@ -1,3 +1,18 @@
+@if($file_folder)
+    <li data-id="{{ $file_folder->parent_id }}" data-zone="folder_{{$file_folder->parent_id}}" data-label="folder_{{$file_folder->parent_id}}" class="folder_container bookmarks-section__item">
+        <div class="bookmark-card">
+            <a class="bookmark-card__link" href="{{ route('user.files.index', $file_folder->parent_id) }}">
+                <div class="bookmark-card__pic">
+                    <svg class="bookmark-card__icon" width="110" height="86">
+                        <use xlink:href="{{asset('assets/img/user/sprite.svg#case')}}"></use>
+                    </svg>
+                </div>
+                <h3 class="bookmark-card__title">...</h3>
+            </a>
+        </div>
+    </li>
+@endif
+
 @foreach($folders as $folder)
     <li data-id="{{ $folder->id }}" data-zone="folder_{{$folder->id}}" data-label="folder_{{$folder->id}}" class="folder_container bookmarks-section__item drag_element">
         <div class="bookmark-card">
@@ -26,7 +41,7 @@
                     </svg>
                 </div>
                 <h3 class="bookmark-card__title">{{ $folder->name }}</h3>
-                <div class="bookmark-card__info">{{ $folder->getTotalEntriesCountTitle() }}</div>
+                <div class="bookmark-card__info">{!! $folder->getTotalEntriesCountTitle() !!}</div>
             </a>
         </div>
     </li>

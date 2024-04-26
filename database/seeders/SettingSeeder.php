@@ -46,6 +46,11 @@ class SettingSeeder extends Seeder
                 'title' => 'Посилання "Google Play"',
                 'value' => '#'
             ],
+            [
+                'name' => SettingEnum::FOOTER_TEXT,
+                'title' => 'Футер',
+                'value' => '2023 © Всі права захищено'
+            ],
         ];
 
         foreach ($settings as $setting) {

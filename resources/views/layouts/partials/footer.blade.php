@@ -63,7 +63,7 @@
         </div>
         <div class="footer__col footer__col--4">
             <div class="footer__info">
-                <div class="footer__copyright">2023 &copy; Всі права захищено</div>
+                <div class="footer__copyright">{{ \App\Services\SettingService::getValueByName(\App\Enums\SettingEnum::FOOTER_TEXT->value) }}</div>
                 <div class="footer__dev">Розроблено<a class="footer__dev-link" href="https://shafem.com/"
                                                       target="_blank"><img class="footer__dev-img" src="/assets/img/shafem.svg"
                                                                            width="95" height="20"
