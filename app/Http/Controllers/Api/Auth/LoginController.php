@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\Events\UserRegisteredEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Auth\LoginRequest;
 use App\Models\User;
@@ -63,6 +64,8 @@ class LoginController extends BaseController
             $new_user->$column = $user->id;
             $new_user->password = Hash::make(Str::random(8));
             $new_user->save();
+
+            event(new UserRegisteredEvent($new_user));
 
             return $this->respondWithToken(\Auth::guard('api')->login($new_user));
         }

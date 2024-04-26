@@ -36,8 +36,7 @@ use App\Http\Controllers\User\ProfileController as UserProfileController;
 Route::get('login', [LoginController::class, 'index'])->name('login');
 
 Route::get('login/{driver}', [LoginController::class, 'driverLogin'])->name('login.driver');
-Route::get('login/apple/callback', [LoginController::class, 'handleAppleLoginCallback'])->name('login.apple.callback');
-Route::get('login/google/callback', [LoginController::class, 'handleGoogleLoginCallback'])->name('login.google.callback');
+Route::get('login/{driver}/callback', [LoginController::class, 'handleDriverLoginCallback']);
 
 Route::get('register', [RegisterController::class, 'index'])->name('register.page');
 Route::post('sing-in', [LoginController::class, 'login'])->name('sing-in')->middleware('throttle:5,1');

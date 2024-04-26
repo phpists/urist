@@ -90,7 +90,7 @@ class LoginController extends Controller
     {
         try {
             if ($driver == 'apple')
-                config()->set('services.apple.client_secret', (\App::make(AppleToken::class))->generate());
+                \Config::set('services.apple.client_secret', (\App::make(AppleToken::class))->generate());
 
             return Socialite::driver($driver)->redirect();
         } catch (\Exception $e) {
@@ -98,10 +98,10 @@ class LoginController extends Controller
         }
     }
 
-    public function handleGoogleLoginCallback(\Request $request)
+    public function handleDriverLoginCallback(\Request $request, string $driver)
     {
         try {
-            $user = Socialite::driver('google')->user();
+            $user = Socialite::driver($driver)->user();
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return redirect('/');
@@ -111,7 +111,7 @@ class LoginController extends Controller
         if($existing_user){
             auth()->login($existing_user, true);
         } else {
-            $column = 'google_id';
+            $column = $driver . '_id';
 
             $new_user = new User;
             $new_user->first_name = explode(' ', $user->name)[0] ?? "User";
@@ -121,25 +121,12 @@ class LoginController extends Controller
             $new_user->password = Hash::make(Str::random(8));
             $new_user->save();
 
+            event(new Registered($new_user));
+
             auth()->login($new_user, true);
         }
 
         return to_route('user.dashboard.index');
-    }
-
-    public function handleAppleLoginCallback(AppleToken $appleToken)
-    {
-        // Generate on-the-fly client_secret from the private key
-        // See: https://bannister.me/blog/generating-a-client-secret-for-sign-in-with-apple-on-each-request
-        config()->set('services.apple.client_secret', $appleToken->generate());
-
-        $socialUser = Socialite::driver('apple')
-            ->stateless()
-            ->user();
-
-        dd($socialUser);
-
-        return redirect()->route("profile.index");
     }
 
 }
