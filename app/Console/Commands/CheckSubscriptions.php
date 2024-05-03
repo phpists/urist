@@ -30,7 +30,12 @@ class CheckSubscriptions extends Command
     {
         $usersWithSubscription = User::whereHas('activeSubscription')->get();
 
+        echo 'found ' . $usersWithSubscription->count() . ' users' . PHP_EOL;
+
         foreach ($usersWithSubscription as $user) {
+            echo "\tuser " . $user->email . ': ' . PHP_EOL;
+            echo 'check #1: ' . ($user->activeSubscription->isCancelled() && $user->activeSubscription->expires_at->isPast()) . PHP_EOL;
+            echo 'check #2: ' . ($user->activeSubscription->expires_at->addHours(6)->isPast()) . PHP_EOL . PHP_EOL;
             if (($user->activeSubscription->isCancelled() && $user->activeSubscription->expires_at->isPast())
                 || $user->activeSubscription->expires_at->addHours(6)->isPast())
                 UserSubscriptionExpired::dispatch($user);

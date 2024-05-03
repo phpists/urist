@@ -38,7 +38,7 @@ class SubscriptionHelper
         $user = \Auth::user();
 
         return [
-            '{activePricePeriod}' => $user->activeSubscription->plan->getPriceWithPeriodByPeriod($user->activeSubscription->period),
+            '{activePricePeriod}' => $user->activeSubscription->plan?->getPriceWithPeriodByPeriod($user->activeSubscription->period),
             '{activeExpiresAt}' => $user->activeSubscription->expires_at->format('d.m.Y'),
             '{pendingExpiresAt}' => $user->pendingSubscription->expires_at->format('d.m.Y')
         ];

@@ -43,5 +43,5 @@
         </div>
     </div>
 
-    @include('layouts.modals.video')
+{{--    @include('layouts.modals.video')--}}
 </div>

@@ -22,6 +22,8 @@ class RemoveRole
      */
     public function handle(UserSubscriptionExpired $event): void
     {
+        \Log::error($event->user->hasRole([RoleEnum::MAX->value]) ? '111' : '000');
+        \Log::error(json_encode($event->user->roles()));
         if ($event->user->hasRole([RoleEnum::MAX->value]))
             $event->user->removeRole(RoleEnum::MAX->value);
     }

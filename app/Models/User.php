@@ -139,11 +139,7 @@ class User extends Authenticatable implements JWTSubject
     public function activeSubscription(): HasOne
     {
         return $this->subscription()->where(function ($query) {
-            return $query->whereNull('subscriptions.cancelled_at')
-                ->orWhere(function ($query) {
-                    return $query->whereNotNull('subscriptions.cancelled_at')
-                        ->where('expires_at', '>', Carbon::now());
-                });
+            return $query->where('subscriptions.expires_at', '>', Carbon::now()->format('Y-m-d'));
         });
     }
 

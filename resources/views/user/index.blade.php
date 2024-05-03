@@ -20,7 +20,7 @@
         @include('layouts.user_partials.modal-search')
         @include('layouts.user_partials.modal-search-disabled')
         @include('layouts.user_partials.modal-notifications')
-        @include('layouts.user_partials.modal-video')
+{{--        @include('layouts.user_partials.modal-video')--}}
         @include('layouts.user_partials.modal-period')
     </div>
 @endsection

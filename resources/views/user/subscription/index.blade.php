@@ -11,6 +11,7 @@
                         <div class="current-subscription__info">
                             <h3 class="current-subscription__title">{{ \App\Helpers\SubscriptionHelper::getVariableTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_FREE_TRIAL) }}</h3>
                             <div class="current-subscription__date">{{ \App\Helpers\SubscriptionHelper::getVariableSubTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_FREE_TRIAL) }}</div>
+                        </div>
                     @elseif(!$user->activeSubscription->price && !$user->activeSubscription->session)
                         <div class="current-subscription__info">
                             <h3 class="current-subscription__title">{{ \App\Helpers\SubscriptionHelper::getVariableTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_FREE) }}</h3>
@@ -123,15 +124,15 @@
                                                 міс (-{{ $plan->getAnnualDiscountSum() }}$)
                                             </div>
                                         </div>
-                                        @if(!$user->activeSubscription
-                                                || ($user->activeSubscription && $user->activeSubscription->isCancelled() && !$user->pendingSubscription))
+{{--                                        @if(!$user->activeSubscription--}}
+{{--                                                || ($user->activeSubscription && $user->activeSubscription->isCancelled() && !$user->pendingSubscription))--}}
                                             <button class="button tariff-card__buy-button show_payment_modal"
                                                     type="button"
                                                     data-id="{{ $plan->id }}" data-title="{{ $plan->title }}"
                                                     data-url="{{ route('user.subscription.payment-data', $plan) }}"
                                                     data-modal="modal-payment">Обрати
                                             </button>
-                                        @endif
+{{--                                        @endif--}}
                                     </div>
                                 </div>
                             </div>
