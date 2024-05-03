@@ -7,17 +7,17 @@
                 </svg>
             </button>
             <h3 class="modal__title">Створити файл</h3>
-            <form action="{{ route('files.new.store') }}" method="POST" class="form modal__form" id="create-form" autocomplete="off" novalidate="novalidate" enctype="multipart/form-data">
+            <form action="{{ route('files.new.store') }}" method="POST" class="form modal__form" id="create-form" autocomplete="off" enctype="multipart/form-data">
                 @csrf
 
                 @if(isset($folder_id))
                     <input type="hidden" name="parent_id" value="{{ $folder_id }}">
                 @endif
                 <div class="form__group">
-                    <input class="input form__input" id="inputCreateFileTitle" type="text" name="name" placeholder="Введіть назву файлу" autocomplete="off" required="required"/>
+                    <input class="input form__input" id="inputCreateFileTitle" type="text" name="name" placeholder="Введіть назву файлу" autocomplete="off" required/>
                 </div>
                 <div class="form__group">
-                    <input class="input form__input" id="inputCreateFileTitle" type="file" name="document" placeholder="Завантажте документ" autocomplete="off" required="required" accept=".doc, .docx"/>
+                    <input class="input form__input" id="inputCreateFileTitle" type="file" name="document" placeholder="Завантажте документ" autocomplete="off" required accept=".doc, .docx"/>
                 </div>
                 <div class="form__buttons-group form__buttons-group--center">
                     <button type="submit" class="button form__button modal__button">Додати</button>

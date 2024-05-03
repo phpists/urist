@@ -98,7 +98,7 @@
                     </div>
                 </div>
                 <div class="tabs-panel">
-                    <div class="page-section__text ck-content">
+                    <div class="page-section__text ck-content" style="overflow: hidden">
                         {!! $article->statya_kk !!}
                     </div>
                 </div>

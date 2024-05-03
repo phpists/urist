@@ -55,8 +55,6 @@ const feedbackFormValidation = () => {
         validator.onSuccess(( event ) => {
             let $form = $(event.currentTarget);
 
-            console.log($form)
-
             $.ajax({
                 type: $form.attr('method'),
                 url: $form.attr('action'),

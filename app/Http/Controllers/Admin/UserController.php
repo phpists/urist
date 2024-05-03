@@ -54,24 +54,20 @@ class UserController extends Controller
         $addPeriod = 'add' . $period = $request->post('period', 'month');
 
         if ($user->activeSubscription) {
-            $user->activeSubscription->update([
-                'expires_at' => $user->activeSubscription->expires_at->$addPeriod()
-            ]);
-
-            return to_route('admin.users.index')
-                ->with('success', "Підписка для користувача {$user->full_name} продовжена на " . __('subscription.'.$period));
+            $expiresAt =  $user->activeSubscription->expires_at->$addPeriod();
         } else {
-            Subscription::create([
-                'user_id' => $user->id,
-                'plan_id' => Plan::find(1)->id,
-                'period' => $period,
-                'expires_at' => Carbon::now()->$addPeriod(),
-            ]);
-
-            return to_route('admin.users.index')
-                ->with('success', "Створено підписку для користувача {$user->full_name} на " . __('subscription.'.$period));
-
+            $expiresAt = Carbon::now()->$addPeriod();
         }
+
+        Subscription::create([
+            'user_id' => $user->id,
+            'plan_id' => Plan::find(1)->id,
+            'period' => $period,
+            'expires_at' => $expiresAt
+        ]);
+
+        return to_route('admin.users.index')
+            ->with('success', "Підписка для користувача {$user->full_name} продовжена на " . __('subscription.'.$period));
     }
 
     public function unsubscribe(Request $request, User $user)

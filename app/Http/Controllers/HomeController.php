@@ -46,18 +46,25 @@ class HomeController extends Controller
             'message' => ['required'],
         ]);
 
-        $email = SettingService::getValueByName(SettingEnum::ADMIN_EMAIL->value) ?? config('app.admin_email');
-
-        return new JsonResponse([
-            'result' => Mail::to($email)
+        try {
+            $email = SettingService::getValueByName(SettingEnum::ADMIN_EMAIL->value) ?? config('app.admin_email');
+            Mail::to($email)
                 ->send(
                     new FeedbackFormMail(
                         $request->post('name'),
                         $request->post('email'),
                         $request->post('message')
                     )
-                )
-        ]);
+                );
+
+            return new JsonResponse([
+                'result' => true
+            ]);
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'result' => false
+            ]);
+        }
     }
 
 }

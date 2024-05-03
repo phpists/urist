@@ -32,4 +32,14 @@ class NotificationController extends Controller
         return back()->with('error', 'Не вдалося створити сповіщення');
     }
 
+    public function destroy(Notification $notification)
+    {
+        if ($notification->delete()) {
+            return to_route('admin.notifications.index')
+                ->with('success', 'Сповіщення успішно видалено');
+        }
+
+        return back()->with('error', 'Не вдалось видалити сповіщення');
+    }
+
 }

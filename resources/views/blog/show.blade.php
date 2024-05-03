@@ -3,12 +3,13 @@
 @section('page')
     <section class="top-section">
         <div class="container top-section__container">
-            <div class="goal-card">
-                <img src="{{ $blog->getThumbnailSrc() }}" alt="" style="width: 100%;">
-
+            <div class="goal-card" style="min-height: 400px">
                 <h1>{{ $blog->title }}</h1>
 
+                <div>
+                    <img src="{{ $blog->getThumbnailSrc() }}" alt="" style="width: 20vw; float: left; margin: 0 15px 15px 0">
                 {!! $blog->content !!}
+                </div>
             </div>
         </div>
     </section>

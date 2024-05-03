@@ -56,6 +56,9 @@ class BlogController extends Controller
         $data['is_main'] = $request->boolean('is_main');
         $data['thumbnail'] = null;
 
+        if (isset($data['slug']))
+            $data['slug'] = trim(parse_url($data['slug'], PHP_URL_PATH), '/');
+
         if ($request->hasFile('thumbnail'))
             if (Storage::put(Blog::IMG_PATH, $file = $request->file('thumbnail')))
                 $data['thumbnail'] = $file->hashName();
@@ -87,6 +90,9 @@ class BlogController extends Controller
     {
         $data = $request->all();
         $data['is_main'] = $request->boolean('is_main');
+
+        if (isset($data['slug']))
+            $data['slug'] = trim(parse_url($data['slug'], PHP_URL_PATH), '/');
 
         if ($request->hasFile('thumbnail'))
             if (Storage::put(Blog::IMG_PATH, $file = $request->file('thumbnail')))

@@ -57,6 +57,9 @@
                                 <th class="pr-0 text-center">
                                     Час
                                 </th>
+                                <th class="pr-0 text-center">
+                                    Дії
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -70,6 +73,17 @@
                                     </td>
                                     <td class="pr-0 text-center">
                                         {{ $item->pretty_created_at }}
+                                    </td>
+                                    <td class="justify-content-center pr-0 d-flex" id="row_{{ $item->id }}">
+                                        <form action="{{ route('admin.notifications.destroy', $item->id) }}" method="POST">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button
+                                                class="btn btn-sm btn-clean btn-icon"
+                                                onclick="return confirm('Вы уверенны, что хотите удалить данную запись?')">
+                                                <i class="las la-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

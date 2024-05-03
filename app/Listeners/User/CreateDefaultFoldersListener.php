@@ -3,10 +3,13 @@
 namespace App\Listeners\User;
 
 use App\Enums\FolderType;
+use App\Enums\SettingEnum;
 use App\Models\User;
+use App\Services\SettingService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Log;
 
 class CreateDefaultFoldersListener
 {
@@ -25,8 +28,15 @@ class CreateDefaultFoldersListener
     {
         /** @var User $user */
         $user = $event->user;
+        Log::error('here');
 
-        $user->allFolders()->create(['folder_type' => FolderType::FILE_FOLDER->value, 'name' => 'Папка']);
-        $user->allFolders()->create(['folder_type' => FolderType::FAVOURITES_FOLDER->value, 'name' => 'Папка']);
+        $defaultFolders = explode('|', SettingService::getValueByName(SettingEnum::DEFAULT_FOLDERS->value));
+
+        foreach ($defaultFolders as $folder) {
+            Log::error($folder);
+            $user->allFolders()->create([
+                'name' => $folder
+            ]);
+        }
     }
 }

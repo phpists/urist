@@ -51,6 +51,41 @@ class SettingSeeder extends Seeder
                 'title' => 'Футер',
                 'value' => '2023 © Всі права захищено'
             ],
+            [
+                'name' => SettingEnum::DEFAULT_FOLDERS,
+                'title' => 'Папки для нових користувачів (роздільник "|")',
+                'value' => 'Папка|Інша папка'
+            ],
+            [
+                'name' => SettingEnum::SUBSCRIPTION_TEXT_ACTIVE,
+                'title' => 'Текст для активної підписки. Розділено символом "|". Змінні: {activePricePeriod} - сума/період (наприклад $60/рік); {activeExpiresAt} - дата закінчення оплаченого періоду/наступного платежа',
+                'value' => 'Підписка дійсна, періодичність списання коштів - {activePricePeriod}|Наступний платіж {activeExpiresAt}'
+            ],
+            [
+                'name' => SettingEnum::SUBSCRIPTION_TEXT_MISSING,
+                'title' => 'Текст про відсутність підписки',
+                'value' => 'Наразі у вас немає активної підписки!'
+            ],
+            [
+                'name' => SettingEnum::SUBSCRIPTION_TEXT_FREE,
+                'title' => 'Текст для безкоштовного доступу, наданого адміном. Розділено символом "|". Змінні: {activeExpiresAt} - дата закінчення оплаченого періоду/наступного платежа',
+                'value' => 'Наразі діє безкоштовний період|Діє до {activeExpiresAt}'
+            ],
+            [
+                'name' => SettingEnum::SUBSCRIPTION_TEXT_FREE_TRIAL,
+                'title' => 'Текст для пробного доступу, який надається автоматично при реєстрації. Розділено символом "|". Змінні: {activeExpiresAt} - дата закінчення оплаченого періоду/наступного платежа',
+                'value' => 'Наразі діє безкоштовний пробний період|Діє до {activeExpiresAt}'
+            ],
+            [
+                'name' => SettingEnum::SUBSCRIPTION_TEXT_CANCELLED,
+                'title' => 'Текст для скасованої підписки. Розділено символом "|". Змінні: {activeExpiresAt} - дата закінчення оплаченого періоду/наступного платежа',
+                'value' => 'Поточна підписка скасована|Оплачений період завершується {activeExpiresAt}'
+            ],
+            [
+                'name' => SettingEnum::SUBSCRIPTION_TEXT_PENDING,
+                'title' => 'Текст для скасованої підписки. Розділено символом "|". Змінні: {pendingExpiresAt} - дата закінчення очікуючого оплаченого періоду/наступного платежа',
+                'value' => 'Наступний оплачуваний період|Наступний платіж {pendingExpiresAt}'
+            ],
         ];
 
         foreach ($settings as $setting) {

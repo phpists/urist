@@ -9,37 +9,43 @@
                 @if($user->activeSubscription)
                     @if($user->allSubscriptions()->count() == 1)
                         <div class="current-subscription__info">
-                            <h3 class="current-subscription__title">Наразі діє безкоштовний пробний період</h3>
-                            <div class="current-subscription__date">Дійсний до {{ $user->activeSubscription->expires_at->format('d.m.Y') }}</div>
+                            <h3 class="current-subscription__title">{{ \App\Helpers\SubscriptionHelper::getVariableTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_FREE_TRIAL) }}</h3>
+                            <div class="current-subscription__date">{{ \App\Helpers\SubscriptionHelper::getVariableSubTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_FREE_TRIAL) }}</div>
+                    @elseif(!$user->activeSubscription->price && !$user->activeSubscription->session)
+                        <div class="current-subscription__info">
+                            <h3 class="current-subscription__title">{{ \App\Helpers\SubscriptionHelper::getVariableTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_FREE) }}</h3>
+                            <div class="current-subscription__date">{{ \App\Helpers\SubscriptionHelper::getVariableSubTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_FREE) }}</div>
                         </div>
                     @else
-                    <div class="current-subscription__info">
-                        <h3 class="current-subscription__title">Підписка дійсна, періодичність списання коштів - {{ $user->activeSubscription->plan->getPriceWithPeriodByPeriod($user->activeSubscription->period) }}
-                            </strong></h3>
-                        @if($user->activeSubscription->isCancelled())
-                            <div class="current-subscription__date">Поточна підписка скасована. Оплачений період завершується {{ $user->activeSubscription->expires_at->format('d.m.Y') }}</div>
-                            @if($user->pendingSubscription)
-                                <hr>
-                                <div class="current-subscription__title">Наступний оплачуваний період - {{ $user->pendingSubscription->plan->getPriceWithPeriodByPeriod($user->pendingSubscription->period) }}</div>
-                                <div class="current-subscription__date">Наступний платіж {{ $user->pendingSubscription->expires_at->format('d.m.Y') }}</div>
-                            @endif
+                        <div class="current-subscription__info">
+                            @if($user->activeSubscription->isCancelled())
+                                <h3 class="current-subscription__title">{{ \App\Helpers\SubscriptionHelper::getVariableTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_CANCELLED) }}</h3>
+                                <div class="current-subscription__date">{{ \App\Helpers\SubscriptionHelper::getVariableSubTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_CANCELLED) }}</div>
+                                @if($user->pendingSubscription)
+                                    <hr>
+
+                                    <h3 class="current-subscription__title">{{ \App\Helpers\SubscriptionHelper::getVariableTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_PENDING) }}</h3>
+                                    <div class="current-subscription__date">{{ \App\Helpers\SubscriptionHelper::getVariableSubTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_PENDING) }}</div>
+                                @endif
                             @else
-                        <div class="current-subscription__date">Наступний
-                            платіж {{ $user->activeSubscription->expires_at->format('d.m.Y') }}</div>
+                                <h3 class="current-subscription__title">{{ \App\Helpers\SubscriptionHelper::getVariableTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_ACTIVE) }}</h3>
+                                <div class="current-subscription__date">{{ \App\Helpers\SubscriptionHelper::getVariableSubTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_ACTIVE) }}</div>
+                            @endif
+                        </div>
+                        @if(!$user->activeSubscription->isCancelled() && $user->activeSubscription->session)
+                            <form action="{{ route('user.subscription.cancel') }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="button button--red subscription-section__button" type="submit"
+                                        onclick="return confirm('Ви впевнені, що хочете скасувати відписку?')">Відмінити
+                                    підписку
+                                </button>
+                            </form>
                         @endif
-                    </div>
-                    @if(!$user->activeSubscription->isCancelled() && $user->activeSubscription->session)
-                    <form action="{{ route('user.subscription.cancel') }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button class="button button--red subscription-section__button" type="submit" onclick="return confirm('Ви впевнені, що хочете скасувати відписку?')">Відмінити підписку
-                        </button>
-                    </form>
-                    @endif
                     @endif
                 @else
                     <div class="current-subscription__info">
-                        <h3 class="current-subscription__title">Наразі у вас немає активної підписки!</h3>
+                        <h3 class="current-subscription__title">{{ \App\Helpers\SubscriptionHelper::getVariableTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_MISSING) }}</h3>
                     </div>
                 @endif
 
@@ -98,7 +104,9 @@
                                         </ul>
                                         <div class="tariff-card__buttons">
                                             @if(!$user->hadSubscription())
-                                                <button class="button button--outline tariff-card__button" type="button">1 день безкоштовне демо</button>
+                                                <button class="button button--outline tariff-card__button"
+                                                        type="button">1 день безкоштовне демо
+                                                </button>
                                             @endif
                                         </div>
                                     </div>
@@ -115,7 +123,8 @@
                                                 міс (-{{ $plan->getAnnualDiscountSum() }}$)
                                             </div>
                                         </div>
-                                        @if(!$user->activeSubscription || ($user->activeSubscription && $user->activeSubscription->isCancelled() && !$user->pendingSubscription))
+                                        @if(!$user->activeSubscription
+                                                || ($user->activeSubscription && $user->activeSubscription->isCancelled() && !$user->pendingSubscription))
                                             <button class="button tariff-card__buy-button show_payment_modal"
                                                     type="button"
                                                     data-id="{{ $plan->id }}" data-title="{{ $plan->title }}"

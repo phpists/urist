@@ -129,4 +129,35 @@ class LoginController extends Controller
         return to_route('user.dashboard.index');
     }
 
+    public function handleAppleLoginCallback(\Request $request)
+    {
+        try {
+            $user = Socialite::driver('apple')->user();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return redirect('/');
+        }
+
+        $existing_user = User::where('email', $user->email)->first();
+        if($existing_user){
+            auth()->login($existing_user, true);
+        } else {
+            $column = 'apple_id';
+
+            $new_user = new User;
+            $new_user->first_name = explode(' ', $user->name)[0] ?? "User";
+            $new_user->last_name = explode(' ', $user->name)[1] ?? "";
+            $new_user->email = $user->email;
+            $new_user->$column = $user->id;
+            $new_user->password = Hash::make(Str::random(8));
+            $new_user->save();
+
+            event(new Registered($new_user));
+
+            auth()->login($new_user, true);
+        }
+
+        return to_route('user.dashboard.index');
+    }
+
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Auth\LoginRequest;
 use App\Models\User;
 use App\Services\UserAuthService;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -65,10 +66,42 @@ class LoginController extends BaseController
             $new_user->password = Hash::make(Str::random(8));
             $new_user->save();
 
-            event(new UserRegisteredEvent($new_user));
+            event(new Registered($new_user));
 
             return $this->respondWithToken(\Auth::guard('api')->login($new_user));
         }
+    }
+
+
+    public function handleAppleLoginCallback(\Request $request)
+    {
+        try {
+            $user = Socialite::driver('apple')->user();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return redirect('/');
+        }
+
+        $existing_user = User::where('email', $user->email)->first();
+        if($existing_user){
+            auth()->login($existing_user, true);
+        } else {
+            $column = 'apple_id';
+
+            $new_user = new User;
+            $new_user->first_name = explode(' ', $user->name)[0] ?? "User";
+            $new_user->last_name = explode(' ', $user->name)[1] ?? "";
+            $new_user->email = $user->email;
+            $new_user->$column = $user->id;
+            $new_user->password = Hash::make(Str::random(8));
+            $new_user->save();
+
+            event(new Registered($new_user));
+
+            auth()->login($new_user, true);
+        }
+
+        return to_route('user.dashboard.index');
     }
 
 }

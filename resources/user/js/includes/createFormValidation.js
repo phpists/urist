@@ -31,6 +31,7 @@ const createFormValidation = () => {
                 complete: function () {
                     $('#modal-create button.modal__close').click()
                     updateContainer('#itemsContainer', location.href)
+                    form.reset()
                 }
             })
         });

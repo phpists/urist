@@ -24,7 +24,9 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {
-            //
+            if ($e->getStatusCode() == 404) {
+                return response()->view('errors.404', [], 404);
+            }
         });
     }
 }

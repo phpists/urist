@@ -8,6 +8,7 @@
             -webkit-user-drag: none;
             user-select: none;
         }
+
         .folder_container {
             min-height: 256px;
         }
@@ -43,8 +44,10 @@
                                 <h3 class="card-title">
                                 </h3>
                                 <div class="card-toolbar">
-                                    <div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="left" data-original-title="Quick actions">
-                                        <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div class="dropdown dropdown-inline" data-toggle="tooltip" title=""
+                                         data-placement="left" data-original-title="Quick actions">
+                                        <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="ki ki-bold-more-hor"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
@@ -58,7 +61,8 @@
                                 <div class="d-flex flex-column">
                                     <a href="{{route('admin.favourites.view', $fav_folder->parent_id)}}"
                                        class="non-draggable d-block text-center">
-                                        <img class="max-h-65px h-65px" alt="" src="{{asset('super_admin/media/svg/icons/Text/Dots.svg')}}">
+                                        <img class="max-h-65px h-65px" alt=""
+                                             src="{{asset('super_admin/media/svg/icons/Text/Dots.svg')}}">
                                     </a>
                                 </div>
                             </div>
@@ -73,8 +77,10 @@
                                 <h3 class="card-title">
                                 </h3>
                                 <div class="card-toolbar">
-                                    <div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="left" data-original-title="Quick actions">
-                                        <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div class="dropdown dropdown-inline" data-toggle="tooltip" title=""
+                                         data-placement="left" data-original-title="Quick actions">
+                                        <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="ki ki-bold-more-hor"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
@@ -107,12 +113,15 @@
                             </div>
                             <div class="card-body">
                                 <div class="d-flex flex-column">
-                                    <a href="{{route('admin.favourites.view', $folder->id)}}" class="d-block text-center">
+                                    <a href="{{route('admin.favourites.view', $folder->id)}}"
+                                       class="d-block text-center">
                                         <img draggable="true"
                                              data-item="folder_{{$folder->id}}"
-                                             class="drag_element max-h-65px h-65px non-" src="{{asset('super_admin/media/svg/icons/Files/Folder.svg')}}" alt="">
+                                             class="drag_element max-h-65px h-65px non-"
+                                             src="{{asset('super_admin/media/svg/icons/Files/Folder.svg')}}" alt="">
                                     </a>
-                                    <a class="text-dark-75 text-center font-weight-bold mt-15 font-size-lg" href="">{{$folder->name}}</a>
+                                    <a class="text-dark-75 text-center font-weight-bold mt-15 font-size-lg"
+                                       href="">{{$folder->name}}</a>
                                 </div>
                             </div>
                         </div>
@@ -125,8 +134,10 @@
                                 <h3 class="card-title">
                                 </h3>
                                 <div class="card-toolbar">
-                                    <div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="left" data-original-title="Quick actions">
-                                        <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div class="dropdown dropdown-inline" data-toggle="tooltip" title=""
+                                         data-placement="left" data-original-title="Quick actions">
+                                        <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="ki ki-bold-more-hor"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
@@ -141,7 +152,8 @@
                                                     <form action="{{route('favourites.delete')}}" method="POST">
                                                         @method('delete')
                                                         @csrf
-                                                        <input type="hidden" name="favourite_id" value="{{$favourite->id}}">
+                                                        <input type="hidden" name="favourite_id"
+                                                               value="{{$favourite->id}}">
                                                         <button class="btn btn-clean w-100 rounded-0 navi-link">
                                                             Видалити
                                                         </button>
@@ -156,8 +168,10 @@
                             <div class="card-body">
                                 <div class="d-flex flex-column">
                                     <img draggable="true" data-item="file_{{$favourite->id}}"
-                                         class="max-h-65px drag_element" src="{{asset('super_admin/media/svg/files/doc.svg')}}" alt="">
-                                    <a class="text-dark-75 text-center font-weight-bold mt-15 font-size-lg" href="">{{$favourite->name}}</a>
+                                         class="max-h-65px drag_element"
+                                         src="{{asset('super_admin/media/svg/files/doc.svg')}}" alt="">
+                                    <a class="text-dark-75 text-center font-weight-bold mt-15 font-size-lg"
+                                       href="">{{$favourite->name}}</a>
                                 </div>
                             </div>
                         </div>
@@ -166,9 +180,9 @@
             </div>
         </div>
     </div>
-    @include('admin.favourites.modals.create_folder')
-    @include('admin.favourites.modals.edit_folder')
-    @include('admin.favourites.modals.edit_file_modal')
+    @include('favourites.modals.create_folder')
+    @include('favourites.modals.edit_folder')
+    @include('favourites.modals.edit_file_modal')
 @endsection
 
 @section('js_after')
@@ -179,9 +193,11 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
         function handleDragEnter(ev) {
             ev.preventDefault()
         }
+
         function handleDragOver(ev) {
             ev.preventDefault();
         }
@@ -213,14 +229,13 @@
 
         function handleDrop(ev) {
             let item_id = ev.dataTransfer.getData('text/plain');
-            if(item_id !== null && ev.currentTarget.dataset.zone !==  item_id) {
+            if (item_id !== null && ev.currentTarget.dataset.zone !== item_id) {
                 let id = item_id.split('_');
-                if(id.length > 1) {
+                if (id.length > 1) {
                     if (id[0] === 'file') {
                         let folder_id = ev.currentTarget.dataset.zone.split('_')[1];
                         moveFavourite(folder_id, id[1]);
-                    }
-                    else if(id[0] === 'folder') {
+                    } else if (id[0] === 'folder') {
                         let folder_id = ev.currentTarget.dataset.zone.split('_')[1];
                         moveFolder(folder_id, id[1]);
                     }
@@ -228,9 +243,11 @@
                 document.querySelector(`*[data-label="${item_id}"]`).remove()
             }
         }
+
         function handleDragStart(ev) {
             ev.dataTransfer.setData("text/plain", ev.currentTarget.dataset.item);
         }
+
         document.addEventListener('DOMContentLoaded', function (ev) {
             document.querySelectorAll('.drag_element').forEach((el) => {
                 el.addEventListener('dragstart', handleDragStart);
@@ -244,7 +261,7 @@
                 placeholder: "Назва закладки",
                 ajax: makeSelect2AjaxSearch('/favourites/search', 'searchFile')
             })
-            $("#searchFile").on('select2:select', function(e) {
+            $("#searchFile").on('select2:select', function (e) {
                 location.href = '/admin/file/' + e.target.value;
             })
         })

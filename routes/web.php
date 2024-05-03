@@ -37,6 +37,7 @@ Route::get('login', [LoginController::class, 'index'])->name('login');
 
 Route::get('login/{driver}', [LoginController::class, 'driverLogin'])->name('login.driver');
 Route::get('login/{driver}/callback', [LoginController::class, 'handleDriverLoginCallback']);
+Route::post('login/apple/callback', [LoginController::class, 'handleAppleLoginCallback']);
 
 Route::get('register', [RegisterController::class, 'index'])->name('register.page');
 Route::post('sing-in', [LoginController::class, 'login'])->name('sing-in')->middleware('throttle:5,1');

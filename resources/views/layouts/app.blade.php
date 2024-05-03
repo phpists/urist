@@ -34,6 +34,9 @@
 </head>
 <body>
 @include('layouts.partials.header')
+<div class="modal-wrap">
+    @stack('modals')
+</div>
 <main id="main" class="main">
     @yield('page')
 </main>

@@ -48,7 +48,12 @@
                 <div class="form__button-group">
                     <button class="button form__button">Надіслати</button>
                 </div>
+                <button type="button" data-modal="modal-success" style="display: none">modal</button>
             </form>
         </div>
     </section>
 @endsection
+
+@push('modals')
+    @include('layouts.partials.form_success_modal')
+@endpush

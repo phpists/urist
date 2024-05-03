@@ -14,7 +14,10 @@
             <div class="form-group">
                 <label for="formSlug">Посилання (slug)</label>
                 <div class="input-wrapper">
-                    <input type="text" class="form-control" name="slug" id="formSlug" value="{{ old('slug', $model->slug) }}">
+                    <div class="input-group">
+                        <div class="input-group-prepend"><span class="input-group-text">{{ str_replace(0, '', route('blog.show', 0)) }}</span></div>
+                        <input type="text" class="form-control" name="slug" id="formSlug" value="{{ old('slug', $model->slug) }}">
+                    </div>
                     <span class="form-text text-muted">Буде згенеровано автоматично, якщо залишити пустим</span>
                     @error('slug')
                     <div class="alert alert-danger">{{ $message }}</div>
