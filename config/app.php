@@ -190,7 +190,8 @@ return [
 
 
     /** CUSTOM */
-    'admin_email' => env('APP_ADMIN_EMAIL')
+    'admin_email' => env('APP_ADMIN_EMAIL'),
+    'logo' => env('APP_LOGO')
 
 
 ];
