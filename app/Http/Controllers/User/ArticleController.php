@@ -90,8 +90,10 @@ class ArticleController extends Controller
         \PhpOffice\PhpWord\Shared\Html::addHtml($statya_kk, $article->statya_kk, false, false);
 
         $objectWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord);
-        header('Content-Type: text/html');
-        header("Content-Disposition: attatchement;Filename={$article->getProgramTitle()}.docx");
+        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        header("Content-Disposition: attachment;Filename={$article->getProgramTitle()}.docx");
+        header('Pragma: public');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         $objectWriter->save('php://output');
 
         exit(418);

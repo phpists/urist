@@ -35,7 +35,6 @@ $(function () {
                 $form.hide();
             },
             success: function (response) {
-                $('#paymentPlanTitle').text(planTitle)
                 $form.attr('action', response.action);
                 $form.find('[name="data"]').val(response.data);
                 $form.find('[name="signature"]').val(response.signature);

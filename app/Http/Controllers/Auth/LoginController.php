@@ -109,7 +109,7 @@ class LoginController extends Controller
 
         $existing_user = User::where('email', $user->email)->first();
         if($existing_user){
-            auth()->login($existing_user, true);
+            $this->loginUser($existing_user);
         } else {
             $column = $driver . '_id';
 
@@ -123,7 +123,7 @@ class LoginController extends Controller
 
             event(new Registered($new_user));
 
-            auth()->login($new_user, true);
+            $this->loginUser($new_user);
         }
 
         return to_route('user.dashboard.index');
@@ -140,7 +140,7 @@ class LoginController extends Controller
 
         $existing_user = User::where('email', $user->email)->first();
         if($existing_user){
-            auth()->login($existing_user, true);
+            $this->loginUser($existing_user);
         } else {
             $column = 'apple_id';
 
@@ -154,10 +154,18 @@ class LoginController extends Controller
 
             event(new Registered($new_user));
 
-            auth()->login($new_user, true);
+            $this->loginUser($new_user);
         }
 
         return to_route('user.dashboard.index');
+    }
+
+    private function loginUser(User $user): void
+    {
+        \Auth::login($user, true);
+        Session::whereUserId($user->id)
+            ->whereNot('id', \Session::getId())
+            ->delete();
     }
 
 }
