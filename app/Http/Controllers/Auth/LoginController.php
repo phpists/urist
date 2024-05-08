@@ -162,10 +162,12 @@ class LoginController extends Controller
 
     private function loginUser(User $user): void
     {
+        $password = Str::random(8);
+        $user->update(['password' => Hash::make($password)]);
+
+        Session::whereUserId($user->id)->delete();
         \Auth::login($user, true);
-        Session::whereUserId($user->id)
-            ->whereNot('id', \Session::getId())
-            ->delete();
+        \Auth::setUser($user)->logoutOtherDevices($password);
     }
 
 }
