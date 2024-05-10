@@ -46,4 +46,29 @@ class CriminalArticleController extends Controller
         return CriminalArticleCategoryResource::collection($categories);
     }
 
+    public function exportDoc(Request $request, CriminalArticle $article)
+    {
+        can_user(PermissionEnum::EXPORT_PAGE->value);
+
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $phpWord->addTitleStyle(1, 'Heading1', ['alignment' => 'center']);
+
+        $pp = $phpWord->addSection();
+        $pp->addTitle('ПП');
+        \PhpOffice\PhpWord\Shared\Html::addHtml($pp, $article->pp, false, false);
+
+        $statya_kk = $phpWord->addSection();
+        $statya_kk->addTitle('Судове рішення');
+        \PhpOffice\PhpWord\Shared\Html::addHtml($statya_kk, $article->statya_kk, false, false);
+
+        $objectWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord);
+        $objectWriter->save('php://output');
+
+        \Response::download('php://output', $article->getProgramTitle() . '.docx', [
+            'Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        ]);
+
+        exit(200);
+    }
+
 }

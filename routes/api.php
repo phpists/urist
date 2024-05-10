@@ -37,11 +37,14 @@ Route::group(['middleware' => 'jwt'], function () {
     Route::get('criminal-articles/categories/{type?}', [\App\Http\Controllers\Api\CriminalArticleController::class, 'categories']);
     Route::get('criminal-articles/{type?}', [\App\Http\Controllers\Api\CriminalArticleController::class, 'index']);
     Route::get('criminal-article/{criminalArticle}', [\App\Http\Controllers\Api\CriminalArticleController::class, 'show']);
+    Route::get('criminal-article/{article}/export-doc', [\App\Http\Controllers\Api\CriminalArticleController::class, 'exportDoc']);
 
     /** Cabinet */
+    Route::get('cabinet/files/{file}/export-doc', [\App\Http\Controllers\Api\User\FileController::class, 'exportDoc']);
     Route::resource('cabinet', \App\Http\Controllers\Api\User\FileController::class)->only('index');
     Route::resource('cabinet/folders', \App\Http\Controllers\Api\User\FileFolderController::class)
         ->only(['store', 'update', 'destroy']);
+    Route::post('cabinet/files/new', [\App\Http\Controllers\Api\User\FileController::class, 'newFile']);
     Route::resource('cabinet/files', \App\Http\Controllers\Api\User\FileController::class)
         ->except('index');
     Route::resource('cabinet/bookmarks', \App\Http\Controllers\Api\User\BookmarkController::class)

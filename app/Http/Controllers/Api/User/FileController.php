@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Enums\FolderType;
+use App\Enums\PermissionEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\Files\FileStoreRequest;
 use App\Http\Requests\Api\User\Files\FileUpdateRequest;
+use App\Http\Requests\Api\User\Files\NewRequest;
 use App\Models\CriminalArticle;
 use App\Models\Favourite;
 use App\Models\File;
 use App\Models\Folder;
+use App\Services\FileService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -154,4 +157,54 @@ class FileController extends Controller
             'message' => 'Не вдалось видалити файл'
         ]);
     }
+
+    public function exportDoc(Request $request, CriminalArticle $article)
+    {
+        can_user(PermissionEnum::EXPORT_PAGE->value);
+
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $phpWord->addTitleStyle(1, 'Heading1', ['alignment' => 'center']);
+
+        $pp = $phpWord->addSection();
+        $pp->addTitle('ПП');
+        \PhpOffice\PhpWord\Shared\Html::addHtml($pp, $article->pp, false, false);
+
+        $statya_kk = $phpWord->addSection();
+        $statya_kk->addTitle('Судове рішення');
+        \PhpOffice\PhpWord\Shared\Html::addHtml($statya_kk, $article->statya_kk, false, false);
+
+        $objectWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord);
+        $objectWriter->save('php://output');
+
+        \Response::download('php://output', $article->getProgramTitle() . '.docx', [
+            'Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        ]);
+
+        exit(200);
+    }
+
+    public function newFile(NewRequest $request)
+    {
+        $file = new File([
+            'name' => $request->name,
+            'pp' => FileService::getDocumentContent($request->file('document')),
+            'statya_kk' => '',
+            'folder_id' => $request->folder_id,
+            'user_id' => $request->user()->id,
+        ]);
+
+        if ($file->save()) {
+            return new JsonResponse([
+                'result' => true,
+                'message' => 'Файл успішно створено',
+                'file' => $file
+            ]);
+        }
+
+        return new JsonResponse([
+            'result' => false,
+            'message' => 'Не вдалось видалити файл'
+        ]);
+    }
+
 }

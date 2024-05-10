@@ -83,7 +83,7 @@ class FileController extends Controller
     public function new(StoreNewFileRequest $request) {
         $file = new File([
             'name' => $request->name,
-            'pp' => $tead = FileService::getDocumentContent($request->file('document')),
+            'pp' => FileService::getDocumentContent($request->file('document')),
             'statya_kk' => '',
             'folder_id' => $request->folder_id,
             'user_id' => $request->user()->id,

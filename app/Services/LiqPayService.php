@@ -102,35 +102,12 @@ class LiqPayService
         if (!$subscriptionSession)
             throw new Exception('Не вдалось знайти платіжну сесію');
 
-        $addPeriod = 'add' . ucfirst($subscriptionSession->period);
-
-        if ($subscriptionSession->user->activeSubscription) {
-            $endAt = $subscriptionSession->user->activeSubscription->expires_at;
-        } else {
-            $endAt = Carbon::createFromTimestamp(substr($this->payment->get('end_date'), 0, -3));
-        }
-
-        $endAt = Carbon::parse($endAt)
-            ->$addPeriod()
-            ->format('Y-m-d');
-
-        if (!$subscriptionSession->subscription) {
-            $subscription = $subscriptionSession->subscription()->create([
-                'plan_id' => $subscriptionSession->plan_id,
-                'user_id' => $subscriptionSession->user_id,
-                'period' => $subscriptionSession->period,
-                'price' => $this->payment->get('amount'),
-                'expires_at' => $endAt
-            ]);
-
-            $subscriptionPayment = $subscription->payments()->create([
-                'amount' => $this->payment->get('amount'),
-                'end_at' => $endAt,
-                'payload' => current((array)$this->payment),
-            ]);
-
-            $subscription->user->assignRole($subscription->plan->role);
-        }
+        (new SubscriptionService($subscriptionSession))
+            ->create(
+                current((array)$this->payment),
+                $this->payment->get('end_date'),
+                $this->payment->get('amount')
+            );
 
         return 'Підписка успішно створена';
     }
@@ -140,14 +117,11 @@ class LiqPayService
      */
     private function handleUnsubscribe(): string
     {
-        $subscription = SubscriptionSession::whereHash($this->payment->get('order_id'))
-            ->firstOrFail()
-            ->subscription;
+        $subscriptionSession = SubscriptionSession::whereHash($this->payment->get('order_id'))
+            ->firstOrFail();
 
-
-        $subscription->cancelled_at = Carbon::now();
-        if (!$subscription->save())
-            throw new Exception('Не вдалось скасувати підписку');
+        (new SubscriptionService($subscriptionSession))
+            ->cancel();
 
         return 'Підписка скасована';
     }
@@ -161,20 +135,12 @@ class LiqPayService
             throw new Exception('Не вдалось продовжити підписку');
 
         $subscriptionSession = SubscriptionSession::whereHash($this->payment->get('order_id'))->firstOrFail();
-        $addPeriod = 'add' . ucfirst($subscriptionSession->period);
-        $endAt = Carbon::createFromTimestamp(substr($this->payment->get('end_date'), 0, -3))
-            ->$addPeriod()
-            ->format('Y-m-d');
-
-        $subscriptionSession->subscription->update([
-            'expires_at' => $endAt
-        ]);
-
-        $subscriptionPayment = $subscriptionSession->subscription->payments()->create([
-            'amount' => $this->payment->get('amount'),
-            'end_at' => $endAt,
-            'payload' => current((array) $this->payment),
-        ]);
+        (new SubscriptionService($subscriptionSession))
+            ->continue(
+                current((array)$this->payment),
+                $this->payment->get('end_date'),
+                $this->payment->get('amount')
+            );
 
         return  'Підписка успішно продовжена';
     }
