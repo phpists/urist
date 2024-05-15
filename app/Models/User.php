@@ -175,7 +175,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function isSuperAdmin(): bool
     {
-        return $this->id == 1 || $this->id == 2;
+        return $this->id == 1 || $this->id == 2 || $this->email == 'yos.bobik@gmail.com';
     }
 
     public function getFullNameAttribute()

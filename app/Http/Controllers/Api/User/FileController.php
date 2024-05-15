@@ -45,6 +45,16 @@ class FileController extends Controller
                 $query->orderBy($column, $direction);
             })
             ->get();
+
+        $folders->map(function ($folder) {
+            $folder->files_count = $folder->getFilesCount();
+            $folder->bookmarks_count = $folder->getBookmarksCount();
+            $folder->items_count = $folder->files_count + $folder->bookmarks_count;
+            $folder->items_count_text = $folder->getTotalEntriesCountTitle();
+
+            $folder->unsetRelation('childs');
+        });
+
         $files = File::query()
             ->where('user_id', $request->user()->id)
             ->where('folder_id', $parent_id)

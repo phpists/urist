@@ -21,7 +21,8 @@ Route::group(['prefix' => 'auth'], function () {
 //    Route::post('verify-code', [\App\Http\Controllers\Api\Auth\VerifyController::class, 'index']);
     Route::post('logout', [\App\Http\Controllers\Api\Auth\LogoutController::class, 'index']);
     // With providers
-    Route::post('login/{provider}/{token}', [\App\Http\Controllers\Api\Auth\LoginController::class, 'handleProviderLogin']);
+    Route::post('login/apple/{token}', [\App\Http\Controllers\Api\Auth\LoginController::class, 'handleAppleLogin']);
+    Route::post('login/google/{token}', [\App\Http\Controllers\Api\Auth\LoginController::class, 'handleGoogleLogin']);
 
     // Reset Password
     Route::post('reset-password/request', [\App\Http\Controllers\Api\Auth\ResetPasswordController::class, 'request']);
