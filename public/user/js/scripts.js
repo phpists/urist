@@ -158,8 +158,12 @@ $(function () {
     })
 
     if ((Math.min(window.screen.width, window.screen.height) < 768 || navigator.userAgent.indexOf("Mobi") > -1)
-        && window.location.href.includes('/articles/'))
-        $('.filter-toggle__button').click() // open filter on articles page if mobile device
+        && window.location.href.includes('/articles/')) {
+        let page = new URLSearchParams(window.location.search).get('page');
+
+        if (!page || page == 1)
+            $('.filter-toggle__button').click() // open filter on articles page if mobile device
+    }
 
 
     $('#alertsContainer span.success').each(function (i, item) {

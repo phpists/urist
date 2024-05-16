@@ -318,7 +318,11 @@ class SystemPageSeeder extends Seeder
             SystemPage::create([
                 'name' => SystemPageEnum::USER_SUBSCRIPTION->value,
                 'title' => 'Моя підписка',
-                'data' => [],
+                'data' => [
+                    [
+                        'body' => 'Ви можете обрати кращий тариф який надасть вам можливість використання нашого сервісу по максимуму.',
+                    ],
+                ],
                 'images' => [],
                 'meta' => [],
             ]);

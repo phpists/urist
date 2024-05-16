@@ -34,13 +34,6 @@
                 @if($paginator->currentPage() < $paginator->lastPage() - 2)
                     <li class="pagenav__item"><span>...</span></li>
                 @endif
-                @if($paginator->currentPage() < $paginator->lastPage() - 1)
-                    @if($paginator->lastPage() == $paginator->currentPage())
-                        <li class="pagenav__item is-active" aria-current="page"><a class="pagenav__link" href="#">{{ $paginator->lastPage() }}</a></li>
-                    @else
-                        <li class="pagenav__item"><a class="pagenav__link" href="{{ $paginator->url($paginator->lastPage()) }}">{{ $paginator->lastPage() }}</a></li>
-                    @endif
-                @endif
 
                 @if(!$paginator->onLastPage())
             <li class="pagenav__item">

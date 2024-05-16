@@ -13,7 +13,7 @@
         @if(can_user(\App\Enums\PermissionEnum::SMART_SEARCH->value))
         <form class="search header__search articles-search" action="{{ request('type') ? route('user.articles.index', ['type' => request('type')]) : route('user.articles.index') }}" id="search-form" autocomplete="off" novalidate="novalidate">
             <div class="search__group">
-                <input class="input search__input" id="inputSearch" type="text" name="search" placeholder="Пошук по збірнику" autocomplete="off" value="{{ request('search') }}" required="required" data-url="{{ route('user.search.items') }}"/>
+                <input class="input search__input" id="inputSearch" type="text" name="search" placeholder="Пошук по базі" autocomplete="off" value="{{ request('search') }}" required="required" data-url="{{ route('user.search.items') }}"/>
                 <div class="searchItemsContainer"></div>
                 <button class="search__button">
                     <svg class="search__icon" width="21" height="21">

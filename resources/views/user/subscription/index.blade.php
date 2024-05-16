@@ -57,8 +57,7 @@
             <input type="hidden" id="selectedPeriod" value="month">
 
             <div class="tariffs">
-                <h3 class="tariffs__title">Ви можете обрати кращий тариф який надасть вам можливість використання нашого
-                    сервісу по максимуму. </h3>
+                <h3 class="tariffs__title">{{ $systemPage->getDataByDotPath('0.body') }}</h3>
                 <ul class="tariffs-list">
                     <li class="tariffs-list__item">
                         <button class="button button--outline tariffs-list__button is-active" type="button"
