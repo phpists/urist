@@ -75,6 +75,16 @@
                 })
             $filterAccordionItemsContainer.load($filterAccordionItemsContainer.data('load-url'), function () {
                 $filterSpinner.hide()
+
+                $('.accordion__panel:has(button.accordion__trigger)').each(function (i, el) {
+                    let mustBeExpanded = localStorage.getItem(`accordion__panel_${$(el).data('id')}_expanded`);
+
+                    console.log(mustBeExpanded == 'true')
+
+                    if (mustBeExpanded == 'true') {
+                        $(el).find('button.accordion__trigger:first').click()
+                    }
+                })
             })
 
             $(document).on('keyup', '#inputFilterSearch', function (e) {
@@ -241,6 +251,16 @@
                 }
             }
         }
+
+        $(document).on('click', '.accordion__trigger', function () {
+            const $panel = $(this).parents('.accordion__panel:first'),
+                $content = $panel.find('.accordion__content');
+            let expanded = $content.attr('aria-hidden') === 'true';
+
+            console.log(expanded ? 'expanded' : 'closed')
+
+            localStorage.setItem(`accordion__panel_${$panel.data('id')}_expanded`, expanded)
+        });
 
     </script>
 @endpush

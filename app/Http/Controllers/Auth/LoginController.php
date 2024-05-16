@@ -163,11 +163,12 @@ class LoginController extends Controller
     private function loginUser(User $user): void
     {
         $password = Str::random(8);
-        $user->update(['password' => Hash::make($password)]);
+        $user->password = Hash::make($password);
+        $user->save();
 
-        Session::whereUserId($user->id)->delete();
+        request()->session()->forget('password_hash_web');
         \Auth::login($user, true);
-        \Auth::setUser($user)->logoutOtherDevices($password);
+        \Auth::logoutOtherDevices($password);
     }
 
 }

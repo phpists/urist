@@ -81,3 +81,7 @@ input[name="search"]:focus + .searchItemsContainer {
 #alertsContainer {
     display: none;
 }
+
+.collection-section em {
+    background-color: yellow;
+}

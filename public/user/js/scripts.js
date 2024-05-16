@@ -151,7 +151,7 @@ $(function () {
 
 
     $(document).on('submit', 'form.articles-search', function (e) {
-        $('.searchItemsContainer').html('').hide()
+        $('.searchItemsContainer').html('')
         const $form = $('#filterForm');
         $form.find('input[name="search"]').val($(this).find('input[name="search"]').val());
         $form.submit()

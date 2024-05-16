@@ -116,7 +116,12 @@ class ArticleFilterService
                 }
             })
             ->paginate($perPage)
-            ->withQueryString();
+            ->withQueryString()
+            ->through(function ($item) {
+                $item->name = $item->scoutMetadata()['_highlightResult']['name']['value'] ?? $item->name;
+                $item->description = $item->scoutMetadata()['_highlightResult']['description']['value'] ?? $item->description;
+                return $item;
+            });
     }
 
     public function getTotalCount(): int
