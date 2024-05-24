@@ -63,10 +63,9 @@ class ArticleCategoryController extends Controller
             }
         }
         $article_categories = $article_categories
-            ->limit(30)
-            ->get();
+            ->paginate();
 
-        $article_categories = $article_categories->map(function ($item) {
+        $article_categories = $article_categories->through(function ($item) {
             $item->full_path = $item->getFullPath();
             return $item;
         });

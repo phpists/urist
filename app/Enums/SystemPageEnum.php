@@ -15,6 +15,7 @@ enum SystemPageEnum:string
     case BLOG = 'blog';
     case POLICY = 'policy';
     case OFFER = 'offer';
+    case ABOUT = 'about';
 
     case USER_PROFILE = 'user_profile';
     case USER_CABINET = 'user_cabinet';

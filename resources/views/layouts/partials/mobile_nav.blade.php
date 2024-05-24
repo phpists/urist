@@ -9,6 +9,7 @@
           <li class="mobile-nav-menu__item"><a class="mobile-nav-menu__link" href="{{route('blog.index')}}">Блог</a></li>
           <li class="mobile-nav-menu__item"><a class="mobile-nav-menu__link" href="#{{route('faq')}}">FAQ</a></li>
           <li class="mobile-nav-menu__item"><a class="mobile-nav-menu__link" href="{{route('contacts')}}">Контакти</a></li>
+          <li class="mobile-nav-menu__item"><a class="mobile-nav-menu__link" href="{{route('about')}}">Про нас</a></li>
         </ul>
       </nav>
     </div>

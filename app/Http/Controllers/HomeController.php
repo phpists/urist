@@ -31,6 +31,13 @@ class HomeController extends Controller
         ]);
     }
 
+    public function about()
+    {
+        return view('pages.about', [
+            'systemPage' => SystemPageEnum::ABOUT->getPage()
+        ]);
+    }
+
     public function offer()
     {
         return view('pages.offer', [

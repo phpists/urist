@@ -45,6 +45,9 @@
                     <li class="footer-menu__item">
                         <a class="footer-menu__link" href="{{ route('offer') }}">Оферта</a>
                     </li>
+                    <li class="footer-menu__item">
+                        <a class="footer-menu__link" href="{{ route('about') }}">Про нас</a>
+                    </li>
                     <li class="mobile-nav-menu__item" style="flex-direction: row;">
                         @guest
                         <a class="button button--outline mobile-nav-menu__button" href="{{ route('login') }}">Вхід</a>

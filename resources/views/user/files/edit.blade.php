@@ -5,7 +5,7 @@
         <div class="container page-section__container">
             <header class="page-section__header">
                 <div class="page-section__descr">
-                    <a href="{{ url()->previous() }}" class="button button--outline page-section__back-button"
+                    <a href="{{ route('user.files.index', $file->folder_id) }}" class="button button--outline page-section__back-button"
                        aria-label="Back" data-tooltip="Назад">
                         <svg class="button__icon" width="10" height="19">
                             <use xlink:href="{{asset('assets/img/user/sprite.svg#arrow-left')}}"></use>

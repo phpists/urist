@@ -217,20 +217,28 @@
                         data: function (params) {
                             var query = {
                                 search_string: params.term,
-                                article_category_id: null
+                                page: params.page || 1
                             }
                             // Query parameters will be ?search=[term]&type=public
                             return query;
                         },
-                        processResults: function (data) {
-                            data = data.map((el) => {
+                        processResults: function (response, params) {
+                            params.page = params.page || 1;
+
+                            let data = response.data.map((el) => {
                                 return {
                                     id: el.id,
                                     text: el.full_path
                                 }
                             })
+
+                            console.log(response.next_page_url)
+
                             return {
-                                results: data
+                                results: data,
+                                pagination: {
+                                    more: response.next_page_url != null
+                                }
                             };
                         }
                     }

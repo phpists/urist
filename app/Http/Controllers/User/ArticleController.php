@@ -91,7 +91,7 @@ class ArticleController extends Controller
 
         $objectWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord);
         header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-        header("Content-Disposition: attachment;Filename={$article->getProgramTitle()}.docx");
+        header("Content-Disposition: attachment;Filename={$article->getExportableFileName()}");
         header('Pragma: public');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         $objectWriter->save('php://output');

@@ -29,6 +29,10 @@ class CriminalArticle extends Model
         'date' => 'date'
     ];
 
+    protected $with = [
+        'tags'
+    ];
+
     protected static function booted () {
 
         static::deleted(function(self $model) {
@@ -100,6 +104,11 @@ class CriminalArticle extends Model
     public function getProgramTitle(): string
     {
         return \Str::slug($this->name);
+    }
+
+    public function getExportableFileName(): string
+    {
+        return strtolower(config('app.name') . '_' . \Str::slug($this->getProgramTitle())) . '.docx';
     }
 
     public function getSearchHighlightedName()

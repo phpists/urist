@@ -114,7 +114,7 @@ class FileController extends Controller
 
         $objectWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord);
         header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-        header("Content-Disposition: attachment;Filename={$file->getProgramTitle()}.docx");
+        header("Content-Disposition: attachment;Filename={$file->getExportableFileName()}");
         $objectWriter->save('php://output');
 
         exit(418);

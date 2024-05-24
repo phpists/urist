@@ -31,6 +31,11 @@ class File extends Model
         return \Str::replace(' ', '_', $this->name);
     }
 
+    public function getExportableFileName(): string
+    {
+        return strtolower(config('app.name') . '_' . \Str::slug($this->getProgramTitle())) . '.docx';
+    }
+
     public function getPrettyCreatedAtAttribute()
     {
         return $this->created_at->format('d.m.Y');

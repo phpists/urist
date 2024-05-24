@@ -69,6 +69,7 @@ Route::post('form', [\App\Http\Controllers\HomeController::class, 'form'])
 
 Route::get('/offer', [\App\Http\Controllers\HomeController::class, 'offer'])->name('offer');
 Route::get('/policy', [\App\Http\Controllers\HomeController::class, 'policy'])->name('policy');
+Route::get('/about', [\App\Http\Controllers\HomeController::class, 'about'])->name('about');
 Route::get('faq', [FaqController::class, 'index'])->name('faq');
 Route::get('contacts', [ContactController::class, 'index'])->name('contacts');
 
@@ -152,6 +153,7 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
             ->name('articles.total-count');
         // Download DOC
         Route::get('articles/{article}/export-doc', [\App\Http\Controllers\User\ArticleController::class, 'exportDoc'])
+            ->middleware('throttle:6,1')
             ->name('articles.export-doc');
 
         Route::get('search/items', [\App\Http\Controllers\User\ArticleController::class, 'searchItems'])
@@ -170,6 +172,7 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
             ->name('files.update.file-name');
         // Download DOC
         Route::get('file/{file}/export-doc', [\App\Http\Controllers\User\FileController::class, 'exportDoc'])
+            ->middleware('throttle:6,1')
             ->name('files.export-doc');
 
         // Registries

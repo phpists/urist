@@ -328,5 +328,19 @@ class SystemPageSeeder extends Seeder
             ]);
         }
 
+        if (!SystemPage::whereName(SystemPageEnum::ABOUT->value)->exists()) {
+            SystemPage::create([
+                'name' => SystemPageEnum::ABOUT->value,
+                'title' => 'Про Нас',
+                'data' => [
+                    [
+                        'body' => '<h1>Про нас</h1>'
+                    ]
+                ],
+                'images' => [],
+                'meta' => [],
+            ]);
+        }
+
     }
 }

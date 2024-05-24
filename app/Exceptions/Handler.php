@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -27,6 +28,10 @@ class Handler extends ExceptionHandler
             if ($e->getCode() == 404) {
                 return response()->view('errors.404', [], 404);
             }
+        });
+
+        $this->renderable(function (ThrottleRequestsException $e) {
+            return back()->with('error', 'Забагато спроб! Будь ласка, зачекайте перш ніж повторити');
         });
     }
 }
