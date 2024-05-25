@@ -23,7 +23,7 @@ class NewRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'document' => ['required', 'file', 'max:5000', 'mimes:doc,docx'],
+            'document' => ['required', 'file', 'max:5000', 'mimes:doc,docs,docx'],
             'folder_id' => ['sometimes', 'exists:folders,id', 'nullable'],
         ];
     }

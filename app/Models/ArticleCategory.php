@@ -17,6 +17,10 @@ class ArticleCategory extends Model
 
     protected $fillable = ['name', 'parent_id', 'position', 'is_active', 'sub_title', 'type'];
 
+    protected $with = [
+        'children'
+    ];
+
     public function articles(): BelongsToMany
     {
         return $this->belongsToMany(CriminalArticle::class, 'criminal_article_categories');

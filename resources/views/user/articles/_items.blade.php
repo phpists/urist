@@ -78,7 +78,7 @@
         </tbody>
     </table>
 
-    {!! $articles->onEachSide(1)->links('vendor.pagination.urist') !!}
+    {!! $articles->onEachSide(6)->links('vendor.pagination.urist') !!}
 @else
     <h3>Немає результатів</h3>
 @endif

@@ -52,7 +52,7 @@
             </form>
         </div>
         <div class="filter__bottom">
-            <button class="button button--outline filter__button" type="button" onclick="location.href = '{{ route('user.articles.index', $filterService->getType()) }}'">Скинути</button>
+            <button id="clearFilterButton" class="button button--outline filter__button" type="button" data-url="{{ route('user.articles.index', $filterService->getType()) }}">Скинути</button>
             <button class="button filter__button" type="submit" form="filterForm" @if(!str_contains(route('user.articles.index', $filterService->getType()), url()->current())) data-redirect="true" @endif disabled>Показати</button>
         </div>
     </div>
@@ -66,6 +66,13 @@
                 e.preventDefault()
             })
 
+            $(document).on('click', '#clearFilterButton', function (e) {
+                localStorage.removeItem('filter_search');
+                localStorage.removeItem('accordion__panel_expanded_statuses');
+
+                location.href = this.dataset.url;
+            })
+
             const $filterAccordionItemsContainer = $('#filterAccordionItemsContainer');
             let $filterSpinner = $('#spinner').clone();
             $filterAccordionItemsContainer
@@ -76,19 +83,23 @@
             $filterAccordionItemsContainer.load($filterAccordionItemsContainer.data('load-url'), function () {
                 $filterSpinner.hide()
 
-                $('.accordion__panel:has(button.accordion__trigger)').each(function (i, el) {
-                    let mustBeExpanded = localStorage.getItem(`accordion__panel_${$(el).data('id')}_expanded`);
+                let accordion_statuses = JSON.parse(localStorage.getItem('accordion__panel_expanded_statuses'));
+                if (accordion_statuses) {
+                    $('.accordion__panel:has(button.accordion__trigger)').each(function (i, el) {
+                        if (accordion_statuses[el.dataset.id]) {
+                            $(el).find('button.accordion__trigger:first').click()
+                        }
+                    })
+                }
 
-                    console.log(mustBeExpanded == 'true')
-
-                    if (mustBeExpanded == 'true') {
-                        $(el).find('button.accordion__trigger:first').click()
-                    }
-                })
+                let filter_search = localStorage.getItem('filter_search');
+                if (filter_search)
+                    $('#inputFilterSearch').val(filter_search).trigger('keyup');
             })
 
             $(document).on('keyup', '#inputFilterSearch', function (e) {
                 let value = $(this).val().toLowerCase();
+                localStorage.setItem('filter_search', value)
 
                 filterCategories(value)
             })
@@ -175,7 +186,24 @@
                     }
                 })
             })
+
+            $(document).on('click', '.accordion__trigger', function () {
+                saveAccordionStatus()
+            });
+
         })
+
+        function saveAccordionStatus() {
+            let data = {};
+            $('.accordion__panel:has(.accordion__trigger)').each(function (i, item) {
+                const $panel = $(item),
+                    $content = $panel.find('.accordion__content');
+
+                data[$panel.data('id')] = $content.attr('aria-hidden') !== 'true';
+            });
+
+            localStorage.setItem(`accordion__panel_expanded_statuses`, JSON.stringify(data))
+        }
 
         function filterCategories(value) {
             value = value.toLowerCase();
@@ -184,39 +212,43 @@
                 item.innerHTML = item.textContent
             })
 
-            if (value.length > 0 && $('#filterForm input[name="categories[]"]:checked').length > 0) {
-                $('#filterForm div.accordion__panel.sub-category .accordion__header input[name="categories[]"]:not(:checked)').each(function (i, el) {
-                    $(el).parents('div.accordion__panel.sub-category:first').hide()
-                })
-
-                $('div.accordion__panel.sub-category .accordion__header input[name="categories[]"]:checked')
-                    .each(function (i, el) {
-                        $(el).parents('div.accordion__panel.sub-category:first')
-                            .find('div.accordion__content div.accordion__panel.sub-category')
-                            .each(function (i, el) {
-                                let title = $(el).find('label');
-                                if (title.length > 0) {
-                                    if (title.text().toLowerCase().indexOf(value) === -1) {
-                                        $(el).hide();
-                                    } else {
-                                        $(el).show();
-                                        el.querySelector('span.name-text').innerHTML = el.querySelector('span.name-text').innerHTML.replace(value, `<span style="background-color: yellow;color: black">${value}</span>`)
-                                    }
-                                }
-                            })
-                    })
-
-
-                $('.accordion__content[aria-hidden="true"]:has(div.sub-category:visible)')
-                    .each(function (i, item) {
-                        const $parent = $(item).parent('.accordion__panel')
-
-                        $(item).attr('aria-hidden', false);
-                        $parent.find('.accordion__trigger')
-                            .attr('aria-expanded', true)
-                    })
-            } else {
+            // if (value.length > 0 && $('#filterForm input[name="categories[]"]:checked').length > 0) {
+            //     $('#filterForm div.accordion__panel.sub-category .accordion__header input[name="categories[]"]:not(:checked)').each(function (i, el) {
+            //         $(el).parents('div.accordion__panel.sub-category:first').hide()
+            //     })
+            //
+            //     $('div.accordion__panel.sub-category .accordion__header input[name="categories[]"]:checked')
+            //         .each(function (i, el) {
+            //             console.log(1, el)
+            //             $(el).parents('div.accordion__panel.sub-category:first')
+            //                 .find('div.accordion__content div.accordion__panel.sub-category')
+            //                 .each(function (i, el) {
+            //                     let title = $(el).find('label');
+            //                     if (title.length > 0) {
+            //                         if (title.text().toLowerCase().indexOf(value) === -1) {
+            //                             $(el).hide();
+            //                         } else {
+            //                             $(el).show();
+            //                             el.querySelector('span.name-text').innerHTML = el.querySelector('span.name-text').innerHTML.replace(value, `<span style="background-color: yellow;color: black">${value}</span>`)
+            //                         }
+            //                     }
+            //                 })
+            //         })
+            //
+            //
+            //     $('.accordion__content[aria-hidden="true"]:has(div.sub-category:visible)')
+            //         .each(function (i, item) {
+            //             const $parent = $(item).parent('.accordion__panel')
+            //
+            //             $(item).attr('aria-hidden', false);
+            //             $parent.find('.accordion__trigger')
+            //                 .attr('aria-expanded', true)
+            //         })
+            //
+            //     saveAccordionStatus();
+            // } else {
                 $('div.accordion__panel.sub-category').each(function (i, el) {
+                    console.log(2, el)
                     let title = $(el).find('label');
                     if (title.length > 0) {
                         if (title.text().toLowerCase().indexOf(value) === -1) {
@@ -249,18 +281,10 @@
                             }
                         })
                 }
-            }
+
+                saveAccordionStatus();
+            // }
         }
-
-        $(document).on('click', '.accordion__trigger', function () {
-            const $panel = $(this).parents('.accordion__panel:first'),
-                $content = $panel.find('.accordion__content');
-            let expanded = $content.attr('aria-hidden') === 'true';
-
-            console.log(expanded ? 'expanded' : 'closed')
-
-            localStorage.setItem(`accordion__panel_${$panel.data('id')}_expanded`, expanded)
-        });
 
     </script>
 @endpush

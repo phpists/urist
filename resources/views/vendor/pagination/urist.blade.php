@@ -23,7 +23,7 @@
                     <li class="pagenav__item"><span>...</span></li>
                 @endif
                 @foreach(range(1, $paginator->lastPage()) as $i)
-                    @if($i >= $paginator->currentPage() - 1 && $i <= $paginator->currentPage() + 1)
+                    @if($i >= $paginator->currentPage() - 3 && $i <= $paginator->currentPage() + 3)
                         @if($i == $paginator->currentPage())
                             <li class="pagenav__item is-active" aria-current="page"><a class="pagenav__link" href="#">{{ $i }}</a></li>
                         @else

@@ -12,7 +12,7 @@
                 <li class="menu__item"><a class="menu__link @if(request()->routeIs('blog.*')) is-active @endif" href="{{ route('blog.index') }}">Блог</a></li>
                 <li class="menu__item"><a class="menu__link @if(request()->routeIs('faq')) is-active @endif" href="{{ route('faq') }}">FAQ</a></li>
                 <li class="menu__item"><a class="menu__link @if(request()->routeIs('contacts')) is-active @endif" href="{{ route('contacts') }}">Контакти</a></li>
-                <li class="menu__item"><a class="menu__link @if(request()->routeIs('about')) is-active @endif" href="{{ route('about') }}">Про нас</a></li>
+                <li class="menu__item"><a class="menu__link @if(request()->routeIs('about')) is-active @endif" href="{{ route('about') }}" style="white-space: nowrap;">Про нас</a></li>
             </ul>
         </nav>
         <ul class="actions">

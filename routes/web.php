@@ -153,7 +153,7 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
             ->name('articles.total-count');
         // Download DOC
         Route::get('articles/{article}/export-doc', [\App\Http\Controllers\User\ArticleController::class, 'exportDoc'])
-            ->middleware('throttle:6,1')
+            ->middleware('throttle:10,1')
             ->name('articles.export-doc');
 
         Route::get('search/items', [\App\Http\Controllers\User\ArticleController::class, 'searchItems'])
@@ -172,7 +172,7 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
             ->name('files.update.file-name');
         // Download DOC
         Route::get('file/{file}/export-doc', [\App\Http\Controllers\User\FileController::class, 'exportDoc'])
-            ->middleware('throttle:6,1')
+            ->middleware('throttle:10,1')
             ->name('files.export-doc');
 
         // Registries

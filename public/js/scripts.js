@@ -9,6 +9,10 @@ $(function () {
         }
     })
 
+    $(document).on('click', '.mobile-nav-menu__link', function () {
+        $('.header__burger.is-active').click()
+    })
+
 })
 
 

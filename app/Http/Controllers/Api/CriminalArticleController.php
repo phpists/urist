@@ -41,7 +41,7 @@ class CriminalArticleController extends Controller
 
     public function categories()
     {
-        $categories = $this->filterService->getCategories();
+        $categories = $this->filterService->getCategories()->first()->children;
 
         return CriminalArticleCategoryResource::collection($categories);
     }
