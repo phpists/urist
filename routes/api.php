@@ -41,7 +41,8 @@ Route::group(['middleware' => 'jwt'], function () {
     Route::get('criminal-article/{article}/export-doc', [\App\Http\Controllers\Api\CriminalArticleController::class, 'exportDoc']);
 
     /** Cabinet */
-    Route::get('cabinet/files/{file}/export-doc', [\App\Http\Controllers\Api\User\FileController::class, 'exportDoc']);
+    Route::get('cabinet/files/{file}/export-doc', [\App\Http\Controllers\Api\User\FileController::class, 'exportDoc'])
+        ->middleware('throttle:10,5');
     Route::resource('cabinet', \App\Http\Controllers\Api\User\FileController::class)->only('index');
     Route::resource('cabinet/folders', \App\Http\Controllers\Api\User\FileFolderController::class)
         ->only(['store', 'update', 'destroy']);

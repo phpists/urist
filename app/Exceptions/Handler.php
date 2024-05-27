@@ -31,7 +31,15 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (ThrottleRequestsException $e) {
-            return back()->with('error', 'Забагато спроб! Будь ласка, зачекайте перш ніж повторити');
+            $retryAfter = $e->getHeaders()['Retry-After'] ?? 99;
+            $message = "Забагато спроб! Будь ласка, спробуйте через {$retryAfter} сек";
+
+            return request()->wantsJson()
+                ? \Response::json([
+                    'result' => false,
+                    'message' => $message
+                ])
+                : back()->with('error', $message);
         });
     }
 }

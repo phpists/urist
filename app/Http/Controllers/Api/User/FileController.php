@@ -15,6 +15,7 @@ use App\Models\Folder;
 use App\Services\FileService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use PhpOffice\PhpWord\TemplateProcessor;
 
 class FileController extends Controller
 {
@@ -186,7 +187,7 @@ class FileController extends Controller
         $objectWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord);
         $objectWriter->save('php://output');
 
-        \Response::download('php://output', $article->getProgramTitle() . '.docx', [
+        \Response::download('php://output', $article->getExportableFileName(), [
             'Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document'
         ]);
 

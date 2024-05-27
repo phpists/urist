@@ -11,6 +11,8 @@ use App\Services\ArticleFilterService;
 use App\Services\PermissionService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use PhpOffice\PhpWord\Element\Table;
+use PhpOffice\PhpWord\TemplateProcessor;
 
 class ArticleController extends Controller
 {
@@ -78,23 +80,43 @@ class ArticleController extends Controller
     {
         can_user(PermissionEnum::EXPORT_PAGE->value);
 
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
-        $phpWord->addTitleStyle(1, 'Heading1', ['alignment' => 'center']);
+        $templateProcessor = new TemplateProcessor(resource_path('data/template.docx'));
 
-        $pp = $phpWord->addSection();
-        $pp->addTitle('ПП');
-        \PhpOffice\PhpWord\Shared\Html::addHtml($pp, $article->pp, false, false);
+        $ppTable = new Table();
+        $ppTable->addRow();
+        $cell = $ppTable->addCell();
+        \PhpOffice\PhpWord\Shared\Html::addHtml($cell, '<h1>ПП</h1>');
+        \PhpOffice\PhpWord\Shared\Html::addHtml($cell, $article->pp);
+        $templateProcessor->setComplexBlock('pp', $ppTable);
+        $statyaKkTable = new Table();
+        $statyaKkTable->addRow();
+        $cell = $statyaKkTable->addCell();
+        \PhpOffice\PhpWord\Shared\Html::addHtml($cell, '<h1>Судове рішення</h1>');
+        \PhpOffice\PhpWord\Shared\Html::addHtml($cell, $article->statya_kk);
+        $templateProcessor->setComplexBlock('statya_kk', $statyaKkTable);
 
-        $statya_kk = $phpWord->addSection();
-        $statya_kk->addTitle('Судове рішення');
-        \PhpOffice\PhpWord\Shared\Html::addHtml($statya_kk, $article->statya_kk, false, false);
 
-        $objectWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord);
         header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
         header("Content-Disposition: attachment;Filename={$article->getExportableFileName()}");
-        header('Pragma: public');
-        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-        $objectWriter->save('php://output');
+        $templateProcessor->saveAs('php://output');
+
+//        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+//        $phpWord->addTitleStyle(1, 'Heading1', ['alignment' => 'center']);
+//
+//        $pp = $phpWord->addSection();
+//        $pp->addTitle('ПП');
+//        \PhpOffice\PhpWord\Shared\Html::addHtml($pp, $article->pp, false, false);
+//
+//        $statya_kk = $phpWord->addSection();
+//        $statya_kk->addTitle('Судове рішення');
+//        \PhpOffice\PhpWord\Shared\Html::addHtml($statya_kk, $article->statya_kk, false, false);
+//
+//        $objectWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord);
+//        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+//        header("Content-Disposition: attachment;Filename={$article->getExportableFileName()}");
+//        header('Pragma: public');
+//        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+//        $objectWriter->save('php://output');
 
         exit(418);
     }
