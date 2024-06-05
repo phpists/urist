@@ -15,7 +15,7 @@ class ArticleCategory extends Model
     use HasFactory;
     use Notifiable;
 
-    protected $fillable = ['name', 'parent_id', 'position', 'is_active', 'sub_title', 'type'];
+    protected $fillable = ['name', 'parent_id', 'position', 'is_active', 'sub_title', 'type', 'full_path'];
 
     protected $with = [
         'children'

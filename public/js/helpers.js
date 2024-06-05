@@ -3,7 +3,8 @@ function makeSelect2AjaxSearch(url, element_id) {
         url: url,
         data: function (params) {
             var query = {
-                search_string: params.term
+                search_string: params.term,
+                page: params.page || 1
             }
             // Query parameters will be ?search=[term]&type=public
             return query;

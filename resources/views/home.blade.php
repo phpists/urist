@@ -207,15 +207,15 @@
                                     </ul>
                                     <div class="tariff-card__buttons">
                                         @if(!auth()->user()?->hadSubscription())
-                                            <button class="button button--outline tariff-card__button" type="button">1 день безкоштовне демо</button>
+                                            <p style="margin-top: 20px;color: #1d3f68;">5 днів безкоштовне демо</p>
                                         @endif
                                     </div>
                                 </div>
                                 <div class="tariff-card__footer">
                                     <div class="tariff-card__total">
-                                        <div class="tariff-card__price">Вартість <span>{{ $plan->price_monthly }}$</span></div>
-                                        <div class="tariff-card__discount" data-months="1" data-price="{{ $plan->price_monthly }}$" style="display: none">{{ $plan->price_monthly }}$ / 1 міс</div>
-                                        <div class="tariff-card__discount" data-months="12" data-price="{{ $plan->price_annual }}$">{{ $plan->price_annual }}$ / 12 міс (-{{ $plan->getAnnualDiscountSum() }}$)</div>
+                                        <div class="tariff-card__price">Вартість <span>{{ $plan->price_monthly }}₴</span></div>
+                                        <div class="tariff-card__discount" data-months="1" data-price="{{ $plan->price_monthly }}₴" style="display: none">{{ $plan->price_monthly }}₴ / 1 міс</div>
+                                        <div class="tariff-card__discount" data-months="12" data-price="{{ $plan->price_annual }}₴">{{ $plan->price_annual }}₴ / 12 міс (-{{ $plan->getAnnualDiscountSum() }}₴)</div>
                                     </div>
                                     <a class="button tariff-card__buy-button" href="{{ auth()->check() ? route('user.subscription.index') : route('login') }}">Обрати</a>
                                 </div>

@@ -27,9 +27,9 @@ class GrantFreeTrialAccess
         Subscription::create([
             'plan_id' => Plan::first()->id,
             'user_id' => $event->user->id,
-            'period' => 'day',
+            'period' => 'trial',
             'price' => 0,
-            'expires_at' => Carbon::now()->addDay()
+            'expires_at' => Carbon::now()->addDays(5)
         ]);
     }
 }

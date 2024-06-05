@@ -65,11 +65,6 @@ class ArticleCategoryController extends Controller
         $article_categories = $article_categories
             ->paginate();
 
-        $article_categories = $article_categories->through(function ($item) {
-            $item->full_path = $item->getFullPath();
-            return $item;
-        });
-
         return response()->json($article_categories);
     }
 

@@ -14,6 +14,9 @@ use App\Listeners\User\RemoveRole;
 use App\Listeners\User\SendSubscriptionExpirationNotification;
 use App\Listeners\UserSendVerifyCodeListener;
 use App\Listeners\UserSendVerifyCodeResetPasswordListener;
+use App\Models\ArticleCategory;
+use App\Models\User;
+use App\Observers\ArticleCategoryObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -49,6 +52,16 @@ class EventServiceProvider extends ServiceProvider
         \SocialiteProviders\Manager\SocialiteWasCalled::class => [
             \SocialiteProviders\Apple\AppleExtendSocialite::class.'@handle',
         ],
+    ];
+
+
+    /**
+     * The model observers for your application.
+     *
+     * @var array
+     */
+    protected $observers = [
+        ArticleCategory::class => [ArticleCategoryObserver::class],
     ];
 
     /**
