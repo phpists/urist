@@ -47,6 +47,10 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'remember_token',
     ];
+    
+    protected $with = [
+        'activeSubscription'
+    ];
 
     const ROLE_ADMIN = 'admin';
     const ROLE_USER = 'user';
