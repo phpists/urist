@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Str;
 
 class BlogController extends Controller
 {
@@ -57,7 +58,7 @@ class BlogController extends Controller
         $data['thumbnail'] = null;
 
         if (isset($data['slug']))
-            $data['slug'] = trim(parse_url($data['slug'], PHP_URL_PATH), '/');
+            $data['slug'] = Str::slug(parse_url($data['slug'], PHP_URL_PATH));
 
         if ($request->hasFile('thumbnail'))
             if (Storage::put(Blog::IMG_PATH, $file = $request->file('thumbnail')))
@@ -92,7 +93,7 @@ class BlogController extends Controller
         $data['is_main'] = $request->boolean('is_main');
 
         if (isset($data['slug']))
-            $data['slug'] = trim(parse_url($data['slug'], PHP_URL_PATH), '/');
+            $data['slug'] = Str::slug(parse_url($data['slug'], PHP_URL_PATH));
 
         if ($request->hasFile('thumbnail'))
             if (Storage::put(Blog::IMG_PATH, $file = $request->file('thumbnail')))
