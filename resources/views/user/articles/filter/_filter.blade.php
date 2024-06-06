@@ -34,7 +34,7 @@
             </div>
             <form class="search filter__search" id="filter-search-form" autocomplete="off" novalidate="novalidate">
                 <div class="search__group">
-                    <input class="input search__input" id="inputFilterSearch" type="text" name="inputFilterSearch" placeholder="Пошук..." autocomplete="off" required="required">
+                    <input class="input search__input" id="inputFilterSearch" type="text" name="inputFilterSearch" placeholder="Пошук по категоріях" autocomplete="off" required="required">
                     <button type="button" class="search__button">
                         <svg class="search__icon" width="21" height="21">
                             <use xlink:href="{{ asset('img/sprite.svg#search') }}"></use>
