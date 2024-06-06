@@ -27,15 +27,17 @@ class FillFullPathForArticleCategory extends Command
      */
     public function handle()
     {
-        ArticleCategory::chunkById(5, function ($categories) {
-            echo 'Gained ' . $categories->count() . ' Article Categories' . PHP_EOL;
-            foreach ($categories as $category) {
-                echo 'Processing ' . $category->name . "(ID:{$category->id})" . PHP_EOL;
-                $category->update([
-                    'full_path' => $category->getFullPath()
-                ]);
-                FillArticleCategoryFullPathJob::dispatch($category);
-            }
-        });
+        foreach (ArticleCategory::all() as $category) {
+            $category->update([
+                'full_path' => $category->getFullPath()
+            ]);
+        }
+//        ArticleCategory::chunkById(5, function ($categories) {
+//            echo 'Gained ' . $categories->count() . ' Article Categories' . PHP_EOL;
+//            foreach ($categories as $category) {
+//                echo 'Processing ' . $category->name . "(ID:{$category->id})" . PHP_EOL;
+//
+//            }
+//        });
     }
 }

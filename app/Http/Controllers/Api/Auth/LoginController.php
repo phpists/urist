@@ -59,7 +59,7 @@ class LoginController extends BaseController
     public function handleGoogleLogin(\Request $request, string $token)
     {
         try {
-            $user = Socialite::driver('google')->getUserFromToken($token);
+            $user = Socialite::driver('google')->userByIdentityToken($token);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return new JsonResponse([
