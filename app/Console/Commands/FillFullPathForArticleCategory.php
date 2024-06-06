@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\FillArticleCategoryFullPathJob;
 use App\Models\ArticleCategory;
 use Illuminate\Console\Command;
 
@@ -26,9 +27,15 @@ class FillFullPathForArticleCategory extends Command
      */
     public function handle()
     {
-        foreach (ArticleCategory::all() as $category) {
-            $category->full_path = $category->getFullPath();
-            $category->update();
-        }
+        ArticleCategory::chunkById(5, function ($categories) {
+            echo 'Gained ' . $categories->count() . ' Article Categories' . PHP_EOL;
+            foreach ($categories as $category) {
+                echo 'Processing ' . $category->name . "(ID:{$category->id})" . PHP_EOL;
+                $category->update([
+                    'full_path' => $category->getFullPath()
+                ]);
+                FillArticleCategoryFullPathJob::dispatch($category);
+            }
+        });
     }
 }

@@ -12,8 +12,9 @@ class ArticleCategoryObserver
      */
     public function created(ArticleCategory $articleCategory): void
     {
-        $articleCategory->full_path = $articleCategory->getFullPath();
-        $articleCategory->update();
+        $articleCategory->update([
+            'full_path' => $articleCategory->getFullPath()
+        ]);
     }
 
     /**
@@ -21,8 +22,9 @@ class ArticleCategoryObserver
      */
     public function updated(ArticleCategory $articleCategory): void
     {
-        $articleCategory->full_path = $articleCategory->getFullPath();
-        $articleCategory->update();
+        $articleCategory->update([
+            'full_path' => $articleCategory->getFullPath()
+        ]);
     }
 
 }

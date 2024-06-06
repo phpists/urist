@@ -54,22 +54,12 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 
-
-    /**
-     * The model observers for your application.
-     *
-     * @var array
-     */
-    protected $observers = [
-        ArticleCategory::class => [ArticleCategoryObserver::class],
-    ];
-
     /**
      * Register any events for your application.
      */
     public function boot(): void
     {
-        //
+        ArticleCategory::observe(ArticleCategoryObserver::class);
     }
 
     /**
