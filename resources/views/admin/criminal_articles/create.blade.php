@@ -62,7 +62,7 @@
                           enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="form-group">
                                     <label for="createArticleName">Назва</label>
                                     <div class="input-wrapper">
@@ -70,6 +70,21 @@
                                                data-url="{{ route('admin.criminal-article.check-name') }}"
                                                value="{{ old('name') }}" required/>
                                         @error('name')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label for="createArticleName">Відношення</label>
+                                    <div class="input-wrapper">
+                                        <select class="form-control" name="type" id="createArticleType">
+                                            @foreach(\App\Enums\CriminalArticleTypeEnum::cases() as $case)
+                                                <option value="{{ $case->value }}" @selected(old('type'))>{{ $case->getTitle() }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('type')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>

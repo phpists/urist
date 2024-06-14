@@ -78,7 +78,7 @@
                         @csrf
                         <input type="hidden" name="id" value="{{$criminal_article->id}}">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="form-group">
                                     <label for="createArticleName">Назва</label>
                                     <div class="input-wrapper">
@@ -87,6 +87,21 @@
                                                name="name" class="form-control" required/>
                                         @error('name')
                                             <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label for="createArticleName">Відношення</label>
+                                    <div class="input-wrapper">
+                                        <select class="form-control" name="type" id="createArticleType">
+                                            @foreach(\App\Enums\CriminalArticleTypeEnum::cases() as $case)
+                                                <option value="{{ $case->value }}" @selected(old('type', $criminal_article->type))>{{ $case->getTitle() }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('type')
+                                        <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
