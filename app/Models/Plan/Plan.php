@@ -3,6 +3,8 @@
 namespace App\Models\Plan;
 
 use App\Models\Role;
+use App\Models\User;
+use App\Services\LiqPayService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -73,7 +75,7 @@ class Plan extends Model
         return match ($period) {
             'month' => $this->price_monthly,
             'year' => $this->price_annual,
-            'day' => 0,
+            'trial', 'day' => 0,
         };
     }
 
@@ -82,10 +84,22 @@ class Plan extends Model
         $periodTitle = match ($period) {
             'month' => 'місяць',
             'year' => 'рік',
+            'trial' => 'пробний',
             'day' => 'день'
         };
 
         return '$' . $this->getPriceByPeriod($period) . '/' . $periodTitle;
+    }
+
+    public function getCheckoutData(User $user, string $period): object
+    {
+        $prerequisites = (new LiqPayService)->getCheckoutPrerequisites($user, $this, $period);
+
+        return (object) [
+            'action' => $prerequisites->getAction(),
+            'data' => $prerequisites->getData(),
+            'signature' => $prerequisites->getSignature(),
+        ];
     }
 
 }

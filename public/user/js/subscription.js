@@ -18,6 +18,14 @@ $(function () {
 
             $('.tariff-card__discount').hide()
             $(`.tariff-card__discount[data-months!="${months}"]`).show()
+
+            if (months == 1) {
+                $('#monthPaymentForm').show()
+                $('#yearPaymentForm').hide()
+            } else if (months == 12) {
+                $('#monthPaymentForm').hide()
+                $('#yearPaymentForm').show()
+            }
         }
     })
 

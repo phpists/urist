@@ -12,6 +12,7 @@
         "algolia/scout-extended": "^3.0",
         "anhskohbo/no-captcha": "^3.5",
         "digital-threads/liqpay": "^1.0",
+        "google/apiclient": "2.15.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",

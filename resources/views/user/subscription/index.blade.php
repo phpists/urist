@@ -121,14 +121,28 @@
                                                 міс (-{{ $plan->getAnnualDiscountSum() }}₴)
                                             </div>
                                         </div>
+                                        @php($monthPaymentData = $plan->getCheckoutData($user, 'month'))
+                                        <form id="monthPaymentForm" method="POST" action="{{ $monthPaymentData->action }}" accept-charset="utf-8">
+                                            <input type="hidden" name="data" value="{{ $monthPaymentData->data }}"/>
+                                            <input type="hidden" name="signature" value="{{ $monthPaymentData->signature }}"/>
+                                            <input type="image"
+                                                   src="//static.liqpay.ua/buttons/payUk.png" style="height: 70px;"/>
+                                        </form>
+                                        @php($yearPaymentData = $plan->getCheckoutData($user, 'year'))
+                                        <form id="yearPaymentForm" method="POST" action="{{ $yearPaymentData->action }}" accept-charset="utf-8" style="display: none">
+                                            <input type="hidden" name="data" value="{{ $yearPaymentData->data }}"/>
+                                            <input type="hidden" name="signature" value="{{ $yearPaymentData->signature }}"/>
+                                            <input type="image"
+                                                   src="//static.liqpay.ua/buttons/payUk.png" style="height: 70px;"/>
+                                        </form>
 {{--                                        @if(!$user->activeSubscription--}}
 {{--                                                || ($user->activeSubscription && $user->activeSubscription->isCancelled() && !$user->pendingSubscription))--}}
-                                            <button class="button tariff-card__buy-button show_payment_modal"
-                                                    type="button"
-                                                    data-id="{{ $plan->id }}" data-title="{{ $plan->title }}"
-                                                    data-url="{{ route('user.subscription.payment-data', $plan) }}"
-                                                    data-modal="modal-payment">Обрати
-                                            </button>
+{{--                                            <button class="button tariff-card__buy-button show_payment_modal"--}}
+{{--                                                    type="button"--}}
+{{--                                                    data-id="{{ $plan->id }}" data-title="{{ $plan->title }}"--}}
+{{--                                                    data-url="{{ route('user.subscription.payment-data', $plan) }}"--}}
+{{--                                                    data-modal="modal-payment">Обрати--}}
+{{--                                            </button>--}}
 {{--                                        @endif--}}
                                     </div>
                                 </div>

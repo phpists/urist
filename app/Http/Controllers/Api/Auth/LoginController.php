@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Auth\LoginRequest;
 use App\Models\User;
 use App\Services\UserAuthService;
+use Google_Client;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -59,7 +60,18 @@ class LoginController extends BaseController
     public function handleGoogleLogin(\Request $request, string $token)
     {
         try {
-            $user = Socialite::driver('google')->userFromToken($token);
+            $client = new Google_Client(['client_id' => env('GOOGLE_API_CLIENT_ID')]);
+            $payload = $client->verifyIdToken($token);
+
+            if ($payload) {
+                $user = (object) [
+                    'id' => $payload['sub'],
+                    'email' => $payload['email'],
+                    'name' => [$payload['given_name'] ?? null, $payload['family_name'] ?? null],
+                ];
+            } else {
+                throw new \Exception('ERROR! Can\'t get data from token');
+            }
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return new JsonResponse([

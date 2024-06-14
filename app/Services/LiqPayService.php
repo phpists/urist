@@ -102,8 +102,9 @@ class LiqPayService
         if (!$subscriptionSession)
             throw new Exception('Не вдалось знайти платіжну сесію');
 
-        (new SubscriptionService($subscriptionSession))
+        (new SubscriptionService)
             ->create(
+                $subscriptionSession,
                 current((array)$this->payment),
                 $this->payment->get('end_date'),
                 $this->payment->get('amount')
@@ -120,8 +121,8 @@ class LiqPayService
         $subscriptionSession = SubscriptionSession::whereHash($this->payment->get('order_id'))
             ->firstOrFail();
 
-        (new SubscriptionService($subscriptionSession))
-            ->cancel();
+        (new SubscriptionService)
+            ->cancel($subscriptionSession);
 
         return 'Підписка скасована';
     }
@@ -135,8 +136,9 @@ class LiqPayService
             throw new Exception('Не вдалось продовжити підписку');
 
         $subscriptionSession = SubscriptionSession::whereHash($this->payment->get('order_id'))->firstOrFail();
-        (new SubscriptionService($subscriptionSession))
+        (new SubscriptionService)
             ->continue(
+                $subscriptionSession,
                 current((array)$this->payment),
                 $this->payment->get('end_date'),
                 $this->payment->get('amount')
