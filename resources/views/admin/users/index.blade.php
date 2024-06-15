@@ -116,6 +116,7 @@
                     </div>
                     <div class="card-toolbar w-100">
                         <form id="filterDataForm" class="w-100" action="{{ route('admin.users.index') }}">
+                            <input type="hidden" name="per-page">
                             <div class="row">
                                 <div class="col-4">
                                     <div class="form-group">

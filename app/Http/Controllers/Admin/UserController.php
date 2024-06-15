@@ -23,9 +23,13 @@ class UserController extends Controller
                     ->orWhere('last_name', 'LIKE', "%{$search}%")
                     ->orWhere('email', 'LIKE', "%{$search}%")
                     ->orWhere('phone', 'LIKE', "%{$search}%");
-            })
-            ->paginate()
-            ->withQueryString();
+            });
+
+        $perPage = $request->get('per-page', 20);
+        if ($perPage == 'all')
+            $users = $users->get();
+        else
+            $users = $users->paginate($perPage)->withQueryString();
 
         if ($request->ajax() && $request->wantsJson()) {
             return new JsonResponse([

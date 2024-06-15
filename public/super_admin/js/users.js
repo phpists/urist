@@ -27,6 +27,9 @@ jQuery(document).ready(function () {
     $('#search').on('input', function () {
         request('filterDataForm')
     })
+    $('#filterDataForm').on('change', function () {
+        request('filterDataForm')
+    })
 
     $(document).on('click', 'button[data-target="#subscribeUser"]', function (e) {
         $("#subscribeUser form").attr('action', this.dataset.url);

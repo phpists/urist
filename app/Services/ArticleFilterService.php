@@ -77,9 +77,9 @@ class ArticleFilterService
 
         $type = $this->getType();
         return $articles
-            ->when(!$isFromSearch && $type, function ($query) {
-                $query->whereType($this->getType());
-            })
+//            ->when(!$isFromSearch && $type, function ($query) {
+//                $query->whereType($this->getType());
+//            })
             ->when((!empty($categories)), function ($q) use ($categories, $isFromSearch) {
                 if ($isFromSearch) {
                     $filterCategories = \Arr::map($categories, function ($category) {

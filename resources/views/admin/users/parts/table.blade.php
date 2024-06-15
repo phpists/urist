@@ -77,4 +77,6 @@
     </tbody>
 </table>
 
+@if(method_exists($users, 'links'))
 {{ $users->links('vendor.pagination.product_pagination') }}
+@endif
