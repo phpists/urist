@@ -30,6 +30,7 @@
     @stack('scripts_head')
 </head>
 <body>
+@include('layouts.partials.noscript')
 @include('layouts.partials.header')
 <div class="modal-wrap">
     @stack('modals')

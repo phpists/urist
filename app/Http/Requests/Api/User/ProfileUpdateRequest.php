@@ -26,7 +26,8 @@ class ProfileUpdateRequest extends FormRequest
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email'],
             'birth_date' => ['nullable', 'date'],
-            'city' => ['nullable', 'string']
+            'city' => ['nullable', 'string'],
+            'phone' => ['required', 'string']
         ];
     }
 }

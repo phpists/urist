@@ -29,6 +29,7 @@
     @stack('scripts_head')
 </head>
 <body>
+@include('layouts.partials.noscript')
 
 @php($is_menu_hidden = isset($is_menu_hidden) ? $is_menu_hidden : true)
 

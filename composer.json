@@ -14,6 +14,7 @@
         "digital-threads/liqpay": "^1.0",
         "google/apiclient": "2.15.0",
         "guzzlehttp/guzzle": "^7.2",
+        "intervention/image": "^3.7",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/socialite": "^5.12",

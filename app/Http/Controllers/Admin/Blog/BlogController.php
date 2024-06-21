@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin\Blog;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\BlogTag;
-use App\Models\Page;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 use Str;
 
 class BlogController extends Controller
@@ -60,9 +60,14 @@ class BlogController extends Controller
         if (isset($data['slug']))
             $data['slug'] = Str::slug(parse_url($data['slug'], PHP_URL_PATH));
 
-        if ($request->hasFile('thumbnail'))
-            if (Storage::put(Blog::IMG_PATH, $file = $request->file('thumbnail')))
-                $data['thumbnail'] = $file->hashName();
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail = $request->file('thumbnail');
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($thumbnail->getRealPath());
+            $image->scale(width: 600);
+            $image->toPng()->save(Storage::path(Blog::IMG_PATH) . $thumbnail->hashName());
+            $data['thumbnail'] = $thumbnail->hashName();
+        }
 
         $blog = new Blog($data);
         if ($blog->save()) {
@@ -95,9 +100,14 @@ class BlogController extends Controller
         if (isset($data['slug']))
             $data['slug'] = Str::slug(parse_url($data['slug'], PHP_URL_PATH));
 
-        if ($request->hasFile('thumbnail'))
-            if (Storage::put(Blog::IMG_PATH, $file = $request->file('thumbnail')))
-                $data['thumbnail'] = $file->hashName();
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail = $request->file('thumbnail');
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($thumbnail->getRealPath());
+            $image->scale(width: 600);
+            $image->toPng()->save(Storage::path(Blog::IMG_PATH) . $thumbnail->hashName());
+            $data['thumbnail'] = $thumbnail->hashName();
+        }
 
         $result = $blog->update($data);
 
