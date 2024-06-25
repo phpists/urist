@@ -67,7 +67,7 @@ class LoginController extends BaseController
                 $user = (object) [
                     'id' => $payload['sub'],
                     'email' => $payload['email'],
-                    'name' => [$payload['given_name'] ?? null, $payload['family_name'] ?? null],
+                    'name' => ($payload['given_name'] ?? null) . ' ' . ($payload['family_name'] ?? null),
                 ];
             } else {
                 throw new \Exception('ERROR! Can\'t get data from token');

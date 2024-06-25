@@ -105,7 +105,7 @@ class LiqPayService
         (new SubscriptionService)
             ->create(
                 $subscriptionSession,
-                current((array)$this->payment),
+                (array) current((array)$this->payment),
                 $this->payment->get('end_date'),
                 $this->payment->get('amount')
             );
@@ -139,7 +139,7 @@ class LiqPayService
         (new SubscriptionService)
             ->continue(
                 $subscriptionSession,
-                current((array)$this->payment),
+                (array) current((array)$this->payment),
                 $this->payment->get('end_date'),
                 $this->payment->get('amount')
             );
