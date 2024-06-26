@@ -55,7 +55,7 @@
                 {{ $user->files()->count() }}
             </td>
             <td class="pr-0 text-center">
-                {{ $user->activeSubscription ? __('subscription.'.$user->activeSubscription->period) . ' (' . $user->activeSubscription->expires_at->format('d.m.y') . ')' : '-' }}
+                {{ $user->activeSubscription ? __('subscription.'.$user->activeSubscription->period) . ' (' . $user->pendingSubscription->expires_at->format('d.m.y') . ')' : '-' }}
             </td>
             <td class="justify-content-center pr-0 d-flex">
                 <button type="button" title="Підписка" data-url="{{ route('admin.users.subscribe', $user) }}"

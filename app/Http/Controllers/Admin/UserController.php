@@ -58,7 +58,7 @@ class UserController extends Controller
         $addPeriod = 'add' . $period = $request->post('period', 'month');
 
         if ($user->activeSubscription) {
-            $expiresAt =  $user->activeSubscription->expires_at->$addPeriod();
+            $expiresAt =  $user->pendingSubscription->expires_at->$addPeriod();
         } else {
             $expiresAt = Carbon::now()->$addPeriod();
         }

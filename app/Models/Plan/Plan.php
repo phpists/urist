@@ -88,7 +88,7 @@ class Plan extends Model
             'day' => 'день'
         };
 
-        return '$' . $this->getPriceByPeriod($period) . '/' . $periodTitle;
+        return '₴' . $this->getPriceByPeriod($period) . '/' . $periodTitle;
     }
 
     public function getCheckoutData(User $user, string $period): object
