@@ -35,6 +35,7 @@ class FileController extends Controller
             [$column, $direction] = explode(':', $sort);
 
         $folders = Folder::query()
+            ->with('childs')
             ->where('user_id', $request->user()->id)
             ->where('parent_id', $parent_id)
             ->when($search, function ($q) use ($search) {
@@ -53,7 +54,7 @@ class FileController extends Controller
             $folder->items_count = $folder->files_count + $folder->bookmarks_count;
             $folder->items_count_text = $folder->getTotalEntriesCountTitle();
 
-            $folder->unsetRelation('childs');
+//            $folder->unsetRelation('childs');
         });
 
         $files = File::query()
