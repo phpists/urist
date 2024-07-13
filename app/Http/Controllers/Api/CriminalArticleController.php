@@ -34,6 +34,20 @@ class CriminalArticleController extends Controller
         return CriminalArticleResource::collection($articles);
     }
 
+    public function search(Request $request)
+    {
+        $q = $request->query('q');
+        $items = [];
+
+        if ($q)
+            $items = CriminalArticle::select(['id', 'article_category_id', 'name', 'type', 'date'])
+                ->where('name', 'LIKE', "%{$q}%")
+                ->limit(50)
+                ->get();
+
+        return \Response::json(['data' => $items]);
+    }
+
     public function show(CriminalArticle $criminalArticle)
     {
         can_user(PermissionEnum::LEGAL_BASE->value);

@@ -36,6 +36,7 @@ Route::group(['middleware' => 'jwt'], function () {
 
     /** Articles */
     Route::get('criminal-articles/categories/{type?}', [\App\Http\Controllers\Api\CriminalArticleController::class, 'categories']);
+    Route::get('criminal-articles/search', [\App\Http\Controllers\Api\CriminalArticleController::class, 'search']);
     Route::get('criminal-articles/{type?}', [\App\Http\Controllers\Api\CriminalArticleController::class, 'index']);
     Route::get('criminal-article/{criminalArticle}', [\App\Http\Controllers\Api\CriminalArticleController::class, 'show']);
     Route::get('criminal-article/{article}/export-doc', [\App\Http\Controllers\Api\CriminalArticleController::class, 'exportDoc']);

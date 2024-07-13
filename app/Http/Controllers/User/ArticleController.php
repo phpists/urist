@@ -142,6 +142,7 @@ class ArticleController extends Controller
 
         if ($search)
             $items = CriminalArticle::where('name', 'LIKE', "%{$search}%")
+                ->limit(50)
                 ->get();
 
         return view('user.articles.__search-items', [
