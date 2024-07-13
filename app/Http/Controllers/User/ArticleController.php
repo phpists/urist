@@ -141,7 +141,9 @@ class ArticleController extends Controller
         $items = [];
 
         if ($search)
-            $items = CriminalArticle::where('name', 'LIKE', "%{$search}%")
+            $items = CriminalArticle::select(['id', 'article_category_id', 'name', 'type', 'date'])
+                ->where('name', 'like', "%{$search}%")
+                ->orderBy('date', 'DESC')
                 ->limit(50)
                 ->get();
 

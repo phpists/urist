@@ -41,7 +41,8 @@ class CriminalArticleController extends Controller
 
         if ($q)
             $items = CriminalArticle::select(['id', 'article_category_id', 'name', 'type', 'date'])
-                ->where('name', 'LIKE', "%{$q}%")
+                ->where('name', 'like', "%{$q}%")
+                ->orderBy('date', 'DESC')
                 ->limit(50)
                 ->get();
 
