@@ -22,7 +22,7 @@ class FileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'folder_id' => ['nullable', 'exists:folders,id'],
+            'folder_id' => ['nullable'],
             'name' => ['required', 'string', 'max:255'],
             'pp' => ['required', 'string'],
             'statya_kk' => ['required', 'string'],

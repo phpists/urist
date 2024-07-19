@@ -22,7 +22,7 @@ class FileStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'criminal_article_id' => ['required', 'exists:criminal_articles,id'],
+            'criminal_article_id' => ['required'],
             'folder_id' => ['nullable', 'exists:folders,id'],
             'name' => ['nullable', 'string', 'max:255']
         ];

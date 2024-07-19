@@ -12,6 +12,7 @@ use App\Models\CriminalArticle;
 use App\Models\Favourite;
 use App\Models\File;
 use App\Models\Folder;
+use App\Services\ExportDocument;
 use App\Services\FileService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -170,29 +171,10 @@ class FileController extends Controller
         ]);
     }
 
-    public function exportDoc(Request $request, CriminalArticle $article)
+    public function exportDoc(Request $request, File $file)
     {
         can_user(PermissionEnum::EXPORT_PAGE->value);
-
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
-        $phpWord->addTitleStyle(1, 'Heading1', ['alignment' => 'center']);
-
-        $pp = $phpWord->addSection();
-        $pp->addTitle('ПП');
-        \PhpOffice\PhpWord\Shared\Html::addHtml($pp, $article->pp, false, false);
-
-        $statya_kk = $phpWord->addSection();
-        $statya_kk->addTitle('Судове рішення');
-        \PhpOffice\PhpWord\Shared\Html::addHtml($statya_kk, $article->statya_kk, false, false);
-
-        $objectWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord);
-        $objectWriter->save('php://output');
-
-        \Response::download('php://output', $article->getExportableFileName(), [
-            'Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-        ]);
-
-        exit(200);
+        ExportDocument::download($file);
     }
 
     public function newFile(NewRequest $request)

@@ -1,4 +1,5 @@
 const CKEditorDocumentConfig = {
+    versionCheck: false,
     language: 'uk',
     // Define the toolbar: https://ckeditor.com/docs/ckeditor4/latest/features/toolbar.html
     // The full preset from CDN which we used as a base provides more features than we need.

@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Favourite;
 use App\Models\File;
 use App\Models\Folder;
+use App\Services\ExportDocument;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use PhpOffice\PhpWord\TemplateProcessor;
@@ -101,48 +102,7 @@ class FileController extends Controller
     public function exportDoc(Request $request, File $file)
     {
         can_user(PermissionEnum::EXPORT_PAGE->value);
-
-        $templateProcessor = new TemplateProcessor(resource_path('data/template.docx'));
-
-        $ppTable = new Table();
-        $ppTable->addRow();
-        $cell = $ppTable->addCell();
-        \PhpOffice\PhpWord\Shared\Html::addHtml($cell, '<h1>ПП</h1>');
-        \PhpOffice\PhpWord\Shared\Html::addHtml($cell, $file->pp);
-        $templateProcessor->setComplexBlock('pp', $ppTable);
-        $statyaKkTable = new Table();
-        $statyaKkTable->addRow();
-        $cell = $statyaKkTable->addCell();
-        \PhpOffice\PhpWord\Shared\Html::addHtml($cell, '<h1>Судове рішення</h1>');
-        \PhpOffice\PhpWord\Shared\Html::addHtml($cell, $file->statya_kk);
-        $templateProcessor->setComplexBlock('statya_kk', $statyaKkTable);
-
-
-        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-        header("Content-Disposition: attachment;Filename={$file->getExportableFileName()}");
-        $templateProcessor->saveAs('php://output');
-
-
-
-
-
-//        $phpWord = new \PhpOffice\PhpWord\PhpWord();
-//        $phpWord->addTitleStyle(1, 'Heading1', ['alignment' => 'center']);
-//
-//        $pp = $phpWord->addSection();
-//        $pp->addTitle('ПП');
-//        \PhpOffice\PhpWord\Shared\Html::addHtml($pp, $file->pp, false, false);
-//
-//        $statya_kk = $phpWord->addSection();
-//        $statya_kk->addTitle('Судове рішення');
-//        \PhpOffice\PhpWord\Shared\Html::addHtml($statya_kk, $file->statya_kk, false, false);
-//
-//        $objectWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord);
-//        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-//        header("Content-Disposition: attachment;Filename={$file->getExportableFileName()}");
-//        $objectWriter->save('php://output');
-
-        exit(418);
+        ExportDocument::download($file);
     }
 
 }
