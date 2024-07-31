@@ -24,8 +24,8 @@ class FileUpdateRequest extends FormRequest
         return [
             'folder_id' => ['nullable'],
             'name' => ['required', 'string', 'max:255'],
-            'pp' => ['required', 'string'],
-            'statya_kk' => ['required', 'string'],
+            'pp' => ['nullable', 'string'],
+            'statya_kk' => ['nullable', 'string'],
         ];
     }
 }
