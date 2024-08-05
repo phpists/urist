@@ -37,17 +37,13 @@ class CriminalArticleController extends Controller
 
     public function search(Request $request)
     {
-        $q = $request->query('q');
-        $items = [];
+        $search = $request->query('q');
+        $query = CriminalArticle::select(['id', 'article_category_id', 'name', 'type', 'date'])
+            ->where('name', 'like', "%{$search}%")
+            ->orderBy('date', 'DESC')
+            ->paginate();
 
-        if ($q)
-            $items = CriminalArticle::select(['id', 'article_category_id', 'name', 'type', 'date'])
-                ->where('name', 'like', "%{$q}%")
-                ->orderBy('date', 'DESC')
-                ->limit(50)
-                ->get();
-
-        return \Response::json(['data' => $items]);
+        return CriminalArticleResource::collection($query);
     }
 
     public function show(CriminalArticle $criminalArticle)
