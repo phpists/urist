@@ -30,7 +30,15 @@ class LoginController extends Controller
      */
     function index(): Application|Factory|View|\Illuminate\Foundation\Application
     {
-        return view('auth.login');
+        $showLoginButtons = true;
+        $userAgent = request()->header('user_agent');
+
+        if (Str::contains($userAgent, 'Mobile')) {
+            if (!Str::contains($userAgent, 'Safari/') || !Str::contains($userAgent, 'Chrome/'))
+                $showLoginButtons = false;
+        }
+
+        return view('auth.login', compact('showLoginButtons'));
     }
 
     /**
