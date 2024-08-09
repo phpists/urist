@@ -35,7 +35,8 @@ class User extends Authenticatable implements JWTSubject
         'phone_verified_at',
         'password',
         'google_id',
-        'apple_id'
+        'apple_id',
+        'current_api_token',
     ];
 
     /**
@@ -47,7 +48,7 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'remember_token',
     ];
-    
+
     protected $with = [
         'activeSubscription'
     ];

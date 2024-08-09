@@ -38,6 +38,8 @@ class LoginController extends BaseController
             ], 202);
         }
 
+        $user->updateQuietly(['current_api_token' => $token]);
+
         return $this->respondWithToken($token);
     }
 
@@ -87,7 +89,10 @@ class LoginController extends BaseController
     {
         $existing_user = User::where('email', $user->email)->first();
         if($existing_user){
-            return $this->respondWithToken(\Auth::guard('api')->login($existing_user));
+            $token = \Auth::guard('api')->login($existing_user);
+            $existing_user->updateQuietly(['current_api_token' => $token]);
+
+            return $this->respondWithToken($token);
         } else {
             $column = $provider . '_id';
 
@@ -101,7 +106,10 @@ class LoginController extends BaseController
 
             event(new Registered($new_user));
 
-            return $this->respondWithToken(\Auth::guard('api')->login($new_user));
+            $token = \Auth::guard('api')->login($new_user);
+            $new_user->updateQuietly(['current_api_token' => $token]);
+
+            return $this->respondWithToken($token);
         }
     }
 

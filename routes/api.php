@@ -30,7 +30,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::put('reset-password', [\App\Http\Controllers\Api\Auth\ResetPasswordController::class, 'update']);
 });
 
-Route::group(['middleware' => 'jwt'], function () {
+Route::group(['middleware' => ['jwt', 'api-single-login']], function () {
     Route::get('me', [\App\Http\Controllers\Api\User\ProfileController::class, 'index']);
     Route::put('me', [\App\Http\Controllers\Api\User\ProfileController::class, 'update']);
 
@@ -73,6 +73,9 @@ Route::group(['middleware' => 'jwt'], function () {
 
 });
 
+
+// Check Token Validity
+Route::get('auth/check-token-validity', \App\Http\Controllers\Api\Auth\ValidateTokenController::class);
 
 // LiqPay
 Route::post('liqpay/callback', [\App\Http\Controllers\Api\LiqPayController::class, 'callback'])

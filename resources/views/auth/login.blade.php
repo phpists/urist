@@ -36,7 +36,7 @@
                             <div class="form__info">Вхід у вбудованому браузері неможливий</div>
                         </div>
                         <div class="form__group">
-                            <div class="form__info">Будь ласка, відкрийте цей сайт у звичайному браузері, як-от Chrome або Safari</div>
+                            <div class="form__info">Будь ласка, відкрийте цей сайт у звичайному браузері, як-от Google Chrome, Apple Safari, Mozilla Firefox або Opera</div>
                         </div>
                         Скопіюйте та вставте це посилання: <a href="{{ route('login') }}" target="_blank">{{ route('login') }}</a>
                     @endif
