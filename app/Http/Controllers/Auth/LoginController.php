@@ -33,10 +33,8 @@ class LoginController extends Controller
         $showLoginButtons = true;
         $userAgent = request()->header('user_agent');
 
-        if (Str::contains($userAgent, 'Mobile')) {
-            if (!Str::contains($userAgent, 'Safari/') || !Str::contains($userAgent, 'Chrome/'))
-                $showLoginButtons = false;
-        }
+        if (Str::contains($userAgent, ['WebView', 'FBAN', 'FBAV', 'Messenger', 'Instagram', 'Snapchat', 'Twitter']))
+            $showLoginButtons = false;
 
         return view('auth.login', compact('showLoginButtons'));
     }
