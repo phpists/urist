@@ -37,6 +37,7 @@
                         <li class="actions__item">
                             <button class="button button--outline actions__button modal-self-completing" type="button"
                                     aria-label="Add to bookmarks" data-tooltip="В закладки" data-modal="modal-bookmark"
+                                    data-modal-once="modal-tip-8"
                                     data-json='@json(['criminal_article_id' => $article->id])'>
                                 <svg class="button__icon" width="19" height="24">
                                     <use xlink:href="{{ asset('assets/img/user/sprite.svg#bookmark') }}"></use>
@@ -48,7 +49,7 @@
                     @if(can_user(\App\Enums\PermissionEnum::CREATE_OWN_PAGES->value))
                         <li class="actions__item">
                             <button class="button button--outline actions__button modal-self-completing" type="button"
-                                    aria-label="Add page" data-tooltip="Робота з файлом"
+                                    aria-label="Add page" data-tooltip="Робота з файлом" data-modal-once="modal-tip-9"
                                     data-json='@json(['criminal_article_id' => $article->id, 'name' => htmlspecialchars($article->name)])'
                                     data-modal="modal-file">
                                 <svg class="button__icon" width="22" height="24">
@@ -60,7 +61,7 @@
                     @if(can_user(\App\Enums\PermissionEnum::COPY_PAGE->value))
                         <li class="actions__item">
                             <button class="button button--outline actions__button" type="button" aria-label="Copy"
-                                    data-tooltip="Копіювати"
+                                    data-tooltip="Копіювати" data-modal-once="modal-tip-10"
                                     onclick="copyText('{{ route('user.articles.show', $article) }}')">
                                 <svg class="button__icon" width="22" height="22">
                                     <use xlink:href="{{ asset('assets/img/user/sprite.svg#copy') }}"></use>
@@ -72,7 +73,7 @@
                         <li class="actions__item">
                             <a href="{{ route('user.articles.export-doc', $article) }}"
                                class="button button--outline actions__button" type="button" aria-label="Word"
-                               data-tooltip="Word">
+                               data-tooltip="Word" data-modal-once="modal-tip-11">
                                 <svg class="button__icon" width="18" height="21">
                                     <use xlink:href="{{ asset('assets/img/user/sprite.svg#download') }}"></use>
                                 </svg>

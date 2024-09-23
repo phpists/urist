@@ -34,7 +34,7 @@
             </div>
             <form class="search filter__search" id="filter-search-form" autocomplete="off" novalidate="novalidate">
                 <div class="search__group">
-                    <input class="input search__input" id="inputFilterSearch" type="text" name="inputFilterSearch" placeholder="Пошук по категоріях" autocomplete="off" required="required">
+                    <input class="input search__input" id="inputFilterSearch" type="text" name="inputFilterSearch" placeholder="Пошук по категоріях" autocomplete="off" required="required" data-modal-once="modal-tip-6">
                     <button type="button" class="search__button">
                         <svg class="search__icon" width="21" height="21">
                             <use xlink:href="{{ asset('img/sprite.svg#search') }}"></use>
@@ -52,7 +52,7 @@
             </form>
         </div>
         <div class="filter__bottom">
-            <button id="clearFilterButton" class="button button--outline filter__button" type="button" data-url="{{ route('user.articles.index', $filterService->getType()) }}">Скинути</button>
+            <button id="clearFilterButton" class="button button--outline filter__button" type="button" data-url="{{ route('user.articles.index', $filterService->getType()) }}" data-modal-once="modal-tip-13">Скинути</button>
             <button class="button filter__button" type="submit" form="filterForm" @if(!str_contains(route('user.articles.index', $filterService->getType()), url()->current())) data-redirect="true" @endif disabled>Показати</button>
         </div>
     </div>

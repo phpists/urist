@@ -5,7 +5,7 @@
          style="padding-left: {{ $padding + 10 }}px">
         <div class="checkbox accordion__checkbox">
             <input class="checkbox__input" id="accordion-checkbox-{{ $category->id }}" type="checkbox"
-                   name="categories[]"
+                   name="categories[]" data-modal-once="modal-tip-5"
                    value="{{ $category->id }}" @checked($filterService->isCategoryActive($category->id))>
             <label class="checkbox__label" for="accordion-checkbox-{{ $category->id }}">
                 @if($category->sub_title)
@@ -19,7 +19,7 @@
             </label>
         </div>
         @if($category->children->isNotEmpty())
-            <button type="button" class="accordion__trigger" aria-expanded="false"
+            <button type="button" class="accordion__trigger" aria-expanded="false" data-modal-once="modal-tip-4"
                     aria-controls="accordion-content-{{ $category->id }}">
                 <svg class="accordion__icon" width="15" height="8">
                     <use xlink:href="{{ asset('img/sprite.svg#dropdown-arrow') }}"></use>

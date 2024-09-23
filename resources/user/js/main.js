@@ -17,6 +17,7 @@ import modalSearchFormValidation from './includes/modalSearchFormValidation.js';
 import filter from './includes/filter.js';
 import initTabs from './includes/initTabs.js';
 import tariffsSlider from './includes/tariffsSlider.js';
+import tips from "./includes/tips.js";
 import '../sass/main.sass';
 
 
@@ -39,3 +40,4 @@ modalSearchFormValidation();
 filter();
 initTabs();
 tariffsSlider();
+tips();

@@ -44,7 +44,7 @@
             <div class="filter-toggle">
                 <h3 class="filter-toggle__title">Фільтр</h3>
                 <button class="button button--outline filter-toggle__button" type="button" aria-label="Hide Filter" data-filter-toggle="data-filter-toggle">
-                    <svg class="button__icon" width="20" height="20p">
+                    <svg class="button__icon" width="20" height="20">
                         <use xlink:href="img/sprite.svg#filter"></use>
                     </svg>
                 </button>

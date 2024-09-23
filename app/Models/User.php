@@ -188,4 +188,14 @@ class User extends Authenticatable implements JWTSubject
         return $this->first_name . ($this->last_name ? ' ' . $this->last_name : '');
     }
 
+    public function welcomeHints()
+    {
+        return $this->belongsToMany(WelcomeHint::class)
+            ->withTimestamps();
+    }
+
+    public function getPendingWelcomeHints()
+    {
+        return WelcomeHint::whereNotIn('id', $this->welcomeHints()->pluck('welcome_hints.id')->toArray())->get();
+    }
 }

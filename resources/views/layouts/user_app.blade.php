@@ -42,6 +42,7 @@
 
 <div class="modal-wrap">
     @stack('modals')
+    @include('layouts.user_partials.welcome-hints')
 </div>
 
 <div id="alertsContainer">

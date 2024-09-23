@@ -196,6 +196,8 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
     Route::post('notifications/bulk-mark-as-read', [\App\Http\Controllers\User\NotificationController::class, 'bulkMarkAsRead'])
         ->name('notifications.bulk-mark-as-read');
 
+    Route::post('welcome-hints/{welcomeHint}', [\App\Http\Controllers\User\WelcomeHintController::class, 'store'])
+        ->name('welcome-hints.store');
 });
 
 Route::post('subscription', [\App\Http\Controllers\User\SubscriptionController::class, 'checkout'])
