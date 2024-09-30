@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Events\UserRegisteredEvent;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Auth\LoginRequest;
 use App\Models\User;
 use App\Services\UserAuthService;
 use Google_Client;
-use Illuminate\Auth\Events\Registered;
+use App\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -104,7 +102,7 @@ class LoginController extends BaseController
             $new_user->password = Hash::make(Str::random(8));
             $new_user->save();
 
-            event(new Registered($new_user));
+            event(new Registered($new_user, false));
 
             $token = \Auth::guard('api')->login($new_user);
             $new_user->updateQuietly(['current_api_token' => $token]);

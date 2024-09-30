@@ -4,6 +4,7 @@ namespace App\Providers;
 
 
 use App\Events\ArticleCategoryDeleted;
+use App\Events\Registered;
 use App\Events\UserSubscriptionExpired;
 use App\Listeners\ProcessPostCategoryDelete;
 use App\Events\UserRegisteredEvent;
@@ -15,9 +16,7 @@ use App\Listeners\User\SendSubscriptionExpirationNotification;
 use App\Listeners\UserSendVerifyCodeListener;
 use App\Listeners\UserSendVerifyCodeResetPasswordListener;
 use App\Models\ArticleCategory;
-use App\Models\User;
 use App\Observers\ArticleCategoryObserver;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 

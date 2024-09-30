@@ -6,7 +6,7 @@ use App\Enums\FolderType;
 use App\Enums\SettingEnum;
 use App\Models\User;
 use App\Services\SettingService;
-use Illuminate\Auth\Events\Registered;
+use App\Events\Registered;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;

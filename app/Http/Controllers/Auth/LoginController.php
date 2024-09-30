@@ -10,7 +10,7 @@ use App\Services\Apple\AppleToken;
 use App\Services\UserAuthService;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Auth\Events\Registered;
+use App\Events\Registered;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;

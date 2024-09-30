@@ -6,7 +6,6 @@ use App\Enums\FolderType;
 use App\Models\ArticleCategory;
 use App\Models\Favourite;
 use App\Models\Folder;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
