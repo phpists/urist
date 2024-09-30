@@ -107,7 +107,9 @@ class LiqPayService
                 $subscriptionSession,
                 (array) current((array)$this->payment),
                 $this->payment->get('end_date'),
-                $this->payment->get('amount')
+                $this->payment->get('amount'),
+                Subscription::SOURCE_WEB,
+                Subscription::PROVIDER_LIQPAY,
             );
 
         return 'Підписка успішно створена';

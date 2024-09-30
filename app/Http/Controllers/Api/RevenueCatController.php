@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Plan\Plan;
+use App\Models\Subscription;
 use App\Models\SubscriptionSession;
 use App\Models\User;
 use App\Services\SubscriptionService;
@@ -67,7 +68,9 @@ class RevenueCatController extends Controller
                     $subscriptionSession,
                     $this->payload,
                     $data['purchased_at_ms'],
-                    $data['price_in_purchased_currency']
+                    $data['price_in_purchased_currency'],
+                    Subscription::SOURCE_MOBILE,
+                    Subscription::PROVIDER_REVENUECAT,
                 );
 
             return Response::HTTP_OK;

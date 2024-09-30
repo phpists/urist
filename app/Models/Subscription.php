@@ -12,6 +12,13 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Subscription extends Model
 {
 
+    const SOURCE_WEB = 'web';
+    const SOURCE_MOBILE = 'mobile';
+
+    const PROVIDER_LIQPAY = 'liqpay';
+    const PROVIDER_REVENUECAT = 'revenuecat';
+
+
     protected $fillable = [
         'user_id',
         'subscription_session_id',
@@ -19,7 +26,9 @@ class Subscription extends Model
         'period',
         'price',
         'expires_at',
-        'cancelled_at'
+        'cancelled_at',
+        'provider',
+        'source',
     ];
 
     protected $casts = [
