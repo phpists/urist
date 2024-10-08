@@ -12,15 +12,15 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         $userArr = parent::toArray($request);
-        $userArr['is_premium'] = (bool) $request->activeSubscription;
+        $userArr['is_premium'] = $this->activeSubscription()->exists();
 
         if ($userArr['is_premium']) {
-            $userArr['premium_type'] = match ($request->activeSubscription->period) {
+            $userArr['premium_type'] = match ($this->activeSubscription->period) {
                 'year' => 'base_annual',
                 'month' => 'base_monthly',
             };
-            $userArr['premium_source'] = $request->activeSubscription->source;
-            $userArr['premium_expiration'] = $request->activeSubscription->expires_at;
+            $userArr['premium_source'] = $this->activeSubscription->source;
+            $userArr['premium_expiration'] = $this->activeSubscription->expires_at;
         }
 
         return $userArr;

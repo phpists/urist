@@ -29,7 +29,8 @@ class SubscriptionService
                 'user_id' => $subscriptionSession->user_id,
                 'period' => $subscriptionSession->period,
                 'price' => $amount,
-                'expires_at' => $endAt
+                'expires_at' => $endAt,
+                'source' => $source,
             ]);
 
             $subscriptionPayment = $subscription->payments()->create([

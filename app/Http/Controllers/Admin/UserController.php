@@ -67,7 +67,8 @@ class UserController extends Controller
             'user_id' => $user->id,
             'plan_id' => Plan::find(1)->id,
             'period' => $period,
-            'expires_at' => $expiresAt
+            'expires_at' => $expiresAt,
+            'source' => 'web',
         ]);
 
         return to_route('admin.users.index')
