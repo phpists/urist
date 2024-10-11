@@ -21,7 +21,7 @@
             </div>
             <div class="page-section__buttons">
                 <button class="button page-section__button" type="button">Зберегти</button>
-                <button class="button button--outline page-section__button" type="button">Экспорт у Word
+                <button class="button button--outline page-section__button" type="button">Експорт файлу
                     <svg class="button__icon" width="28" height="28">
                         <use xlink:href="{{asset('assets/img/user/sprite.svg#word')}}"></use>
                     </svg>

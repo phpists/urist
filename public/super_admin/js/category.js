@@ -5,14 +5,14 @@ $('.dd-item').each(function (idx, el) {
     let cookie_name = cookieNameGenerator(el);
     let val = getFromLocalStorage(cookie_name);
     if(val === null) {
-        writeToLocalStorage(cookie_name, '1')
-        val = '1';
+        writeToLocalStorage(cookie_name, '0')
+        val = '0';
     }
-    if (val === '0') {
-        el.classList.add('dd-collapsed')
-    }
-    else {
+    if (val == '1') {
         el.classList.remove('dd-collapsed')
+        setTimeout(() => loadChilds($(el)), 500)
+    } else {
+        el.classList.add('dd-collapsed')
     }
 })
 $(document).on('click', '.dd-item button', function(ev) {
@@ -163,6 +163,11 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         });
 
+    $(document).on('click', 'li.dd-item .dd-expand', function (e) {
+        const $item = $(this).parents('li.dd-item:first');
+        loadChilds($item)
+    })
+
 
     function request(formId, url) {
         formId = '#' + formId;
@@ -190,3 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
         request('filterDataForm')
     })
 })
+
+function loadChilds($item) {
+    $item.find('ol.dd-list').load($item.data('show-more-url'));
+}

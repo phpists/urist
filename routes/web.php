@@ -207,7 +207,9 @@ Route::post('subscription', [\App\Http\Controllers\User\SubscriptionController::
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin'], 'as' => 'admin.'], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('article_categories_all/{tab?}/{category?}', [ArticleCategoryController::class, 'index'])
+    Route::get('article_categories_all/{category}/show-childs', [ArticleCategoryController::class, 'showCategoryChilds'])
+        ->name('article_categories.show_childs');
+    Route::get('article_categories_all/{tab?}/{category?}/{childCategory?}', [ArticleCategoryController::class, 'index'])
         ->name('article_categories');
     Route::get('article_category', [ArticleCategoryController::class, 'view'])
         ->name('article_categories.view');

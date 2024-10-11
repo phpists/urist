@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Log;
 
 class ArticleCategoryController extends Controller
 {
-    public function index(Request $request, string $tab = null, ArticleCategory $category = null) {
+    public function index(Request $request, string $tab = null, ArticleCategory $category = null, ArticleCategory $childCategory = null)
+    {
         $article_categories = ArticleCategory::query()
             ->orderBy('position')
             ->when($search = $request->get('search'), function ($query) use ($search) {
@@ -47,8 +48,13 @@ class ArticleCategoryController extends Controller
 
         return view(
             'admin.article_categories.index',
-            compact('article_categories', 'tree_categories', 'tab', 'category')
+            compact('article_categories', 'tree_categories', 'tab', 'category', 'childCategory')
         );
+    }
+
+    public function showCategoryChilds(Request $request, ArticleCategory $category)
+    {
+        return view('admin.article_categories.parts.table', ['categories' => $category->children->sortBy('position')]);
     }
 
     public function search(Request $request) {

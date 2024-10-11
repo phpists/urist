@@ -1,5 +1,6 @@
 @foreach($categories->sortBy('position') as $category)
-    <li class="dd-item dd3-item" data-id="{{$category->id}}">
+    @php($hasChilds = sizeof($category->subcategories) > 0)
+    <li class="dd-item dd3-item" data-id="{{$category->id}}" data-show-more-url="{{ route('admin.article_categories.show_childs', $category) }}">
         <div class="dd-handle dd3-handle">Drag</div>
         <div class="dd3-content accordion accordion-toggle-arrow" id="accordion_{{ $category->id }}">
 
@@ -38,9 +39,8 @@
                 </div>
             </div>
         </div>
-        @if(sizeof($category->subcategories) > 0)
+        @if($hasChilds)
             <ol class="dd-list">
-                @include('admin.article_categories.parts.table', ['categories' => $category->children->sortBy('position')])
             </ol>
         @endif
     </li>

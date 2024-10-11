@@ -23,7 +23,7 @@
                         </button>
                     </li>
                     <li class="actions__item">
-                        <button class="button button--outline actions__button" type="button" aria-label="Add page" data-tooltip="Робота з файлом" data-modal="modal-file">
+                        <button class="button button--outline actions__button" type="button" aria-label="Add page" data-tooltip="Редагування файлу" data-modal="modal-file">
                             <svg class="button__icon" width="22" height="24">
                                 <use xlink:href="{{asset('assets/img/user/sprite.svg#create')}}"></use>
                             </svg>

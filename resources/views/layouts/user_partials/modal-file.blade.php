@@ -6,7 +6,7 @@
                     <use xlink:href="{{asset('assets/img/user/sprite.svg#close-modal')}}"></use>
                 </svg>
             </button>
-            <h3 class="modal__title">Робота з файлом</h3>
+            <h3 class="modal__title">Редагування файлу</h3>
             <form action="{{ route('files.store') }}" method="POST" class="form modal__form" id="file-form" autocomplete="off" novalidate="novalidate">
                 @csrf
                 <input type="hidden" name="criminal_article_id">

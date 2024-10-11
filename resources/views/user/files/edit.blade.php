@@ -57,7 +57,7 @@
                     <button class="button page-section__button" type="submit">Зберегти</button>
 
                     @if(can_user(\App\Enums\PermissionEnum::EXPORT_PAGE->value))
-                    <button data-url="{{ route('user.files.export-doc', $file) }}" class="button button--outline page-section__button" type="button" id="exportDocBtn">Экспорт у Word
+                    <button data-url="{{ route('user.files.export-doc', $file) }}" class="button button--outline page-section__button" type="button" id="exportDocBtn">Експорт файлу
                         <svg class="button__icon" width="28" height="28">
                             <use xlink:href="{{asset('assets/img/user/sprite.svg#word')}}"></use>
                         </svg>

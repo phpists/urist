@@ -49,7 +49,7 @@
                     @if(can_user(\App\Enums\PermissionEnum::CREATE_OWN_PAGES->value))
                         <li class="actions__item">
                             <button class="button button--outline actions__button modal-self-completing" type="button"
-                                    aria-label="Add page" data-tooltip="Робота з файлом" data-modal-once="modal-tip-9"
+                                    aria-label="Add page" data-tooltip="Редагування файлу" data-modal-once="modal-tip-9"
                                     data-json='@json(['criminal_article_id' => $article->id, 'name' => htmlspecialchars($article->name)])'
                                     data-modal="modal-file">
                                 <svg class="button__icon" width="22" height="24">
@@ -72,8 +72,8 @@
                     @if(can_user(\App\Enums\PermissionEnum::EXPORT_PAGE->value))
                         <li class="actions__item">
                             <a href="{{ route('user.articles.export-doc', $article) }}"
-                               class="button button--outline actions__button" type="button" aria-label="Word"
-                               data-tooltip="Word" data-modal-once="modal-tip-11">
+                               class="button button--outline actions__button" type="button" aria-label="Експорт файлу"
+                               data-tooltip="Експорт файлу" data-modal-once="modal-tip-11">
                                 <svg class="button__icon" width="18" height="21">
                                     <use xlink:href="{{ asset('assets/img/user/sprite.svg#download') }}"></use>
                                 </svg>

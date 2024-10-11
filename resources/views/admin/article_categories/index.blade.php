@@ -102,16 +102,24 @@
                                                     <a class="btn @if($category?->type == $case->value) btn-primary @else btn-outline-primary @endif" href="{{ route('admin.article_categories', ['tab' => 'tree_nested_tab', 'category' => $caseCategory = $case->getCategory()]) }}">{{ $caseCategory->name }}</a>
                                                 @endforeach
                                             </div>
+                                            @isset($category)
+                                                <div class="col-12">
+                                                    <hr class="my-2">
+                                                    @foreach($category->children as $categoryChildCategory)
+                                                        <a class="btn mb-1 @if($childCategory?->id == $categoryChildCategory->id) btn-primary @else btn-outline-primary @endif" href="{{ route('admin.article_categories', ['tab' => 'tree_nested_tab', 'category' => \App\Enums\CriminalArticleTypeEnum::tryFrom($categoryChildCategory->type)->getCategory(), 'childCategory' => $categoryChildCategory]) }}">{{ $categoryChildCategory->name }}</a>
+                                                    @endforeach
+                                                </div>
+                                            @endisset
                                         </div>
 
                                         <hr class="my-3">
 
                                         <div class="row">
                                             <div class="col-12">
-                                                @if($category)
-                                                <div class="dd w-100" id="nestable3" data-update-url="{{ route('admin.article_category.update_position', $category) }}">
-                                                    <ol class="dd-list" data-id="{{ $category->id }}">
-                                                        @include('admin.article_categories.parts.table', ['categories' => $category->children])
+                                                @if($childCategory)
+                                                <div class="dd w-100" id="nestable3" data-update-url="{{ route('admin.article_category.update_position', $childCategory) }}">
+                                                    <ol class="dd-list" data-id="{{ $childCategory->id }}">
+                                                        @include('admin.article_categories.parts.table', ['categories' => $childCategory->children])
                                                     </ol>
                                                 </div>
                                                 @endif
