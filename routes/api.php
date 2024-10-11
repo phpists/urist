@@ -28,6 +28,9 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('reset-password/request', [\App\Http\Controllers\Api\Auth\ResetPasswordController::class, 'request']);
     Route::post('reset-password/verify', [\App\Http\Controllers\Api\Auth\ResetPasswordController::class, 'verify']);
     Route::put('reset-password', [\App\Http\Controllers\Api\Auth\ResetPasswordController::class, 'update']);
+
+    // guest login
+    Route::post('login-guest', [\App\Http\Controllers\Api\Auth\LoginController::class, 'guest']);
 });
 
 Route::group(['middleware' => ['jwt', 'api-single-login']], function () {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Requests\Api\Auth\LoginRequest;
+use App\Http\Requests\Api\GuestLoginRequest;
 use App\Models\User;
 use App\Services\UserAuthService;
 use Google_Client;
@@ -37,6 +38,34 @@ class LoginController extends BaseController
         }
 
         $user->updateQuietly(['current_api_token' => $token]);
+
+        return $this->respondWithToken($token);
+    }
+
+    public function guest(GuestLoginRequest $request)
+    {
+        $credentials = $request->validated();
+        if (!Str::contains($credentials['username'], '@'))
+            $credentials['username'] = $credentials['username'] . '@test.lexgo.com.ua';
+
+        $user = User::firstWhere('email', $credentials['username']);
+        if (!$user) {
+            $user = User::create([
+                'first_name' => $credentials['username'],
+                'last_name' => $credentials['username'],
+                'email' => $credentials['username'],
+                'password' => Hash::make($credentials['password']),
+                'email_verified_at' => now(),
+                'phone_verified_at' => now(),
+            ]);
+
+            $token = \Auth::guard('api')->login($user);
+        } else {
+            $token = \Auth::guard('api')->attempt([
+                'email' => $credentials['username'],
+                'password' => $credentials['password'],
+            ]);
+        }
 
         return $this->respondWithToken($token);
     }
