@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Requests\Api\Auth\LoginRequest;
 use App\Http\Requests\Api\GuestLoginRequest;
+use App\Models\Plan\Plan;
+use App\Models\Subscription;
 use App\Models\User;
 use App\Services\UserAuthService;
 use Google_Client;
@@ -66,6 +68,18 @@ class LoginController extends BaseController
                 'password' => $credentials['password'],
             ]);
         }
+
+        if (!$user->activeSubscription()->exists()) {
+            Subscription::create([
+                'user_id' => $user->id,
+                'plan_id' => Plan::find(1)->id,
+                'period' => 'year',
+                'expires_at' => now()->addYear(),
+                'source' => 'app',
+            ]);
+        }
+
+        $user->updateQuietly(['current_api_token' => $token]);
 
         return $this->respondWithToken($token);
     }
