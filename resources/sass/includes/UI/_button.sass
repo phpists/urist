@@ -42,7 +42,7 @@
 
     &--outline
         background: linear-gradient(90deg, rgba(55, 78, 115, .2) 20%, transparent 100%)
-        background-color: var(--white) 
+        background-color: var(--white)
         border: 1px solid var(--blue)
         color: var(--blue)
 
@@ -51,7 +51,7 @@
         &:focus-visible
             color: var(--white)
             background: linear-gradient(90deg, rgba(55, 78, 115, .2) 20%, transparent 100%)
-            background-color: var(--blue) 
+            background-color: var(--blue)
             border-color: var(--blue)
 
     &--white
@@ -106,3 +106,16 @@
             border-color: var(--blue)
             color: var(--black)
             background: none
+
+    &--square
+        aspect-ratio: 1 / 1
+        padding: 0
+
+    &--facebook
+        background: #0B84EE
+
+        &:hover,
+        &:active,
+        &:focus-visible
+            color: var(--white)
+            background: var(--blue)

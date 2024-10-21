@@ -9,10 +9,12 @@ use App\Http\Requests\BulkDeleteItemsRequest;
 use App\Http\Requests\UpdatePositionRequest;
 use App\Models\ArticleCategory;
 use App\Models\CriminalArticle;
+use Google\Service\Books\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 
 class ArticleCategoryController extends Controller
 {
@@ -54,7 +56,8 @@ class ArticleCategoryController extends Controller
 
     public function showCategoryChilds(Request $request, ArticleCategory $category)
     {
-        return view('admin.article_categories.parts.table', ['categories' => $category->children->sortBy('position')]);
+        $categories = $category->children()->with('children')->get();
+        return view('admin.article_categories.parts.table', ['categories' => $categories]);
     }
 
     public function search(Request $request) {
@@ -230,6 +233,52 @@ class ArticleCategoryController extends Controller
     {
         $articleCategory->full_path = $articleCategory->getFullPath();
         return new JsonResponse($articleCategory);
+    }
+
+    public function moveToAnotherParent(Request $request)
+    {
+        $category = ArticleCategory::find($request->post('category_id'));
+        $category->update([
+            'parent_id' => $request->post('parent_id'),
+            'position' => 0
+        ]);
+    }
+
+    public function getAllForSelect(Request $request)
+    {
+        $request->validate([
+            'search_string' => 'sometimes|string'
+        ]);
+        $search = $request->get('search_string');
+        $categories = ArticleCategory::where('name', 'LIKE', "%{$search}%")->get(['id', 'full_path']);
+
+        return Response::json($categories);
+    }
+
+    public function clone(Request $request, ArticleCategory $category)
+    {
+        $parentCategory = ArticleCategory::findOrFail($request->post('parent_category_id'));
+        $this->recursiveCloneCategory($category, $parentCategory);
+
+        return redirect()->back()->with('success', 'Категорія "'. $category->name .'" успішно склонована');
+    }
+
+    private function recursiveCloneCategory(ArticleCategory $category, ArticleCategory $parentCategory)
+    {
+        $cloneCategory = ArticleCategory::create([
+            'name' => $category->name,
+            'parent_id' => $parentCategory->id,
+            'position' => 0,
+            'is_active' => $category->is_active,
+            'sub_title' => $category->sub_title,
+            'type' => $category->type,
+            'full_path' => $category->full_path,
+        ]);
+        $cloneCategory->articles()->attach($category->articles()->allRelatedIds());
+
+        if ($category->children?->isNotEmpty())
+            foreach ($category->children as $childCategory)
+                $this->recursiveCloneCategory($childCategory, $cloneCategory);
     }
 
 }

@@ -1,6 +1,5 @@
 @foreach($categories->sortBy('position') as $category)
-    @php($hasChilds = sizeof($category->subcategories) > 0)
-    <li class="dd-item dd3-item" data-id="{{$category->id}}" data-show-more-url="{{ route('admin.article_categories.show_childs', $category) }}">
+    <li class="dd-item dd3-item dd-collapsed draggable" data-id="{{$category->id}}" data-show-more-url="{{ route('admin.article_categories.show_childs', $category) }}">
         <div class="dd-handle dd3-handle">Drag</div>
         <div class="dd3-content accordion accordion-toggle-arrow" id="accordion_{{ $category->id }}">
 
@@ -14,6 +13,11 @@
                     @csrf
                     @method('DELETE')
 
+                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon cloneCategoryBtn"
+                       data-toggle="modal" data-target="#cloneCategoryModal" title="Клонувати"
+                       data-id="{{ $category->id }}" data-url="{{ route('admin.article-categories.clone', $category->id) }}">
+                        <i class="las la-copy"></i>
+                    </a>
                     <button type="button" class="btn btn-sm btn-clean btn-icon create_category_inside" data-id="{{ $category->id }}" data-name="{{ $category->name }}" data-toggle="modal" data-target="#createArticleCategoryModal"><i class="las la-plus"></i></button>
                     <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateArticleCategory"
                        data-toggle="modal" data-target="#updateArticleCategoryModal"
@@ -39,7 +43,7 @@
                 </div>
             </div>
         </div>
-        @if($hasChilds)
+        @if($category->children?->isNotEmpty())
             <ol class="dd-list">
             </ol>
         @endif

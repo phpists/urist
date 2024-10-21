@@ -30,8 +30,11 @@ if (!function_exists('truncate_by_words')) {
 }
 
 if (!function_exists('get_setting_value_by_name')) {
-    function get_setting_value_by_name($name): string
+    function get_setting_value_by_name(string|\App\Enums\SettingEnum $name): ?string
     {
+        if ($name instanceof \App\Enums\SettingEnum)
+            $name = $name->value;
+
         return \App\Services\SettingService::getValueByName($name);
     }
 }

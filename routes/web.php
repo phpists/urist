@@ -233,6 +233,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin'], 'as' 
         ->name('article_categories.bulk_delete');
     Route::get('article_categories/{article_category}/show-full-path', [ArticleCategoryController::class, 'showFullPath'])
         ->name('article_categories.show-full-path');
+    Route::post('article_categories/move-to-another-parent', [ArticleCategoryController::class, 'moveToAnotherParent'])
+        ->name('article_categories.move_to_another_parent');
+    Route::get('article-categories/data-for-select', [ArticleCategoryController::class, 'getAllForSelect'])
+        ->name('article-categories.data-for-select');
+    Route::post('article-categories/clone/{category}', [ArticleCategoryController::class, 'clone'])
+        ->name('article-categories.clone');
 
     // Criminal articles
     Route::get('/criminal_articles', [CriminalArticleController::class, 'index'])
@@ -267,6 +273,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin'], 'as' 
         ->name('criminal-article.add-category');
     Route::get('criminal_articles-data-for-select', [CriminalArticleController::class, 'getAllArticlesForSelect'])
         ->name('criminal-articles.data-for-select');
+    Route::post('criminal-article/move-to-another-category', [CriminalArticleController::class, 'moveToAnotherCategory'])
+        ->name('criminal_article.move_to_another_category');
 
     // Favourites
     Route::get('/favourites', [FavoritesController::class, 'index'])

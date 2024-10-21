@@ -351,4 +351,11 @@ class CriminalArticleController extends Controller
         return response()->json(CriminalArticle::where('name', 'LIKE', "%{$search}%")->get(['id', 'name']));
     }
 
+    public function moveToAnotherCategory(Request $request)
+    {
+        $article = CriminalArticle::findOrFail($request->post('article_id'));
+        $article->categories()->detach($request->post('old_category_id'));
+        $article->categories()->attach($request->post('new_category_id'));
+    }
+
 }

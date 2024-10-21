@@ -36,6 +36,7 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['middleware' => ['jwt', 'api-single-login']], function () {
     Route::get('me', [\App\Http\Controllers\Api\User\ProfileController::class, 'index']);
     Route::put('me', [\App\Http\Controllers\Api\User\ProfileController::class, 'update']);
+    Route::delete('me', [\App\Http\Controllers\Api\User\ProfileController::class, 'destroy']);
 
     /** Articles */
     Route::get('criminal-articles/categories/{type?}', [\App\Http\Controllers\Api\CriminalArticleController::class, 'categories']);

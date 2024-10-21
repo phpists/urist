@@ -6,6 +6,10 @@
 
 @php($is_menu_hidden = false)
 
+@push('style')
+    <link rel="stylesheet" href="{{ asset('assets/css/social.css') }}">
+@endpush
+
 @section('page')
     <style>
         .collection-descr__text p {
@@ -55,4 +59,5 @@
 @push('modals')
     @include('layouts.user_partials.modal-bookmark')
     @include('layouts.user_partials.modal-file')
+    @include('layouts.modals.social')
 @endpush

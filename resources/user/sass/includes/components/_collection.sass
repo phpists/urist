@@ -34,15 +34,15 @@
                     &:first-child
                         text-align: center
                         width: 10%
-                    
+
                     &:nth-child(2)
                         width: 20%
-                    
+
                     &:nth-child(3)
                         width: 70%
-        
+
         &__tbody
-            
+
             @media ($max-md)
                 display: block
 
@@ -79,7 +79,7 @@
                             width: 100%
 
                 &:not(:last-child)
-                    
+
                     @media ($max-md)
                         border-bottom: 1px solid #A8B2C2
 
@@ -88,14 +88,14 @@
 
                         @media ($max-md)
                             border: none
-        
+
         &__date
             display: block
             font-size: 16px
 
             @media ($max-md)
                 font-size: 14px
-        
+
         &__info
             display: block
             font-size: 16px
@@ -117,7 +117,7 @@
 
             &:not(:last-child)
                 margin-bottom: 5px
-        
+
         &__link
             font-size: 14px
 
@@ -126,12 +126,16 @@
 
         &__actions
             flex-wrap: wrap
-            gap: 10px
+            gap: 6px
 
-            .actions__button
-                width: 40px
-                height: 40px
-                min-width: 40px
+        &__checkbox
+            display: flex
+            justify-content: center
+            margin-bottom: 6px
+            .checkbox__label
+                padding: 0
+                width: 20px
+                height: 20px
 
         &--auto
 
@@ -144,7 +148,7 @@
 
         @media ($max-md)
             font-size: 12px
-            
+
         &__text
             line-height: 1.25
             color: var(--black)

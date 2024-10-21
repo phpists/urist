@@ -1,7 +1,7 @@
 .actions
     display: flex
     align-items: center
-    gap: 5px
+    gap: 8px
     margin: 0
     padding: 0
     list-style: none
@@ -15,16 +15,27 @@
 
             @media ($max-md)
                 display: none
-        
+
         &--visible-md
             display: none
 
             @media ($max-md)
                 display: block
 
+        &--hidden-lg
+
+            @media ($max-lg)
+                display: none
+
+        &--visible-lg
+            display: none
+
+            @media ($max-lg)
+                display: block
+
     &__button
         height: 40px
-        min-width: 127px
+        //min-width: 127px
 
         @media ($max-lg)
             min-width: 0

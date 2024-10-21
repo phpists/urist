@@ -28,4 +28,16 @@ class ProfileController extends Controller
         ], $result ? 200 : 500);
     }
 
+    public function destroy()
+    {
+        $user = \Auth::user();
+        $result = $user->delete();
+
+        return new JsonResponse([
+            'result' => $result,
+            'message' => $result
+                ? 'Аккаунт успішно видалено'
+                : 'Не вдалось видалити аккаунт'
+        ], $result ? 200 : 500);
+    }
 }

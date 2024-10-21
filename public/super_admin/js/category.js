@@ -1,20 +1,7 @@
 function cookieNameGenerator(el) {
     return 'el_' + el.getAttribute('data-id');
 }
-$('.dd-item').each(function (idx, el) {
-    let cookie_name = cookieNameGenerator(el);
-    let val = getFromLocalStorage(cookie_name);
-    if(val === null) {
-        writeToLocalStorage(cookie_name, '0')
-        val = '0';
-    }
-    if (val == '1') {
-        el.classList.remove('dd-collapsed')
-        setTimeout(() => loadChilds($(el)), 500)
-    } else {
-        el.classList.add('dd-collapsed')
-    }
-})
+// openNestableItems();
 $(document).on('click', '.dd-item button', function(ev) {
     let el = ev.currentTarget.parentNode;
     let cookie_name = cookieNameGenerator(el);
@@ -138,55 +125,18 @@ document.addEventListener('DOMContentLoaded', function () {
         createCategorySelect.append(option).trigger('change');
     })
 
-    $('.updateStatusBtn').each((id, el) => {
-        el.addEventListener('click', () => {
-            updateStatus('/admin/article_category/update_status', el)
-
-        })
+    $(document).on('click', '.updateStatusBtn', () => {
+        updateStatus('/admin/article_category/update_status', el)
     })
-    $('.dd').nestable({
-        maxDepth: 10
-    })
-        .on('change', function (e) {
-            let list = e.length ? e : $(e.target),
-                url = document.getElementById('nestable3').dataset.updateUrl;
 
-            $.ajax({
-                url: url,
-                method: 'put',
-                data: {
-                    positions: list.nestable('serialize')
-                },
-                error: function (resp) {
-                    console.log(resp)
-                }
-            })
-        });
+    initNestable();
+    // openNestableItems()
 
     $(document).on('click', 'li.dd-item .dd-expand', function (e) {
         const $item = $(this).parents('li.dd-item:first');
         loadChilds($item)
     })
 
-
-    function request(formId, url) {
-        formId = '#' + formId;
-        if (typeof url === 'undefined') {
-            url = $(formId).attr('action') + '?' + $(formId).serialize();
-        }
-
-        $.ajax({
-            type: "GET",
-            url: url,
-            dataType: "json",
-            success: function (response) {
-                $('#table_data').html(response.table);
-
-                window.history.pushState(null, null, url);
-            }
-        });
-
-    }
 
     $('#nameSearch').on('input', function () {
         request('filterDataForm')
@@ -196,6 +146,97 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 })
 
+function request(formId, url) {
+    formId = '#' + formId;
+    if (typeof url === 'undefined') {
+        url = $(formId).attr('action') + '?' + $(formId).serialize();
+    }
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: "json",
+        success: function (response) {
+            $('#table_data').html(response.table);
+
+            window.history.pushState(null, null, url);
+        }
+    });
+
+}
+
 function loadChilds($item) {
-    $item.find('ol.dd-list').load($item.data('show-more-url'));
+    $item.find('ol.dd-list').load($item.data('show-more-url'), () => {
+        reinitNestable()
+        openNestableItems($item)
+    });
+}
+
+function initNestable() {
+    const $block = $('.dd');
+
+    $block.nestable({
+        depth: 100,
+        beforeDragStop: function (container, $target, place, event) {
+            if (event.target.classList.contains('parent-category-droppable')) {
+                $.ajax({
+                    async: true,
+                    url: $('#nestable3').data('move-parent-url'),
+                    method: 'post',
+                    data: {
+                        category_id: $target.data('id'),
+                        parent_id: $(event.target).data('id')
+                    },
+                    success: function (response) {
+                        $target.remove()
+                    },
+                    error: function (resp) {
+                        console.log(resp)
+                    }
+                })
+            }
+        },
+        callback: function (l, e) {
+            let url = document.getElementById('nestable3').dataset.updateUrl;
+
+            $.ajax({
+                url: url,
+                method: 'put',
+                data: {
+                    positions: l.nestable('serialize')
+                },
+                error: function (resp) {
+                    console.log(resp)
+                }
+            })
+        }
+    });
+}
+
+function reinitNestable() {
+    const $block = $('.dd');
+    $block.nestable('init');
+}
+
+function openNestableItems(parent = null) {
+    const $parent = parent || $(document);
+
+    $parent.find('.dd-item').each(function (idx, el) {
+        let cookie_name = cookieNameGenerator(el);
+        let val = getFromLocalStorage(cookie_name);
+        if(val === null) {
+            writeToLocalStorage(cookie_name, '0')
+            val = '0';
+        }
+        if (val == '1') {
+            if (el.classList.contains('dd-collapsed')) {
+                el.classList.remove('dd-collapsed')
+                loadChilds($(el))
+            }
+        } else {
+            if (!el.classList.contains('dd-collapsed')) {
+                el.classList.add('dd-collapsed')
+            }
+        }
+    })
 }

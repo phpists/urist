@@ -30,16 +30,52 @@
                         <a class="black-link" href="{{ $url }}">{{ $article->pretty_date }}</a>
                     </time>
                     <span class="collection-table__info">
-                    <a class="black-link" href="{{ $url }}">{{ $article->getTagsString() }}</a>
-                </span>
+                        <a class="black-link" href="{{ $url }}">{{ $article->getTagsString() }}</a>
+                    </span>
+                    <ul class="actions actions--center collection-table__actions">
+                        <li class="actions__item">
+                            <button class="button button--xs button--outline modal-self-completing" type="button"
+                                    aria-label="В закладки" data-tooltip="В закладки" data-modal="modal-bookmark"
+                                    data-json='@json(['criminal_article_id' => $article->id])'>
+                                <svg class="button__icon" width="14" height="14">
+                                    <use xlink:href="{{ asset('assets/img/user/sprite.svg#bookmark') }}"></use>
+                                </svg>
+                            </button>
+                        </li>
+                        <li class="actions__item">
+                            <button class="button button--xs button--outline" type="button" aria-label="Експорт файлу"
+                                    onclick="window.location.href = '{{ route('user.articles.export-doc', $article) }}'"
+                                    data-tooltip="Екпорт файлу">
+                                <svg class="button__icon" width="14" height="14">
+                                    <use xlink:href="{{ asset('assets/img/user/sprite.svg#download') }}"></use>
+                                </svg>
+                            </button>
+                        </li>
+                        <li class="actions__item">
+                            <button class="button button--xs button--outline modal-self-completing" type="button" aria-label="Поділитися" data-modal="modal-social"
+                                    data-tooltip="Поділитися" data-json='@json(['share_url' => $url, 'share_text' => $article->name])'>
+                                <svg class="button__icon" width="14" height="14">
+                                    <use xlink:href="{{ asset('assets/img/user/sprite.svg#share') }}"></use>
+                                </svg>
+                            </button>
+                        </li>
+                    </ul>
                 </td>
                 <td>
                     <h4 class="collection-table__title">
                         <a class="black-link" href="{{ $url }}">{!! $article->getSearchHighlightedName() !!}</a></h4>
+                    <div class="collection-table__link-group">
                     @if($article->court_decision_link)
                         <a class="blue-link collection-table__link" href="{{ $article->court_decision_link }}"
                            target="_blank">Посилання на рішення</a>
                     @endif
+                        <button class="button button--outline button--xs" type="button" aria-label="Copy" data-tooltip="Копіювати"
+                                onclick="copyText('{{ $article->court_decision_link }}')">
+                            <svg class="button__icon" width="14" height="14">
+                                <use xlink:href="{{ asset('assets/img/user/sprite.svg#copy') }}"></use>
+                            </svg>
+                        </button>
+                    </div>
                 </td>
                 <td>
                     <div class="collection-descr default">

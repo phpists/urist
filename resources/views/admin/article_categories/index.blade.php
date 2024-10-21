@@ -99,14 +99,17 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 @foreach(\App\Enums\CriminalArticleTypeEnum::cases() as $case)
-                                                    <a class="btn @if($category?->type == $case->value) btn-primary @else btn-outline-primary @endif" href="{{ route('admin.article_categories', ['tab' => 'tree_nested_tab', 'category' => $caseCategory = $case->getCategory()]) }}">{{ $caseCategory->name }}</a>
+                                                    <a class="btn @if($category?->type == $case->value) btn-primary @else btn-outline-primary @endif"
+                                                       href="{{ route('admin.article_categories', ['tab' => 'tree_nested_tab', 'category' => $caseCategory = $case->getCategory()]) }}">{{ $caseCategory->name }}</a>
                                                 @endforeach
                                             </div>
                                             @isset($category)
                                                 <div class="col-12">
                                                     <hr class="my-2">
                                                     @foreach($category->children as $categoryChildCategory)
-                                                        <a class="btn mb-1 @if($childCategory?->id == $categoryChildCategory->id) btn-primary @else btn-outline-primary @endif" href="{{ route('admin.article_categories', ['tab' => 'tree_nested_tab', 'category' => \App\Enums\CriminalArticleTypeEnum::tryFrom($categoryChildCategory->type)->getCategory(), 'childCategory' => $categoryChildCategory]) }}">{{ $categoryChildCategory->name }}</a>
+                                                        <a class="btn mb-1 @if($childCategory?->id == $categoryChildCategory->id) btn-primary @else btn-outline-primary @endif parent-category-droppable"
+                                                           data-id="{{ $categoryChildCategory->id }}"
+                                                           href="{{ route('admin.article_categories', ['tab' => 'tree_nested_tab', 'category' => \App\Enums\CriminalArticleTypeEnum::tryFrom($categoryChildCategory->type)->getCategory(), 'childCategory' => $categoryChildCategory]) }}">{{ $categoryChildCategory->name }}</a>
                                                     @endforeach
                                                 </div>
                                             @endisset
@@ -117,11 +120,21 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 @if($childCategory)
-                                                <div class="dd w-100" id="nestable3" data-update-url="{{ route('admin.article_category.update_position', $childCategory) }}">
-                                                    <ol class="dd-list" data-id="{{ $childCategory->id }}">
-                                                        @include('admin.article_categories.parts.table', ['categories' => $childCategory->children])
-                                                    </ol>
-                                                </div>
+                                                    @if($childCategory->articles?->isNotEmpty())
+                                                        <div class="card mb-5">
+                                                            <div class="card-body p-1">
+                                                                @include('admin.article_categories.parts.category-articles', ['category' => $childCategory])
+                                                            </div>
+                                                        </div>
+                                                    @endif
+
+                                                    <div class="dd w-100" id="nestable3"
+                                                         data-update-url="{{ route('admin.article_category.update_position', $childCategory) }}"
+                                                         data-move-parent-url="{{ route('admin.article_categories.move_to_another_parent') }}">
+                                                        <ol class="dd-list" data-id="{{ $childCategory->id }}">
+                                                            @include('admin.article_categories.parts.table', ['categories' => $childCategory->children])
+                                                        </ol>
+                                                    </div>
                                                 @endif
                                             </div>
                                         </div>
@@ -145,6 +158,7 @@
 
     @include('admin.layouts.modals.show_category_full_path')
     @include('admin.article_categories.modals.add-article')
+    @include('admin.article_categories.modals.clone')
 @endsection
 
 @section('js_after')
@@ -192,6 +206,17 @@
                 placeholder: "Стаття",
                 minimumInputLength: 3,
                 ajax: makeSelect2AjaxSearch('{{ route('admin.criminal-articles.data-for-select') }}', 'addCriminalArticleId')
+            })
+
+            $("#cloneParentCategoryId").select2({
+                placeholder: "Батьківська категорія",
+                minimumInputLength: 3,
+                ajax: makeSelect2AjaxSearch('{{ route('admin.article-categories.data-for-select') }}')
+            })
+
+            $(document).on('click', '.cloneCategoryBtn', function (e) {
+                const url = this.dataset.url;
+                $('#cloneCategoryForm').attr('action', url)
             })
 
             $(document).on('submit', '#addCriminalArticleModal form', function (e) {
@@ -250,8 +275,39 @@
                                     category_id: category_id,
                                 },
                                 success: function (response) {
-                                    document.querySelector(`.droppable[data-id="${old_category_id}"]`).innerHTML = response.html[old_category_id];
+                                    const parent = document.querySelector(`.droppable[data-id="${old_category_id}"]`);
+                                    if (parent)
+                                        parent.innerHTML = response.html[old_category_id];
                                     document.querySelector(`.droppable[data-id="${category_id}"]`).innerHTML = response.html[category_id];
+                                    draggable.remove()
+                                }
+                            })
+                        }
+                    }
+                }
+            });
+
+            $('.parent-category-droppable').droppable({
+                accept: '.drag-element',
+                drop: function (e, ui) {
+                    console.log('drop in parent category')
+                    if (ui.draggable.length) {
+                        let draggable = ui.draggable[0],
+                            article_id = draggable.dataset.id,
+                            old_category_id = draggable.dataset.categoryId,
+                            new_category_id = this.dataset.id;
+
+                        if (old_category_id !== new_category_id) {
+                            $.ajax({
+                                // async: false,
+                                type: 'POST',
+                                url: draggable.dataset.moveCategoryUrl,
+                                data: {
+                                    article_id: article_id,
+                                    old_category_id: old_category_id,
+                                    new_category_id: new_category_id,
+                                },
+                                success: function (response) {
                                     draggable.remove()
                                 }
                             })

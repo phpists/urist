@@ -5,7 +5,7 @@
         content: attr(data-tooltip)
         position: absolute
         bottom: calc(100% + 7px)
-        left: -15px
+        left: 50%
         display: flex
         align-items: center
         justify-content: center
@@ -14,7 +14,7 @@
         font-weight: 500
         line-height: 1
         color: var(--blue)
-        width: calc(100% + 30px)
+        width: auto
         z-index: $z-index-1
         background: #D7DCE3
         border-radius: 5px
@@ -23,13 +23,13 @@
         opacity: 0
         visibility: hidden
         transition: all .25s ease
-        transform: translateY(-10px)
+        transform: translateY(-10px) translateX(-50%)
         user-select: none
 
     &:after
         position: absolute
         bottom: calc(100% + 2px)
-        left: calc(50% - 6px)
+        left: 50%
         width: 0px
         height: 0px
         border-style: solid
@@ -39,19 +39,19 @@
         opacity: 0
         visibility: hidden
         transition: all .25s ease
-        transform: translateY(-10px)
+        transform: translateY(-10px) translateX(-50%)
         user-select: none
         z-index: $z-index-1
 
     &:hover,
     &:active,
     &:focus-visible
-        
+
         &:before,
         &:after
             opacity: 1
             visibility: visible
-            transform: translateY(0)
+            transform: translateY(0) translateX(-50%)
 
 [data-tooltip-left]
     position: relative
@@ -101,7 +101,7 @@
     &:hover,
     &:active,
     &:focus-visible
-        
+
         &:before,
         &:after
             opacity: 1

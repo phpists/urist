@@ -86,6 +86,21 @@ class SettingSeeder extends Seeder
                 'title' => 'Текст для скасованої підписки. Розділено символом "|". Змінні: {pendingExpiresAt} - дата закінчення очікуючого оплаченого періоду/наступного платежа',
                 'value' => 'Наступний оплачуваний період|Наступний платіж {pendingExpiresAt}'
             ],
+            [
+                'name' => SettingEnum::FACEBOOK_URL,
+                'title' => 'Посилання на Facebook',
+                'value' => 'https://www.facebook.com/people/Lex-Go/61560082906686/'
+            ],
+            [
+                'name' => SettingEnum::SHARE_URL,
+                'title' => 'Посилання, яким ділитись в соц.мережах',
+                'value' => config('app.url')
+            ],
+            [
+                'name' => SettingEnum::SHARE_TEXT,
+                'title' => 'Текст, яким ділитись в соц.мережах',
+                'value' => config('app.name')
+            ],
         ];
 
         foreach ($settings as $setting) {

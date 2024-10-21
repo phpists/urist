@@ -60,22 +60,24 @@ $(function () {
     $(document).on('click', '.modal-self-completing', function (e) {
         let action = this.dataset.action ?? null,
             json = this.dataset.json,
-            form = document.getElementById(this.dataset.modal).querySelector('form');
+            modal = document.getElementById(this.dataset.modal),
+            form = modal.querySelector('form');
 
         if (form) {
             if (action)
                 form.action = action;
+        }
 
-            try {
-                let values = JSON.parse(json);
+        try {
+            let values = JSON.parse(json);
 
-                for (let field in values) {
-                    let formField = form.querySelector(`[name="${field}"]`)
-                    if (formField)
-                        formField.value = values[field]
-                }
-            } catch (e) {
+            for (let field in values) {
+                let parent = form || modal;
+                let formField = parent.querySelector(`[name="${field}"]`)
+                if (formField)
+                    formField.value = values[field]
             }
+        } catch (e) {
         }
     })
 
