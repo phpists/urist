@@ -32,12 +32,12 @@
                                 <span data-item="wa" title="Поділитись в WhatsApp"
                                       class="ico_uscl_soc ico_uscl ico_uscl-wa uscl-wa"></span>
                             </a>
-                            <a class="uscl-item" href="javascript:;" onclick="shareSocial()"
+                            <a class="uscl-item" href="javascript:;" onclick="shareSocial.call(this)"
                                data-href="http://www.linkedin.com/shareArticle?mini=true&url={share_url}&title={share_text}&summary=&source={share_source}">
                                 <span data-item="lin" title="Поділитись в LinkedIn"
                                       class="ico_uscl_soc ico_uscl ico_uscl-lin uscl-lin"></span>
                             </a>
-                            <a class="uscl-item" href="javascript:;" onclick="shareSocial()"
+                            <a class="uscl-item" href="javascript:;" onclick="shareSocial.call(this)"
                                data-href="https://t.me/share/url?url={share_url}&text={share_text}">
                                 <span data-item="telegram" title="Поділитись в Telegram"
                                       class="ico_uscl_soc ico_uscl ico_uscl-telegram uscl-telegram"></span>
