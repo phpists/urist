@@ -36,7 +36,7 @@ class ExportDocument
 
     private static function getClearHtml(string $html): string
     {
-        return preg_replace('/<a\s+[^>]*>(.*?)<\/a>/is', '$1', str_replace(['<br>', "\r\n", '&nbsp;'], ['<br />', ''], $html));
+        return preg_replace('/<img[^>]*>/i', '', preg_replace('/<a\s+[^>]*>(.*?)<\/a>/is', '$1', str_replace(['<br>', "\r\n", '&nbsp;'], ['<br />', ''], $html)));
     }
 
 }

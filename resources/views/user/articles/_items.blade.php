@@ -53,7 +53,7 @@
                         </li>
                         <li class="actions__item">
                             <button class="button button--xs button--outline modal-self-completing" type="button" aria-label="Поділитися" data-modal="modal-social"
-                                    data-tooltip="Поділитися" data-json='@json(['share_url' => $url, 'share_text' => $article->name])'>
+                                    data-tooltip="Поділитися" data-json='@json(['share_url' => $url, 'share_text' => htmlentities($article->name)])'>
                                 <svg class="button__icon" width="14" height="14">
                                     <use xlink:href="{{ asset('assets/img/user/sprite.svg#share') }}"></use>
                                 </svg>
