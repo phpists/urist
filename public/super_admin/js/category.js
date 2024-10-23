@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
         placeholder: "Виберіть батьківську категорію",
         ajax: makeAjaxCategorySearch()
     })
-    $('.updateArticleCategory').on('click', function (ev) {
+    $(document).on('click', '.updateArticleCategory', function (ev) {
         let categoryId = ev.currentTarget.dataset.id;
         $.ajax({
             url: '/admin/article_category',
