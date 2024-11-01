@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\MobilePeriodEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Plan\Plan;
 use App\Models\Subscription;
@@ -9,6 +10,7 @@ use App\Models\SubscriptionSession;
 use App\Models\User;
 use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -55,7 +57,7 @@ class RevenueCatController extends Controller
         ]));
 
         $subscriptionSession = SubscriptionSession::create([
-            'period' => $data['subscriber_attributes']['$period'] ?? 'month', //TODO
+            'period' => MobilePeriodEnum::from($data['product_id'])->getDefaultValue() ?? 'month',
             'plan_id' => Plan::first()->id,
             'user_id' => $user->id,
             'hash' => $subscription_code,
@@ -67,7 +69,7 @@ class RevenueCatController extends Controller
                 ->create(
                     $subscriptionSession,
                     $this->payload,
-                    $data['purchased_at_ms'],
+                    Carbon::parse($data['purchased_at_ms']),
                     $data['price_in_purchased_currency'],
                     Subscription::SOURCE_MOBILE,
                     Subscription::PROVIDER_REVENUECAT,
@@ -90,7 +92,7 @@ class RevenueCatController extends Controller
                 ->continue(
                     $user->activeSubscription->session,
                     $this->payload,
-                    $data['purchased_at_ms'],
+                    Carbon::parse($data['purchased_at_ms']),
                     $data['price_in_purchased_currency']
                 );
 
