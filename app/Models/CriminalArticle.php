@@ -6,11 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Query\Expression;
+use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
 
 class CriminalArticle extends Model
 {
     use HasFactory, Searchable;
+
+    const TAGS_PRIORITY = [
+        'ВП ВС' => 3,
+        'ОП ВС' => 2,
+    ];
 
     protected $fillable = [
         'name',
@@ -54,10 +61,29 @@ class CriminalArticle extends Model
             'name' => $this->name,
             'description' => $this->description,
             'categories' => $this->categories()->pluck('article_categories.id')->toArray(),
-            'date_timestamp' => $this->date->timestamp
+            'date_timestamp' => $this->date->timestamp,
+            'tag_priority' => (int) $this->tags()
+                ->select($this::getTagPriorityRawSelect(false))
+                ->get()
+                ->sortByDesc('tag_priority')
+                ->first()
+                ?->tag_priority,
         ];
     }
 
+    public static function getTagPriorityRawSelect(bool $max = true, string $attr = 'tag_priority'): Expression
+    {
+        $whens = [];
+        foreach (self::TAGS_PRIORITY as $key => $value)
+            $whens[] = "WHEN tags.name = '". $key ."' THEN ". $value;
+
+        return DB::raw(($max ? 'MAX(' : '') ."
+               CASE
+                   ". implode("\r\n", $whens) ."
+                   ELSE 1
+               END
+            ". ($max ? ')' : '') ." AS ". $attr);
+    }
 
 
     public function getPrettyCreatedAtAttribute()

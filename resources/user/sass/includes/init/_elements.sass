@@ -63,7 +63,7 @@ strong
 .red-color
     color: var(--light-red)
 
-.blue-link 
+.blue-link
     color: var(--blue)
     text-decoration: underline
 
@@ -73,7 +73,7 @@ strong
         color: var(--blue)
         text-decoration: none
 
-.black-link 
+.black-link
     color: var(--black)
     transition: color .5s ease
 
@@ -103,13 +103,17 @@ strong
 
     @media ($max-md)
         padding-top: 70px
-    
+
     &.is-full
         padding-left: 128px
         transition: padding .25s ease
 
         @media ($max-md)
             padding-left: 0
+
+    &--pt-0
+        @media ($max-md)
+            padding-top: 0
 
 .scroll-disabled
     overflow-y: hidden

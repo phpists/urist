@@ -2,23 +2,20 @@
     <table class="collection-table">
         <thead class="collection-table__thead">
         <tr>
+            <th>Дата</th>
+            <th>Назва статті</th>
             <th>
-                <span>Дата</span>
-                <div class="sort">
-                    <button class="sort__button filter-sort" data-value="date:asc" type="button" aria-label="Sort up">
-                        <svg class="sort__icon" width="16" height="12">
-                            <use xlink:href="{{ asset('img/sprite.svg#sort-up-arrow') }}"></use>
-                        </svg>
-                    </button>
-                    <button class="sort__button filter-sort" data-value="date:desc" type="button" aria-label="Sort up">
-                        <svg class="sort__icon" width="16" height="12">
-                            <use xlink:href="{{ asset('img/sprite.svg#sort-down-arrow') }}"></use>
-                        </svg>
-                    </button>
+                <div class="collection-table__th-group"><span>Опис</span>
+                    <form class="sort-form collection-table__sort-form" id="sort-table-form" autocomplete="off" novalidate="novalidate">
+                        <div class="sort-form__group">
+                            <select class="select" id="selectSortBy" name="selectSortBy" aria-label="Sort by" required="required">
+                                <option value="hierarchy" @selected(request('sort', 'hierarchy') == 'hierarchy')>Сортувати за ієрархією судових рішень (ВПВС, ОПВС, ККСВС) та хронологією</option>
+                                <option value="date" @selected(request('sort', 'hierarchy') == 'date')>Сортувати за зростанням</option>
+                            </select>
+                        </div>
+                    </form>
                 </div>
             </th>
-            <th>Назва ПП</th>
-            <th>ПП</th>
         </tr>
         </thead>
         <tbody class="collection-table__tbody">
@@ -63,7 +60,7 @@
                 </td>
                 <td>
                     <h4 class="collection-table__title">
-                        <a class="black-link" href="{{ $url }}">{!! $article->getSearchHighlightedName() !!}</a></h4>
+                        <b><a class="black-link" href="{{ $url }}">{!! $article->getSearchHighlightedName() !!}</a></b></h4>
                     <div class="collection-table__link-group">
                     @if($article->court_decision_link)
                         <a class="blue-link collection-table__link" href="{{ $article->court_decision_link }}"

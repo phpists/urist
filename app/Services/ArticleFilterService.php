@@ -8,6 +8,7 @@ use App\Models\ArticleCategory;
 use App\Models\CriminalArticle;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class ArticleFilterService
 {
@@ -28,16 +29,6 @@ class ArticleFilterService
                 return $query->whereType($type);
             })
             ->orderBy('position')
-            ->with([
-                'children',
-                'children.children',
-                'children.children.children',
-                'children.children.children.children',
-                'children.children.children.children.children',
-                'children.children.children.children.children.children',
-                'children.children.children.children.children.children.children',
-                'children.children.children.children.children.children.children.children',
-            ])
             ->get();
     }
 
@@ -69,7 +60,7 @@ class ArticleFilterService
             && can_user(\App\Enums\PermissionEnum::SMART_SEARCH->value);
 
         $articles = $isFromSearch
-            ? CriminalArticle::search(request('search'), function($algolia, string $query, array $options) {
+            ? CriminalArticle::search(request('search'), function ($algolia, string $query, array $options) {
                 $options['attributesToHighlight'] = ['name', 'description'];
                 return $algolia->search($query, $options);
             })
@@ -95,25 +86,26 @@ class ArticleFilterService
                     });
                 }
             })
-            ->when($sort = request('sort'), function ($q) use ($sort, $isFromSearch) {
-                [$column, $direction] = explode(':', $sort);
-
-                if (isset($column) && isset($direction)) {
-                    if ($isFromSearch) {
-                        return $q->within('criminal_articles_date_' . strtolower($direction));
-                    } else {
-                        return $q->orderBy($column, $direction);
-                    }
-                }
-
-                return $q;
-            })
-            ->when(!$sort, function ($query) use ($isFromSearch) { // default sort
-                if ($isFromSearch) {
-                    return $query->within('criminal_articles_date_desc');
-                } else {
-                    return $query->orderBy('date', 'DESC');
-                }
+            ->when($sort = request('sort', 'hierarchy'), function ($q) use ($sort, $isFromSearch) {
+                match ($sort) {
+                    'date' => $isFromSearch
+                        ? $q->within('criminal_articles_date_desc')
+                        : $q->orderBy('date', 'desc'),
+                    default => $isFromSearch
+                        ? $q->within('criminal_articles_hierarchy')
+                        : $q->leftJoinSub(
+                            DB::table('article_tags')
+                                ->join('tags', 'tags.id', '=', 'article_tags.tag_id')
+                                ->select(['article_tags.criminal_article_id', CriminalArticle::getTagPriorityRawSelect()])
+                                ->groupBy('article_tags.criminal_article_id'),
+                            'priority_tags',
+                            function ($join) {
+                                $join->on('criminal_articles.id', '=', 'priority_tags.criminal_article_id');
+                            }
+                        )
+                            ->orderBy('priority_tags.tag_priority', 'desc')
+                            ->orderBy('date', 'DESC'),
+                };
             })
             ->paginate($perPage)
             ->withQueryString()

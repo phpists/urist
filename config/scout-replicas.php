@@ -11,6 +11,11 @@ return [
             'ranking' => ['desc(date_timestamp)'],
 //            'customRanking' => ['desc(date_timestamp)'],
 //            'relevancyStrictness' => 0 // only for virtual
+        ],
+        'criminal_articles_hierarchy' => [
+            'ranking' => ['desc(tag_priority)'],
+//            'customRanking' => ['desc(date_timestamp)'],
+//            'relevancyStrictness' => 0 // only for virtual
         ]
     ]
 ];

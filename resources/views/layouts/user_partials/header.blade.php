@@ -1,4 +1,4 @@
-<header class="header {{ $is_menu_hidden ? 'is-full' : '' }}">
+<header class="header header--rel {{ $is_menu_hidden ? 'is-full' : '' }}">
     <div class="container header__container">
         <button class="burger header__burger" type="button" aria-label="Open sidebar" aria-expanded="false" data-sidebar-toggle="data-sidebar-toggle">
             <div class="burger__line"></div>

@@ -41,3 +41,7 @@ filter();
 initTabs();
 tariffsSlider();
 tips();
+
+$(document).on('ajaxComplete', () => {
+    select();
+})

@@ -35,7 +35,7 @@
 
 @include('layouts.user_partials.header')
 
-<main id="main" class="main {{ $is_menu_hidden ? 'is-full' : '' }}">
+<main id="main" class="main main--pt-0 {{ $is_menu_hidden ? 'is-full' : '' }}">
     @yield('page')
     @include('layouts.user_partials.sidebar')
 </main>
