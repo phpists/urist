@@ -1,4 +1,5 @@
 import JustValidate from 'just-validate';
+import {closeModal} from "./modal.js";
 
 const modalSearchFormValidation = () => {
     if (document.getElementById('modal-search-form')) {
@@ -17,6 +18,7 @@ const modalSearchFormValidation = () => {
         validator.onSuccess((event) => {
             event.preventDefault();
             this.dispatchEvent(new Event('submit'))
+            closeModal(document.getElementById('modal-search'))
         });
     }
 }
