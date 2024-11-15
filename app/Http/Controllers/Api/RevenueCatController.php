@@ -69,7 +69,7 @@ class RevenueCatController extends Controller
                 ->create(
                     $subscriptionSession,
                     $this->payload,
-                    Carbon::parse($data['purchased_at_ms']),
+                    $data['purchased_at_ms'],
                     $data['price_in_purchased_currency'],
                     Subscription::SOURCE_MOBILE,
                     Subscription::PROVIDER_REVENUECAT,

@@ -31,6 +31,7 @@ class SubscriptionService
                 'price' => $amount,
                 'expires_at' => $endAt,
                 'source' => $source,
+                'provider' => $provider,
             ]);
 
             $subscriptionPayment = $subscription->payments()->create([
@@ -64,9 +65,9 @@ class SubscriptionService
     /**
      * @throws Exception
      */
-    final function cancel(SubscriptionSession $subscriptionSession): void
+    final function cancel(SubscriptionSession $subscriptionSession, string $at = null): void
     {
-        $subscriptionSession->subscription->cancelled_at = Carbon::now();
+        $subscriptionSession->subscription->cancelled_at = $at ?? Carbon::now();
         if (!$subscriptionSession->subscription->save())
             throw new Exception('Не вдалось скасувати підписку');
     }
