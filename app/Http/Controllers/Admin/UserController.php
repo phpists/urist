@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Plan\Plan;
 use App\Models\Subscription;
 use App\Models\User;
+use App\Services\LiqPayService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -58,7 +59,7 @@ class UserController extends Controller
         $addPeriod = 'add' . $period = $request->post('period', 'month');
 
         if ($user->activeSubscription) {
-            $expiresAt =  $user->pendingSubscription->expires_at->$addPeriod();
+            $expiresAt = $user->pendingSubscription->expires_at->$addPeriod();
         } else {
             $expiresAt = Carbon::now()->$addPeriod();
         }
@@ -68,6 +69,7 @@ class UserController extends Controller
             'plan_id' => Plan::find(1)->id,
             'period' => $period,
             'expires_at' => $expiresAt,
+            'provider' => 'admin',
             'source' => 'web',
         ]);
 
@@ -77,11 +79,13 @@ class UserController extends Controller
 
     public function unsubscribe(Request $request, User $user)
     {
-        $user->activeSubscription()
-            ->update([
-                'cancelled_at' => Carbon::now(),
-                'expires_at' => Carbon::now()
-            ]);
+        $subscription = $user->activeSubscription;
+        $subscription->update([
+            'expires_at' => Carbon::now()
+        ]);
+
+        if ($subscription->provider === 'liqpay')
+            (new LiqPayService)->unsubscribe($subscription);
 
         UserSubscriptionExpired::dispatch($user, false);
 

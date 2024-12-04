@@ -32,9 +32,9 @@ class RevenueCatController extends Controller
             abort(Response::HTTP_UNPROCESSABLE_ENTITY);
 
         $this->payload = $payload;
-        $method = 'handle' . Str::studly($type);
+        $method = 'handle' . Str::studly(Str::lower($type));
         if (method_exists($this, $method))
-            return $this->{$method};
+            return $this->$method();
 
         abort(Response::HTTP_NOT_IMPLEMENTED);
     }
@@ -90,9 +90,9 @@ class RevenueCatController extends Controller
         try {
             $this->subscriptionService
                 ->continue(
-                    $user->activeSubscription->session,
+                    $user->lastSubscription?->session,
                     $this->payload,
-                    Carbon::parse($data['purchased_at_ms']),
+                    $data['purchased_at_ms'],
                     $data['price_in_purchased_currency']
                 );
 
@@ -110,7 +110,7 @@ class RevenueCatController extends Controller
 
         try {
             $this->subscriptionService
-                ->cancel($user->activeSubscription->session);
+                ->cancel($user->lastSubscription?->session);
 
             return Response::HTTP_OK;
         } catch (\Exception $e) {
