@@ -4,14 +4,19 @@ namespace App\Services\Apple;
 
 use Carbon\CarbonImmutable;
 use Lcobucci\JWT\Configuration;
+use Lcobucci\JWT\Signer\Ecdsa\Sha256;
+use Lcobucci\JWT\Signer\Key\InMemory;
 
 class AppleToken
 {
     private Configuration $jwtConfig;
 
-    public function __construct(Configuration $jwtConfig)
+    public function __construct()
     {
-        $this->jwtConfig = $jwtConfig;
+        $this->jwtConfig = Configuration::forSymmetricSigner(
+            new Sha256,
+            InMemory::plainText(config('services.apple.private_key'))
+        );
     }
 
     public function generate()

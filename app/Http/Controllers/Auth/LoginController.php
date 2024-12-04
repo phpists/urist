@@ -138,6 +138,8 @@ class LoginController extends Controller
     public function handleAppleLoginCallback(\Request $request)
     {
         try {
+            \Config::set('services.apple.client_secret', (\App::make(AppleToken::class))->generate());
+
             $user = Socialite::driver('apple')->user();
         } catch (\Exception $e) {
             Log::error($e->getMessage());
