@@ -90,7 +90,7 @@ class RevenueCatController extends Controller
         try {
             $this->subscriptionService
                 ->continue(
-                    $user->lastSubscription?->session,
+                    $user->lastRevenueSubscription?->session,
                     $this->payload,
                     $data['purchased_at_ms'],
                     $data['price_in_purchased_currency']
@@ -104,13 +104,29 @@ class RevenueCatController extends Controller
     }
 
 
-    private function handleCancellation(array $payload)
+    private function handleCancellation()
     {
         $user = $this->getUser();
 
         try {
             $this->subscriptionService
-                ->cancel($user->lastSubscription?->session);
+                ->cancel($user->lastRevenueSubscription?->session);
+
+            return Response::HTTP_OK;
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            abort(Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    private function handleExpiration()
+    {
+        $user = $this->getUser();
+
+        try {
+            $this->subscriptionService
+                ->cancel($user->lastRevenueSubscription?->session);
 
             return Response::HTTP_OK;
         } catch (\Exception $e) {

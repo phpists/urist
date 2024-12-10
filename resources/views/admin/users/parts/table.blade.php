@@ -23,7 +23,10 @@
             К-сть файлів
         </th>
         <th class="pr-0 text-center">
-            Підписка
+            Період підписки
+        </th>
+        <th class="pr-0 text-center">
+            Стан підписки
         </th>
         <th class="pr-0 text-center">
             Дії
@@ -56,6 +59,13 @@
             </td>
             <td class="pr-0 text-center">
                 {{ $user->activeSubscription ? __('subscription.'.$user->activeSubscription->period) . ' (' . $user->pendingSubscription->expires_at->format('d.m.y') . ')' : '-' }}
+            </td>
+            <td class="pr-0 text-center">
+                @if($user->activeSubscription)
+                    <span class="label label-success label-inline">Активна</span>
+                @else
+                    <span class="label label-danger label-inline">Неактивна</span>
+                @endif
             </td>
             <td class="justify-content-center pr-0 d-flex">
                 <button type="button" title="Підписка" data-url="{{ route('admin.users.subscribe', $user) }}"
