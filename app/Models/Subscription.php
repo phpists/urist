@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Plan\Plan;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -61,6 +62,11 @@ class Subscription extends Model
     function isCancelled(): bool
     {
         return $this->cancelled_at !== null;
+    }
+
+    public function scopeActive($query)
+    {
+        $query->where('subscriptions.expires_at', '>', Carbon::now()->format('Y-m-d'));
     }
 
 }

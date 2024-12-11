@@ -54,9 +54,9 @@
                 {{--                <button class="button button--outline current-subscription__button" type="button">Продовжити підписку</button>--}}
             </div>
 
-            <input type="hidden" id="selectedPeriod" value="month">
-
+            @if(!$user->activeSubscription)
             <div class="tariffs">
+                <input type="hidden" id="selectedPeriod" value="month">
                 <h3 class="tariffs__title">{{ $systemPage->getDataByDotPath('0.body') }}</h3>
                 <ul class="tariffs-list">
                     <li class="tariffs-list__item">
@@ -153,6 +153,7 @@
                 </div>
 
             </div>
+            @endif
         </div>
     </section>
 

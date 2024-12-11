@@ -8,6 +8,7 @@ use App\Models\Plan\Plan;
 use App\Models\Subscription;
 use App\Models\User;
 use App\Services\LiqPayService;
+use App\Services\SubscriptionService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -79,13 +80,19 @@ class UserController extends Controller
 
     public function unsubscribe(Request $request, User $user)
     {
-        $subscription = $user->activeSubscription;
-        $subscription->update([
-            'expires_at' => Carbon::now()
-        ]);
-
-        if ($subscription->provider === 'liqpay')
-            (new LiqPayService)->unsubscribe($subscription);
+        $user->allActiveSubscriptions->each(function ($subscription) {
+            if ($subscription->provider === 'liqpay') {
+                (new SubscriptionService)->cancel($subscription->session);
+                (new LiqPayService)->unsubscribe($subscription);
+            } elseif ($subscription->provider === 'revenuecat') {
+                (new SubscriptionService)->cancel($subscription->session);
+            } else {
+                $subscription->update([
+                    'expires_at' => Carbon::now(),
+                    'cancelled_at' => Carbon::now(),
+                ]);
+            }
+        });
 
         UserSubscriptionExpired::dispatch($user, false);
 
