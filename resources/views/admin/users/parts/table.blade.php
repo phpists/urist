@@ -61,7 +61,9 @@
                 {{ $user->activeSubscription ? __('subscription.'.$user->activeSubscription->period) . ' (' . $user->pendingSubscription->expires_at->format('d.m.y') . ')' : '-' }}
             </td>
             <td class="pr-0 text-center">
-                @if($user->activeSubscription)
+                @if($user->activeSubscription && $user->activeSubscription->cancelled_at)
+                    <span class="label label-warning label-inline">Закінчується</span>
+                @elseif($user->activeSubscription)
                     <span class="label label-success label-inline">Активна</span>
                 @else
                     <span class="label label-danger label-inline">Неактивна</span>

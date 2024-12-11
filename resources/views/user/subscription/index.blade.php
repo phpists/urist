@@ -54,7 +54,6 @@
                 {{--                <button class="button button--outline current-subscription__button" type="button">Продовжити підписку</button>--}}
             </div>
 
-            @if(!$user->activeSubscription)
             <div class="tariffs">
                 <input type="hidden" id="selectedPeriod" value="month">
                 <h3 class="tariffs__title">{{ $systemPage->getDataByDotPath('0.body') }}</h3>
@@ -121,6 +120,8 @@
                                                 міс{{-- (-{{ $plan->getAnnualDiscountSum() }}₴)--}}
                                             </div>
                                         </div>
+
+                                        @if(!$user->activeSubscription)
                                         @php($monthPaymentData = $plan->getCheckoutData($user, 'month'))
                                         <form id="monthPaymentForm" method="POST" action="{{ $monthPaymentData->action }}" accept-charset="utf-8">
                                             <input type="hidden" name="data" value="{{ $monthPaymentData->data }}"/>
@@ -135,6 +136,8 @@
                                             <input type="image"
                                                    src="//static.liqpay.ua/buttons/payUk.png" style="height: 70px;"/>
                                         </form>
+                                        @endif
+
 {{--                                        @if(!$user->activeSubscription--}}
 {{--                                                || ($user->activeSubscription && $user->activeSubscription->isCancelled() && !$user->pendingSubscription))--}}
 {{--                                            <button class="button tariff-card__buy-button show_payment_modal"--}}
@@ -153,7 +156,6 @@
                 </div>
 
             </div>
-            @endif
         </div>
     </section>
 

@@ -30,8 +30,8 @@ class LiqPayService
         return match ($this->payment->get('action')) {
             'subscribe' => match ($this->payment->get('status')) {
                 'subscribed' => $this->handleNewSubscription(),
-                'unsubscribed' => $this->handleUnsubscribe()
             },
+            'unsubscribe' => $this->handleUnsubscribe(),
             'regular' => $this->handleRegularPayment(),
         };
     }
@@ -82,7 +82,7 @@ class LiqPayService
         if (!$subscription->session)
             throw new Exception('Не вдалось оприділити сесію підписки');
 
-        $liqPay = new \LiqPay(config('liqpay.public_key'), config('liqpay.private_key'));
+        $liqPay = new \LiqPay(env('LIQPAY_PUBLIC_KEY'), env('LIQPAY_PRIVATE_KEY'));
         $response = $liqPay->api('request', [
             'action' => 'unsubscribe',
             'version' => '3',
