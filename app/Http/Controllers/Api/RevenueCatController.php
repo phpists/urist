@@ -119,7 +119,6 @@ class RevenueCatController extends Controller
         }
     }
 
-
     private function handleExpiration()
     {
         $user = $this->getUser();
@@ -127,6 +126,21 @@ class RevenueCatController extends Controller
         try {
             $this->subscriptionService
                 ->cancel($user->lastRevenueSubscription?->session);
+
+            return Response::HTTP_OK;
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            abort(Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private function handleTransfer()
+    {
+        $fromUser = User::find($this->payload['event']['transferred_from'][0]);
+        $toUser = User::find($this->payload['event']['transferred_to'][1]);
+
+        try {
+            $this->subscriptionService->move($fromUser, $toUser);
 
             return Response::HTTP_OK;
         } catch (\Exception $e) {

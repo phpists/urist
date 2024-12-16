@@ -2,9 +2,12 @@
 
 namespace App\Services;
 
+use App\Enums\RoleEnum;
 use App\Models\SubscriptionSession;
+use App\Models\User;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class SubscriptionService
 {
@@ -70,6 +73,24 @@ class SubscriptionService
         $subscriptionSession->subscription->cancelled_at = $at ?? Carbon::now();
         if (!$subscriptionSession->subscription->save())
             throw new Exception('Не вдалось скасувати підписку');
+    }
+
+    final function move(User $fromUser, User $toUser)
+    {
+        try {
+            DB::beginTransaction();
+            $subscription = $fromUser->lastRevenueSubscription;
+            $subscription->update(['user_id' => $toUser->id]);
+            $subscription->session->update(['user_id' => $toUser->id]);
+
+            $fromUser->removeRole(RoleEnum::MAX->value);
+            $toUser->assignRole(RoleEnum::MAX->value);
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            \Log::error('ERROR on transfer: ' . $e->getMessage() . ' subId' . ($subscription->id ?? '-') . ' from' . $fromUser->id . ' to ' . $toUser->id);
+        }
     }
 
 }
