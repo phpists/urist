@@ -45,6 +45,10 @@ Route::group(['middleware' => ['jwt', 'api-single-login']], function () {
     Route::get('criminal-article/{criminalArticle}', [\App\Http\Controllers\Api\CriminalArticleController::class, 'show']);
     Route::get('criminal-article/{article}/export-doc', [\App\Http\Controllers\Api\CriminalArticleController::class, 'exportDoc']);
 
+    /** Categories */
+    Route::get('categories/search/{type}', [\App\Http\Controllers\Api\CategoryController::class, 'search']);
+    Route::get('categories/{type}/{articleCategory?}', [\App\Http\Controllers\Api\CategoryController::class, 'index']);
+
     /** Cabinet */
     Route::get('cabinet/files/{file}/export-doc', [\App\Http\Controllers\Api\User\FileController::class, 'exportDoc'])
         ->middleware('throttle:10,5');

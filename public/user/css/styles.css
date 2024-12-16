@@ -85,3 +85,8 @@ input[name="search"]:focus + .searchItemsContainer {
 .collection-section em {
     background-color: yellow;
 }
+
+#filterAccordionItemsContainer > .accordion__inner > .accordion__panel > .accordion__header span.name-text,
+#filterAccordionItemsContainer > .accordion__inner > .accordion__panel > .accordion__content > .accordion__inner > .accordion__panel > .accordion__header span.name-text {
+    font-weight: bolder;
+}

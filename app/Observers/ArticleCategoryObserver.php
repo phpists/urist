@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\ArticleCategory;
+use Illuminate\Support\Facades\Cache;
 
 class ArticleCategoryObserver
 {
@@ -21,6 +22,13 @@ class ArticleCategoryObserver
     public function updating(ArticleCategory $articleCategory): void
     {
         $articleCategory->full_path = $articleCategory->getFullPath();
+    }
+
+    public function updated(ArticleCategory $articleCategory)
+    {
+        if ($articleCategory->parent_id) {
+            $articleCategory->parent->clearChildIdsCache();
+        }
     }
 
 }

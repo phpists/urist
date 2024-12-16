@@ -1,14 +1,29 @@
-@php($filterService = $filterService ?? new \App\Services\ArticleFilterService(request('type')))
+<style>
+    #spinner {
+        position: absolute;
+        display: block;
+        z-index: 9999;
+        margin: auto;
+        left: 0;
+        right: 0;
+        text-align: center;
+        top: 0;
+        bottom: 0;
+    }
+</style>
 
 <aside class="filter {{ $is_menu_hidden ? 'is-hide' : '' }}">
     <div class="filter__panel">
         <div class="filter__top">
             <div class="logo filter__logo">
                 <a class="logo__link" href="/" aria-label="logo">
-                    <img class="logo__img" src="{{ asset('assets/img/user/logo-white.png') }}" srcset="{{ asset('assets/img/user/logo-white@2x.png') }} 2x" width="82" height="61" alt="logo"/>
+                    <img class="logo__img" src="{{ asset('assets/img/user/logo-white.png') }}"
+                         srcset="{{ asset('assets/img/user/logo-white@2x.png') }} 2x" width="82" height="61"
+                         alt="logo"/>
                 </a>
             </div>
-            <button class="burger filter__burger" type="button" aria-label="Open sidebar" aria-expanded="false" data-sidebar-toggle="data-sidebar-toggle">
+            <button class="burger filter__burger" type="button" aria-label="Open sidebar" aria-expanded="false"
+                    data-sidebar-toggle="data-sidebar-toggle">
                 <div class="burger__line"></div>
                 <div class="burger__line"></div>
                 <div class="burger__line"></div>
@@ -19,14 +34,17 @@
                 <h3 class="filter__title">
                     <svg class="filter__title-icon" width="38" height="38">
                         <use xlink:href="{{ asset('img/sprite.svg#filter') }}"></use>
-                    </svg><span>Зміст кодексу</span>
+                    </svg>
+                    <span>Зміст кодексу</span>
                 </h3>
-                <button class="button button--outline filter__hide-button" type="button" aria-label="Hide Filter" data-tooltip-left="Регулювання масштабу" data-filter-hide="data-filter-hide">
+                <button class="button button--outline filter__hide-button" type="button" aria-label="Hide Filter"
+                        data-tooltip-left="Регулювання масштабу" data-filter-hide="data-filter-hide">
                     <svg class="button__icon" width="10" height="19">
                         <use xlink:href="{{ asset('img/sprite.svg#arrow-left') }}"></use>
                     </svg>
                 </button>
-                <button class="button button--outline filter__toggle-button" type="button" aria-label="Hide Filter" data-filter-toggle="data-filter-toggle">
+                <button class="button button--outline filter__toggle-button" type="button" aria-label="Hide Filter"
+                        data-filter-toggle="data-filter-toggle">
                     <svg class="button__icon" width="17" height="17">
                         <use xlink:href="{{ asset('img/sprite.svg#close-modal') }}"></use>
                     </svg>
@@ -34,7 +52,9 @@
             </div>
             <form class="search filter__search" id="filter-search-form" autocomplete="off" novalidate="novalidate">
                 <div class="search__group">
-                    <input class="input search__input" id="inputFilterSearch" type="text" name="inputFilterSearch" placeholder="Пошук по категоріях" autocomplete="off" required="required" data-modal-once="modal-tip-6">
+                    <input class="input search__input" id="inputFilterSearch" type="text" name="inputFilterSearch"
+                           placeholder="Пошук по категоріях" autocomplete="off" required="required"
+                           data-modal-once="modal-tip-6">
                     <button type="button" class="search__button">
                         <svg class="search__icon" width="21" height="21">
                             <use xlink:href="{{ asset('img/sprite.svg#search') }}"></use>
@@ -43,23 +63,31 @@
                 </div>
             </form>
 
-            <form id="filterForm" action="{{ route('user.articles.index', $filterService->getType()) }}" data-count-url="{{ route('user.articles.total-count', $filterService->getType()) }}" style="margin-bottom: 0">
+            <form id="filterForm" action="{{ route('user.articles.index', $type) }}" style="margin-bottom: 0">
                 <input type="hidden" name="sort">
                 <input type="hidden" name="search" value="{{ request('search') }}">
                 <div id="filterAccordionItemsContainer"
-                     data-load-url="{{ route('user.filter', ['type' => $filterService->getType(), ...request()->query()]) }}"
+                     data-load-url="{{ route('user.categories.index', ['type' => $type, 'categories' => request('categories', [])]) }}"
+                     data-search-url="{{ route('user.categories.search', ['type' => $type, 'categories' => request('categories', [])]) }}"
                      class="accordion filter__accordion"></div>
             </form>
         </div>
         <div class="filter__bottom">
-            <button id="clearFilterButton" class="button button--outline filter__button" type="button" data-url="{{ route('user.articles.index', $filterService->getType()) }}" data-modal-once="modal-tip-13">Скинути</button>
-            <button class="button filter__button" type="submit" form="filterForm" @if(!str_contains(route('user.articles.index', $filterService->getType()), url()->current())) data-redirect="true" @endif disabled>Показати</button>
+            <button id="clearFilterButton" class="button button--outline filter__button" type="button"
+                    data-url="{{ route('user.articles.index', $type) }}" data-modal-once="modal-tip-13">Скинути
+            </button>
+            <button class="button filter__button" type="submit" form="filterForm"
+                    @if(!str_contains(route('user.articles.index', $type), url()->current())) data-redirect="true"
+                    @endif disabled>Показати
+            </button>
         </div>
     </div>
 </aside>
 
 @push('scripts')
     <script>
+        let filterTimeout;
+
         $(function () {
 
             $(document).on('submit', '#filter-search-form', function (e) {
@@ -80,28 +108,46 @@
                 .css({
                     "text-align": 'center'
                 })
-            $filterAccordionItemsContainer.load($filterAccordionItemsContainer.data('load-url'), function () {
-                $filterSpinner.hide()
 
-                let accordion_statuses = JSON.parse(localStorage.getItem('accordion__panel_expanded_statuses'));
-                if (accordion_statuses) {
-                    $('.accordion__panel:has(button.accordion__trigger)').each(function (i, el) {
-                        if (accordion_statuses[el.dataset.id]) {
-                            $(el).find('button.accordion__trigger:first').click()
-                        }
+            let filter_search = localStorage.getItem('filter_search');
+            if (filter_search) {
+                $('#inputFilterSearch').val(filter_search);
+                filterCategories(filter_search);
+            } else {
+                $filterAccordionItemsContainer.load($filterAccordionItemsContainer.data('load-url'))
+            }
+
+            $(document).on('click', '.accordion__trigger', function (e) {
+                const $this = $(this),
+                    $container = $('#' + $(this).attr('aria-controls')),
+                    $list = $container.find('.accordion__inner');
+
+                if ($container.children().length < 1) {
+                    $filterAccordionItemsContainer.prepend($filterSpinner.show())
+
+                    $this.prop('disabled', true)
+                    console.log('hide')
+                    $this.attr('aria-expanded', 'false');
+                    $container.attr('aria-hidden', 'true');
+
+                    $container.load(this.dataset.loadUrl, function () {
+                        console.log('show')
+                        $this.attr('aria-expanded', 'true');
+                        $container.attr('aria-hidden', 'false');
+                        $this.prop('disabled', false)
+                        $filterSpinner.hide()
                     })
                 }
-
-                let filter_search = localStorage.getItem('filter_search');
-                if (filter_search)
-                    $('#inputFilterSearch').val(filter_search).trigger('keyup');
             })
 
-            $(document).on('keyup', '#inputFilterSearch', function (e) {
+            $(document).on('input', '#inputFilterSearch', function (e) {
                 let value = $(this).val().toLowerCase();
                 localStorage.setItem('filter_search', value)
 
-                filterCategories(value)
+                clearTimeout(filterTimeout);
+                filterTimeout = setTimeout(function () {
+                    filterCategories(value)
+                }, 700)
             })
 
             $(document).on('click', '.filter-sort', function (e) {
@@ -156,8 +202,16 @@
                                     display: "block",
                                 })
 
-                        if (response.url)
+                        if (response.url) {
                             history.pushState({}, '', response.url)
+                            const responseUrl = new URL(response.url),
+                                searchParams = new URLSearchParams(responseUrl.search),
+                                categoriesLoadUrl = new URL($('#filterAccordionItemsContainer').data('load-url'));
+
+                            categoriesLoadUrl.search = searchParams.toString();
+
+                            $('#filterAccordionItemsContainer').data('load-url', categoriesLoadUrl.toString())
+                        }
                     },
                     complete: function () {
                         if ($('aside.filter').hasClass('is-visible'))
@@ -208,82 +262,62 @@
         function filterCategories(value) {
             value = value.toLowerCase();
 
-            document.getElementById('filterForm').querySelectorAll('span.name-text').forEach(function (item, i) {
-                item.innerHTML = item.textContent
-            })
+            const $filterAccordionItemsContainer = $('#filterAccordionItemsContainer'),
+                searchUrl = new URL($filterAccordionItemsContainer.data('search-url')),
+                searchParams = new URLSearchParams(searchUrl.search);
 
-            // if (value.length > 0 && $('#filterForm input[name="categories[]"]:checked').length > 0) {
-            //     $('#filterForm div.accordion__panel.sub-category .accordion__header input[name="categories[]"]:not(:checked)').each(function (i, el) {
-            //         $(el).parents('div.accordion__panel.sub-category:first').hide()
+            searchParams.set('q', value);
+            searchUrl.search = searchParams.toString();
+
+            const url = value.length > 0
+                    ? searchUrl.toString()
+                    : $filterAccordionItemsContainer.data('load-url'),
+                $filterSpinner = $('#spinner').clone();
+
+            $filterAccordionItemsContainer.prepend($filterSpinner.show())
+
+            $filterAccordionItemsContainer.load(url, () => $filterSpinner.hide())
+
+            // document.getElementById('filterForm').querySelectorAll('span.name-text').forEach(function (item, i) {
+            //     item.innerHTML = item.textContent
+            // })
+            //
+            // $('div.accordion__panel.sub-category').each(function (i, el) {
+            //     console.log(2, el)
+            //     let title = $(el).find('label');
+            //     if (title.length > 0) {
+            //         if (title.text().toLowerCase().indexOf(value) === -1) {
+            //             $(el).hide();
+            //         } else {
+            //             $(el).show();
+            //             el.querySelector('span.name-text').innerHTML = el.querySelector('span.name-text').innerHTML.replace(value, `<span style="background-color: yellow;color: black">${value}</span>`)
+            //         }
+            //     }
+            // })
+            //
+            // $('.accordion__content[aria-hidden="true"]:has(div.sub-category:visible)')
+            //     .each(function (i, item) {
+            //         const $parent = $(item).parent('.accordion__panel')
+            //
+            //         $(item).attr('aria-hidden', false);
+            //         $parent.find('.accordion__trigger')
+            //             .attr('aria-expanded', true)
             //     })
             //
-            //     $('div.accordion__panel.sub-category .accordion__header input[name="categories[]"]:checked')
-            //         .each(function (i, el) {
-            //             console.log(1, el)
-            //             $(el).parents('div.accordion__panel.sub-category:first')
-            //                 .find('div.accordion__content div.accordion__panel.sub-category')
-            //                 .each(function (i, el) {
-            //                     let title = $(el).find('label');
-            //                     if (title.length > 0) {
-            //                         if (title.text().toLowerCase().indexOf(value) === -1) {
-            //                             $(el).hide();
-            //                         } else {
-            //                             $(el).show();
-            //                             el.querySelector('span.name-text').innerHTML = el.querySelector('span.name-text').innerHTML.replace(value, `<span style="background-color: yellow;color: black">${value}</span>`)
-            //                         }
-            //                     }
-            //                 })
-            //         })
-            //
-            //
-            //     $('.accordion__content[aria-hidden="true"]:has(div.sub-category:visible)')
+            // if (value.length < 1) {
+            //     $('.accordion__content[aria-hidden="false"]')
             //         .each(function (i, item) {
             //             const $parent = $(item).parent('.accordion__panel')
             //
-            //             $(item).attr('aria-hidden', false);
-            //             $parent.find('.accordion__trigger')
-            //                 .attr('aria-expanded', true)
+            //             if (!$parent.find('.accordion__header input')[0].checked) {
+            //                 $(item).attr('aria-hidden', true);
+            //                 $parent.find('.accordion__trigger')
+            //                     .attr('aria-expanded', false)
+            //             }
             //         })
-            //
-            //     saveAccordionStatus();
-            // } else {
-                $('div.accordion__panel.sub-category').each(function (i, el) {
-                    console.log(2, el)
-                    let title = $(el).find('label');
-                    if (title.length > 0) {
-                        if (title.text().toLowerCase().indexOf(value) === -1) {
-                            $(el).hide();
-                        } else {
-                            $(el).show();
-                            el.querySelector('span.name-text').innerHTML = el.querySelector('span.name-text').innerHTML.replace(value, `<span style="background-color: yellow;color: black">${value}</span>`)
-                        }
-                    }
-                })
-
-                $('.accordion__content[aria-hidden="true"]:has(div.sub-category:visible)')
-                    .each(function (i, item) {
-                        const $parent = $(item).parent('.accordion__panel')
-
-                        $(item).attr('aria-hidden', false);
-                        $parent.find('.accordion__trigger')
-                            .attr('aria-expanded', true)
-                    })
-
-                if (value.length < 1) {
-                    $('.accordion__content[aria-hidden="false"]')
-                        .each(function (i, item) {
-                            const $parent = $(item).parent('.accordion__panel')
-
-                            if (!$parent.find('.accordion__header input')[0].checked) {
-                                $(item).attr('aria-hidden', true);
-                                $parent.find('.accordion__trigger')
-                                    .attr('aria-expanded', false)
-                            }
-                        })
-                }
-
-                saveAccordionStatus();
             // }
+            //
+            // saveAccordionStatus();
         }
 
     </script>

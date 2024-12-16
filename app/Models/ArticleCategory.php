@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class ArticleCategory extends Model
@@ -18,7 +19,7 @@ class ArticleCategory extends Model
     protected $fillable = ['name', 'parent_id', 'position', 'is_active', 'sub_title', 'type', 'full_path'];
 
     protected $with = [
-        'children'
+//        'children'
     ];
 
     public function articles(): BelongsToMany
@@ -83,6 +84,30 @@ class ArticleCategory extends Model
         }
 
         return $ids;
+    }
+
+    public static function getAllChildIds($categoryId): array
+    {
+        return Cache::rememberForever('article_categories_all_child_ids_' . $categoryId, function () use ($categoryId) {
+            $ids = [$categoryId];
+            $category = self::with('children')->select(['id'])->find($categoryId);
+
+            if ($category->children) {
+                foreach ($category->children as $child) {
+                    $ids = array_merge($ids, self::getAllChildIds($child->id));
+                }
+            }
+
+            return $ids;
+        });
+    }
+
+    public function clearChildIdsCache()
+    {
+        Cache::forget('article_categories_all_child_ids_' . $this->id);
+
+        if ($this->parent_id)
+            $this->parent->clearChildIdsCache();
     }
 
     public function getFullPath()

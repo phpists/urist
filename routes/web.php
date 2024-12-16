@@ -17,6 +17,7 @@ use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\FolderController;
+use App\Http\Controllers\User\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\ProfileController as UserProfileController;
 
@@ -158,6 +159,10 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
 
         Route::get('search/items', [\App\Http\Controllers\User\ArticleController::class, 'searchItems'])
             ->name('search.items');
+
+        // Categories
+        Route::get('categories/search/{type}', [CategoryController::class, 'search'])->name('categories.search');
+        Route::get('categories/{type}/{articleCategory?}', [CategoryController::class, 'index'])->name('categories.index');
 
         // Bookmarks
         Route::get('bookmarks/{folderId?}', [\App\Http\Controllers\User\BookmarkController::class, 'index'])
