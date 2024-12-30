@@ -211,4 +211,37 @@ class User extends Authenticatable implements JWTSubject
     {
         return WelcomeHint::whereNotIn('id', $this->welcomeHints()->pluck('welcome_hints.id')->toArray())->get();
     }
+
+    public function getSubscriptionSource(): string
+    {
+        if (!$this->activeSubscription)
+            return '-';
+
+        if ($this->activeSubscription->period === 'trial')
+            return 'Випробувальний період';
+
+        return match ($this->activeSubscription->source) {
+            'web' => match ($this->activeSubscription->provider) {
+                'liqpay' => 'LiqPay',
+                default => 'Видана адміном',
+            },
+            'mobile' => 'Мобільна версія',
+            'mobile.ios' => 'iOS',
+            'mobile.android' => 'Android',
+            default => '-'
+        };
+    }
+
+    public function getSubscriptionPrice(): string
+    {
+        if (!$this->activeSubscription)
+            return '';
+
+        return match ($this->activeSubscription->provider) {
+            'liqpay' => $this->activeSubscription->price . ' ГРН',
+            'revenuecat' => $this->activeSubscription->price . ' USD',
+            default => ''
+        };
+    }
+
 }

@@ -16,12 +16,15 @@ class CategoriesService
     final public function getCategories(?ArticleCategory $articleCategory = null): array
     {
         if (!$articleCategory)
-            $articleCategory = ArticleCategory::whereType($this->type)->whereNull('parent_id')->first();
+            $articleCategory = ArticleCategory::whereType($this->type)
+                ->whereNull('parent_id')
+                ->first();
 
         $categories = $articleCategory->children()
             ->whereIsActive(1)
-            ->select(['id', 'name', 'sub_title'])
+            ->select(['id', 'name', 'sub_title', 'position'])
             ->withCount('children')
+            ->orderBy('position')
             ->get()
             ->toArray();
 
@@ -45,7 +48,8 @@ class CategoriesService
                         ->orWhere('sub_title', 'LIKE', '%' . $q . '%');
                 })
                 ->with('parent', 'parent.parent', 'parent.parent.parent', 'parent.parent.parent.parent', 'parent.parent.parent.parent.parent')
-                ->select(['id', 'name', 'sub_title', 'parent_id'])
+                ->select(['id', 'name', 'sub_title', 'parent_id', 'position'])
+                ->orderBy('position')
                 ->get()
         );
     }
@@ -90,6 +94,7 @@ class CategoriesService
                         'name' => $category->name,
                         'sub_title' => $category->sub_title,
                         'checked' => $this->isCategoryChecked($id),
+                        'position' => $category->position,
                         'children' => [],
                     ];
                 }
@@ -98,7 +103,22 @@ class CategoriesService
             }
         }
 
+        $this->sortTree($tree);
+
         return $tree;
+    }
+
+    private function sortTree(array &$tree): void
+    {
+        usort($tree, function ($a, $b) {
+            return $a['position'] <=> $b['position'];
+        });
+
+        foreach ($tree as &$node) {
+            if (!empty($node['children'])) {
+                $this->sortTree($node['children']);
+            }
+        }
     }
 
     private function isCategoryExpanded(int $categoryId): bool

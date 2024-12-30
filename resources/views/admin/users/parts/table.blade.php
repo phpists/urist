@@ -26,7 +26,13 @@
             Період підписки
         </th>
         <th class="pr-0 text-center">
+            Ціна підписки
+        </th>
+        <th class="pr-0 text-center">
             Стан підписки
+        </th>
+        <th class="pr-0 text-center">
+            Джерело підписки
         </th>
         <th class="pr-0 text-center">
             Дії
@@ -34,7 +40,7 @@
     </tr>
     </thead>
     <tbody id="blog_table" class="blog_table">
-        @foreach($users as $user)
+    @foreach($users as $user)
         <tr>
             <td class="pr-0 text-center">
                 {{ $user->id }}
@@ -61,27 +67,39 @@
                 {{ $user->activeSubscription ? __('subscription.'.$user->activeSubscription->period) . ' (' . $user->pendingSubscription->expires_at->format('d.m.y') . ')' : '-' }}
             </td>
             <td class="pr-0 text-center">
+                {{ $user->getSubscriptionPrice() }}
+            </td>
+            <td class="pr-0 text-center">
                 @if($user->activeSubscription && $user->activeSubscription->cancelled_at)
-                    <span class="label label-warning label-inline">Закінчується</span>
+                    <span class="label label-warning label-inline">Скасована</span>
                 @elseif($user->activeSubscription)
                     <span class="label label-success label-inline">Активна</span>
                 @else
                     <span class="label label-danger label-inline">Неактивна</span>
                 @endif
             </td>
+            <td class="pr-0 text-center">
+                {{ $user->getSubscriptionSource() }}
+            </td>
             <td class="justify-content-center pr-0 d-flex">
-                <button type="button" title="Підписка" data-url="{{ route('admin.users.subscribe', $user) }}"
-                        data-toggle="modal" data-target="#subscribeUser" class="btn btn-sm btn-clean btn-icon edit-btn">
-                    <i class="las la-star"></i>
-                </button>
-                @if($user->activeSubscription)
-                <form method="POST" action="{{ route('admin.users.unsubscribe', $user) }}" style="display: inline">
-                    @csrf
-                <button type="submit" title="Анулювати підписку" data-url="{{ route('admin.users.subscribe', $user) }}"
-                        class="btn btn-sm btn-clean btn-icon edit-btn" onclick="return confirm('Ви впевнені, що хочете анулювати підписку користувача?')">
-                    <i class="fas fa-minus-circle"></i>
-                </button>
-                </form>
+                @if(!$user->activeSubscription)
+                    <button type="button" title="Підписка" data-url="{{ route('admin.users.subscribe', $user) }}"
+                            data-toggle="modal" data-target="#subscribeUser"
+                            class="btn btn-sm btn-clean btn-icon edit-btn">
+                        <i class="las la-star"></i>
+                    </button>
+                @endif
+                @if($user->activeSubscription && $user->activeSubscription->source !== 'mobile')
+                    <form method="POST" action="{{ route('admin.users.unsubscribe', $user) }}"
+                          style="display: inline">
+                        @csrf
+                        <button type="submit" title="Анулювати підписку"
+                                data-url="{{ route('admin.users.subscribe', $user) }}"
+                                class="btn btn-sm btn-clean btn-icon edit-btn"
+                                onclick="return confirm('Ви впевнені, що хочете анулювати підписку користувача?')">
+                            <i class="fas fa-minus-circle"></i>
+                        </button>
+                    </form>
                 @endif
             </td>
         </tr>
@@ -90,5 +108,5 @@
 </table>
 
 @if(method_exists($users, 'links'))
-{{ $users->links('vendor.pagination.product_pagination') }}
+    {{ $users->links('vendor.pagination.product_pagination') }}
 @endif

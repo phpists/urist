@@ -90,3 +90,59 @@ input[name="search"]:focus + .searchItemsContainer {
 #filterAccordionItemsContainer > .accordion__inner > .accordion__panel > .accordion__content > .accordion__inner > .accordion__panel > .accordion__header span.name-text {
     font-weight: bolder;
 }
+
+.accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__header {
+    padding-left: 85px;
+}
+
+.accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__header {
+    padding-left: 95px;
+}
+
+.accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__header {
+    padding-left: 105px;
+}
+
+.accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__header {
+    padding-left: 115px;
+}
+
+.accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__header {
+    padding-left: 125px;
+}
+
+.accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__header {
+    padding-left: 135px;
+}
+
+.accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__header {
+    padding-left: 145px;
+}
+
+.accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__header {
+    padding-left: 155px;
+}
+
+.accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__header {
+    padding-left: 165px;
+}
+
+.accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__header {
+    padding-left: 175px;
+}
+
+.accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__header {
+    padding-left: 185px;
+}
+
+.accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__inner>.accordion__panel .accordion__header {
+    padding-left: 195px;
+}
+
+.highlighted {
+    background-color: yellow
+}
+
+.accordion__header:has(.accordion__trigger[aria-expanded=true]) .highlighted {
+    color: black;
+}

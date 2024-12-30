@@ -71,7 +71,7 @@ class RevenueCatController extends Controller
                     $this->payload,
                     $data['purchased_at_ms'],
                     $data['price_in_purchased_currency'],
-                    Subscription::SOURCE_MOBILE,
+                    $this->getSource($data['store']),
                     Subscription::PROVIDER_REVENUECAT,
                 );
 
@@ -154,6 +154,16 @@ class RevenueCatController extends Controller
             \Log::error($e->getMessage());
             abort(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+    private function getSource(string $store): string
+    {
+        return match ($store) {
+            'APP_STORE' => Subscription::SOURCE_MOBILE_IOS,
+            'PLAY_STORE' => Subscription::SOURCE_MOBILE_ANDROID,
+            default => Subscription::SOURCE_MOBILE,
+        };
     }
 
 }

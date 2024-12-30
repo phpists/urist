@@ -30,8 +30,8 @@ class LiqPayService
         return match ($this->payment->get('action')) {
             'subscribe' => match ($this->payment->get('status')) {
                 'subscribed' => $this->handleNewSubscription(),
+                'unsubscribed' => $this->handleUnsubscribe()
             },
-            'unsubscribe' => $this->handleUnsubscribe(),
             'regular' => $this->handleRegularPayment(),
         };
     }

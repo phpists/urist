@@ -7,7 +7,7 @@
             <h1 class="page-title subscription-section__title">{{ $systemPage->title ?? 'Моя підписка' }}</h1>
             <div class="current-subscription">
                 @if($user->activeSubscription)
-                    @if($user->allSubscriptions()->count() == 1)
+                    @if($user->allSubscriptions()->count() == 1 && $user->activeSubscription->period === 'trial')
                         <div class="current-subscription__info">
                             <h3 class="current-subscription__title">{{ \App\Helpers\SubscriptionHelper::getVariableTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_FREE_TRIAL) }}</h3>
                             <div class="current-subscription__date">{{ \App\Helpers\SubscriptionHelper::getVariableSubTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_FREE_TRIAL) }}</div>
@@ -22,7 +22,7 @@
                             @if($user->activeSubscription->isCancelled())
                                 <h3 class="current-subscription__title">{{ \App\Helpers\SubscriptionHelper::getVariableTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_CANCELLED) }}</h3>
                                 <div class="current-subscription__date">{{ \App\Helpers\SubscriptionHelper::getVariableSubTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_CANCELLED) }}</div>
-                                @if($user->pendingSubscription)
+                                @if($user->pendingSubscription && $user->activeSubscription->id != $user->pendingSubscription->id)
                                     <hr>
 
                                     <h3 class="current-subscription__title">{{ \App\Helpers\SubscriptionHelper::getVariableTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_PENDING) }}</h3>
@@ -121,7 +121,7 @@
                                             </div>
                                         </div>
 
-                                        @if(!$user->activeSubscription)
+                                        @if(!$user->activeSubscription || $user->activeSubscription->period === 'trial')
                                         @php($monthPaymentData = $plan->getCheckoutData($user, 'month'))
                                         <form id="monthPaymentForm" method="POST" action="{{ $monthPaymentData->action }}" accept-charset="utf-8">
                                             <input type="hidden" name="data" value="{{ $monthPaymentData->data }}"/>

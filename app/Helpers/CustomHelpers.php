@@ -55,6 +55,10 @@ if (!function_exists('get_highlighted_text')) {
         if (!$needle)
             return $text;
 
-        return \Str::replace($needle, "<span style='background-color: yellow'>{$needle}</span>", $text);
+        return \Str::replace(
+            $needle,
+            "<span class='highlighted'>{$needle}</span>",
+            Str::replace(mb_ucfirst($needle), "<span class='highlighted'>".mb_ucfirst($needle)."</span>", $text),
+            false);
     }
 }

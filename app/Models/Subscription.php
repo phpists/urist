@@ -15,6 +15,8 @@ class Subscription extends Model
 
     const SOURCE_WEB = 'web';
     const SOURCE_MOBILE = 'mobile';
+    const SOURCE_MOBILE_IOS = 'mobile.ios';
+    const SOURCE_MOBILE_ANDROID = 'mobile.android';
 
     const PROVIDER_LIQPAY = 'liqpay';
     const PROVIDER_REVENUECAT = 'revenuecat';
