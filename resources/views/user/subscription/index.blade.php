@@ -29,11 +29,17 @@
                                     <div class="current-subscription__date">{{ \App\Helpers\SubscriptionHelper::getVariableSubTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_PENDING) }}</div>
                                 @endif
                             @else
-                                <h3 class="current-subscription__title">{{ \App\Helpers\SubscriptionHelper::getVariableTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_ACTIVE) }}</h3>
-                                <div class="current-subscription__date">{{ \App\Helpers\SubscriptionHelper::getVariableSubTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_ACTIVE) }}</div>
+                                @if(!$user->activeSubscription?->source || $user->activeSubscription?->source == \App\Models\Subscription::SOURCE_WEB)
+                                    <h3 class="current-subscription__title">{{ \App\Helpers\SubscriptionHelper::getVariableTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_ACTIVE) }}</h3>
+                                    <div
+                                        class="current-subscription__date">{{ \App\Helpers\SubscriptionHelper::getVariableSubTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_ACTIVE) }}</div>
+                                @else
+                                    <h3 class="current-subscription__title">{{ \App\Helpers\SubscriptionHelper::getVariableTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_ACTIVE_MOBILE) }}</h3>
+                                    <div class="current-subscription__date">{{ \App\Helpers\SubscriptionHelper::getVariableSubTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_ACTIVE_MOBILE) }}</div>
+                                @endif
                             @endif
                         </div>
-                        @if(!$user->activeSubscription->isCancelled() && $user->activeSubscription->session)
+                        @if(!$user->activeSubscription->isCancelled() && $user->activeSubscription->source === \App\Models\Subscription::SOURCE_WEB)
                             <form action="{{ route('user.subscription.cancel') }}" method="POST">
                                 @csrf
                                 @method('DELETE')
@@ -42,6 +48,10 @@
                                     підписку
                                 </button>
                             </form>
+                        @elseif (in_array($user->activeSubscription->source, [\App\Models\Subscription::SOURCE_MOBILE, \App\Models\Subscription::SOURCE_MOBILE_ANDROID, \App\Models\Subscription::SOURCE_MOBILE_IOS]))
+                            <div class="current-subscription__date">Оплата підписки зроблена через додаток, скасувати
+                                можна лише через ваш смартфон.
+                            </div>
                         @endif
                     @endif
                 @else
@@ -116,37 +126,45 @@
                                                  style="display: none">{{ ($plan->price_annual / 12) }}₴ / 1 міс
                                             </div>
                                             <div class="tariff-card__discount" data-months="12"
-                                                 data-price="{{ $plan->price_annual }}₴">{{ ($plan->price_monthly * 12) }}₴ / 12
+                                                 data-price="{{ $plan->price_annual }}₴">{{ ($plan->price_monthly * 12) }}
+                                                ₴ / 12
                                                 міс{{-- (-{{ $plan->getAnnualDiscountSum() }}₴)--}}
                                             </div>
                                         </div>
 
                                         @if(!$user->activeSubscription || $user->activeSubscription->period === 'trial')
-                                        @php($monthPaymentData = $plan->getCheckoutData($user, 'month'))
-                                        <form id="monthPaymentForm" method="POST" action="{{ $monthPaymentData->action }}" accept-charset="utf-8">
-                                            <input type="hidden" name="data" value="{{ $monthPaymentData->data }}"/>
-                                            <input type="hidden" name="signature" value="{{ $monthPaymentData->signature }}"/>
-                                            <input type="image"
-                                                   src="//static.liqpay.ua/buttons/payUk.png" style="height: 70px;"/>
-                                        </form>
-                                        @php($yearPaymentData = $plan->getCheckoutData($user, 'year'))
-                                        <form id="yearPaymentForm" method="POST" action="{{ $yearPaymentData->action }}" accept-charset="utf-8" style="display: none">
-                                            <input type="hidden" name="data" value="{{ $yearPaymentData->data }}"/>
-                                            <input type="hidden" name="signature" value="{{ $yearPaymentData->signature }}"/>
-                                            <input type="image"
-                                                   src="//static.liqpay.ua/buttons/payUk.png" style="height: 70px;"/>
-                                        </form>
+                                            @php($monthPaymentData = $plan->getCheckoutData($user, 'month'))
+                                            <form id="monthPaymentForm" method="POST"
+                                                  action="{{ $monthPaymentData->action }}" accept-charset="utf-8">
+                                                <input type="hidden" name="data" value="{{ $monthPaymentData->data }}"/>
+                                                <input type="hidden" name="signature"
+                                                       value="{{ $monthPaymentData->signature }}"/>
+                                                <input type="image"
+                                                       src="//static.liqpay.ua/buttons/payUk.png"
+                                                       style="height: 70px;"/>
+                                            </form>
+                                            @php($yearPaymentData = $plan->getCheckoutData($user, 'year'))
+                                            <form id="yearPaymentForm" method="POST"
+                                                  action="{{ $yearPaymentData->action }}" accept-charset="utf-8"
+                                                  style="display: none">
+                                                <input type="hidden" name="data" value="{{ $yearPaymentData->data }}"/>
+                                                <input type="hidden" name="signature"
+                                                       value="{{ $yearPaymentData->signature }}"/>
+                                                <input type="image"
+                                                       src="//static.liqpay.ua/buttons/payUk.png"
+                                                       style="height: 70px;"/>
+                                            </form>
                                         @endif
 
-{{--                                        @if(!$user->activeSubscription--}}
-{{--                                                || ($user->activeSubscription && $user->activeSubscription->isCancelled() && !$user->pendingSubscription))--}}
-{{--                                            <button class="button tariff-card__buy-button show_payment_modal"--}}
-{{--                                                    type="button"--}}
-{{--                                                    data-id="{{ $plan->id }}" data-title="{{ $plan->title }}"--}}
-{{--                                                    data-url="{{ route('user.subscription.payment-data', $plan) }}"--}}
-{{--                                                    data-modal="modal-payment">Обрати--}}
-{{--                                            </button>--}}
-{{--                                        @endif--}}
+                                        {{--                                        @if(!$user->activeSubscription--}}
+                                        {{--                                                || ($user->activeSubscription && $user->activeSubscription->isCancelled() && !$user->pendingSubscription))--}}
+                                        {{--                                            <button class="button tariff-card__buy-button show_payment_modal"--}}
+                                        {{--                                                    type="button"--}}
+                                        {{--                                                    data-id="{{ $plan->id }}" data-title="{{ $plan->title }}"--}}
+                                        {{--                                                    data-url="{{ route('user.subscription.payment-data', $plan) }}"--}}
+                                        {{--                                                    data-modal="modal-payment">Обрати--}}
+                                        {{--                                            </button>--}}
+                                        {{--                                        @endif--}}
                                     </div>
                                 </div>
                             </div>

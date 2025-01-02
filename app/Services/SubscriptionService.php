@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class SubscriptionService
 {
 
-    final function create(SubscriptionSession $subscriptionSession, array $payload, string $startsAt, string|int $amount, string $source, string $provider): void
+    final function create(SubscriptionSession $subscriptionSession, array $payload, string $startsAt, string|float $amount, string $source, string $provider): void
     {
         $addPeriod = 'add' . ucfirst($subscriptionSession->period);
 
@@ -47,7 +47,7 @@ class SubscriptionService
         }
     }
 
-    final function continue(SubscriptionSession $subscriptionSession, array $payload, string $startsAt, string|int $amount): void
+    final function continue(SubscriptionSession $subscriptionSession, array $payload, string $startsAt, string|float $amount): void
     {
         $addPeriod = 'add' . ucfirst($subscriptionSession->period);
         $endAt = Carbon::createFromTimestamp(substr($startsAt, 0, -3))

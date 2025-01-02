@@ -19,6 +19,7 @@ enum SettingEnum: string
     case SUBSCRIPTION_TEXT_FREE = 'subscription_text_free';
     case SUBSCRIPTION_TEXT_CANCELLED = 'subscription_text_cancelled';
     case SUBSCRIPTION_TEXT_ACTIVE = 'subscription_text_active';
+    case SUBSCRIPTION_TEXT_ACTIVE_MOBILE = 'subscription_text_active_mobile';
     case SUBSCRIPTION_TEXT_PENDING = 'subscription_text_pending';
     case SUBSCRIPTION_TEXT_MISSING = 'subscription_text_missing';
     case FACEBOOK_URL = 'facebook_url';

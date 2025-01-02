@@ -62,6 +62,11 @@ class SettingSeeder extends Seeder
                 'value' => 'Підписка дійсна, періодичність списання коштів - {activePricePeriod}|Наступний платіж {activeExpiresAt}'
             ],
             [
+                'name' => SettingEnum::SUBSCRIPTION_TEXT_ACTIVE_MOBILE,
+                'title' => 'Текст для активної підписки, яка оформлена через мобільний додаток. Розділено символом "|". {activeExpiresAt} - дата закінчення оплаченого періоду/наступного платежа',
+                'value' => 'Підписка дійсна, оформлена через додаток|Наступний платіж {activeExpiresAt}'
+            ],
+            [
                 'name' => SettingEnum::SUBSCRIPTION_TEXT_MISSING,
                 'title' => 'Текст про відсутність підписки',
                 'value' => 'Наразі у вас немає активної підписки!'
