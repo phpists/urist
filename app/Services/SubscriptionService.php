@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\RoleEnum;
+use App\Models\Subscription;
 use App\Models\SubscriptionSession;
 use App\Models\User;
 use Carbon\Carbon;
@@ -76,21 +77,27 @@ class SubscriptionService
             throw new Exception('Не вдалось скасувати підписку');
     }
 
-    final function move(User $fromUser, User $toUser)
+    final function move(int $fromUserId, int $toUserId)
     {
         try {
             DB::beginTransaction();
-            $subscription = $fromUser->lastRevenueSubscription;
-            $subscription->update(['user_id' => $toUser->id]);
-            $subscription->session->update(['user_id' => $toUser->id]);
+            $subscription = Subscription::whereProvider(Subscription::PROVIDER_REVENUECAT)
+                ->whereUserId($fromUserId)
+                ->orderBy('id', 'desc')
+                ->firstOrFail();
+            $subscription->update(['user_id' => $toUserId]);
+            $subscription->session->update(['user_id' => $toUserId]);
 
-            $fromUser->removeRole(RoleEnum::MAX->value);
+            $fromUser = User::find($fromUserId);
+            $fromUser?->removeRole(RoleEnum::MAX->value);
+
+            $toUser = User::find($toUserId);
             $toUser->assignRole(RoleEnum::MAX->value);
 
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
-            \Log::error('ERROR on transfer: ' . $e->getMessage() . ' subId' . ($subscription->id ?? '-') . ' from' . $fromUser->id . ' to ' . $toUser->id);
+            \Log::error('ERROR on transfer: ' . $e->getMessage() . ' subId' . ($subscription->id ?? '-') . ' from' . $fromUserId . ' to ' . $toUserId);
         }
     }
 

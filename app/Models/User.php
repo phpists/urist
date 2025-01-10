@@ -241,7 +241,11 @@ class User extends Authenticatable implements JWTSubject
 
         return match ($this->activeSubscription->provider) {
             'liqpay' => $this->activeSubscription->price . ' ГРН',
-            'revenuecat' => $this->activeSubscription->price . ' USD',
+            'revenuecat' => match ($this->activeSubscription->source) {
+                Subscription::SOURCE_MOBILE_IOS => $this->activeSubscription->price . ' USD',
+                Subscription::SOURCE_MOBILE_ANDROID => $this->activeSubscription->price . ' ГРН',
+                default => '',
+            },
             default => ''
         };
     }

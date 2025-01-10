@@ -69,7 +69,8 @@
                      . ' (' . ($user->activeSubscription->period == 'trial'
                                 ? 'пробний період до '
                                 : (is_null($user->activeSubscription->subscription_session_id) ? 'видана адміном до ' : ''))
-                            . $user->activeSubscription->expires_at->format('d.m.y') . ($user->pendingSubscription && !is_null($user->pendingSubscription->subscription_session_id) ? ' | далі йде оплачена підписка' : '') . ')'
+                            . $user->activeSubscription->expires_at->format('d.m.y')
+                            . ($user->pendingSubscription && !is_null($user->pendingSubscription->subscription_session_id) ? ' | далі йде оплачена підписка до ' . $user->pendingSubscription->expires_at->format('d.m.y') : '') . ')'
                     : '-' }}
             </td>
             <td class="pr-0 text-center">

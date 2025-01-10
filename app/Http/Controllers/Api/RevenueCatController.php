@@ -136,18 +136,15 @@ class RevenueCatController extends Controller
 
     private function handleTransfer()
     {
-        $fromId = current(array_filter($this->payload['event']['transferred_from'], function($item) {
-            return ctype_digit($item);
-        }));
-        $fromUser = User::find($fromId);
-
-        $toId = current(array_filter($this->payload['event']['transferred_to'], function($item) {
-            return ctype_digit($item);
-        }));
-        $toUser = User::find($toId);
-
         try {
-            $this->subscriptionService->move($fromUser, $toUser);
+            $fromId = current(array_filter($this->payload['event']['transferred_from'], function($item) {
+                return ctype_digit($item);
+            }));
+            $toId = current(array_filter($this->payload['event']['transferred_to'], function($item) {
+                return ctype_digit($item);
+            }));
+
+            $this->subscriptionService->move($fromId, $toId);
 
             return Response::HTTP_OK;
         } catch (\Exception $e) {
