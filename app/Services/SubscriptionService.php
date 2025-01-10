@@ -55,6 +55,7 @@ class SubscriptionService
             ->format('Y-m-d');
 
         $subscriptionSession->subscription->update([
+            'cancelled_at' => null,
             'expires_at' => $endAt
         ]);
 
@@ -91,6 +92,16 @@ class SubscriptionService
             DB::rollBack();
             \Log::error('ERROR on transfer: ' . $e->getMessage() . ' subId' . ($subscription->id ?? '-') . ' from' . $fromUser->id . ' to ' . $toUser->id);
         }
+    }
+
+    /**
+     * @throws Exception
+     */
+    final function resume(SubscriptionSession $subscriptionSession)
+    {
+        $subscriptionSession->subscription->update(['cancelled_at' => null]);
+        if (!$subscriptionSession->subscription->save())
+            throw new Exception('Не вдалось відновити підписку');
     }
 
 }

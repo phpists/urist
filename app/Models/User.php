@@ -163,7 +163,9 @@ class User extends Authenticatable implements JWTSubject
 
     public function pendingSubscription(): HasOne
     {
-        return $this->activeSubscription()->latest();
+        return $this->allActiveSubscriptions()->count() > 1
+            ? $this->activeSubscription()->latest()
+            : $this->subscription()->where('id', false);
     }
 
     public function hadSubscription(): bool
@@ -242,6 +244,11 @@ class User extends Authenticatable implements JWTSubject
             'revenuecat' => $this->activeSubscription->price . ' USD',
             default => ''
         };
+    }
+
+    public function hasActivePaidSubscription(): bool
+    {
+        return $this->allActiveSubscriptions()->whereNotNull('subscription_session_id')->exists();
     }
 
 }

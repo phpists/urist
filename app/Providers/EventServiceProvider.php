@@ -5,6 +5,7 @@ namespace App\Providers;
 
 use App\Events\ArticleCategoryDeleted;
 use App\Events\Registered;
+use App\Events\UserLoggedInEvent;
 use App\Events\UserSubscriptionExpired;
 use App\Listeners\ProcessPostCategoryDelete;
 use App\Events\UserRegisteredEvent;
@@ -45,6 +46,9 @@ class EventServiceProvider extends ServiceProvider
         UserSubscriptionExpired::class => [
             RemoveRole::class,
             SendSubscriptionExpirationNotification::class
+        ],
+        UserLoggedInEvent::class => [
+            GrantFreeTrialAccess::class,
         ],
 
         // Socialite

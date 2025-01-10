@@ -22,6 +22,7 @@ enum SettingEnum: string
     case SUBSCRIPTION_TEXT_ACTIVE_MOBILE = 'subscription_text_active_mobile';
     case SUBSCRIPTION_TEXT_PENDING = 'subscription_text_pending';
     case SUBSCRIPTION_TEXT_MISSING = 'subscription_text_missing';
+    case SUBSCRIPTION_TEXT_PAID_AFTER_FREE = 'subscription_text_paid_after_free';
     case FACEBOOK_URL = 'facebook_url';
     case SHARE_URL = 'share_url';
     case SHARE_TEXT = 'share_text';

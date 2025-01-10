@@ -64,7 +64,13 @@
                 {{ $user->files()->count() }}
             </td>
             <td class="pr-0 text-center">
-                {{ $user->activeSubscription ? __('subscription.'.$user->activeSubscription->period) . ' (' . $user->pendingSubscription->expires_at->format('d.m.y') . ')' : '-' }}
+                {{ $user->activeSubscription
+                    ? __('subscription.'.$user->activeSubscription->period)
+                     . ' (' . ($user->activeSubscription->period == 'trial'
+                                ? 'пробний період до '
+                                : (is_null($user->activeSubscription->subscription_session_id) ? 'видана адміном до ' : ''))
+                            . $user->activeSubscription->expires_at->format('d.m.y') . ($user->pendingSubscription && !is_null($user->pendingSubscription->subscription_session_id) ? ' | далі йде оплачена підписка' : '') . ')'
+                    : '-' }}
             </td>
             <td class="pr-0 text-center">
                 {{ $user->getSubscriptionPrice() }}
@@ -89,7 +95,7 @@
                         <i class="las la-star"></i>
                     </button>
                 @endif
-                @if($user->activeSubscription && $user->activeSubscription->source !== 'mobile')
+                @if($user->activeSubscription && !str_contains($user->activeSubscription->source, 'mobile'))
                     <form method="POST" action="{{ route('admin.users.unsubscribe', $user) }}"
                           style="display: inline">
                         @csrf

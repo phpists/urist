@@ -156,6 +156,20 @@ class RevenueCatController extends Controller
         }
     }
 
+    private function handleUncancellation()
+    {
+        $user = $this->getUser();
+
+        try {
+            $this->subscriptionService
+                ->resume($user->lastRevenueSubscription?->session);
+
+            return Response::HTTP_OK;
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            abort(Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 
     private function getSource(string $store): string
     {

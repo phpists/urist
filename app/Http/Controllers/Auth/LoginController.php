@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserLoggedInEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserLoginRequest;
 use App\Models\Session;
@@ -16,6 +17,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
@@ -175,8 +177,10 @@ class LoginController extends Controller
         $user->save();
 
         request()->session()->forget('password_hash_web');
-        \Auth::login($user, true);
-        \Auth::logoutOtherDevices($password);
+        Auth::login($user, true);
+        Auth::logoutOtherDevices($password);
+
+        UserLoggedInEvent::dispatch($user);
     }
 
 }

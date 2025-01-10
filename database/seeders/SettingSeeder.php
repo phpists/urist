@@ -92,6 +92,11 @@ class SettingSeeder extends Seeder
                 'value' => 'Наступний оплачуваний період|Наступний платіж {pendingExpiresAt}'
             ],
             [
+                'name' => SettingEnum::SUBSCRIPTION_TEXT_PAID_AFTER_FREE,
+                'title' => 'Текст для платної підписки після поточної безкоштовної. Розділено символом "|". Змінні: {activeExpiresAt} - дата закінчення оплаченого періоду/наступного платежа, {pendingExpiresAt} - дата закінчення очікуючого оплаченого періоду/наступного платежа',
+                'value' => 'Після закінчення безкоштовного періоду почнеться оплата|Наступний платіж {activeExpiresAt}'
+            ],
+            [
                 'name' => SettingEnum::FACEBOOK_URL,
                 'title' => 'Посилання на Facebook',
                 'value' => 'https://www.facebook.com/people/Lex-Go/61560082906686/'

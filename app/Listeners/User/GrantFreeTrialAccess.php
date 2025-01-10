@@ -22,9 +22,9 @@ class GrantFreeTrialAccess
     /**
      * Handle the event.
      */
-    public function handle(Registered $event): void
+    public function handle($event): void
     {
-        if ($event->freeTrial)
+        if ($event->freeTrial && $event->user->allSubscriptions()->count() === 0)
             Subscription::create([
                 'plan_id' => Plan::first()->id,
                 'user_id' => $event->user->id,

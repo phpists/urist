@@ -38,8 +38,12 @@ class LiqPayService
 
     final function getCheckoutPrerequisites(User $user, Plan $plan, string $period): LiqPayCheckoutFormPrerequisitesInterface
     {
-        if ($user->activeSubscription?->isCancelled()) {
+        $activeSubscriptionsCount = $user->allActiveSubscriptions()->count();
+        if ($activeSubscriptionsCount == 1) {
             $start_date = $user->activeSubscription->expires_at;
+        } elseif ($activeSubscriptionsCount > 2) {
+            $lastSubscription = $user->allActiveSubscriptions()->latest();
+            $start_date = $lastSubscription->expires_at;
         } else {
             $start_date = Carbon::now();
         }

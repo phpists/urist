@@ -17,6 +17,12 @@
                             <h3 class="current-subscription__title">{{ \App\Helpers\SubscriptionHelper::getVariableTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_FREE) }}</h3>
                             <div class="current-subscription__date">{{ \App\Helpers\SubscriptionHelper::getVariableSubTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_FREE) }}</div>
                         </div>
+                        @if ($user->pendingSubscription && !is_null($user->pendingSubscription->subscription_session_id))
+                        <div class="current-subscription__info">
+                            <h3 class="current-subscription__title">{{ \App\Helpers\SubscriptionHelper::getVariableTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_PAID_AFTER_FREE) }}</h3>
+                            <div class="current-subscription__date">{{ \App\Helpers\SubscriptionHelper::getVariableSubTitle(\App\Enums\SettingEnum::SUBSCRIPTION_TEXT_PAID_AFTER_FREE) }}</div>
+                        </div>
+                        @endif
                     @else
                         <div class="current-subscription__info">
                             @if($user->activeSubscription->isCancelled())
@@ -132,7 +138,7 @@
                                             </div>
                                         </div>
 
-                                        @if(!$user->activeSubscription || $user->activeSubscription->period === 'trial')
+                                        @if(!$user->hasActivePaidSubscription())
                                             @php($monthPaymentData = $plan->getCheckoutData($user, 'month'))
                                             <form id="monthPaymentForm" method="POST"
                                                   action="{{ $monthPaymentData->action }}" accept-charset="utf-8">

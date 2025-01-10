@@ -68,7 +68,7 @@ class Subscription extends Model
 
     public function scopeActive($query)
     {
-        $query->where('subscriptions.expires_at', '>', Carbon::now()->format('Y-m-d'));
+        $query->where('subscriptions.expires_at', '>', Carbon::now());
     }
 
 }

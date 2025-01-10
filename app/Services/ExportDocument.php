@@ -14,18 +14,28 @@ class ExportDocument
     {
         $templateProcessor = new TemplateProcessor(resource_path('data/template.docx'));
 
-        $ppTable = new Table();
-        $ppTable->addRow();
-        $cell = $ppTable->addCell();
-        \PhpOffice\PhpWord\Shared\Html::addHtml($cell, '<h1>ПП</h1>');
-        \PhpOffice\PhpWord\Shared\Html::addHtml($cell, self::getClearHtml($model->pp));
-        $templateProcessor->setComplexBlock('pp', $ppTable);
-        $statyaKkTable = new Table();
-        $statyaKkTable->addRow();
-        $cell = $statyaKkTable->addCell();
-        \PhpOffice\PhpWord\Shared\Html::addHtml($cell, '<h1>Судове рішення</h1>');
-        \PhpOffice\PhpWord\Shared\Html::addHtml($cell, self::getClearHtml($model->statya_kk));
-        $templateProcessor->setComplexBlock('statya_kk', $statyaKkTable);
+        if ($model instanceof File && is_null($model->criminal_article_id)) {
+            $opysTable = new Table();
+            $opysTable->addRow();
+            $cell = $opysTable->addCell();
+            \PhpOffice\PhpWord\Shared\Html::addHtml($cell, '<h1>Опис</h1>');
+            \PhpOffice\PhpWord\Shared\Html::addHtml($cell, self::getClearHtml($model->pp));
+            $templateProcessor->setComplexBlock('pp', $opysTable);
+            $templateProcessor->setValue('statya_kk', '');
+        } else {
+            $ppTable = new Table();
+            $ppTable->addRow();
+            $cell = $ppTable->addCell();
+            \PhpOffice\PhpWord\Shared\Html::addHtml($cell, '<h1>ПП</h1>');
+            \PhpOffice\PhpWord\Shared\Html::addHtml($cell, self::getClearHtml($model->pp));
+            $templateProcessor->setComplexBlock('pp', $ppTable);
+            $statyaKkTable = new Table();
+            $statyaKkTable->addRow();
+            $cell = $statyaKkTable->addCell();
+            \PhpOffice\PhpWord\Shared\Html::addHtml($cell, '<h1>Судове рішення</h1>');
+            \PhpOffice\PhpWord\Shared\Html::addHtml($cell, self::getClearHtml($model->statya_kk));
+            $templateProcessor->setComplexBlock('statya_kk', $statyaKkTable);
+        }
 
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
