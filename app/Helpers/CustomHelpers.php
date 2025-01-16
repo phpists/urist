@@ -9,23 +9,80 @@ if (!function_exists('formatPhoneNumber')) {
 }
 
 if (!function_exists('truncate_by_words')) {
-    function truncate_by_words($text, $maxLength, $end = '...'): string
+    function truncate_by_words($html, $maxLength, $end = '...', $isUtf8 = true): string
     {
-        if (mb_strlen($text) <= $maxLength) {
-            return $text;
+        $output = '';
+        $printedLength = 0;
+        $position = 0;
+        $tags = [];
+
+        // For UTF-8, we need to count multibyte sequences as one character.
+        $re = $isUtf8
+            ? '{</?([a-z]+)[^>]*>|&#?[a-zA-Z0-9]+;|[\x80-\xFF][\x80-\xBF]*}'
+            : '{</?([a-z]+)[^>]*>|&#?[a-zA-Z0-9]+;}';
+
+        while ($printedLength < $maxLength && preg_match($re, $html, $match, PREG_OFFSET_CAPTURE, $position))
+        {
+            list($tag, $tagPosition) = $match[0];
+
+            // Print text leading up to the tag.
+            $str = substr($html, $position, $tagPosition - $position);
+            if ($printedLength + strlen($str) > $maxLength)
+            {
+                $output .= substr($str, 0, $maxLength - $printedLength);
+                $printedLength = $maxLength;
+                break;
+            }
+
+            $output .= $str;
+            $printedLength += strlen($str);
+            if ($printedLength >= $maxLength) break;
+
+            if ($tag[0] == '&' || ord($tag) >= 0x80)
+            {
+                // Pass the entity or UTF-8 multibyte sequence through unchanged.
+                $output .= $tag;
+                $printedLength++;
+            }
+            else
+            {
+                // Handle the tag.
+                $tagName = $match[1][0];
+                if ($tag[1] == '/')
+                {
+                    // This is a closing tag.
+
+                    $openingTag = array_pop($tags);
+                    assert($openingTag == $tagName); // check that tags are properly nested.
+
+                    $output .= $tag;
+                }
+                else if ($tag[strlen($tag) - 2] == '/')
+                {
+                    // Self-closing tag.
+                    $output .= $tag;
+                }
+                else
+                {
+                    // Opening tag.
+                    $output .= $tag;
+                    $tags[] = $tagName;
+                }
+            }
+
+            // Continue after the tag.
+            $position = (int) $tagPosition + strlen($tag);
         }
 
-        // Знаходимо останнє повноцінне слово перед максимальною довжиною
-        $lastSpace = mb_strrpos(mb_substr($text, 0, $maxLength), ' ');
+        // Print any remaining text.
+        if ($printedLength < $maxLength && $position < strlen($html))
+            $output .= substr($html, $position, $maxLength - $printedLength);
 
-        // Відкидаємо символи після останнього пробілу, якщо вони є
-        if ($lastSpace !== false) {
-            $truncatedText = mb_substr($text, 0, $lastSpace);
-        } else {
-            $truncatedText = mb_substr($text, 0, $maxLength);
-        }
+        // Close any open tags.
+        while (!empty($tags))
+            $output .= '</'.array_pop($tags).'>';
 
-        return $truncatedText . $end;
+        return $output . $end;
     }
 }
 
