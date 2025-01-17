@@ -37,6 +37,7 @@
                     </svg>
                     <span>Зміст кодексу</span>
                 </h3>
+                @if(can_user(\App\Enums\PermissionEnum::LEGAL_BASE->value))
                 <button class="button button--outline filter__hide-button" type="button" aria-label="Hide Filter"
                         data-tooltip-left="Регулювання масштабу" data-filter-hide="data-filter-hide">
                     <svg class="button__icon" width="10" height="19">
@@ -49,6 +50,7 @@
                         <use xlink:href="{{ asset('img/sprite.svg#close-modal') }}"></use>
                     </svg>
                 </button>
+                @endif
             </div>
             <form class="search filter__search" id="filter-search-form" autocomplete="off" novalidate="novalidate">
                 <div class="search__group">
