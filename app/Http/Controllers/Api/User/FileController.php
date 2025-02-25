@@ -136,7 +136,9 @@ class FileController extends Controller
     public function update(FileUpdateRequest $request, File $file)
     {
         try {
-            $file->update($request->validated());
+            $data = $request->validated();
+            $data['folder_id'] = $request->post('folder_id');
+            $file->update($data);
 
             return new JsonResponse([
                 'result' => true,

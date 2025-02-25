@@ -22,8 +22,8 @@ class CriminalArticleController extends Controller
 {
     public function index(Request $request) {
         $criminal_articles = CriminalArticle::query()
-            ->when($date_from = $request->input('date_from'), function ($query) use ($date_from) {
-                $query->where('date', '>=', $date_from);
+            ->when($date = $request->input('date'), function ($query) use ($date) {
+                $query->where('date', $date);
             })
             ->when($date_to = $request->input('date_to'), function ($query) use ($date_to) {
                 $query->where('date', '<=', $date_to);

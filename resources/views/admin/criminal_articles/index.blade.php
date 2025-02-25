@@ -69,13 +69,7 @@
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="date" class="form-control" name="date_from" value="{{ request('date_from') }}" placeholder="Дата від"/>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
-                                            </div>
-                                            <input type="date" class="form-control" name="date_to" value="{{ request('date_to') }}" placeholder="Дата до"/>
-                                        </div>
+                                            <input type="date" class="form-control" name="date" value="{{ request('date') }}" placeholder="Дата"/>
                                     </div>
                                 </div>
                             </div>

@@ -271,7 +271,7 @@ class ArticleCategoryController extends Controller
             'position' => 0,
             'is_active' => $category->is_active,
             'sub_title' => $category->sub_title,
-            'type' => $category->type,
+            'type' => $parentCategory->type,
             'full_path' => $category->full_path,
         ]);
         $cloneCategory->articles()->attach($category->articles()->allRelatedIds());

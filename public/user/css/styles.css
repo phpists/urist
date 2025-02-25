@@ -146,3 +146,8 @@ input[name="search"]:focus + .searchItemsContainer {
 .accordion__header:has(.accordion__trigger[aria-expanded=true]) .highlighted {
     color: black;
 }
+
+#notificationsContainer {
+    max-height: 400px;
+    overflow: auto;
+}
