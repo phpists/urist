@@ -30,7 +30,7 @@
                 <form class="sort-form collection-section__sort-form" id="sort-form" autocomplete="off" novalidate="novalidate">
                     <div class="sort-form__group">
                         <select class="select" id="selectSortBy" name="selectSortBy" aria-label="Sort by" required="required">
-                            <option value="hierarchy" @selected(request('sort', 'hierarchy') == 'hierarchy')>Сортувати за ієрархією судових рішень (ВПВС, ОПВС, ККСВС) та хронологією</option>
+                            <option value="hierarchy" @selected(request('sort', 'hierarchy') == 'hierarchy')>Сортувати за ієрархією судових рішень (ВП ВС, ОП ККС ВС, ККС ВС) та хронологією</option>
                             <option value="date" @selected(request('sort', 'hierarchy') == 'date')>Сортувати за зростанням</option>
                         </select>
                     </div>

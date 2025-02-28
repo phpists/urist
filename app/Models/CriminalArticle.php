@@ -15,8 +15,9 @@ class CriminalArticle extends Model
     use HasFactory, Searchable;
 
     const TAGS_PRIORITY = [
-        'ВП ВС' => 3,
-        'ОП ВС' => 2,
+        'ВП ВС' => 4,
+        'ОП ККС ВС' => 3,
+        'ККС ВС' => 2,
     ];
 
     protected $fillable = [
