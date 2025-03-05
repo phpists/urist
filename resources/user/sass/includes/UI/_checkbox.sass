@@ -11,7 +11,7 @@
         font-weight: 400
         color: var(--black)
         margin: 0
-        padding-left: 30px
+        padding-left: 32px
         cursor: pointer
         text-align: left
         user-select: none
@@ -21,20 +21,20 @@
             position: absolute
             top: 0
             left: 0
-            width: 20px
-            height: 20px
+            width: 24px
+            height: 24px
             border: 1px solid var(--blue)
             background: var(--white)
             border-radius: 4px
             transition: all .5s ease
             content: ""
-        
+
         &::after
             position: absolute
             top: 1px
             left: 1px
-            width: 18px
-            height: 18px
+            width: 22px
+            height: 22px
             background: url("data:image/svg+xml,%3Csvg width='11' height='9' viewBox='0 0 11 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10.6778 2.37718L4.87485 8.17974C4.44513 8.60953 3.74806 8.60953 3.31794 8.17974L0.322409 5.18399C-0.10747 4.75419 -0.10747 4.05704 0.322409 3.62716C0.75237 3.1972 1.44938 3.1972 1.87915 3.627L4.09662 5.8445L9.12082 0.820273C9.55078 0.390313 10.2478 0.390638 10.6776 0.820273C11.1074 1.25015 11.1074 1.94706 10.6778 2.37718Z' fill='%23374E73' style='fill:%23374E73;fill:color(display-p3 0.2157 0.3059 0.4510);fill-opacity:1;'/%3E%3C/svg%3E%0A") no-repeat center center
             border-radius: 0
             transition: all .25s ease
@@ -42,10 +42,10 @@
 
         &:hover
             color: var(--blue)
-        
+
         span
             transition: color .5s ease
-            
+
     &__input
         position: absolute
         opacity: 0
@@ -54,6 +54,8 @@
         // Checked
         &:checked + .checkbox__label::before
             background: var(--white)
+            border-color: var(--blue-light)
+            box-shadow: 0 0 8px 0 #3fb7df
 
         &:checked + .checkbox__label::after
             opacity: 1
@@ -68,17 +70,17 @@
         &:not(:disabled):not(:checked) + .checkbox__label:hover::before
             border-color: var(--blue)
 
-        // Active 
+        // Active
         &:not(:disabled):active + .checkbox__label::before
             border-color: var(--blue)
 
-        // Focus 
+        // Focus
         &:focus-visible + .checkbox__label::before
             border-color: var(--blue)
 
         &:focus-visible:not(:checked) + .checkbox__label::before
             border-color: var(--blue)
-        
+
         // Disabled
         &:disabled
 
@@ -94,7 +96,7 @@
 
             + .checkbox__label
                 color: var(--grey-disabled)
-        
+
         &.just-validate-error-field + .checkbox__label::before
             border-color: var(--red)
 

@@ -65,17 +65,13 @@
                 </svg></span><span class="sidebar-menu__title">Моя підписка</span></a></li>
 
                     <li class="sidebar-menu__item">
-                        <a class="button button--app mobile-nav-menu__button" href="{{ \App\Services\SettingService::getValueByName(\App\Enums\SettingEnum::APPLE_STORE_URL->value) }}">
-                            <svg class="button__icon" width="78" height="22">
-                                <use xlink:href="{{ asset('assets/img/sprite.svg#app-store') }}"></use>
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="sidebar-menu__item">
-                        <a class="button button--app mobile-nav-menu__button" href="{{ \App\Services\SettingService::getValueByName(\App\Enums\SettingEnum::GOOGLE_STORE_URL->value) }}">
-                            <svg class="button__icon" width="85" height="21">
-                                <use xlink:href="{{ asset('assets/img/sprite.svg#google-play') }}"></use>
-                            </svg>
+                        <a class="sidebar-menu__link" href="{{ route('logout') }}">
+                            <span class="sidebar-menu__pic">
+                                <svg class="sidebar-menu__icon" width="21" height="19">
+                                    <use xlink:href="{{asset('assets/img/user/sprite.svg#logout')}}"></use>
+                                </svg>
+                            </span>
+                            <span class="sidebar-menu__title">Вихід</span>
                         </a>
                     </li>
                 </ul>

@@ -93,12 +93,17 @@
                 </ul>
             </div>
             <div class="tabs-content page-section__tabs-content" data-tabs-content="tabs-1">
-                <div class="tabs-panel">
+                <div class="tabs-panel" data-tab="pp">
                     <div class="page-section__text">
                         {!! $article->pp !!}
                     </div>
+                    <button class="button button--outline button--xs" type="button" aria-label="Copy" data-tooltip="Копіювати" onclick="copyTextBySelector('.tabs-content .tabs-panel[data-tab=pp] .page-section__text')">
+                        <svg class="button__icon" width="14" height="14">
+                            <use xlink:href="{{ asset('assets/img/user/sprite.svg#copy') }}"></use>
+                        </svg>
+                    </button>
                 </div>
-                <div class="tabs-panel">
+                <div class="tabs-panel" data-tab="kk">
                     <div class="page-section__text ck-content" style="overflow: hidden">
                         {!! $article->statya_kk !!}
                     </div>

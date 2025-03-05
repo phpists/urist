@@ -9,6 +9,10 @@
     @media ($max-md)
         gap: 10px
 
+    @media ($max-sm)
+        gap: 0
+        justify-content: space-between
+
     &__item
         position: relative
 
@@ -40,6 +44,7 @@
             height: 40px
             min-width: 40px
             padding: 5px
+            font-size: 14px
 
         &--big
             padding: 5px 20px
@@ -90,6 +95,8 @@
         padding: 0
         list-style: none
         width: 310px
+        max-height: 370px
+        overflow-y: auto
         opacity: 0
         visibility: hidden
         transform: translateY(10px)

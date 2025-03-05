@@ -23,6 +23,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group w-100">
+                        <label for="createTagColor" class="col-auto col-form-label font-weight-bold">Колір</label>
+                        <div class="col-sm-12">
+                            <div class="input-group">
+                                <input id="createTagPrimaryColor" class="form-control" type="color" name="primary_color" value="#ffffff">
+                                <input id="createTagSecondaryColor" class="form-control" type="color" name="secondary_color" value="#ffffff">
+                            </div>
+                            <span class="form-text text-muted">Вкажіть другий як 255,255,255 щоб застосувати тільки перший як однотонний</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="modal-footer">

@@ -9,6 +9,7 @@ use App\Http\Resources\Api\CriminalArticleResource;
 use App\Models\CriminalArticle;
 use App\Services\ArticleFilterService;
 use App\Services\ExportDocument;
+use App\Services\UserLastViewService;
 use Illuminate\Http\Request;
 use PhpOffice\PhpWord\Element\Table;
 use PhpOffice\PhpWord\TemplateProcessor;
@@ -49,6 +50,7 @@ class CriminalArticleController extends Controller
     public function show(CriminalArticle $criminalArticle)
     {
         can_user(PermissionEnum::LEGAL_BASE->value);
+        UserLastViewService::rememberArticle($criminalArticle->id);
 
         return $criminalArticle;
     }

@@ -5,8 +5,6 @@ namespace App\Http\Controllers\User;
 use App\Models\ArticleCategory;
 use App\Services\CategoriesService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
-use function Termwind\render;
 
 class CategoryController
 {

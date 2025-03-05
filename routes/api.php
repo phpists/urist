@@ -1,6 +1,8 @@
 <?php
 
+use App\Enums\CriminalArticleTypeEnum;
 use App\Http\Controllers\Api\PaymentController;
+use App\Services\UserLastViewService;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,8 +44,14 @@ Route::group(['middleware' => ['jwt', 'api-single-login']], function () {
     Route::get('criminal-articles/categories/{type?}', [\App\Http\Controllers\Api\CriminalArticleController::class, 'categories']);
     Route::get('criminal-articles/search', [\App\Http\Controllers\Api\CriminalArticleController::class, 'search']);
     Route::get('criminal-articles/{type?}', [\App\Http\Controllers\Api\CriminalArticleController::class, 'index']);
+    Route::get('last-category', function () {
+        return UserLastViewService::getCategory();
+    });
     Route::get('criminal-article/{criminalArticle}', [\App\Http\Controllers\Api\CriminalArticleController::class, 'show']);
     Route::get('criminal-article/{article}/export-doc', [\App\Http\Controllers\Api\CriminalArticleController::class, 'exportDoc']);
+    Route::get('last-article', function () {
+        return ['id' => UserLastViewService::getArticle()];
+    });
 
     /** Categories */
     Route::get('categories/search/{type}', [\App\Http\Controllers\Api\CategoryController::class, 'search']);

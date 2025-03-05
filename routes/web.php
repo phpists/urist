@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\CriminalArticleTypeEnum;
 use App\Http\Controllers\Admin\ArticleCategoryController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CriminalArticleController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\FolderController;
 use App\Http\Controllers\User\CategoryController;
+use App\Services\UserLastViewService;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\ProfileController as UserProfileController;
 
@@ -156,6 +158,10 @@ Route::group(['middleware' => ['auth'], 'as' => 'user.'], function () {
         Route::get('articles/{article}/export-doc', [\App\Http\Controllers\User\ArticleController::class, 'exportDoc'])
             ->middleware('throttle:10,5')
             ->name('articles.export-doc');
+        // Last page
+        Route::get('articles-last-page', function () {
+            return redirect(UserLastViewService::getCategoryUrl(), 303);
+        })->name('articles.last-page');
 
         Route::get('search/items', [\App\Http\Controllers\User\ArticleController::class, 'searchItems'])
             ->name('search.items');

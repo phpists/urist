@@ -39,6 +39,8 @@ document.addEventListener('DOMContentLoaded', function () {
             success: function (resp) {
                 document.getElementById('updateTagId').value = categoryId;
                 $("#updateTagName").val(resp.name)
+                $("#updateTagPrimaryColor").val(resp.primary_color)
+                $("#updateTagSecondaryColor").val(resp.secondary_color)
             }
         })
     })

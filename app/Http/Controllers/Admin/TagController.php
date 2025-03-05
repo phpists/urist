@@ -36,7 +36,9 @@ class TagController extends Controller
     public function store(StoreTagRequest $request): \Illuminate\Http\RedirectResponse
     {
         $data = [
-            'name' => $request->name
+            'name' => $request->name,
+            'primary_color' => $request->primary_color,
+            'secondary_color' => $request->secondary_color,
         ];
         $position = Tag::query()->max('position');
         if (!isset($position)) {

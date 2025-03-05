@@ -10,6 +10,7 @@ use App\Models\CriminalArticle;
 use App\Services\ArticleFilterService;
 use App\Services\ExportDocument;
 use App\Services\PermissionService;
+use App\Services\UserLastViewService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use PhpOffice\PhpWord\Element\Table;
@@ -74,6 +75,8 @@ class ArticleController extends Controller
     public function show(CriminalArticle $article)
     {
         can_user(PermissionEnum::LEGAL_BASE->value);
+        UserLastViewService::rememberArticle($article->id);
+
         return view('user.articles.show', compact('article'));
     }
 

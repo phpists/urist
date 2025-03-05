@@ -16,11 +16,10 @@
             margin-bottom: 0!important;
         }
     </style>
-    <section class="collection-section collection-section--pt-0">
+    <section class="collection-section">
         <div class="container collection-section__container">
-            <header class="collection-section__sticky-header">
                 <div class="filter-toggle collection-section__filter-toggle">
-                    <h3 class="filter-toggle__title">Фільтр</h3>
+                    <h3 class="filter-toggle__title">Фільтр<span class="filter-toggle__info green-color">У вас є активні фільтри</span></h3>
                     <button class="button button--outline filter-toggle__button" type="button" aria-label="Hide Filter" data-filter-toggle="data-filter-toggle">
                         <svg class="button__icon" width="20" height="20">
                             <use xlink:href="{{ asset('img/sprite.svg#filter') }}"></use>
@@ -35,7 +34,6 @@
                         </select>
                     </div>
                 </form>
-            </header>
 
             <div id="itemsContainer">
                 @include('user.articles._items')

@@ -9,7 +9,7 @@
                     <form class="sort-form collection-table__sort-form" id="sort-table-form" autocomplete="off" novalidate="novalidate">
                         <div class="sort-form__group">
                             <select class="select" id="selectSortBy" name="selectSortBy" aria-label="Sort by" required="required">
-                                <option value="hierarchy" @selected(request('sort', 'hierarchy') == 'hierarchy')>Сортувати за ієрархією судових рішень (ВПВС, ОПВС, ККСВС) та хронологією</option>
+                                <option value="hierarchy" @selected(request('sort', 'hierarchy') == 'hierarchy')>Сортувати за ієрархією судових рішень (ВП ВС, ОП ККС ВС, ККС ВС) та хронологією</option>
                                 <option value="date" @selected(request('sort', 'hierarchy') == 'date')>Сортувати за зростанням</option>
                             </select>
                         </div>
@@ -21,14 +21,10 @@
         <tbody class="collection-table__tbody">
         @foreach($articles as $article)
             @php($url = can_user(\App\Enums\PermissionEnum::LEGAL_BASE->value) ? route('user.articles.show', $article) : '#')
-            <tr>
+            <tr data-key="{{ $article->id }}">
                 <td>
-                    <time class="collection-table__date">
-                        <a class="black-link" href="{{ $url }}">{{ $article->pretty_date }}</a>
-                    </time>
-                    <span class="collection-table__info">
-                        <a class="black-link" href="{{ $url }}">{{ $article->getTagsString() }}</a>
-                    </span>
+                    <a class="collection-table__date" href="{{ $url }}">{{ $article->pretty_date }}</a>
+                    {!! $article->getTagsHtml($url) !!}
                     <ul class="actions actions--center collection-table__actions">
                         <li class="actions__item">
                             <button class="button button--xs button--outline modal-self-completing" type="button"
@@ -75,11 +71,12 @@
                     </div>
                 </td>
                 <td>
+                    <div class="full-description" style="display: none">{{ $article->description }}</div>
                     <div class="collection-descr default">
                         <a class="black-link collection-descr__text" href="{{ $url }}" style="display:block;">
                             <p style="display: inline;">{!! $short = truncate_by_words($article->description, 370) !!}</p>
                             <div class="collection-descr__hidden">
-                                {!! str_replace("\r\n", '<br>', Str::substr($article->description, mb_strlen($short) - 3)) !!}
+                                {!! str_replace("\n", '<br>', Str::substr($article->description, mb_strlen($short) - 3)) !!}
                             </div>
                         </a>
                         @if(strlen($short) < strlen($article->description))
@@ -89,12 +86,17 @@
                                 </svg>
                             </button>
                         @endif
+                        <button class="button button--outline button--xs" type="button" aria-label="Copy" data-tooltip="Копіювати" onclick="copyTextBySelector('table.collection-table tr[data-key={{ $article->id }}] div.full-description')">
+                            <svg class="button__icon" width="14" height="14">
+                                <use xlink:href="{{ asset('assets/img/user/sprite.svg#copy') }}"></use>
+                            </svg>
+                        </button>
                     </div>
                     <div class="collection-descr more-width">
                         <a class="black-link collection-descr__text" href="{{ $url }}" style="display:block;">
                             <p style="display: inline;">{!! $short = truncate_by_words($article->description, 700) !!}</p>
                             <div class="collection-descr__hidden">
-                                {!! str_replace("\r\n", '<br>', Str::substr($article->description, mb_strlen($short) - 3)) !!}
+                                {!! str_replace("\n", '<br>', Str::substr($article->description, mb_strlen($short) - 3)) !!}
                             </div>
                         </a>
                         @if(strlen($short) < strlen($article->description))
@@ -104,6 +106,11 @@
                                 </svg>
                             </button>
                         @endif
+                        <button class="button button--outline button--xs" type="button" aria-label="Copy" data-tooltip="Копіювати" onclick="copyTextBySelector('table.collection-table tr[data-key={{ $article->id }}] div.full-description')">
+                            <svg class="button__icon" width="14" height="14">
+                                <use xlink:href="{{ asset('assets/img/user/sprite.svg#copy') }}"></use>
+                            </svg>
+                        </button>
                     </div>
                 </td>
             </tr>

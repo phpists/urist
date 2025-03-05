@@ -12,9 +12,15 @@ use Illuminate\Support\Facades\DB;
 
 class ArticleFilterService
 {
+    public array $categories;
+    public string $sort;
 
-    public function __construct(public ?string $type = null)
+    public function __construct(
+        public ?string $type = null,
+    )
     {
+        $this->categories = request('categories', []);
+        $this->sort = request('sort', 'hierarchy');
     }
 
     public function getType(): ?string
@@ -48,8 +54,10 @@ class ArticleFilterService
 
     public function getArticles()
     {
+        UserLastViewService::rememberCategory($this->type, $this->categories, $this->sort);
+
         $perPage = SettingService::getValueByName(SettingEnum::CRIMINAL_ARTICLES_PER_PAGE->value) ?? 20;
-        $categories = request('categories', []);
+        $categories = $this->categories;
         foreach ($categories as $category)
             $categories = array_merge($categories, ArticleCategory::getChildIds($category));
 
@@ -86,12 +94,12 @@ class ArticleFilterService
                     });
                 }
             })
-            ->when($sort = request('sort', 'hierarchy'), function ($q) use ($sort, $isFromSearch) {
-                match ($sort) {
+            ->when($this->sort, function ($q) use ($isFromSearch) {
+                match ($this->sort) {
                     'date' => $isFromSearch
                         ? $q->within('criminal_articles_date_desc')
                         : $q->orderBy('date', 'desc'),
-                    default => $isFromSearch
+                    'hierarchy' => $isFromSearch
                         ? $q->within('criminal_articles_hierarchy')
                         : $q->leftJoinSub(
                             DB::table('article_tags')
@@ -105,6 +113,7 @@ class ArticleFilterService
                         )
                             ->orderBy('priority_tags.tag_priority', 'desc')
                             ->orderBy('date', 'DESC'),
+                    default => null
                 };
             })
             ->paginate($perPage)

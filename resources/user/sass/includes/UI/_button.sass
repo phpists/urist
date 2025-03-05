@@ -35,6 +35,12 @@
         color: var(--white)
         background: var(--black)
 
+    &.is-active
+        background: var(--blue)
+        color: var(--white)
+        border-color: var(--blue-light)
+        box-shadow: 0 0 8px 0 #3fb7df
+
     &:disabled
         background: var(--grey-disabled) !important
         border-color: var(--grey-disabled) !important
@@ -54,6 +60,12 @@
             background: linear-gradient(90deg, rgba(55, 78, 115, .2) 20%, transparent 100%)
             background-color: var(--blue)
             border-color: var(--blue)
+
+        &:disabled
+            background: transparent !important
+            border-color: var(--grey-alt) !important
+            color: var(--grey-alt) !important
+            cursor: not-allowed
 
     &--white
         background: var(--white)

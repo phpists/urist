@@ -12,12 +12,28 @@
     @media (max-width: 1400px)
         padding-left: 420px
 
+    @media ($max-md)
+        background-color: #F7F8FA
+        border-radius: 0 0 10px 10px
+        border: none
+        box-shadow: 0 0 30px 0 rgba(0, 0, 0, .3)
+        transform: translateY(calc((100% - 25px) * -1))
+        transition: transform .25s ease
+
     &.is-full
         padding-left: 128px
-        transition: padding .25s ease
+        transition: padding .25s ease, transform .25s ease
 
         @media ($max-md)
             padding-left: 0
+
+    &.is-visible
+        transform: translateY(0)
+
+        .header__toggle-button
+
+            svg
+                transform: rotateX(180deg)
 
     &__container
         display: flex
@@ -26,7 +42,10 @@
         padding: 20px 30px 19px
 
         @media ($max-md)
-            padding: 15px 15px 14px
+            padding: 15px 15px 25px
+            flex-direction: column-reverse
+            align-items: stretch
+            gap: 10px
 
     &__burger
         display: none
@@ -44,17 +63,39 @@
         // max-width: 585px
         width: 100%
 
-        @media ($max-md)
-            display: none
+        //@media ($max-md)
+        //    display: none
 
     &__actions
         margin-left: auto
+
+        @media ($max-sm)
+            margin-left: 0
+            flex: 1
 
     &__tariff-button
         white-space: nowrap
 
         @media ($max-lg)
             display: none
+
+    &__toggle-button
+        position: absolute
+        bottom: 0
+        left: 0
+        width: 100%
+        height: 25px
+        display: flex
+        align-items: center
+        justify-content: center
+        border-radius: 0 0 10px 10px
+        color: var(--blue)
+
+        @media ($min-md)
+            display: none
+
+        svg
+            transition: transform .25s ease
 
     &--rel
 

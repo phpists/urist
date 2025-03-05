@@ -90,21 +90,53 @@
                             border: none
 
         &__date
-            display: block
-            font-size: 16px
+            display: inline-flex
+            align-items: center
+            justify-content: center
+            text-align: center
+            padding: 4px 8px
+            font-size: 12px
+            font-weight: 700
+            line-height: 1
+            border: 1px solid #005AA9
+            border-radius: 5px
+            height: 24px
+            background: linear-gradient(90deg, #31BBAC 0%, #005AA9 100%)
+            color: var(--white)
 
-            @media ($max-md)
-                font-size: 14px
+            @media ($min-md)
+                &:not(:last-child)
+                    margin-bottom: 6px
+
+            &:hover,
+            &:active,
+            &:focus-visible
+                color: var(--white)
 
         &__info
-            display: block
-            font-size: 16px
-            font-weight: 600
-            color: var(--blue)
+            display: inline-flex
+            align-items: center
+            justify-content: center
+            text-align: center
+            padding: 4px 8px
+            font-size: 12px
+            font-weight: 700
+            line-height: 1
+            border: 1px solid #0d2d5f
+            border-radius: 5px
+            height: 24px
             text-transform: uppercase
+            background: linear-gradient(90deg, #374e73 0%, #0d2d5f 100%)
+            color: var(--white)
 
-            @media ($max-md)
-                font-size: 14px
+            @media ($min-md)
+                &:not(:last-child)
+                    margin-bottom: 6px
+
+            &:hover,
+            &:active,
+            &:focus-visible
+                color: var(--white)
 
         &__title
             font-size: 16px

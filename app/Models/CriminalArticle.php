@@ -128,6 +128,13 @@ class CriminalArticle extends Model
         return implode(', ', $this->getTagsArray());
     }
 
+    public function getTagsHtml(string $url): string
+    {
+        return $this->tags?->map(function($tag) use ($url) {
+            return '<a class="collection-table__info" href="'.$url.'" style="'.$tag->style_color.'">'.$tag->name.'</a>';
+        })->join('');
+    }
+
     public function getProgramTitle(): string
     {
         return \Str::slug($this->name);

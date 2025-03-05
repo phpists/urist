@@ -176,6 +176,16 @@ $(function () {
         throwErrorToaster(item.textContent)
     })
 
+    setInterval(function () {
+        if ($('.filter input[type="checkbox"]:checked').length > 0) {
+            $('.filter-toggle__info').show()
+            $('.filter-toggle__button').addClass('is-active')
+        } else {
+            $('.filter-toggle__info').hide()
+            $('.filter-toggle__button').removeClass('is-active')
+        }
+    }, 500)
+
 })
 
 
@@ -217,12 +227,12 @@ function throwErrorToaster(text) {
     }, 3000)
 }
 
-const copyText = async (text) => {
+const copyText = async (text, successMessage = 'Вміст успішно скопійований в буфер обміну') => {
     try {
         // Navigator clipboard api needs a secure context (https)
         if (navigator.clipboard && window.isSecureContext) {
             await navigator.clipboard.writeText(text);
-            throwSuccessToaster('Посилання успішно скопійоване в буфер обміну');
+            throwSuccessToaster(successMessage);
         } else {
             // Use the 'out of viewport hidden text area' trick
             const textArea = document.createElement("textarea");
@@ -237,7 +247,7 @@ const copyText = async (text) => {
 
             try {
                 document.execCommand('copy');
-                throwSuccessToaster('Посилання успішно скопійоване в буфер обміну');
+                throwSuccessToaster(successMessage);
             } catch (error) {
                 console.error(error);
             } finally {
@@ -246,6 +256,16 @@ const copyText = async (text) => {
         }
     } catch (err) {
         console.error('Failed to copy: ', err);
+    }
+}
+
+const copyTextBySelector = async (selector, successMessage = 'Вміст успішно скопійований в буфер обміну') => {
+    const $el = $(selector);
+
+    if ($el.length > 0) {
+        let text = $el.text();
+
+        await copyText(text, successMessage);
     }
 }
 

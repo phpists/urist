@@ -52,18 +52,71 @@
                 </button>
                 @endif
             </div>
-            <form class="search filter__search" id="filter-search-form" autocomplete="off" novalidate="novalidate">
-                <div class="search__group">
-                    <input class="input search__input" id="inputFilterSearch" type="text" name="inputFilterSearch"
-                           placeholder="Пошук по категоріях" autocomplete="off" required="required"
-                           data-modal-once="modal-tip-6">
-                    <button type="button" class="search__button">
-                        <svg class="search__icon" width="21" height="21">
-                            <use xlink:href="{{ asset('img/sprite.svg#search') }}"></use>
-                        </svg>
-                    </button>
-                </div>
-            </form>
+
+            <div class="filter__sticky-header">
+                <ul class="actions filter__actions">
+                    <li class="actions__item">
+                        <a class="button button--outline actions__button @if(url()->current() == route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KK->value)) is-active @endif"
+                           href="{{ !can_user(\App\Enums\PermissionEnum::MODULE_KK->value) ? '#' : get_setting_value_by_name(\App\Enums\SettingEnum::KK_MODULE_BTN->value) }}" aria-label="KK">КК</a>
+                    </li>
+                    <li class="actions__item">
+                        <a class="button button--outline actions__button @if(url()->current() == route('user.articles.index', \App\Enums\CriminalArticleTypeEnum::KPK->value)) is-active @endif"
+                           href="{{ !can_user(\App\Enums\PermissionEnum::MODULE_KPK->value) ? '#' : get_setting_value_by_name(\App\Enums\SettingEnum::KPK_MODULE_BTN->value) }}" aria-label="KПK">КПК</a>
+                    </li>
+                    <li class="actions__item">
+                        <a class="button button--outline actions__button" href="{{ route('user.articles.last-page') }}" aria-label="List">
+                            <svg class="button__icon" width="17" height="12">
+                                <use xlink:href="{{ asset('assets/img/user/sprite.svg#list') }}"></use>
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="actions__item">
+                        @if($lastArticleId = \App\Services\UserLastViewService::getArticle())
+                            <a class="button button--outline actions__button" href="{{ route('user.articles.show', $lastArticleId) }}" aria-label="View">
+                                <svg class="button__icon" width="17" height="11">
+                                    <use xlink:href="{{ asset('assets/img/user/sprite.svg#eye') }}"></use>
+                                </svg>
+                            </a>
+                        @else
+                            <button class="button button--outline actions__button" type="button" aria-label="View" disabled="disabled">
+                                <svg class="button__icon" width="17" height="11">
+                                    <use xlink:href="{{ asset('assets/img/user/sprite.svg#eye') }}"></use>
+                                </svg>
+                            </button>
+                        @endif
+                    </li>
+                    <li class="actions__item">
+                        <a class="button button--outline actions__button @if(url()->current() == route('user.files.index')) is-active @endif" href="{{ route('user.files.index') }}" aria-label="Bookmarks">
+                            <svg class="button__icon" width="16" height="20">
+                                <use xlink:href="{{ asset('assets/img/user/sprite.svg#bookmark') }}"></use>
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="actions__item">
+                        <button class="button button--outline actions__button" type="button" aria-label="Hide Filter" data-filter-toggle="data-filter-toggle">
+                            <svg class="button__icon" width="17" height="17">
+                                <use xlink:href="{{ asset('assets/img/user/sprite.svg#close-modal') }}"></use>
+                            </svg>
+                        </button>
+                    </li>
+                </ul>
+                <form class="search filter__search" id="filter-search-form" autocomplete="off" novalidate="novalidate">
+                    <div class="search__group">
+                        <input class="input search__input" id="inputFilterSearch" type="text" name="inputFilterSearch"
+                               placeholder="Пошук..." autocomplete="off" required="required" data-modal-once="modal-tip-6"/>
+                        <button class="search__button">
+                            <svg class="search__icon" width="21" height="21">
+                                <use xlink:href="{{ asset('assets/img/user/sprite.svg#search') }}"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+                <button class="filter__collapse-button" type="button" aria-label="Filter collapse" data-filter-collapse="data-filter-collapse">
+                    <svg width="12" height="8">
+                        <use xlink:href="{{ asset('assets/img/user/sprite.svg#dropdown-arrow') }}"></use>
+                    </svg>
+                </button>
+            </div>
 
             <form id="filterForm" action="{{ route('user.articles.index', $type) }}" style="margin-bottom: 0">
                 <input type="hidden" name="sort">
