@@ -39,6 +39,7 @@ class TagController extends Controller
             'name' => $request->name,
             'primary_color' => $request->primary_color,
             'secondary_color' => $request->secondary_color,
+            'border_color' => $request->border_color,
         ];
         $position = Tag::query()->max('position');
         if (!isset($position)) {

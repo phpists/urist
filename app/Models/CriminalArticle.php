@@ -131,7 +131,7 @@ class CriminalArticle extends Model
     public function getTagsHtml(string $url): string
     {
         return $this->tags?->map(function($tag) use ($url) {
-            return '<a class="collection-table__info" href="'.$url.'" style="'.$tag->style_color.'">'.$tag->name.'</a>';
+            return '<a class="collection-table__info" href="'.$url.'" style="'.$tag->style_color.$tag->style_border_color.'">'.$tag->name.'</a>';
         })->join('');
     }
 

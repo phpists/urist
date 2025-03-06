@@ -35,6 +35,12 @@
                                     <span class="form-text text-muted">Вкажіть другий як 255,255,255 щоб застосувати тільки перший як однотонний</span>
                                 </div>
                             </div>
+                            <div class="form-group w-100">
+                                <label for="updateTagBorderColor" class="col-auto col-form-label font-weight-bold">Колір рамки (border)</label>
+                                <div class="col-sm-12">
+                                    <input id="updateTagBorderColor" class="form-control" type="color" name="border_color" value="#ffffff">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

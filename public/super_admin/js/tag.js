@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 $("#updateTagName").val(resp.name)
                 $("#updateTagPrimaryColor").val(resp.primary_color)
                 $("#updateTagSecondaryColor").val(resp.secondary_color)
+                $("#updateTagBorderColor").val(resp.border_color)
             }
         })
     })

@@ -182,9 +182,11 @@ $(function () {
         if ($('.filter input[type="checkbox"]:checked').length > 0) {
             $('.filter-toggle__info').show()
             $('.filter-toggle__button').addClass('is-active')
+            $('#inputSearch').attr('placeholder', 'Пошук в межах зафіксованих категорій')
         } else {
             $('.filter-toggle__info').hide()
             $('.filter-toggle__button').removeClass('is-active')
+            $('#inputSearch').attr('placeholder', 'Пошук по базі')
         }
     }, 100)
 
