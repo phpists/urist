@@ -32,6 +32,7 @@ class UserLastViewService
 
         return route('user.articles.index', [
             'type' => $data['type'],
+            'close-filter' => true,
             ...$data['query']
         ]);
     }

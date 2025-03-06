@@ -151,3 +151,7 @@ input[name="search"]:focus + .searchItemsContainer {
     max-height: 400px;
     overflow: auto;
 }
+
+.alert {
+    z-index: 5;
+}

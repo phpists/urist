@@ -64,7 +64,7 @@
                            href="{{ !can_user(\App\Enums\PermissionEnum::MODULE_KPK->value) ? '#' : get_setting_value_by_name(\App\Enums\SettingEnum::KPK_MODULE_BTN->value) }}" aria-label="KПK">КПК</a>
                     </li>
                     <li class="actions__item">
-                        <a class="button button--outline actions__button" href="{{ route('user.articles.last-page') }}" aria-label="List">
+                        <a class="button button--outline actions__button @if(Route::is('user.articles.index')) is-active @endif" href="{{ route('user.articles.last-page') }}" aria-label="List">
                             <svg class="button__icon" width="17" height="12">
                                 <use xlink:href="{{ asset('assets/img/user/sprite.svg#list') }}"></use>
                             </svg>
@@ -72,7 +72,8 @@
                     </li>
                     <li class="actions__item">
                         @if($lastArticleId = \App\Services\UserLastViewService::getArticle())
-                            <a class="button button--outline actions__button" href="{{ route('user.articles.show', $lastArticleId) }}" aria-label="View">
+                            <a class="button button--outline actions__button @if(Route::is('user.articles.show')) is-active @endif"
+                               href="{{ route('user.articles.show', $lastArticleId) }}" aria-label="View">
                                 <svg class="button__icon" width="17" height="11">
                                     <use xlink:href="{{ asset('assets/img/user/sprite.svg#eye') }}"></use>
                                 </svg>
